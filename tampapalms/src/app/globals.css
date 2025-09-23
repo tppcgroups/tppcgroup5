@@ -24,3 +24,42 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* show a hamburger inside the existing nav on small screens only */
+header nav {
+  position: relative; /* needed for absolute-positioned pseudo-element */
+}
+
+/* small screens: show hamburger */
+@media (max-width: 767px) {
+  header nav::before {
+    content: "";
+    position: absolute;
+    right: 1rem;                 /* position on the right inside the nav */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 16px;
+    display: inline-block;
+    cursor: pointer;
+    /* three horizontal bars using layered linear-gradients */
+    background-image:
+      linear-gradient(#111 0 2px, transparent 2px 100%),
+      linear-gradient(#111 0 2px, transparent 2px 100%),
+      linear-gradient(#111 0 2px, transparent 2px 100%);
+    background-size: 100% 2px;
+    background-position: 0 0, 0 6px, 0 12px;
+    background-repeat: no-repeat;
+    z-index: 50;
+  }
+
+  /* optionally hide any visible navigation text if you want the icon-only view;
+     only enable if your nav links are already hidden via 'hidden md:flex' */
+  /* header nav .your-nav-links-selector { display: none; } */
+}
+
+/* hide the hamburger on medium+ screens */
+@media (min-width: 768px) {
+  header nav::before {
+    display: none;
+  }
+}
