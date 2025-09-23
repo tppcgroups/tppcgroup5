@@ -1,7 +1,7 @@
 export default function Availability() {
   return (
     <div>
-      <h1>Availability Page</h1>
+        <h1 className="text-black">Availability Page</h1>
     </div>
   );
 }

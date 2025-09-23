@@ -8,15 +8,12 @@ const NavLinks = () => {
     const pathname = usePathname() || "/";
 
     const navLinks = [
-      { href: "/", label: "Home" },
-      {
-        href: "/pages/Availability",
-        label: "Office and Executive suits Availability",
-      },
-      { href: "/pages/Features", label: "Features & Amenities" },
-      { href: "/pages/Maintenance", label: "Maintenance Request" },
-      { href: "/pages/Apply", label: "Rental Application" },
-      { href: "/pages/Contact", label: "Contact" },
+    { href: "/", label: "Home" },
+    { href: "/pages/Availability", label: "Office and Executive suits Availability" },
+    { href: "/pages/Features", label: "Features & Amenities" },
+    { href: "/pages/Maintenance", label: "Maintenance Request" },
+    { href: "/pages/Apply", label: "Rental Application" },
+    { href: "/pages/Contact", label: "Contact" },
     ];
     return (
       <div className="hidden md:flex flex-1 justify-evenly items-center">
