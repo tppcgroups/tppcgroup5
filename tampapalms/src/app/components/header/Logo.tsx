@@ -10,8 +10,8 @@ const Logo = () => {
         <Image
           src="/TampaPalmsLogo.png"
           alt="Tampa Palms Professional Center Logo"
-          width={160}
-          height={50}
+          width={200}
+          height={63}
           className="object-contain"
         />
       </Link>
