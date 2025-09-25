@@ -2,7 +2,7 @@ import HomePage from "./pages/Home/page"
 
 export default function Page() {
   return (
-    <div>
+    <div bg-white>
       <HomePage/>
     </div>
   );
