@@ -1,7 +1,11 @@
+import Card from "@/app/components/maintenance/Cards"
+
 export default function Maintenance(){
-    return (
-      <div>
-        <h1 className="text-black">Maintenance Page</h1>
-      </div>
+    return(
+        <div className="bg-white">
+            
+            
+
+        </div>
     );
 }
