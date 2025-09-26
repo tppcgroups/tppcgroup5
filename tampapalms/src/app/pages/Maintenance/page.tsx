@@ -2,10 +2,8 @@ import Card from "@/app/components/maintenance/Cards"
 
 export default function Maintenance(){
     return(
-        <div className="bg-white">
-            
-            <Card />
-
-        </div>
+        <main className="min-h-screen bg-gray-50">
+            <Card/>
+        </main>
     );
 }
