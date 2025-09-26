@@ -14,7 +14,7 @@ const Card = () => {
                 <div className="rounded-xl bg-white p-6 shadow-xl ring-1">
                     {/*Image Placeholder */}
                     <div className=" relative overflow-hidden rounded-md bg-gray-300 text-gray-700 flex items-center justify-center aspect-[5/3]">
-                        <Image src="/maintenanceIMG.png" alt="Maintenance team" fill></Image>
+                        <Image src="/images/maintenanceIMG.png" alt="Maintenance team" fill></Image>
                     </div>
                     {/*Maintenance Message*/}
                     <p className="mt-6 text-[15px] text-gray-800">For all other Maintenance Requests. Please Sign in Here:</p>

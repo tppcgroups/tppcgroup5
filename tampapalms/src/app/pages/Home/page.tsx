@@ -14,9 +14,11 @@ export default function Home(){
           <hr className="h-px mt-2 border-t-3 border-black rounded-4xl"></hr>
           <div className="w-full flex flex-row justify-center">
             {/* LoopNet locations */}
-            <div className="h-[50dvh] w-[50dvh] bg-gray-200 hover:bg-gray-800 transition-colors duration-300 ease-in-out m-2 rounded-xl"></div>
-            <div className="h-[50dvh] w-[50dvh] bg-gray-200 hover:bg-gray-800 transition-colors duration-300 ease-in-out m-2 rounded-xl"></div>
+            <div className="h-[80dvh] w-[80dvh] mt-20 bg-gray-200 hover:bg-gray-800 transition-colors duration-300 ease-in-out mr-5 rounded-xl"></div>
+            <div className="h-[80dvh] w-[80dvh] mt-20 bg-gray-200 hover:bg-gray-800 transition-colors duration-300 ease-in-out ml-5 rounded-xl"></div>
           </div>
+          {/* White space below the LoopNet locations */}
+            <div className="h-20"></div>
         </div>
       </div>
     );
