@@ -3,7 +3,6 @@
 "use client"
 import * as React from "react"
 import Image from "next/image"
-import { Card, CardContent } from "@/app/components/home/carousel/card"
 import { 
     Carousel, 
     CarouselContent, 
@@ -18,9 +17,10 @@ import Autoplay from "embla-carousel-autoplay"
 // Define the type for the componenet's props
 interface ImageCarouselProps {
     imageUrls: string[];
+    className?: string;
 }
 
-export const ImageCarousel: React.FC<ImageCarouselProps> = ({ imageUrls }) => {
+export const ImageCarousel: React.FC<ImageCarouselProps> = ({ imageUrls, className }) => {
     const plugin = React.useRef(
         Autoplay({ delay: 3000, stopOnInteraction: false })
     )
@@ -31,7 +31,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ imageUrls }) => {
           align: "start",
           loop: true,
         }}
-        className="w-full max-w-4xl mx-auto"
+        className={`w-full h-full ${className || ""}`}
         // Stop autoplay on mouse enter
         onMouseEnter={plugin.current.stop}
         // Start autoplay on mouse leave
@@ -39,25 +39,21 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ imageUrls }) => {
       >
         <CarouselContent>
           {imageUrls.map((url, index) => (
-            <CarouselItem key={index}>
-              <div className="p-1">
-                <Card>
-                  <CardContent className="flex aspect-video items-center justify-center p-0 overflow-hidden rounded-lg">
-                    <Image
-                      src={url}
-                      alt={`Slide ${index + 1}`}
-                      width={1280}
-                      height={720}
-                      className="h-full w-full object-cover"
-                    ></Image>
-                  </CardContent>
-                </Card>
+            <CarouselItem key={index} className="h-full">
+              <div className="relative w-full h-full rounded-xl overflow-hidden">
+                <Image
+                  src={url}
+                  alt={`Slide ${index + 1}`}
+                  width={1920}
+                  height={1080}
+                  className="h-full w-full object-cover object-position-center"
+                ></Image>
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden sm:flex" />
-        <CarouselNext className="hidden sm:flex" />
+        <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-30 hidden sm:flex" />
+        <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-30 hidden sm:flex" />
       </Carousel>
     );
 }
