@@ -12,7 +12,7 @@ const Logo = () => {
           alt="Tampa Palms Professional Center Logo"
           width={200}
           height={63}
-          className="object-contain"
+          className="object-contain h-auto"
         />
       </Link>
     </div>

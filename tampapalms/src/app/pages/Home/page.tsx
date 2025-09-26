@@ -1,9 +1,21 @@
+// file: tampapalms/src/app/pages/Home/page.tsx
+
+import { ImageCarousel } from "@/app/components/home/carousel/ImageCarousel"
+
 export default function Home(){
+    const images = [
+      "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinition.jpg",
+      "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
+      "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-3-LargeHighDefinition.jpg",
+      "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-4-LargeHighDefinition.jpg",
+    ];
+
     return (
       <div>
         {/* Highlighted Images container */}
         <div className="relative h-[80dvh] rounded-xl bg-gray-200 my-2 mx-8 p-6">
-          <h1 className="text-black">Highlighted Images</h1>
+          {/* <h1 className="text-black">Highlighted Images</h1> */}
+            <ImageCarousel imageUrls={images} />
           <div className="absolute bottom-0 right-0 h-50 w-50 bg-white rounded-xl">
             <p className="text-black text-center pt-4">Highlighted Location</p>
           </div>
