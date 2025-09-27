@@ -164,3 +164,11 @@ header nav {
 .full-height-carousel .embla__slide {
   height: 100%;
 }
+
+.rotate-90 {
+  transform: rotate(90deg);
+}
+
+.white-image {
+  filter: brightness(0) invert(1);
+}

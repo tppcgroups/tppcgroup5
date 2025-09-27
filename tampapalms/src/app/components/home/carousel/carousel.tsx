@@ -8,6 +8,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/app/components/home/carousel/button"
+import Image from "next/image"
 
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
@@ -174,7 +175,7 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
 function CarouselPrevious({
   className,
   variant = "outline",
-  size = "icon",
+  // size = "icon",
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel()
@@ -182,10 +183,10 @@ function CarouselPrevious({
   return (
     <Button
       data-slot="carousel-previous"
-      variant={variant}
-      size={size}
+      // variant={variant}
+      // size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+          "h-15 w-25 rounded-full bg-transparent border-0 text-white hover:bg-transparent",
         orientation === "horizontal"
           ? "top-1/2 -left-12 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -195,10 +196,11 @@ function CarouselPrevious({
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeft />
+      <Image src="/images/arrowRight.png" alt="Right Arrow" width={50} height={20} className="rotate-180 white-image"></Image>
+      {/* <ArrowLeft height={24} width={80} className="drop-shadow-md"/> */}
       <span className="sr-only">Previous slide</span>
     </Button>
-  )
+  );
 }
 
 function CarouselNext({
@@ -212,10 +214,10 @@ function CarouselNext({
   return (
     <Button
       data-slot="carousel-next"
-      variant={variant}
-      size={size}
+      // variant={variant}
+      // size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+        "h-15 w-25 rounded-full bg-transparent border-0 text-white hover:bg-transparent",
         orientation === "horizontal"
           ? "top-1/2 -right-12 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -225,10 +227,16 @@ function CarouselNext({
       onClick={scrollNext}
       {...props}
     >
-      <ArrowRight />
+      <Image
+        src="/images/arrowRight.png"
+        alt="Right Arrow"
+        width={50}
+        height={20}
+        className="white-image"
+      ></Image>
       <span className="sr-only">Next slide</span>
     </Button>
-  )
+  );
 }
 
 export {

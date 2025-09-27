@@ -14,6 +14,7 @@ export default function Home(){
         <div className="relative h-[80dvh] rounded-xl bg-gray-200 my-2 mx-8 overflow-hidden">
           {/* <h1 className="text-black">Highlighted Images</h1> */}
             <ImageCarousel imageUrls={images} />
+            <h1 className="absolute bottom-0 left-0 m-8 text-white text-5xl z-20">Tampa Palms<br></br>Professional Center</h1>"
           <div className="absolute bottom-0 right-0 h-50 w-50 bg-white rounded-xl z-20">
             <p className="text-black text-center pt-4">Highlighted Location</p>
           </div>

@@ -52,8 +52,8 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ imageUrls, classNa
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-30 hidden sm:flex" />
-        <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-30 hidden sm:flex" />
+        <CarouselPrevious className="absolute left-15 top-15 z-30 hidden sm:flex" />
+        <CarouselNext className="absolute left-50 top-15 z-30 hidden sm:flex" />
       </Carousel>
     );
 }
