@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: black;
+}
+
+#image-container img {
+    width: 100%;
+    height: auto;
+    max-height: 100vh;
+    object-fit: cover;
+
+    -webkit-mask-image: linear-gradient(to right, transparent, black 40%);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: cover;
+
+    mask-image: linear-gradient(to right, transparent, black 40%);
+    mask-repeat: no-repeat;
+    mask-size: cover;
+}
