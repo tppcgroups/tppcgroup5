@@ -1,23 +1,23 @@
 body {
-    margin: 0;
-    display: flex;
-    justify-content: center;
+    margin: 0; /*The default spacing is removed around the page*/
+    display: flex; /*Using the flex box layout which centers the content*/
+    justify-content: center; /*Centering the image container horizontally and vertically*/
     align-items: center;
-    height: 100vh;
-    background: black;
+    height: 100vh; /*The image will take up the full view*/
+    background: black; /*Setting background color*/
 }
 
 #image-container img {
-    width: 100%;
-    height: auto;
+    width: 100%; /*Image will fill the entire container*/
+    height: auto; /*Keeping the image in the vertical constraints of the container*/
     max-height: 100vh;
-    object-fit: cover;
+    object-fit: cover; /*Keeping the image from being distorted*/
 
-    -webkit-mask-image: linear-gradient(to right, transparent, black 40%);
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-size: cover;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 40%); /*Causing the fading effect from the left side of the image to the right side of the image*/
+    -webkit-mask-repeat: no-repeat; /*Making sure the mask does not repeat*/
+    -webkit-mask-size: cover; /*The mask will stretch to cover the image size*/
 
-    mask-image: linear-gradient(to right, transparent, black 40%);
+    mask-image: linear-gradient(to right, transparent, black 40%); /*Stadard broswers preferances*/
     mask-repeat: no-repeat;
     mask-size: cover;
 }
