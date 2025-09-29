@@ -36,3 +36,19 @@ main {
     padding: 1.5rem 2rem; /*Adding spacing inside the text*/
     border-radius: 20px; /*Rounding corners*/
 }
+
+.perks {
+    display: flex; /*Arranging both perks display side-by-side*/
+    gap: 2rem; /*Adding spacing between the circles*/
+}
+
+.perk {
+    background: rgba(0,0,0,0.6); /*Dark transparent background*/
+    width: 120px; /*Fixing the width*/
+    height: 120px; /*Fixing the height*/
+    border-radius: 50%; /*Rounding the edges to make a circle*/
+    display: flex; /*Centering the text with flexbox*/
+    align-items: center; /*Vertical center*/
+    justify-content: center; /*Horizontal center*/
+    text-align: center; /*Align multi-line text center*/
+}
