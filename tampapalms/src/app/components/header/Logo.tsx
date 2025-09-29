@@ -8,11 +8,11 @@ const Logo = () => {
     <div className="flex-shrink-0 -ml-2 md:ml-4 -mt-4">
       <Link href="/" passHref>
         <Image
-          src="/TampaPalmsLogo.png"
+          src="/images/TampaPalmsLogo.png"
           alt="Tampa Palms Professional Center Logo"
-          width={160}
-          height={50}
-          className="object-contain"
+          width={200}
+          height={63}
+          className="object-contain h-auto"
         />
       </Link>
     </div>

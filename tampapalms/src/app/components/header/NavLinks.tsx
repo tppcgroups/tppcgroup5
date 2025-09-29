@@ -20,7 +20,7 @@ const NavLinks = () => {
         {navLinks.map((link) => (
           <Link key={link.href} href={link.href} passHref>
             <span
-              className={`text-sm font-medium text-gray-700 hover:text-black transition-colors ${
+              className={`font-medium text-[15px] text-gray-700 hover:text-black transition-colors ${
                 pathname === link.href ? "pb-1 border-b-2 border-gray-800" : ""
               }`}
             >
