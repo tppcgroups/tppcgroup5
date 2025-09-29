@@ -16,3 +16,10 @@ body {
     display: flex; /*Arranging the header*/
     flex-direction: column; /*Stacking to to bottom*/
 }
+
+header {
+    border-bottom: 2px solid white; /*Adding a thin line under title*/
+    padding-bottom: 1rem; /*Adding spacing below title text*/
+    margin-bottom: 2rem; /*Gap between header and main content*/
+    text-align: center; /*Centering the text horizontally*/
+}
