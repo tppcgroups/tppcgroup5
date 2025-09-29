@@ -1,63 +1,102 @@
 body {
-    margin: 0; /*The default spacing is removed around the page*/
-    height: 100vh; /*Filling the entire screen height*/
-    background: url("https://picsum.photos/1600/900") center/cover no-repeat;  /*Making the background the picture of one of their offices*/
-    display: flex; /*Aligning the overlay*/
-    justify-content: flex-start; /*Aligning the content to the left*/
-    align-items: stretch;
-    color: white;
-    font-family: Arial, sans-serif;
+    margin: 0;
+    font-family: Times New Roman, Times New Roman, serif;
+    background: #d3d0cb;
 }
 
-.overlay { /*The semi-transparent gradient on the left of the photo*/
-    flex: 1; /*Taking up the available width*/
-    background: linear-gradient(to right, rgba(0,0,0,0,7) 0%, rgba(0,0,0,0) 50%; /*Transparent gradient*/
-    padding: 2rem; /*Adding padding inside the overlay*/
-    display: flex; /*Arranging the header*/
-    flex-direction: column; /*Stacking to to bottom*/
-}
-
+/* Header at top */
 header {
-    border-bottom: 2px solid white; /*Adding a thin line under title*/
-    padding-bottom: 1rem; /*Adding spacing below title text*/
-    margin-bottom: 2rem; /*Gap between header and main content*/
-    text-align: center; /*Centering the text horizontally*/
+    text-align: center;
+    padding: 1rem 0;
 }
 
-main {
-    display: flex; /*Flex layout for items inside*/
-    flex-direction: column; /*Stacking items vertically*/
-    align-items: center; /*Centering items horizontally*/
-    gap: 2rem; /*Adding spacing between each element*/
+header h1 {
+    margin: 0;
 }
 
+header .rule {
+    height: 3px;
+    background: #000;
+    width: 90%;
+    margin: 0.5rem auto 0;
+}
+
+/* Two-column layout */
+.container {
+    display: flex;
+    height: calc(100vh - 100px);
+    padding: 2rem 0;
+}
+
+/* Left info column */
+.info-column {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 4rem 4rem;
+}
+
+/* Right photo column */
+.image-column {
+    flex: 1;
+    background:
+            linear-gradient(to left, transparent 60%, #d3d0cb 100%),
+            url("https://picsum.photos/1600/900") center/cover no-repeat;
+}
+
+/* Title box */
 .title-box {
-    background: rgba(0,0,0,0.6); /*Semi-transparent black background*/
-    padding: 1.5rem 2rem; /*Adding spacing inside the text*/
-    border-radius: 20px; /*Rounding corners*/
+    background: #444;
+    color: #fff;
+    padding: 3rem 4rem;
+    border-radius: 30px;
+    text-align: center;
+    min-width: 420px;
+    font-size: 30px;
+    max-width: 80%;
+    margin-left: 5rem;
 }
 
-.perks {
-    display: flex; /*Arranging both perks display side-by-side*/
-    gap: 2rem; /*Adding spacing between the circles*/
+/* Perks row */
+.perks-row {
+    display: flex;
+    gap: 16rem;
+    margin-left: 7rem;
 }
 
 .perk {
-    background: rgba(0,0,0,0.6); /*Dark transparent background*/
-    width: 120px; /*Fixing the width*/
-    height: 120px; /*Fixing the height*/
-    border-radius: 50%; /*Rounding the edges to make a circle*/
-    display: flex; /*Centering the text with flexbox*/
-    align-items: center; /*Vertical center*/
-    justify-content: center; /*Horizontal center*/
-    text-align: center; /*Align multi-line text center*/
+    background: #555;
+    color: #fff;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
+/* Link button */
 .link-box {
-    background: rgba(0,0,0,0.6); /*Dark transparent background*/
-    padding: 1rem 2rem; /*Internal spacing*/
-    border-radius: 30px; /*Creating the oval shape*/
-    text-decoration: underline;/*Removing underline */
-    text-underline-offset: 4px; /*making the underline easier to see*/
-    color: white; /*White text*/
+    background: #444;
+    color: #fff;
+    padding: 1.5rem 3rem;
+    border-radius: 30px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    margin-left: 13rem;
+    font-size: 20px;
 }
+
+/* Text styling */
+.image-column-text {
+    position: absolute;
+    right: 15%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    font-size: 18px;
+}
+
