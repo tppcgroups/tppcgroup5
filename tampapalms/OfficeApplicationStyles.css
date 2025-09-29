@@ -52,3 +52,12 @@ main {
     justify-content: center; /*Horizontal center*/
     text-align: center; /*Align multi-line text center*/
 }
+
+.link-box {
+    background: rgba(0,0,0,0.6); /*Dark transparent background*/
+    padding: 1rem 2rem; /*Internal spacing*/
+    border-radius: 30px; /*Creating the oval shape*/
+    text-decoration: underline;/*Removing underline */
+    text-underline-offset: 4px; /*making the underline easier to see*/
+    color: white; /*White text*/
+}
