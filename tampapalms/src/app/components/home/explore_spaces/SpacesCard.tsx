@@ -22,7 +22,7 @@ export const SpacesCard: React.FC<SpacesCardProps> = ({
       href={href}
       target="_blank"
       // The 'group' class enables the hover effects on child elements
-      className="group block w-full max-w-lg mx-auto"
+      className="group block w-full max-w-xl mx-auto"
     >
       <div className="bg-white rounded-xl shadow-md overflow-hidden transition-shadow duration-300 ease-in-out group-hover:shadow-2xl">
         {/* --- IMAGE & HOVER-REVEAL CONTAINER --- */}
@@ -40,7 +40,7 @@ export const SpacesCard: React.FC<SpacesCardProps> = ({
           {/* --- OVERLAY WITH FEATURES (Revealed on hover) --- */}
           <div className="absolute inset-0 bg-black/60 flex items-center justify-center p-4
                         opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <ul className="text-white text-center list-disc list-inside space-y-2">
+            <ul className="text-white text-center list-disc list-inside space-y-2 text-xl font-semibold">
               {features.map((feature) => (
                 <li key={feature}>{feature}</li>
               ))}

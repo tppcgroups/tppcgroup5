@@ -1,10 +1,20 @@
 // file: tampapalms/src/app/pages/Home/page.tsx
 
+"use client"
 import { ImageCarousel } from "@/app/components/home/carousel/ImageCarousel"
 import SpacesCard from "@/app/components/home/explore_spaces/SpacesCard"
 import TitleCard from "@/app/components/home/explore_spaces/TitleCard"
 import Link from "next/link"
 import Image from "next/image"
+import * as React from "react"
+
+import {
+    Carousel,
+    CarouselNext,
+    CarouselPrevious,
+    type CarouselApi
+} from "@/app/components/home/carousel/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 export default function Home(){
     const images = [
@@ -13,6 +23,12 @@ export default function Home(){
       "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-9-LargeHighDefinition.jpg",
       "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Aerial-13-LargeHighDefinition.jpg",
     ];
+
+    const [api, setApi] = React.useState<CarouselApi>();
+
+    const plugin = React.useRef(
+        Autoplay({ delay: 3000, stopOnInteraction: false})
+    )
 
     const officeFeatures = [
       "Ideal for teams and businesses",
@@ -29,18 +45,63 @@ export default function Home(){
     return (
       <div>
         {/* Highlighted Images container */}
-        <div className="relative h-[80dvh] rounded-xl bg-gray-200 my-2 mx-8 overflow-hidden">
-          {/* <h1 className="text-black">Highlighted Images</h1> */}
-          <ImageCarousel imageUrls={images} />
-          <h1 className="absolute bottom-0 left-0 m-8 text-white text-5xl z-20">
-            Tampa Palms<br></br>Professional Center
-          </h1>
-          <div className="absolute h-50 w-50 bottom-8 right-8 bg-neutral-100/80 backdrop-blur-sm rounded-xl z-20 px-5 py-3">
-            <p className="text-black text-center font-semibold">
-              Highlighted Space
-            </p>
+        <Carousel
+          plugins={[plugin.current]}
+          setApi={setApi}
+          opts={{ align: "start", loop: true }}
+          className="relative h-[80dvh] rounded-xl my-2 mx-8 overflow-hidden"
+          onMouseEnter={() => plugin.current.stop()}
+          onMouseLeave={() => plugin.current.play()}
+        >
+          {/* Carousel (Layer 1) */}
+          <ImageCarousel imageUrls={images} className="absolute inset-0 z-10" />
+
+          {/* Gradient Overlay for Text Readability (Layer 2) */}
+          <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+          {/* All Text and UI Elements Go Here (Layer 3, on top of everything) */}
+          <div className="relative w-full h-full p-8 flex flex-col justify-end z-30">
+            <div className="absolute top-15 justify-start gap-4">
+              <CarouselPrevious />
+              <CarouselNext />
+            </div>
+
+            {/* Bottom content container */}
+            <div className="flex items-end justify-between gap-8">
+              {/* Main Title (Now a sibling of the card) */}
+              <h1 className="text-white text-5xl font-bold">
+                Tampa Palms
+                <br />
+                Professional Center
+              </h1>
+
+              {/* Featured Suite Card (Now a sibling of the title) */}
+              <Link href="/pages/Availability" className="block flex-shrink-0">
+                <div className="w-60 h-auto bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-4 transition-all duration-300 hover:bg-white/20 hover:border-white/30">
+                  <div className="relative aspect-video overflow-hidden rounded-lg">
+                    <Image
+                      src="/images/TampaPalmsLogo.png" // Placeholder - use an actual suite image
+                      alt="Highlighted Suite"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="mt-4">
+                    <h3 className="font-semibold text-white">
+                      Highlighted Space
+                    </h3>
+                    <p className="text-sm text-white/80 mt-1">
+                      Premium office with lake view.
+                    </p>
+                    <div className="mt-3 text-sm text-white font-bold">
+                      View Details →
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </div>
           </div>
-        </div>
+        </Carousel>
         {/* Explore Spaces container */}
         <div className="h-[80dvh] rounded-xl mt-8 mx-8 p-6">
           <TitleCard title="Explore Spaces" />

@@ -186,7 +186,7 @@ function CarouselPrevious({
       // variant={variant}
       // size={size}
       className={cn(
-          "h-15 w-25 rounded-full bg-transparent border-0 text-white hover:bg-transparent",
+          "h-15 w-25 rounded-full bg-transparent border-0 text-white hover:bg-transparent z-40",
         orientation === "horizontal"
           ? "top-1/2 -left-12 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -196,7 +196,7 @@ function CarouselPrevious({
       onClick={scrollPrev}
       {...props}
     >
-      <Image src="/images/arrowRight.png" alt="Right Arrow" width={50} height={20} className="rotate-180 white-image"></Image>
+      <Image src="/images/arrowRight.png" alt="Right Arrow" width={50} height={20} className="rotate-180 white-image z-40"></Image>
       {/* <ArrowLeft height={24} width={80} className="drop-shadow-md"/> */}
       <span className="sr-only">Previous slide</span>
     </Button>
@@ -217,7 +217,7 @@ function CarouselNext({
       // variant={variant}
       // size={size}
       className={cn(
-        "h-15 w-25 rounded-full bg-transparent border-0 text-white hover:bg-transparent",
+        "h-15 w-25 rounded-full bg-transparent border-0 text-white hover:bg-transparent z-40",
         orientation === "horizontal"
           ? "top-1/2 -right-12 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -232,7 +232,7 @@ function CarouselNext({
         alt="Right Arrow"
         width={50}
         height={20}
-        className="white-image"
+        className="white-image z-40"
       ></Image>
       <span className="sr-only">Next slide</span>
     </Button>
