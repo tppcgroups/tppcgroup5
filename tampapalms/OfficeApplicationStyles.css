@@ -31,3 +31,8 @@ main {
     gap: 2rem; /*Adding spacing between each element*/
 }
 
+.title-box {
+    background: rgba(0,0,0,0.6); /*Semi-transparent black background*/
+    padding: 1.5rem 2rem; /*Adding spacing inside the text*/
+    border-radius: 20px; /*Rounding corners*/
+}
