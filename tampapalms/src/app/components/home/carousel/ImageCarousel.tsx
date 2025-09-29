@@ -31,7 +31,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ imageUrls, classNa
           align: "start",
           loop: true,
         }}
-        className={`w-full h-full ${className || ""}`}
+        className={`w-full h-full shadow-2xl ${className || ""}`}
         // Stop autoplay on mouse enter
         onMouseEnter={plugin.current.stop}
         // Start autoplay on mouse leave
@@ -46,7 +46,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ imageUrls, classNa
                   alt={`Slide ${index + 1}`}
                   width={1920}
                   height={1080}
-                  className="h-full w-full object-cover object-position-center"
+                  className="h-full w-full object-cover object-position-bottom"
                 ></Image>
               </div>
             </CarouselItem>
