@@ -61,7 +61,7 @@ export default function Home(){
 
           {/* All Text and UI Elements Go Here (Layer 3, on top of everything) */}
           <div className="relative w-full h-full p-8 flex flex-col justify-end z-30">
-            <div className="absolute top-15 justify-start gap-4">
+            <div className="absolute top-8 flex justify-start gap-4">
               <CarouselPrevious />
               <CarouselNext />
             </div>
@@ -103,7 +103,7 @@ export default function Home(){
           </div>
         </Carousel>
         {/* Explore Spaces container */}
-        <div className="h-[80dvh] rounded-xl mt-8 mx-8 p-6">
+        <div className="rounded-xl my-16 md:my-24 mx-8">
           <TitleCard title="Explore Spaces" />
           <div className="w-full flex md:flex-row flex-col justify-center gap-8">
             <SpacesCard
