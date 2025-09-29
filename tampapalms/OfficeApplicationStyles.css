@@ -23,3 +23,11 @@ header {
     margin-bottom: 2rem; /*Gap between header and main content*/
     text-align: center; /*Centering the text horizontally*/
 }
+
+main {
+    display: flex; /*Flex layout for items inside*/
+    flex-direction: column; /*Stacking items vertically*/
+    align-items: center; /*Centering items horizontally*/
+    gap: 2rem; /*Adding spacing between each element*/
+}
+
