@@ -38,8 +38,10 @@ export const SpacesCard: React.FC<SpacesCardProps> = ({
           </div>
 
           {/* --- OVERLAY WITH FEATURES (Revealed on hover) --- */}
-          <div className="absolute inset-0 bg-black/60 flex items-center justify-center p-4
-                        opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div
+            className="absolute inset-0 bg-black/60 flex items-center justify-center p-4
+                        opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:scale-105"
+          >
             <ul className="text-white text-center list-disc list-inside space-y-2 text-xl font-semibold">
               {features.map((feature) => (
                 <li key={feature}>{feature}</li>
@@ -51,8 +53,10 @@ export const SpacesCard: React.FC<SpacesCardProps> = ({
         {/* --- TEXT CONTENT & CTA BUTTON --- */}
         <div className="p-6">
           <h3 className="text-2xl font-bold text-gray-800">{title}</h3>
-          <div className="mt-4 inline-block bg-gray-800 text-white px-5 py-2 rounded-lg text-sm font-semibold
-                        group-hover:bg-gray-900 transition-colors">
+          <div
+            className="mt-4 inline-block bg-gray-800 text-white px-5 py-2 rounded-lg text-sm font-semibold
+                        group-hover:bg-gray-900 transition-colors"
+          >
             View Details
           </div>
         </div>
