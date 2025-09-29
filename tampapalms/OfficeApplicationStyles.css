@@ -1,7 +1,7 @@
 body {
     margin: 0; /*The default spacing is removed around the page*/
     height: 100vh; /*Filling the entire screen height*/
-    background:; /*Making the background the picture of one of their offices*/
+    background: url("https://picsum.photos/1600/900") center/cover no-repeat;  /*Making the background the picture of one of their offices*/
     display: flex; /*Aligning the overlay*/
     justify-content: flex-start; /*Aligning the content to the left*/
     align-items: stretch;
