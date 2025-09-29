@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -75,10 +76,12 @@ header nav {
   /* header nav .your-nav-links-selector { display: none; } */
 }
 
+
 /* hide the hamburger on medium+ screens */
 @media (min-width: 768px) {
   header nav::before {
     display: none;
+
   }
 }
 
