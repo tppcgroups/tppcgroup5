@@ -48,7 +48,13 @@ export default function Home(){
       <div>
         {/* --- MOBILE HERO --- */}
         <div className="md:hidden my-4 mx-4">
-          {/* ... title ... */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-gray-800">
+              Tampa Palms
+              <br />
+              Professional Center
+            </h1>
+          </div>
           <Carousel
             plugins={[plugin.current]}
             opts={{ align: "start", loop: true }}
