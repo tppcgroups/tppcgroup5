@@ -175,9 +175,10 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
 function CarouselPrevious({
   className,
   variant = "outline",
-  // size = "icon",
+  size = "icon",
+  iconClassName,
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: React.ComponentProps<typeof Button> & { iconClassName?: string }) {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel()
 
   return (
@@ -186,7 +187,7 @@ function CarouselPrevious({
       // variant={variant}
       // size={size}
       className={cn(
-          "h-15 w-25 rounded-full bg-transparent border-0 text-white hover:bg-transparent z-40",
+        "h-15 w-25 rounded-full bg-transparent border-0 text-white hover:bg-transparent z-40",
         orientation === "horizontal"
           ? "top-1/2 -left-12 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -196,7 +197,13 @@ function CarouselPrevious({
       onClick={scrollPrev}
       {...props}
     >
-      <Image src="/images/arrowRight.png" alt="Right Arrow" width={50} height={20} className="rotate-180 white-image z-40"></Image>
+      <Image
+        src="/images/arrowRight.png"
+        alt="Right Arrow"
+        width={50}
+        height={20}
+        className={cn("rotate-180 z-40 white-image", iconClassName)}
+      ></Image>
       {/* <ArrowLeft height={24} width={80} className="drop-shadow-md"/> */}
       <span className="sr-only">Previous slide</span>
     </Button>
@@ -207,9 +214,10 @@ function CarouselNext({
   className,
   variant = "outline",
   size = "icon",
+  iconClassName,
   ...props
-}: React.ComponentProps<typeof Button>) {
-  const { orientation, scrollNext, canScrollNext } = useCarousel()
+}: React.ComponentProps<typeof Button> & { iconClassName?: string }) {
+  const { orientation, scrollNext, canScrollNext } = useCarousel();
 
   return (
     <Button
@@ -232,7 +240,7 @@ function CarouselNext({
         alt="Right Arrow"
         width={50}
         height={20}
-        className="white-image z-40"
+        className={cn("z-40 white-image", iconClassName)} 
       ></Image>
       <span className="sr-only">Next slide</span>
     </Button>

@@ -78,8 +78,14 @@ export default function Home(){
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 z-10" />
-            <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 z-10" />
+            <CarouselPrevious
+              className="absolute left-1 top-1/2 -translate-y-1/2 z-10"
+              iconClassName="w-8 h-4"
+            />
+            <CarouselNext
+              className="absolute right-1 top-1/2 -translate-y-1/2 z-10"
+              iconClassName="w-8 h-4"
+            />
           </Carousel>
         </div>
         {/* Highlighted Images container */}
@@ -140,7 +146,7 @@ export default function Home(){
             </div>
           </div>
         </Carousel>
-        <AboutUs/>
+        <AboutUs />
         {/* Explore Spaces container */}
         <div className="rounded-xl my-16 md:my-24 mx-8">
           <TitleCard title="Explore Spaces" />
@@ -161,8 +167,7 @@ export default function Home(){
           {/* White space below the LoopNet locations */}
           <div className="h-20"></div>
         </div>
-        <div>
-        </div>
+        <div></div>
       </div>
     );
 }
