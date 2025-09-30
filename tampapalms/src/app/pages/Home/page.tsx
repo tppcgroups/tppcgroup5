@@ -49,7 +49,13 @@ export default function Home(){
       <div>
         {/* --- MOBILE HERO --- */}
         <div className="md:hidden my-4 mx-4">
-          {/* ... title ... */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-gray-800">
+              Tampa Palms
+              <br />
+              Professional Center
+            </h1>
+          </div>
           <Carousel
             plugins={[plugin.current]}
             opts={{ align: "start", loop: true }}
@@ -93,7 +99,7 @@ export default function Home(){
 
           {/* All Text and UI Elements Go Here (Layer 3, on top of everything) */}
           <div className="relative w-full h-full p-8 flex flex-col justify-end z-30">
-            <div className="absolute top-8 flex justify-start gap-4">
+            <div className="absolute top-15 flex justify-start gap-6">
               <CarouselPrevious />
               <CarouselNext />
             </div>
