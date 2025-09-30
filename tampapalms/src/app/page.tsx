@@ -1,12 +1,3 @@
-/*import HomePage from "./pages/Home/page"
-
-export default function Page() {
-  return (
-    <div>
-      <HomePage/>
-    </div>
-  );
-}*/
 
 import React from "react";
 import ApplicationTitle from "./components/RentalApplication/ApplicationTitle";
