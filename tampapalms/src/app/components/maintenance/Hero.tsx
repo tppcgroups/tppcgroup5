@@ -8,11 +8,10 @@ function Hero () {
                     by the right professionals. Please use the portal to submit new requests or 
                     check the status of existing ones at any time.</p>
                 <button className="mt-6 px-6 py-3 bg-gray-400 text-white font-medium rounded-lg shadow hover:bg-gray-600">Access Maintenance Portal</button>
+
             </div>
-            <hr/>
-            
+
         </section>
-        
     );
 }
 export default Hero;

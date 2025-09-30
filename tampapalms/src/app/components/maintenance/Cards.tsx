@@ -1,5 +1,5 @@
 
-import { PiNotebookBold, PiWrenchBold, PiCheckCircleBold, PiPhoneBold  } from "react-icons/pi";
+import { PiNotebookBold, PiWrenchBold, PiCheckCircleBold } from "react-icons/pi";
 
 const Card = () => {
     return(
@@ -14,7 +14,7 @@ const Card = () => {
 
                 <div className=" grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl w-full">
                     {/* Card 1 - Submit Request */}
-                    <div className="relative bg-white rounded-2xl shadow-lg p-6 space-y-4 transition-transform duration-500 hover:scale-[1.02] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[6px] before:bg-gray-300 before:rounded-t-2xl">
+                    <div className="relative bg-white rounded-2xl shadow-lg p-6 space-y-4 transition-transform duration-500 hover:scale-[1.02] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[6px] before:bg-black before:rounded-t-2xl">
                         <span className="flex items-center justify-center text-black text-4xl"><PiNotebookBold /></span>
                         <div className="flex items-center justify-center">
                             <span><h2 className="text-xl font-semibold text-black ">Submit Request</h2></span>
@@ -23,7 +23,7 @@ const Card = () => {
                     </div>
 
                     {/* Card 2 - Handled by Experts*/}
-                    <div className="relative bg-white rounded-2xl shadow-lg p-6 space-y-4 transition-transform duration-500 hover:scale-[1.02] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[6px] before:bg-gray-300 before:rounded-t-2xl">
+                    <div className="relative bg-white rounded-2xl shadow-lg p-6 space-y-4 transition-transform duration-500 hover:scale-[1.02] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[6px] before:bg-black before:rounded-t-2xl">
                         <span className="flex items-center justify-center text-black text-4xl"><PiWrenchBold /></span>
                         <div className="flex items-center justify-center">
                             <span><h2 className="text-xl font-semibold text-black ">Handled by Experts</h2></span>
@@ -32,8 +32,8 @@ const Card = () => {
                     </div>
 
                     {/* Card 3 - Stay Updated */}
-                    <div className="relative bg-white rounded-2xl shadow-lg p-6 space-y-4 transition-transform duration-500 hover:scale-[1.02] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[6px] before:bg-gray-300 before:rounded-t-2xl">
-                        <span className="flex items-center justify-center text-green-400 text-4xl"><PiCheckCircleBold /></span>
+                    <div className="relative bg-white rounded-2xl shadow-lg p-6 space-y-4 transition-transform duration-500 hover:scale-[1.02] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[6px] before:bg-black before:rounded-t-2xl">
+                        <span className="flex items-center justify-center text-black text-4xl"><PiCheckCircleBold /></span>
                         <div className="flex items-center justify-center">
                             <span><h2 className="text-xl font-semibold text-black ">Stay Updated</h2></span>
                         </div>
@@ -42,15 +42,14 @@ const Card = () => {
                 </div> 
             </div>
                 {/* Card 4 - Emergency Phone*/}
-                <section className=" ">
-                    <div className="relative bg-white rounded-2xl shadow-lg p-6 space-y-4 transition-transform duration-500 hover:scale-[1.02] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[6px] before:bg-gray-300 before:rounded-t-2xl">
-                        <span className="flex items-center justify-center text-red-600 text-4xl"><PiPhoneBold/> </span>
-                        <div className="flex items-center justify-center">
-                            <span><h2 className="text-xl font-semibold text-black ">Emergency</h2></span>
-                        </div>
-                        <p className="text-black mt-3 mx-26 text-xl">If this is an emergency, such as problems with smoke, electrical spark, break-in, or active plumbing leak, please call the number below and opt 5 to report your problem.</p>
-                        <p className="text-2xl font-extrabold text-black mt-6 tracking-wide text-center">(123)-456-7890</p>
-                    </div>
+                <section className=" py-10 max-xl mx-auto bg-white shadow-lg rounded-2xl p-8 text-center">
+                    <h2 className="text-2xl font-bold text-gray-900">Emergency Maintenance</h2>
+                    <p className="text-black mt-3">
+                        If this is an emergency, such as problems with smoke, electrical spark, break-in, or active plumbing leak, please call the number below and opt 5 to report your problem.
+                    </p>
+                    <p className="text-3xl font-extrabold text-black mt-6 tracking-wide">
+                        (123)-456-7890
+                    </p>
                 </section> 
         </div>
         
