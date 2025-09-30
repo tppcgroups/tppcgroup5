@@ -6,7 +6,7 @@ const ApplicationLink: React.FC = () => {
             href="https://tampapalmsprofessionalcenter.managebuilding.com/Resident/rental-application/new/apply"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-foreground text-background px-6 py-3 rounded-full underline underline-offset-4 mt-8 hover:opacity-80 transition"
+            className="bg-foreground text-background rounded-2xl flex items-center justify-center text-lg font-medium w-full max-w-md h-28 mb-12 shadow-2x1 underline underline-offset-4 mt-8 hover:opacity-80 transition"
         >
             Let’s Begin Your Application
         </a>
