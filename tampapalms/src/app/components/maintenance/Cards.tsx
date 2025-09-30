@@ -64,7 +64,7 @@ const Card = () => {
                 className="absolute left-8 top-0 h-1.5 w-16 rounded-full bg-amber-300"
                 aria-hidden="true"
               />
-              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 text-3xl text-amber-700">
+              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 text-3xl text-shadow-gray-800">
                 <Icon aria-hidden="true" />
               </span>
               <div className="space-y-3">

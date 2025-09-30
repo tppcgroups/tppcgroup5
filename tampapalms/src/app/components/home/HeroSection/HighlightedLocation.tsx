@@ -15,7 +15,8 @@ export default function HighlightedLocation() {
                 <Image
                 src="/images/TampaPalmsLogo.png" // Placeholder - use an actual suite image
                 alt="Highlighted Suite"
-                fill
+                width={2000}
+                height={4000}
                 className="object-cover"
                 />
             </div>

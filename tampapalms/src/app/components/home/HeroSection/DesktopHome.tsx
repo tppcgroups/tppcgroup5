@@ -106,11 +106,11 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
           <div className="flex items-center gap-3">
             <CarouselPrevious
               className=" flex h-12 w-20 translate-y-0 items-center justify-center rounded-full border border-transparent bg-white/5 text-white transition hover:border-white hover:bg-white/10"
-              iconClassName="h-6 w-6"
+              iconClassName="h-6 w-8"
             />
             <CarouselNext
               className=" flex h-12 w-20 translate-y-0 items-center justify-center rounded-full border border-transparent bg-white/5 text-white transition hover:border-white hover:bg-white/10"
-              iconClassName="h-6 w-6"
+              iconClassName="h-6 w-8"
             />
           </div>
 
