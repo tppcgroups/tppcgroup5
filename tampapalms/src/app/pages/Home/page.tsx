@@ -12,6 +12,8 @@ import {
     Carousel,
     CarouselNext,
     CarouselPrevious,
+    CarouselContent,
+    CarouselItem,
     type CarouselApi
 } from "@/app/components/home/carousel/carousel";
 import Autoplay from "embla-carousel-autoplay";
@@ -44,12 +46,40 @@ export default function Home(){
 
     return (
       <div>
+        {/* Mobile Hero Section */}
+        <div className="md:hidden my-4 mx-4">
+            <div className="text-center mb-8">
+                <h1 className="text-4xl font-bold text-gray-800">
+                    Tampa Palms
+                    <br />
+                    Professional Center
+                </h1>
+            </div>
+            <Carousel 
+                plugins={[plugin.current]}
+                opts={{ align: "start", loop: true }}
+                className="relative aspect-video w-full rounded-xl overflow-hidden shadow-lg"
+                >
+                <ImageCarousel imageUrls={images} className="absolute inset-0 z-10" imageClassName="block"/>
+                {/* <CarouselContent>
+                    {images.map((url, index) => (
+                        <CarouselItem key={index}>
+                            <div className="relative h-full w-full">
+                                <Image src={url} alt={`Slide ${index + 1}`} fill className="object-cover"/>
+                            </div>
+                        </CarouselItem>
+                       ))}
+                </CarouselContent> */}
+                <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 z-10" />
+                <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 z-10" />
+            </Carousel>
+        </div>
         {/* Highlighted Images container */}
         <Carousel
           plugins={[plugin.current]}
           setApi={setApi}
           opts={{ align: "start", loop: true }}
-          className="relative h-[80dvh] rounded-xl my-2 mx-8 overflow-hidden"
+          className="hidden md:block relative h-[80dvh] rounded-xl my-2 mx-8 overflow-hidden"
           onMouseEnter={() => plugin.current.stop()}
           onMouseLeave={() => plugin.current.play()}
         >
@@ -61,22 +91,25 @@ export default function Home(){
 
           {/* All Text and UI Elements Go Here (Layer 3, on top of everything) */}
           <div className="relative w-full h-full p-8 flex flex-col justify-end z-30">
-            <div className="absolute top-8 flex justify-start gap-4">
+            <div className="absolute top-15 flex justify-start gap-4">
               <CarouselPrevious />
               <CarouselNext />
             </div>
 
             {/* Bottom content container */}
-            <div className="flex items-end justify-between gap-8">
+            <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8">
               {/* Main Title (Now a sibling of the card) */}
-              <h1 className="text-white text-5xl font-bold">
+              <h1 className="text-white text-4xl md:text-5xl font-bold">
                 Tampa Palms
                 <br />
                 Professional Center
               </h1>
 
               {/* Featured Suite Card (Now a sibling of the title) */}
-              <Link href="/pages/Availability" className="block flex-shrink-0">
+              <Link
+                href="/pages/Availability"
+                className="flex-shrink-0 hidden md:block"
+              >
                 <div className="w-60 h-auto bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-4 transition-all duration-300 hover:bg-white/20 hover:border-white/30">
                   <div className="relative aspect-video overflow-hidden rounded-lg">
                     <Image

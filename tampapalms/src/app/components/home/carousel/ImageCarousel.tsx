@@ -12,11 +12,13 @@ import {
 interface ImageCarouselProps {
   imageUrls: string[];
   className?: string;
+  imageClassName?: string;
 }
 
 export const ImageCarousel: React.FC<ImageCarouselProps> = ({
   imageUrls,
   className,
+    imageClassName,
 }) => {
   return (
     <div className={`w-full h-full ${className || ""}`}>
@@ -29,7 +31,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
                 alt={`Slide ${index + 1}`}
                 width={1920}
                 height={1080}
-                className="w-full h-full object-cover"
+                className= {`w-full h-full object-cover ${imageClassName || ""}`}
               />
             </div>
           </CarouselItem>
