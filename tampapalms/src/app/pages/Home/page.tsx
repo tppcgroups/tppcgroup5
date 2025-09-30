@@ -20,10 +20,6 @@ export default function Home(){
         "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Aerial-13-LargeHighDefinition.jpg",
     ];  
 
-    const plugin = React.useRef(
-        Autoplay({ delay: 3000, stopOnInteraction: false})
-    )
-
     const officeFeatures = [
       "Ideal for teams and businesses",
       "Multiple office configurations",
@@ -39,9 +35,9 @@ export default function Home(){
     return (
       <div>
         {/* Mobile Home Component */}
-        <MobileHome imageUrls={images} plugin={plugin}/>
+        <MobileHome imageUrls={images} />
         {/* Desktop Home Component */}
-        <DesktopHome imageUrls={images} plugin={plugin}/>
+        <DesktopHome imageUrls={images} />
         {/* About Us Component */}
         <AboutUs />
         {/* Explore Spaces container */}

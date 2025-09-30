@@ -19,10 +19,13 @@ import Autoplay from "embla-carousel-autoplay";
 
 interface DesktopHomeProps {
   imageUrls: string[];
-  plugin: any;
 }
 
-export const DesktopHome: React.FC<DesktopHomeProps> = ({imageUrls, plugin}) => {
+export const DesktopHome: React.FC<DesktopHomeProps> = ({imageUrls}) => {
+
+    const plugin = React.useRef(
+        Autoplay({ delay: 3000, stopOnInteraction: false})
+    );
 
     const [api, setApi] = React.useState<CarouselApi>();
 
