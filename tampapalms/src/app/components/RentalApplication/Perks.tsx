@@ -17,13 +17,16 @@ const Perks: React.FC = () => {
             {perks.map((perk, index) => (
                 <div
                     key={index}
-                    className="relative bg-foreground text-background rounded-full w-32 h-32 flex items-center justify-center text-center transition-all duration-300 hover:rounded-xl hover:opacity-80 cursor-pointer"
+                    className="relative bg-foreground text-background rounded-full w-32 h-32 flex items-center justify-center text-center cursor-pointer transition-all duration-300 hover:rounded-xl hover:opacity-80"
+                    style={{
+                        boxShadow: "0 0 20px 4px rgba(128, 128, 128, 0.4)", // subtle brown glow
+                    }}
                 >
-                    {/* Default text (visible normally, hidden on hover) */}
+                    {/* Default text */}
                     <span className="absolute opacity-100 hover:opacity-0 transition-opacity duration-300">
             {perk.defaultText}
           </span>
-                    {/* Hover text (hidden normally, visible on hover) */}
+                    {/* Hover text */}
                     <span className="absolute opacity-0 hover:opacity-100 transition-opacity duration-300">
             {perk.hoverText}
           </span>
@@ -34,5 +37,6 @@ const Perks: React.FC = () => {
 };
 
 export default Perks;
+
 
 
