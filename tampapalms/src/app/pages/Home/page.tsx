@@ -11,6 +11,7 @@ import Spacer from "@/app/components/Spacer"
 import * as React from "react"
 import Autoplay from "embla-carousel-autoplay";
 import AboutUs from "@/app/components/home/HeroSection/AboutUs"
+import LocationInsights from "@/app/components/home/LocationsInsights/Location"
 
 export default function Home(){
     const images = [
@@ -71,6 +72,7 @@ export default function Home(){
           <Spacer />
         </div>
         <div></div>
+        {/* <LocationInsights /> */}
       </div>
     );
 }

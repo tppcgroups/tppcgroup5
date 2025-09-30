@@ -49,7 +49,7 @@ const Card = () => {
                             <span><h2 className="text-xl font-semibold text-black ">Emergency</h2></span>
                         </div>
                         <p className="text-black mt-3 mx-26 text-xl">If this is an emergency, such as problems with smoke, electrical spark, break-in, or active plumbing leak, please call the number below and opt 5 to report your problem.</p>
-                        <p className="text-2xl font-extrabold text-black mt-6 tracking-wide text-center">(123)-456-7890</p>
+                        <p className="text-2xl font-extrabold text-black mt-6 tracking-wide text-center justify-center">(123)-456-7890</p>
                     </div>
                 </section> 
         </div>
