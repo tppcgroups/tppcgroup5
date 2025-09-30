@@ -98,7 +98,7 @@ export default function Home(){
 
           {/* All Text and UI Elements Go Here (Layer 3, on top of everything) */}
           <div className="relative w-full h-full p-8 flex flex-col justify-end z-30">
-            <div className="absolute top-8 flex justify-start gap-4">
+            <div className="absolute top-15 flex justify-start gap-6">
               <CarouselPrevious />
               <CarouselNext />
             </div>
