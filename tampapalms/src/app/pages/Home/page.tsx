@@ -17,6 +17,7 @@ import {
     type CarouselApi
 } from "@/app/components/home/carousel/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import AboutUs from "@/app/components/home/HeroSection/AboutUs"
 
 export default function Home(){
     const images = [
@@ -133,6 +134,7 @@ export default function Home(){
             </div>
           </div>
         </Carousel>
+        <AboutUs/>
         {/* Explore Spaces container */}
         <div className="rounded-xl my-16 md:my-24 mx-8">
           <TitleCard title="Explore Spaces" />
@@ -152,6 +154,8 @@ export default function Home(){
           </div>
           {/* White space below the LoopNet locations */}
           <div className="h-20"></div>
+        </div>
+        <div>
         </div>
       </div>
     );
