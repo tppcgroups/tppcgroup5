@@ -2,8 +2,13 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import * as React from "react";
 
-const Logo = () => {
+interface LogoProps {
+  className?: string;
+}
+
+export const Logo: React.FC<LogoProps>= ({className}) => {
   return (
     <div className="flex-shrink-0 -ml-2 md:ml-4 -mt-4">
       <Link href="/" passHref>
@@ -12,7 +17,7 @@ const Logo = () => {
           alt="Tampa Palms Professional Center Logo"
           width={200}
           height={63}
-          className="object-contain h-auto"
+          className={className || ""}
         />
       </Link>
     </div>
