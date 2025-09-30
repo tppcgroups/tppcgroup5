@@ -42,7 +42,7 @@ export const SpacesCard: React.FC<SpacesCardProps> = ({
             className="absolute inset-0 bg-black/60 flex items-center justify-center p-4
                         opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:scale-105"
           >
-            <ul className="text-white text-center list-disc list-inside space-y-2 text-xl font-semibold">
+            <ul className="text-white list-disc list-inside space-y-2 text-xl font-semibold">
               {features.map((feature) => (
                 <li key={feature}>{feature}</li>
               ))}

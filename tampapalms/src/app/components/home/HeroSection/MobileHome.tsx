@@ -17,10 +17,13 @@ import Autoplay from "embla-carousel-autoplay"
 
 interface MobileHomeProps {
   imageUrls: string[];
-  plugin: any;
 }
 
-export const MobileHome: React.FC<MobileHomeProps> = ({ imageUrls, plugin }) => {
+export const MobileHome: React.FC<MobileHomeProps> = ({ imageUrls }) => {
+
+    const plugin = React.useRef(
+        Autoplay({ delay: 3000, stopOnInteraction: false})
+    );
 
     return (
       <div className="md:hidden my-4 mx-4">

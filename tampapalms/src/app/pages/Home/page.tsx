@@ -4,7 +4,7 @@
 
 // Import necessary components and libraries
 import SpacesCard from "@/app/components/home/explore_spaces/SpacesCard"
-import TitleCard from "@/app/components/home/explore_spaces/TitleCard"
+import TitleCard from "@/app/components/TitleCard"
 import { MobileHome } from "@/app/components/home/HeroSection/MobileHome"
 import { DesktopHome } from "@/app/components/home/HeroSection/DesktopHome"
 import Spacer from "@/app/components/Spacer"
@@ -19,10 +19,6 @@ export default function Home(){
         "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-9-LargeHighDefinition.jpg",
         "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Aerial-13-LargeHighDefinition.jpg",
     ];  
-
-    const plugin = React.useRef(
-        Autoplay({ delay: 3000, stopOnInteraction: false})
-    )
 
     const officeFeatures = [
       "Ideal for teams and businesses",
@@ -39,14 +35,20 @@ export default function Home(){
     return (
       <div>
         {/* Mobile Home Component */}
-        <MobileHome imageUrls={images} plugin={plugin}/>
+        <MobileHome imageUrls={images} />
         {/* Desktop Home Component */}
-        <DesktopHome imageUrls={images} plugin={plugin}/>
+        <DesktopHome imageUrls={images} />
         {/* About Us Component */}
         <AboutUs />
         {/* Explore Spaces container */}
         <div className="rounded-xl my-16 md:my-24 mx-8">
-          <TitleCard title="Explore Spaces" />
+            <div className="text-center my-16 md:my-24">
+                {/* The "eyebrow" text adds a touch of color and context */}
+                <p className="text-sm font-semibold  uppercase tracking-wider">
+                Our Properties
+                </p>
+                <TitleCard title="Explore Spaces" />
+            </div>
           <div className="w-full flex md:flex-row flex-col justify-center gap-8">
             <SpacesCard
               title="Buildings/Suites"
