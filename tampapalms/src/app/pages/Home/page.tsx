@@ -12,6 +12,8 @@ import {
     Carousel,
     CarouselNext,
     CarouselPrevious,
+    CarouselContent,
+    CarouselItem,
     type CarouselApi
 } from "@/app/components/home/carousel/carousel";
 import Autoplay from "embla-carousel-autoplay";
@@ -44,12 +46,41 @@ export default function Home(){
 
     return (
       <div>
+        {/* --- MOBILE HERO --- */}
+        <div className="md:hidden my-4 mx-4">
+          {/* ... title ... */}
+          <Carousel
+            plugins={[plugin.current]}
+            opts={{ align: "start", loop: true }}
+            className="relative aspect-video w-full rounded-xl overflow-hidden shadow-lg"
+          >
+            <CarouselContent>
+              {images.map((url, index) => (
+                <CarouselItem key={index}>
+                  <div className="relative h-full w-full">
+                    <Image
+                      src={url}
+                      alt={`Slide ${index + 1}`}
+                      // Provide width and height for optimization
+                      width={1920}
+                      height={1080}
+                      // These classes control the "zoom-in" effect
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 z-10" />
+            <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 z-10" />
+          </Carousel>
+        </div>
         {/* Highlighted Images container */}
         <Carousel
           plugins={[plugin.current]}
           setApi={setApi}
           opts={{ align: "start", loop: true }}
-          className="relative h-[80dvh] rounded-xl my-2 mx-8 overflow-hidden"
+          className="hidden md:block relative h-[80dvh] rounded-xl my-2 mx-8 overflow-hidden"
           onMouseEnter={() => plugin.current.stop()}
           onMouseLeave={() => plugin.current.play()}
         >
