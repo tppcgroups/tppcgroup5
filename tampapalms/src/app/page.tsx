@@ -25,7 +25,7 @@ export default function Page() {
             {/* Main container */}
             <div className="flex h-[calc(100vh-100px)]">
                 {/* Left info column */}
-                <div className="w-2/5 flex flex-col items-center justify-start p-8 gap-6">
+                <div className="w-2/5 flex flex-col items-center justify-between p-8 gap-6">
                     <ApplicationTitle />
                     <Perks />
                     <ApplicationLink />
