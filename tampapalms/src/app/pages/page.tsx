@@ -1,7 +1,7 @@
-import ContactHeader from "./ContactHeader";
-import InfoBlock     from "./InfoBlock";
-import InfoBlurb     from "./InfoBlurb";
-import ContactForm   from "./ContactForm/ContactForm";
+import ContactHeader from "@/app/pages/Contact/ContactHeader";
+import InfoBlock from "@/app/pages/Contact/InfoBlock";
+import InfoBlurb from "@/app/pages/Contact/InfoBlurb";
+import ContactForm from "@/app/pages/Contact/ContactForm/ContactForm";
 
 export default function Page() {
   return (
