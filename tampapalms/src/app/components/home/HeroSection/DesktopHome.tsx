@@ -36,7 +36,10 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({imageUrls, plugin}) => 
         onMouseLeave={() => plugin.current.play()}
       >
         {/* Carousel (Layer 1) */}
-        <ImageCarousel imageUrls={imageUrls} className="absolute inset-0 z-10" />
+        <ImageCarousel
+          imageUrls={imageUrls}
+          className="absolute inset-0 z-10"
+        />
 
         {/* Gradient Overlay for Text Readability (Layer 2) */}
         <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -44,8 +47,8 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({imageUrls, plugin}) => 
         {/* All Text and UI Elements Go Here (Layer 3, on top of everything) */}
         <div className="relative w-full h-full p-8 flex flex-col justify-end z-30">
           <div className="absolute top-15 flex justify-start gap-6">
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious iconClassName="w-8 h-4" />
+            <CarouselNext iconClassName="w-8 h-4" />
           </div>
 
           {/* Bottom content container */}

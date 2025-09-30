@@ -29,7 +29,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen }) => {
   return (
     // This component now renders the links for either desktop or mobile
     // The parent (Header.tsx) decides WHEN to show it.
-    <div className="flex flex-col md:flex-row md:flex-1 md:justify-evenly items-center md:space-x-4 space-y-4 md:space-y-0 py-4 md:py-0 ">
+    <div className="flex flex-col md:flex-row md:flex-1 md:justify-evenly items-center md:space-x-4 space-y-4 md:space-y-0 py-4 md:py-0">
       {navLinks.map((link) => (
         <Link key={link.href} href={link.href} passHref>
           <span
