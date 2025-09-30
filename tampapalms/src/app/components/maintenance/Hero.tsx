@@ -27,26 +27,7 @@ export default function Hero({
             resolutions.
           </p>
         </div>
-
-        <ul className="grid w-full gap-4 text-left text-sm text-white/80 md:max-w-4xl md:grid-cols-2 md:text-base">
-          <li className="flex items-start gap-3">
-            <span className="mt-1 h-2.5 w-2.5 rounded-full bg-amber-300" aria-hidden="true" />
-            Submit new requests and upload supporting photos in minutes.
-          </li>
-          <li className="flex items-start gap-3">
-            <span className="mt-1 h-2.5 w-2.5 rounded-full bg-amber-300" aria-hidden="true" />
-            Track real-time status updates until the job is complete.
-          </li>
-          <li className="flex items-start gap-3">
-            <span className="mt-1 h-2.5 w-2.5 rounded-full bg-amber-300" aria-hidden="true" />
-            Communicate directly with the maintenance team as questions arise.
-          </li>
-          <li className="flex items-start gap-3">
-            <span className="mt-1 h-2.5 w-2.5 rounded-full bg-amber-300" aria-hidden="true" />
-            Automatic records keep your service history organized for audits.
-          </li>
-        </ul>
-
+        
         <div className="flex w-full flex-col items-center gap-5 md:max-w-4xl md:flex-row md:items-center md:justify-between">
           <div className="flex flex-col items-center gap-3 md:flex-row md:gap-4">
             <Link
