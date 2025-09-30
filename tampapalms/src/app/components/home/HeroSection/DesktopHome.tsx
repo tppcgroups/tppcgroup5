@@ -2,7 +2,6 @@
 
 "use client";
 import * as React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { ImageCarousel } from "@/app/components/home/carousel/ImageCarousel";
 import HighlightedLocation from "./HighlightedLocation";
@@ -11,8 +10,6 @@ import {
   Carousel,
   CarouselNext,
   CarouselPrevious,
-  CarouselContent,
-  CarouselItem,
   type CarouselApi,
 } from "@/app/components/home/carousel/carousel";
 import Autoplay from "embla-carousel-autoplay";
@@ -21,51 +18,116 @@ interface DesktopHomeProps {
   imageUrls: string[];
 }
 
-export const DesktopHome: React.FC<DesktopHomeProps> = ({imageUrls}) => {
+export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
+  const autoplayPlugin = React.useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: false })
+  );
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [currentSlide, setCurrentSlide] = React.useState(0);
 
-    const plugin = React.useRef(
-        Autoplay({ delay: 3000, stopOnInteraction: false})
-    );
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
 
-    const [api, setApi] = React.useState<CarouselApi>();
+    const handleSelect = () => {
+      setCurrentSlide(api.selectedScrollSnap());
+    };
 
-    return (
-      <Carousel
-        plugins={[plugin.current]}
-        setApi={setApi}
-        opts={{ align: "start", loop: true }}
-        className="hidden md:block relative h-[80dvh] rounded-xl my-2 mx-8 overflow-hidden"
-        onMouseEnter={() => plugin.current.stop()}
-        onMouseLeave={() => plugin.current.play()}
-      >
-        {/* Carousel (Layer 1) */}
-        <ImageCarousel
-          imageUrls={imageUrls}
-          className="absolute inset-0 z-10"
-        />
+    handleSelect();
+    api.on("select", handleSelect);
+    api.on("reInit", handleSelect);
 
-        {/* Gradient Overlay for Text Readability (Layer 2) */}
-        <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/60 to-transparent"></div>
+    return () => {
+      api.off("select", handleSelect);
+      api.off("reInit", handleSelect);
+    };
+  }, [api]);
 
-        {/* All Text and UI Elements Go Here (Layer 3, on top of everything) */}
-        <div className="relative w-full h-full p-8 flex flex-col justify-end z-30">
-          <div className="absolute top-15 flex justify-start gap-6">
-            <CarouselPrevious iconClassName="w-8 h-4" />
-            <CarouselNext iconClassName="w-8 h-4" />
-          </div>
+  if (imageUrls.length === 0) {
+    return null;
+  }
 
-          {/* Bottom content container */}
-          <div className="flex items-end justify-between gap-8">
-            {/* Main Title (Now a sibling of the card) */}
-            <h1 className="text-white text-5xl font-bold">
+  const totalSlides = imageUrls.length;
+
+  return (
+    <Carousel
+      plugins={[autoplayPlugin.current]}
+      setApi={setApi}
+      opts={{ align: "start", loop: true }}
+      className="relative hidden h-[80dvh] overflow-hidden rounded-3xl mx-8 my-4 md:block"
+      onMouseEnter={() => autoplayPlugin.current.stop()}
+      onMouseLeave={() => autoplayPlugin.current.play()}
+    >
+      <ImageCarousel
+        imageUrls={imageUrls}
+        className="absolute inset-0 z-10"
+      />
+
+      <div
+        className="absolute inset-0 z-20 bg-gradient-to-b from-black/70 via-black/30 to-black/60"
+        aria-hidden="true"
+      />
+
+      <div className="relative z-30 flex h-full flex-col justify-between px-14 py-12">
+        <div className="flex items-start justify-between gap-10">
+          <div className="max-w-xl space-y-6 text-white">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+              Flexible workspace in New Tampa
+            </p>
+            <h1 className="text-5xl font-semibold leading-tight">
               Tampa Palms
-              <br />
-              Professional Center
+              <span className="block text-amber-200">Professional Center</span>
             </h1>
-            <HighlightedLocation />
+            <p className="text-lg text-white/80">
+              Discover full-floor suites and executive offices designed to keep
+              teams connected, productive, and close to Tampa Palms amenities.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link
+                href="/pages/Availability"
+                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-900 shadow-sm transition hover:bg-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                View Availability
+              </Link>
+              <Link
+                href="/pages/Contact"
+                className="rounded-full border border-white/70 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Schedule a Tour
+              </Link>
+            </div>
           </div>
-        </div>
-      </Carousel>
-    );
 
-}
+          <HighlightedLocation />
+        </div>
+
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <CarouselPrevious
+              className=" flex h-12 w-20 translate-y-0 items-center justify-center rounded-full border border-transparent bg-white/5 text-white transition hover:border-white hover:bg-white/10"
+              iconClassName="h-6 w-6"
+            />
+            <CarouselNext
+              className=" flex h-12 w-20 translate-y-0 items-center justify-center rounded-full border border-transparent bg-white/5 text-white transition hover:border-white hover:bg-white/10"
+              iconClassName="h-6 w-6"
+            />
+          </div>
+
+          {totalSlides > 1 && (
+            <div className="flex items-center gap-2">
+              {Array.from({ length: totalSlides }).map((_, index) => (
+                <span
+                  key={`desktop-hero-slide-${index}`}
+                  className={`h-1.5 w-10 rounded-full transition ${
+                    index === currentSlide ? "bg-white" : "bg-white/40"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </Carousel>
+  );
+};
