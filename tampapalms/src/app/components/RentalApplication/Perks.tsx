@@ -42,43 +42,49 @@ const Perks: React.FC = () => {
     };
 
     return (
-        <div className="flex w-full max-w-md flex-wrap justify-center items-center gap-5 md:flex-nowrap">
+        <div className="flex w-full max-w-md flex-wrap items-stretch justify-center gap-5 md:flex-nowrap">
             {perks.map((perk, index) => {
                 const isOpen = openIndex === index;
                 return (
                     <article
                         key={perk.title}
-                        className={`flex flex-col items-center rounded-2xl bg-white px-5 py-4 text-center shadow-md shadow-slate-900/5 ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
-                            isOpen ? "scale-110 p-6" : "scale-100"
+                        className={`flex w-44 flex-col items-center rounded-2xl border px-5 py-5 text-center transition-all duration-300 ease-out md:w-48 ${
+                            isOpen
+                                ? "border-slate-900 bg-slate-900 text-white shadow-xl shadow-slate-900/20"
+                                : "border-slate-200 bg-white text-slate-900 shadow-md shadow-slate-900/10 hover:-translate-y-1 hover:shadow-lg"
                         }`}
-                        style={{
-                            width: "12rem",
-                            boxShadow: "0 0 20px 4px rgba(128, 128, 128, 0.4)",
-                        }}
                     >
-                        {/* Title always visible */}
-                        <h3 className="text-sm font-semibold text-slate-900 text-center">
-                            {perk.title}
-                        </h3>
+                        <h3 className="text-sm font-semibold text-current">{perk.title}</h3>
 
-                        {/* Toggle button */}
                         <button
                             onClick={() => toggleDetails(index)}
-                            className="mt-1 text-lg font-bold text-slate-600 hover:text-slate-900 transition"
+                            className={`mt-3 inline-flex h-9 w-9 items-center justify-center rounded-full border text-base font-semibold transition ${
+                                isOpen
+                                    ? "border-white/70 bg-white/15 text-white hover:bg-white/20"
+                                    : "border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-100"
+                            }`}
+                            type="button"
+                            aria-expanded={isOpen}
                         >
-                            {isOpen ? "−" : "+"}
+                            <span aria-hidden="true" className="leading-none">
+                                {isOpen ? "−" : "+"}
+                            </span>
+                            <span className="sr-only">{isOpen ? "Collapse" : "Expand"}</span>
                         </button>
 
-                        {/* Expandable details */}
-                        {isOpen && (
-                            <div className="mt-2">
-                                <ul className="list-disc list-inside text-xs text-slate-500 text-left">
+                        <div
+                            className={`grid w-full transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                                isOpen ? "mt-4 grid-rows-[1fr] opacity-100" : "mt-0 grid-rows-[0fr] opacity-0"
+                            }`}
+                        >
+                            <div className="overflow-hidden text-left">
+                                <ul className={`list-disc list-inside text-xs ${isOpen ? "text-white/80" : "text-slate-500"}`}>
                                     {perk.details.map((detail, i) => (
                                         <li key={i}>{detail}</li>
                                     ))}
                                 </ul>
                             </div>
-                        )}
+                        </div>
                     </article>
                 );
             })}
@@ -87,7 +93,4 @@ const Perks: React.FC = () => {
 };
 
 export default Perks;
-
-
-
 
