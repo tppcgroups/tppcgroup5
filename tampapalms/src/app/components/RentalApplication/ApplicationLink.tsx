@@ -6,7 +6,7 @@ const ApplicationLink: React.FC = () => {
             href="https://tampapalmsprofessionalcenter.managebuilding.com/Resident/rental-application/new/apply"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-foreground text-background rounded-2xl flex items-center justify-center text-lg font-medium w-full max-w-md h-28 mb-12 shadow-2x1 underline underline-offset-4 mt-8 hover:opacity-80 transition"
+            className="bg-gray-200 text-gray-800 rounded-2xl flex items-center justify-center text-lg font-medium w-full max-w-md h-28 mb-12 shadow-xl mt-8 transition-colors duration-200 hover:bg-gray-700 hover:text-white"
             style={{
                 boxShadow: "0 0 20px 4px rgba(128, 128, 128, 0.4)", // subtle gray glow
             }}
@@ -17,4 +17,5 @@ const ApplicationLink: React.FC = () => {
 };
 
 export default ApplicationLink;
+
 
