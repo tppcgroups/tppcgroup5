@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { AvailabilityHero } from "@/app/components/availability/AvailabilityHero";
 import { SuiteDetails } from "@/app/components/availability/SuiteDetails";
@@ -40,6 +40,7 @@ const suites: Suite[] = [
         alt: "Bridge Hill Court exterior",
       },
     ],
+    category: "buildings",
     brochureHref: "/documents/tppc-suite-101.pdf",
   },
   {
@@ -71,6 +72,7 @@ const suites: Suite[] = [
         alt: "Exterior of Primrose Lake Circle",
       },
     ],
+    category: "executive",
     brochureHref: "/documents/tppc-suite-220.pdf",
   },
   {
@@ -102,6 +104,7 @@ const suites: Suite[] = [
         alt: "Kitchenette inside suite",
       },
     ],
+    category: "buildings",
   },
 ];
 
@@ -111,7 +114,12 @@ const stats: AvailabilityStats[] = [
   { label: "Avg. Suite Size", value: "1,050 SF" },
 ];
 
-const categories = [
+const suiteFilterOptions: Array<{ label: string; value: "buildings" | "executive" }> = [
+  { label: "Buildings/Suites", value: "buildings" },
+  { label: "Executive Suites", value: "executive" },
+];
+
+const campusHighlights = [
   {
     title: "Executive Offices",
     description: "Private, move-in-ready suites for professionals seeking a polished home base.",
@@ -129,27 +137,68 @@ const categories = [
 export default function AvailabilityPage() {
   const [activeSuiteId, setActiveSuiteId] = useState<Suite["id"]>(suites[0]?.id ?? "");
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState<"buildings" | "executive">("buildings");
+
+  const filteredSuites = useMemo(
+    () => suites.filter((suite) => suite.category === selectedCategory),
+    [selectedCategory]
+  );
+
+  const visibleSuites = filteredSuites.length ? filteredSuites : suites;
 
   const activeSuite = useMemo(
-    () => suites.find((suite) => suite.id === activeSuiteId) ?? suites[0],
-    [activeSuiteId],
+    () => visibleSuites.find((suite) => suite.id === activeSuiteId) ?? visibleSuites[0],
+    [activeSuiteId, visibleSuites],
   );
 
   const images = activeSuite?.images ?? [];
+
+  useEffect(() => {
+    if (!visibleSuites.some((suite) => suite.id === activeSuiteId)) {
+      const fallback = visibleSuites[0]?.id ?? "";
+      setActiveSuiteId(fallback);
+      setActiveImageIndex(0);
+    }
+  }, [visibleSuites, activeSuiteId]);
+
+  const handleCategoryChange = (category: "buildings" | "executive") => {
+    setSelectedCategory(category);
+  };
+
+  const handleSuiteSelect = (id: string) => {
+    setActiveSuiteId(id);
+    setActiveImageIndex(0);
+  };
 
   return (
     <main className="min-h-screen bg-gray-50 text-slate-900">
       <AvailabilityHero stats={stats} />
 
       <section className="mx-auto max-w-6xl px-4 pb-20">
+        <div className="mb-8 flex flex-wrap items-center gap-3 text-sm">
+          <div className="flex rounded-full border border-slate-200 bg-white p-1">
+            {suiteFilterOptions.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => handleCategoryChange(option.value)}
+                className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] transition ${
+                  selectedCategory === option.value
+                    ? "bg-slate-900 text-white shadow-md shadow-slate-900/20"
+                    : "bg-transparent text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="grid gap-8 lg:grid-cols-2">
           <SuiteList
-            suites={suites}
+            suites={visibleSuites}
             activeSuiteId={activeSuite?.id ?? ""}
-            onSelectSuite={(id) => {
-              setActiveSuiteId(id);
-              setActiveImageIndex(0);
-            }}
+            onSelectSuite={handleSuiteSelect}
           />
 
           <SuiteGallery
@@ -188,7 +237,7 @@ export default function AvailabilityPage() {
           </div>
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {categories.map((category) => (
+            {campusHighlights.map((category) => (
               <article
                 key={category.title}
                 className="h-full rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-lg shadow-slate-900/10 transition hover:-translate-y-1 hover:shadow-xl"
