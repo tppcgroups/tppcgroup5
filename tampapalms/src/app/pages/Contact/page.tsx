@@ -17,7 +17,7 @@ export default function Page() {
                             border border-white/60">
               <FadeIn><InfoBlock /></FadeIn>
               <FadeIn delay={100}>
-                <div className="hidden md:block w-px h-28 bg-teal-600/50 mx-auto rounded" />
+                <div className="hidden md:block w-px h-28 bg-slate-600/50 mx-auto rounded" />
               </FadeIn>
               <FadeIn delay={150}><InfoBlurb /></FadeIn>
             </div>
@@ -33,7 +33,6 @@ export default function Page() {
             </div>
           </FadeIn>
         </div>
-        <LocationInsights/>
       </section>
     </main>
   );

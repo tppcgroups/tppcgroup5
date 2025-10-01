@@ -9,7 +9,7 @@ export default function TextField({
       <div className="relative">
         <div className="-mb-3 pl-3"><Badge>{label}</Badge></div>
         <div className="rounded-2xl bg-white p-4 pt-6 shadow-inner border border-neutral-300
-                        focus-within:ring-2 focus-within:ring-teal-500">
+                        focus-within:ring-2 focus-within:ring-slate-500">
           <input
             type={type}
             name={name}
