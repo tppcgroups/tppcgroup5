@@ -1,42 +1,39 @@
 import React from "react";
 
-interface Perk {
-    defaultText: string;
-    hoverText: string;
-}
+type Perk = {
+  title: string;
+  caption: string;
+};
 
 const perks: Perk[] = [
-    { defaultText: "Great Location", hoverText: "24/7 Access" },
-    { defaultText: "Support On Demand", hoverText: "Free Parking" },
-    { defaultText: "Secure Office Space", hoverText: "High-speed WiFi" },
+  {
+    title: "Fast Process",
+    caption: "Apply online anytime",
+  },
+  {
+    title: "Tailored Match",
+    caption: "Share team details",
+  },
+  {
+    title: "Quick Follow-Up",
+    caption: "Hear back within a day",
+  },
 ];
 
 const Perks: React.FC = () => {
-    return (
-        <div className="flex gap-8 flex-wrap justify-center">
-            {perks.map((perk, index) => (
-                <div
-                    key={index}
-                    className="relative bg-foreground text-background rounded-full w-32 h-32 flex items-center justify-center text-center cursor-pointer transition-all duration-300 hover:rounded-xl hover:opacity-80"
-                    style={{
-                        boxShadow: "0 0 20px 4px rgba(128, 128, 128, 0.4)", // subtle brown glow
-                    }}
-                >
-                    {/* Default text */}
-                    <span className="absolute opacity-100 hover:opacity-0 transition-opacity duration-300">
-            {perk.defaultText}
-          </span>
-                    {/* Hover text */}
-                    <span className="absolute opacity-0 hover:opacity-100 transition-opacity duration-300">
-            {perk.hoverText}
-          </span>
-                </div>
-            ))}
-        </div>
-    );
+  return (
+    <div className="flex w-full max-w-md flex-wrap justify-center gap-5 md:flex-nowrap">
+      {perks.map((perk) => (
+        <article
+          key={perk.title}
+          className="flex min-h-[7.5rem] w-32 flex-col items-center justify-center rounded-2xl bg-white px-5 py-6 text-center shadow-md shadow-slate-900/5 ring-1 ring-slate-200 transition hover:-translate-y-1 hover:shadow-lg"
+        >
+          <h3 className="text-sm font-semibold text-slate-900">{perk.title}</h3>
+          <p className="mt-2 text-xs text-slate-500">{perk.caption}</p>
+        </article>
+      ))}
+    </div>
+  );
 };
 
 export default Perks;
-
-
-
