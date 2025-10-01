@@ -1,15 +1,20 @@
 import React from "react";
 
 const ApplicationTitle: React.FC = () => {
-  return (
-    <div className="w-full max-w-md rounded-3xl bg-slate-900 px-8 py-8 text-center text-white shadow-xl shadow-slate-900/25">
-      <h2 className="text-xl font-semibold">Your new office starts here.</h2>
-      <p className="mt-3 text-sm text-white/80">
-        Complete the online form in minutes and our leasing team will follow up with
-        tailored availability.
-      </p>
-    </div>
-  );
+    return (
+        <div className="text-center mb-12">
+            <div className="h-0.5 w-24 bg-gray-300 mx-auto mb-4"></div>
+            <h2 className="text-3xl font-bold text-gray-900">
+                Your New Office Starts Here!
+            </h2>
+            <div className="h-0.5 w-24 bg-gray-300 mx-auto mt-4"></div>
+        </div>
+
+    );
 };
 
 export default ApplicationTitle;
+
+
+
+
