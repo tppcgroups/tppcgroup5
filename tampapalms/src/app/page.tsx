@@ -1,9 +1,13 @@
-import HomePage from "./pages/Home/page"
+
+import HomePage from "@/app/pages/Home/page";
 
 export default function Page() {
-  return (
-    <div>
-      <HomePage/>
-    </div>
-  );
+    return (
+        <HomePage />
+    );
 }
+
+
+
+
+
