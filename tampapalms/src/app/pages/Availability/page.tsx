@@ -12,13 +12,13 @@ import type { AvailabilityStats, Suite } from "@/app/components/availability/typ
 
 const suites: Suite[] = [
   {
-    id: "ste-101",
-    label: "Suite 101",
-    building: "Bridge Hill Court",
-    size: "1,250 SF",
+    id: "ste-105",
+    label: "Suite 105",
+    building: "Primrose Lake Circle",
+    size: "354 SF",
     status: "available",
-    type: "Team Suite",
-    rate: "$32 / SF",
+    type: "Executive Suite",
+    rate: "By Request",
     description:
       "Corner suite with floor-to-ceiling windows, reception area, four private offices, and a conference room ready for hybrid teams.",
     features: [
@@ -28,27 +28,59 @@ const suites: Suite[] = [
     ],
     images: [
       {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-14-LargeHighDefinition.jpg",
-        alt: "Conference room with glass walls",
+        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-11-LargeHighDefinition.jpg",
+        alt: "Executive desk with natural light",
       },
       {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-16-LargeHighDefinition.jpg",
-        alt: "Lounge seating in Suite 101",
+        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-4-LargeHighDefinition.jpg",
+        alt: "Shared breakout seating",
       },
       {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-9-LargeHighDefinition.jpg",
-        alt: "Bridge Hill Court exterior",
+        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
+        alt: "Exterior of Primrose Lake Circle",
       },
     ],
-    category: "buildings",
+    category: "executive",
     brochureHref: "/documents/tppc-suite-101.pdf",
   },
   {
-    id: "ste-220",
-    label: "Suite 220",
+    id: "ste-107",
+    label: "Suite 107",
     building: "Primrose Lake Circle",
-    size: "875 SF",
-    status: "comingSoon",
+    size: "274 SF",
+    status: "available",
+    type: "Executive Suite",
+    rate: "By Request",
+    description:
+      "Corner suite with floor-to-ceiling windows, reception area, four private offices, and a conference room ready for hybrid teams.",
+    features: [
+      "Fully wired for Frontier Smart Park/Fios",
+      "Dedicated break area with sink and cabinetry",
+      "Near main lobby and visitor parking",
+    ],
+    images: [
+      {
+        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-11-LargeHighDefinition.jpg",
+        alt: "Executive desk with natural light",
+      },
+      {
+        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-4-LargeHighDefinition.jpg",
+        alt: "Shared breakout seating",
+      },
+      {
+        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
+        alt: "Exterior of Primrose Lake Circle",
+      },
+    ],
+    category: "executive",
+    brochureHref: "/documents/tppc-suite-101.pdf",
+  },
+  {
+    id: "ste-119",
+    label: "Suite 119",
+    building: "Primrose Lake Circle",
+    size: "323 SF",
+    status: "available",
     type: "Executive Suite",
     rate: "By Request",
     description:
@@ -76,12 +108,12 @@ const suites: Suite[] = [
     brochureHref: "/documents/tppc-suite-220.pdf",
   },
   {
-    id: "ste-305",
-    label: "Suite 305",
+    id: "ste-101",
+    label: "Suite 101",
     building: "Bridge Hill Court",
-    size: "540 SF",
+    size: "1974 SF",
     status: "occupied",
-    type: "Flex Office",
+    type: "Office",
     rate: "Join Waitlist",
     description:
       "Functional flex office currently committed. Join the waitlist for the next availability in this configuration.",
