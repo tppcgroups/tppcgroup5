@@ -32,7 +32,7 @@ export function Footer() {
       
       {/* Fading Color */}
       <div
-        className="pointer-events-none absolute top-[-8rem] left-1/2 h-72 w-[120%] -translate-x-1/2 rounded-[999px] bg-amber-400/10 blur-3xl"
+        className="pointer-events-none absolute top-[-8rem] left-1/2 h-72 w-[120%] -translate-x-1/2 rounded-[999px] bg-slate-400/10 blur-3xl"
         aria-hidden
       />
 
@@ -70,7 +70,7 @@ export function Footer() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className=" hover:text-amber-200"
+                    className=" hover:font-bold"
                   >
                     {link.label}
                   </Link>
@@ -105,9 +105,9 @@ export function Footer() {
               <div className="mt-6 space-y-4 text-sm text-stone-300">
                 <a
                   href="tel:8138767697"
-                  className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-amber-200/40 hover:text-amber-100"
+                  className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-white"
                 >
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-300/20 text-amber-200">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-300/20 text-white">
                   <PiPhoneBold aria-hidden="true" className="text-xl" />
                   </span>
                   <span className="font-medium text-white">
@@ -121,9 +121,9 @@ export function Footer() {
                   href="https://maps.google.com/?q=17427+Bridge+Hill+Ct+STE+C,+Tampa,+FL+33647"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-amber-200/40 hover:text-amber-100"
+                  className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-white"
                 >
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-300/20 text-amber-200">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-300/20 text-white">
                     <PiMapPinBold aria-hidden="true" className="text-xl"/>
                   </span>
                   <span className="font-medium text-white">
@@ -141,11 +141,8 @@ export function Footer() {
 
       {/* Bottom Section */}
       <div className="relative border-t border-white/10 bg-black/50 py-6 text-sm text-stone-400">
-        <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-6 text-center md:flex-row md:px-10 md:text-left">
+        <div className="container flex flex-col items-center justify-between text-center md:flex-row">
           <p>&copy; {currentYear} Tampa Palms Professional Center. All rights reserved.</p>
-          <p className="text-xs">
-            Terms and Conditions
-          </p>
         </div>
       </div>
     </footer>

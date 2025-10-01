@@ -77,7 +77,7 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
             </p>
             <h1 className="text-5xl font-semibold leading-tight">
               Tampa Palms
-              <span className="block text-amber-200">Professional Center</span>
+              <span className="block text-white">Professional Center</span>
             </h1>
             <p className="text-lg text-white/80">
               Discover full-floor suites and executive offices designed to keep
