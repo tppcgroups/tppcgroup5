@@ -56,7 +56,6 @@ export function Footer() {
               <div className="space-y-2">
                 <p>Mon – Thu: 9am – 5pm</p>
                 <p>Fri: 9am – 3pm</p>
-                <p>Sat – Sun: Closed</p>
               </div>
             </div>
 
@@ -65,13 +64,13 @@ export function Footer() {
               <h3 className="font-bold text-white uppercase mb-4">Contact</h3>
               <div className="space-y-2">
                 <p>
-                  5331 Primrose Lake Cir
+                  17427 Bridge Hill Ct STE C
                   <br />
                   Tampa, FL 33647
                 </p>
                 <p>
-                  <a href="tel:555-555-5555" className="hover:text-white">
-                    (555) 555-5555
+                  <a href="tel:813-876-7697" className="hover:text-white">
+                    (813) 876-7697
                   </a>
                 </p>
               </div>
