@@ -3,7 +3,7 @@ import { PiNotebookBold, PiWrenchBold, PiCheckCircleBold, PiPhoneBold  } from "r
 function AboutUs () {
   return (
     <section className="bg-gray-50 py-16 px-6 md:px-12">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         {/* Left Side - Text */}
         <div>
           <h2 className="text-3xl font-bold text-gray-900 mb-4">About Us</h2>

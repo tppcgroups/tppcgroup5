@@ -5,6 +5,8 @@ import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
+import { FaArrowRight,FaArrowLeft } from "react-icons/fa6";
+
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/app/components/home/carousel/button"
@@ -197,13 +199,7 @@ function CarouselPrevious({
       onClick={scrollPrev}
       {...props}
     >
-      <Image
-        src="/images/arrowRight.png"
-        alt="Right Arrow"
-        width={50}
-        height={20}
-        className={cn("rotate-180 z-40 white-image", iconClassName)}
-      ></Image>
+      <FaArrowLeft size={10}/>
       {/* <ArrowLeft height={24} width={80} className="drop-shadow-md"/> */}
       <span className="sr-only">Previous slide</span>
     </Button>
@@ -235,13 +231,7 @@ function CarouselNext({
       onClick={scrollNext}
       {...props}
     >
-      <Image
-        src="/images/arrowRight.png"
-        alt="Right Arrow"
-        width={50}
-        height={20}
-        className={cn("z-40 white-image", iconClassName)} 
-      ></Image>
+      <FaArrowRight/>
       <span className="sr-only">Next slide</span>
     </Button>
   );

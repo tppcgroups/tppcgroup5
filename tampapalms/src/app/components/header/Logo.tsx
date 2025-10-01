@@ -10,13 +10,13 @@ interface LogoProps {
 
 export const Logo: React.FC<LogoProps>= ({className}) => {
   return (
-    <div className="flex-shrink-0 -ml-2 md:ml-4 -mt-4">
+    <div className="flex-shrink-0 -ml-2 md:ml-4 pb-7">
       <Link href="/" passHref>
         <Image
           src="/images/TampaPalmsLogo.png"
           alt="Tampa Palms Professional Center Logo"
-          width={200}
-          height={63}
+          width={210}
+          height={50}
           className={className || ""}
         />
       </Link>
