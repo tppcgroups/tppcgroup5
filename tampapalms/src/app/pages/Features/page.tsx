@@ -7,7 +7,7 @@ import { PiCheckCircleBold } from "react-icons/pi";
 
 const suiteOptions = [
   {
-    label: "Office Suites",
+    label: "Buildings/Suites",
     isPrimary: true,
   },
   {
