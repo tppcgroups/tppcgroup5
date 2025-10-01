@@ -1,8 +1,35 @@
+import FadeIn from "./FadeIn";
+
 export default function ContactHeader() {
   return (
-    <section className="mx-auto max-w-6xl px-4 py-10">
-      <h1 className="text-3xl md:text-4xl font-bold text-center text-black">Contact</h1>
-      <div className="mx-auto mt-4 h-[2px] w-11/12 max-w-3xl bg-black" />
-    </section>
+    <header className="relative">
+      <div className="relative h-[260px] md:h-[420px]">
+        <div
+          className="absolute inset-0 bg-center bg-cover"
+          style={{
+            backgroundImage:
+              'url("/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinitionEdit.png")',
+          }}
+          aria-hidden
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 to-black/40" />
+
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-white px-4">
+          <FadeIn>
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight drop-shadow">
+              Contact
+            </h1>
+          </FadeIn>
+          <FadeIn delay={80}>
+            <div className="mt-4 h-1 w-36 rounded-full bg-emerald-600" />
+          </FadeIn>
+          <FadeIn delay={140}>
+            <p className="mt-3 text-center max-w-2xl text-white/85">
+              We’re here to help—reach out and we’ll get back to you quickly.
+            </p>
+          </FadeIn>
+        </div>
+      </div>
+    </header>
   );
 }

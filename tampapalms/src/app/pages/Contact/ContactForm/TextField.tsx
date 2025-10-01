@@ -8,14 +8,16 @@ export default function TextField({
     <label className="block">
       <div className="relative">
         <div className="-mb-3 pl-3"><Badge>{label}</Badge></div>
-        <div className="rounded-2xl bg-neutral-200/80 p-4 pt-6 shadow-inner">
+
+        <div className="rounded-2xl bg-white p-4 pt-6 shadow-inner border border-neutral-300
+                        focus-within:ring-2 focus-within:ring-teal-500">
           <input
             type={type}
             name={name}
             placeholder={placeholder}
             className="w-full bg-transparent outline-none text-[15px] !text-black placeholder:text-neutral-500"
           />
-          <div className="mt-3 border-t border-dashed border-neutral-400" />
+          <div className="mt-3 border-t border-dashed border-neutral-300" />
         </div>
       </div>
     </label>

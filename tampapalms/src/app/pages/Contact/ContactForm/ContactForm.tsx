@@ -23,13 +23,15 @@ export default function ContactForm() {
         <label className="block">
           <div className="relative">
             <div className="-mb-3 pl-3"><Badge>Your Message</Badge></div>
-            <div className="rounded-2xl bg-neutral-200/80 p-4 pt-6 shadow-inner min-h-[300px] flex flex-col">
+
+            <div className="rounded-2xl bg-white p-4 pt-6 shadow-inner border border-neutral-300
+                            focus-within:ring-2 focus-within:ring-teal-500 min-h-[300px] flex flex-col">
               <textarea
                 name="message"
                 placeholder="Tell us how we can help…"
                 className="min-h-[220px] grow w-full resize-vertical bg-transparent outline-none text-[15px] !text-black placeholder:text-neutral-500"
               />
-              <div className="mt-3 border-t border-dashed border-neutral-400" />
+              <div className="mt-3 border-t border-dashed border-neutral-300" />
             </div>
           </div>
         </label>
@@ -37,7 +39,9 @@ export default function ContactForm() {
         <div className="flex justify-end">
           <button
             type="submit"
-            className="rounded-2xl bg-neutral-800 text-white px-6 py-3 text-base font-medium shadow-sm hover:bg-neutral-900"
+            className="rounded-full px-6 py-3 text-base font-medium text-white shadow-md
+                       bg-gradient-to-b from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800
+                       focus:outline-none focus:ring-2 focus:ring-teal-500"
           >
             Submit
           </button>
