@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { PiCheckCircleBold } from "react-icons/pi";
 
 const suiteOptions = [
@@ -25,6 +28,8 @@ const amenities = [
 ];
 
 export default function Features() {
+  const [selectedOption, setSelectedOption] = useState<string>(suiteOptions[0]?.label ?? "");
+
   return (
     <main className="min-h-screen bg-gray-50 text-slate-900">
       {/* Desktop Layout */}
@@ -49,8 +54,9 @@ export default function Features() {
             {suiteOptions.map((option) => (
               <button
                 key={option.label}
+                onClick={() => setSelectedOption(option.label)}
                 className={`flex-1 rounded-full px-5 py-3 text-sm font-semibold transition ${
-                  option.isPrimary
+                  selectedOption === option.label
                     ? "bg-slate-900 text-white shadow-lg shadow-slate-900/20 hover:bg-slate-800"
                     : "bg-white text-slate-900 ring-1 ring-slate-200 hover:bg-slate-100"
                 }`}
@@ -137,8 +143,9 @@ export default function Features() {
             {suiteOptions.map((option) => (
               <button
                 key={option.label}
+                onClick={() => setSelectedOption(option.label)}
                 className={`w-full rounded-full px-5 py-3 text-sm font-semibold transition ${
-                  option.isPrimary
+                  selectedOption === option.label
                     ? "bg-slate-900 text-white shadow-lg shadow-slate-900/20 hover:bg-slate-800"
                     : "bg-white text-slate-900 ring-1 ring-slate-200 hover:bg-slate-100"
                 }`}
