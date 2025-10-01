@@ -3,12 +3,14 @@ import ApplicationTitle from "@/app/components/RentalApplication/ApplicationTitl
 import Perks from "@/app/components/RentalApplication/Perks";
 import ApplicationLink from "@/app/components/RentalApplication/ApplicationLink";
 
-const heroImage = "/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinition.JPG";
+const heroImage =
+    "/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinition.JPG";
 
 export default function Apply() {
     return (
         <main className="min-h-screen bg-gray-50 text-slate-900">
             <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col">
+                {/* Header */}
                 <header className="px-6 pb-10 pt-16 text-center">
                     <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
                         Rental Application
@@ -17,12 +19,16 @@ export default function Apply() {
                         Submit your application to secure the right workspace
                     </h1>
                     <p className="mx-auto mt-4 max-w-2xl text-sm text-slate-600">
-                        Share your team's requirements and timeline so we can prepare
+                        Share your team&apos;s requirements and timeline so we can prepare
                         tailored availability and keep the leasing process moving quickly.
                     </p>
-                    <div className="mx-auto mt-6 h-0.5 w-24 bg-slate-400" aria-hidden="true" />
+                    <div
+                        className="mx-auto mt-6 h-0.5 w-24 bg-slate-400"
+                        aria-hidden="true"
+                    />
                 </header>
 
+                {/* Main Content */}
                 <div className="flex flex-1 flex-col md:h-[calc(100vh-220px)] md:flex-row">
                     {/* Left info column */}
                     <div className="flex w-full flex-col items-center gap-10 px-6 pb-16 pt-6 md:w-2/5 md:items-start md:justify-start md:px-10 md:pt-10">
@@ -36,7 +42,7 @@ export default function Apply() {
                         <div className="relative h-72 w-full overflow-hidden rounded-3xl md:h-[85%]">
                             <Image
                                 src={heroImage}
-                                alt="/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinition.JPGr"
+                                alt="Aerial view of Tampa Palms Professional Center"
                                 fill
                                 className="object-cover"
                                 priority
