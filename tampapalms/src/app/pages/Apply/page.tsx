@@ -10,7 +10,7 @@ export default function Apply() {
     <main className="min-h-screen bg-gray-50 text-slate-900">
       <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col">
         <header className="px-6 pb-10 pt-16 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-amber-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
             Rental Application
           </p>
           <h1 className="mt-4 text-3xl font-semibold text-slate-900 md:text-4xl">
@@ -20,7 +20,7 @@ export default function Apply() {
             Share your team's requirements and timeline so we can prepare
             tailored availability and keep the leasing process moving quickly.
           </p>
-          <div className="mx-auto mt-6 h-0.5 w-24 bg-amber-400" aria-hidden="true" />
+          <div className="mx-auto mt-6 h-0.5 w-24 bg-slate-400" aria-hidden="true" />
         </header>
 
         <div className="flex flex-1 flex-col md:h-[calc(100vh-220px)] md:flex-row">

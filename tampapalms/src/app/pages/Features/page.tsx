@@ -33,7 +33,7 @@ export default function Features() {
 
         <aside className="relative z-10 flex w-full max-w-[520px] flex-col gap-8 rounded-r-3xl bg-white p-12 shadow-2xl shadow-slate-900/10 ring-1 ring-slate-200">
           <div className="space-y-4 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-amber-500">
+            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-slate-500">
               Amenities
             </p>
             <h1 className="text-4xl font-semibold leading-tight">
@@ -63,13 +63,13 @@ export default function Features() {
           <div className="h-px bg-slate-200" aria-hidden="true" />
 
           <div className="flex flex-col gap-4 rounded-2xl bg-slate-50 p-6 shadow-lg shadow-slate-900/5 ring-1 ring-slate-200">
-            <p className="text-left text-xs font-semibold uppercase tracking-[0.3em] text-amber-500">
+            <p className="text-left text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
               Included Features
             </p>
             <ul className="flex flex-col gap-3 text-left text-sm text-slate-600">
               {amenities.map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <PiCheckCircleBold className="mt-0.5 text-lg text-amber-500" aria-hidden="true" />
+                  <PiCheckCircleBold className="mt-0.5 text-lg text-slate-500" aria-hidden="true" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -112,7 +112,7 @@ export default function Features() {
       <section className="block min-h-screen px-5 py-16 md:hidden">
         <div className="rounded-3xl bg-white p-8 shadow-xl shadow-slate-900/10 ring-1 ring-slate-200">
           <div className="space-y-4 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-amber-500">Amenities</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">Amenities</p>
             <h2 className="text-3xl font-semibold leading-tight text-slate-900">
               Elevated campus experiences for every tenant
             </h2>
@@ -149,13 +149,13 @@ export default function Features() {
           </div>
 
           <div className="mt-8 rounded-2xl bg-slate-50 p-6 shadow-lg shadow-slate-900/5 ring-1 ring-slate-200">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-500">
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
               Included Features
             </p>
             <ul className="mt-4 flex flex-col gap-3 text-sm text-slate-600">
               {amenities.map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <PiCheckCircleBold className="mt-0.5 text-lg text-amber-500" aria-hidden="true" />
+                  <PiCheckCircleBold className="mt-0.5 text-lg text-slate-500" aria-hidden="true" />
                   <span>{item}</span>
                 </li>
               ))}
