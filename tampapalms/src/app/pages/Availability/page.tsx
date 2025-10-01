@@ -8,7 +8,7 @@ import { SuiteDetails } from "@/app/components/availability/SuiteDetails";
 import { SuiteGallery } from "@/app/components/availability/SuiteGallery";
 import { SuiteHighlights } from "@/app/components/availability/SuiteHighlights";
 import { SuiteList } from "@/app/components/availability/SuiteList";
-import type { AvailabilityStats, Suite } from "@/app/components/availability/type";
+import type { Suite } from "@/app/components/availability/type";
 
 const suites: Suite[] = [
   {
@@ -140,12 +140,6 @@ const suites: Suite[] = [
   },
 ];
 
-const stats: AvailabilityStats[] = [
-  { label: "Total Campus SF", value: "72K" },
-  { label: "Available Suites", value: suites.filter((suite) => suite.status === "available").length.toString() },
-  { label: "Avg. Suite Size", value: "1,050 SF" },
-];
-
 const suiteFilterOptions: Array<{ label: string; value: "buildings" | "executive" }> = [
   { label: "Buildings/Suites", value: "buildings" },
   { label: "Executive Suites", value: "executive" },
@@ -204,7 +198,7 @@ export default function AvailabilityPage() {
 
   return (
     <main className="min-h-screen bg-gray-50 text-slate-900">
-      <AvailabilityHero stats={stats} />
+      <AvailabilityHero availableCount={suites.filter((suite) => suite.status === "available").length} />
 
       <section className="mx-auto max-w-6xl px-4 pb-20">
         <div className="mb-8 flex flex-wrap items-center gap-3 text-sm">

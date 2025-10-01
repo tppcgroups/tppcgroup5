@@ -1,12 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { AvailabilityStats } from "./type";
 
 type AvailabilityHeroProps = {
-  stats: AvailabilityStats[];
+  availableCount: number;
 };
 
-export function AvailabilityHero({ stats }: AvailabilityHeroProps) {
+export function AvailabilityHero({ availableCount }: AvailabilityHeroProps) {
   return (
     <section className="bg-white py-16">
       <div className="mx-auto max-w-6xl px-4">
@@ -40,7 +39,7 @@ export function AvailabilityHero({ stats }: AvailabilityHeroProps) {
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-3xl">
+          <div className="relative min-h-[260px] overflow-hidden rounded-3xl">
             <Image
               src="/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-10-LargeHighDefinition.jpg"
               alt="Modern executive office interior"
@@ -56,26 +55,24 @@ export function AvailabilityHero({ stats }: AvailabilityHeroProps) {
             <div className="absolute inset-0 flex flex-col justify-between p-6 text-white">
               <div className="space-y-2">
                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
-                  Campus Snapshot
+                  Available Now
                 </p>
-                <h2 className="text-2xl font-semibold">Designed for productivity</h2>
+                <h2 className="text-2xl font-semibold">Suites ready for move-in</h2>
                 <p className="text-sm text-white/80 max-w-sm">
-                  Natural light, fiber connectivity, and on-site hospitality create a turnkey workspace
-                  experience for teams of all sizes.
+                  Preview the spaces that are currently open. Tap a suite below to explore photos,
+                  specifications, and highlights.
                 </p>
               </div>
-              <div className="grid gap-3 sm:grid-cols-3">
-                {stats.map((stat) => (
-                  <div
-                    key={stat.label}
-                    className="rounded-2xl border border-white/40 bg-white/10 px-4 py-3 text-center shadow-sm backdrop-blur"
-                  >
-                    <p className="text-xl font-semibold text-white">{stat.value}</p>
-                    <p className="text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-white/70">
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
+              <div className="flex items-center justify-center">
+                <div className="rounded-2xl border border-white/40 bg-white/10 px-6 py-4 text-center shadow-sm backdrop-blur">
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+                    Available Spaces
+                  </p>
+                  <p className="mt-2 text-3xl font-semibold text-white">{availableCount}</p>
+                  <p className="mt-1 text-xs text-white/70">
+                    Ready for tours and applications today
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -84,4 +81,3 @@ export function AvailabilityHero({ stats }: AvailabilityHeroProps) {
     </section>
   );
 }
-
