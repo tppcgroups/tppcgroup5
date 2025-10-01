@@ -1,5 +1,3 @@
-import FadeIn from "./FadeIn";
-
 export default function ContactHeader() {
   return (
     <header className="relative">
@@ -13,21 +11,12 @@ export default function ContactHeader() {
           aria-hidden
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 to-black/40" />
-
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-white px-4">
-          <FadeIn>
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight drop-shadow">
-              Contact
-            </h1>
-          </FadeIn>
-          <FadeIn delay={80}>
-            <div className="mt-4 h-1 w-36 rounded-full bg-emerald-600" />
-          </FadeIn>
-          <FadeIn delay={140}>
-            <p className="mt-3 text-center max-w-2xl text-white/85">
-              We’re here to help—reach out and we’ll get back to you quickly.
-            </p>
-          </FadeIn>
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight drop-shadow">Contact</h1>
+          <div className="mt-4 h-1 w-36 rounded-full bg-teal-600" />
+          <p className="mt-3 text-center max-w-2xl text-white/85">
+            We’re here to help—reach out and we’ll get back to you quickly.
+          </p>
         </div>
       </div>
     </header>

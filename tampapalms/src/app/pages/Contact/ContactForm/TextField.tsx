@@ -8,7 +8,6 @@ export default function TextField({
     <label className="block">
       <div className="relative">
         <div className="-mb-3 pl-3"><Badge>{label}</Badge></div>
-
         <div className="rounded-2xl bg-white p-4 pt-6 shadow-inner border border-neutral-300
                         focus-within:ring-2 focus-within:ring-teal-500">
           <input

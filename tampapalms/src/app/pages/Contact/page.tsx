@@ -9,7 +9,6 @@ export default function Page() {
     <main className="min-h-screen bg-neutral-100 text-black">
       <ContactHeader />
 
-      {/* Glass overlay card pulled up over the hero */}
       <section className="-mt-16 md:-mt-24 relative z-10">
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn>
@@ -17,18 +16,15 @@ export default function Page() {
                             rounded-3xl bg-white/70 backdrop-blur-md p-6 md:p-8 shadow-2xl
                             border border-white/60">
               <FadeIn><InfoBlock /></FadeIn>
-
               <FadeIn delay={100}>
-                <div className="hidden md:block w-px h-28 bg-emerald-600/50 mx-auto rounded" />
+                <div className="hidden md:block w-px h-28 bg-teal-600/50 mx-auto rounded" />
               </FadeIn>
-
               <FadeIn delay={150}><InfoBlurb /></FadeIn>
             </div>
           </FadeIn>
         </div>
       </section>
 
-      {/* Form card */}
       <section className="pt-10 pb-16">
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn delay={200}>

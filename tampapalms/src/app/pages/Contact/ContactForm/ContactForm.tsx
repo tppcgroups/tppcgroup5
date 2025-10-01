@@ -3,13 +3,45 @@ import React from "react";
 import TextField from "./TextField";
 import Badge from "./Badge";
 
+type Status = "idle" | "loading" | "success" | "error";
+
 export default function ContactForm() {
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const [status, setStatus] = React.useState<Status>("idle");
+  const [message, setMessage] = React.useState<string>("");
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    console.log("Form submit:", Object.fromEntries(fd.entries()));
-    alert("Thanks! (wire this to your API or email service)");
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+
+    if ((fd.get("company") as string)?.trim()) {
+      setStatus("success");
+      setMessage("Thanks! We’ll be in touch soon.");
+      form.reset();
+      return;
+    }
+
+    setStatus("loading");
+    setMessage("");
+
+    const payload = Object.fromEntries(fd.entries());
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      setStatus("success");
+      setMessage("Thanks! We’ve received your message and will reply soon.");
+      form.reset();
+    } catch {
+      setStatus("error");
+      setMessage("Something went wrong. Please try again or email admin@tampapalmscenter.com.");
+    }
   }
+
+  const disabled = status === "loading";
 
   return (
     <form onSubmit={onSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
@@ -23,27 +55,41 @@ export default function ContactForm() {
         <label className="block">
           <div className="relative">
             <div className="-mb-3 pl-3"><Badge>Your Message</Badge></div>
-
             <div className="rounded-2xl bg-white p-4 pt-6 shadow-inner border border-neutral-300
                             focus-within:ring-2 focus-within:ring-teal-500 min-h-[300px] flex flex-col">
               <textarea
                 name="message"
                 placeholder="Tell us how we can help…"
                 className="min-h-[220px] grow w-full resize-vertical bg-transparent outline-none text-[15px] !text-black placeholder:text-neutral-500"
+                required
               />
               <div className="mt-3 border-t border-dashed border-neutral-300" />
             </div>
           </div>
         </label>
 
-        <div className="flex justify-end">
+        <div className="flex items-start gap-3 text-sm text-neutral-700">
+          <input id="consent" name="consent" type="checkbox" required className="mt-1" />
+          <label htmlFor="consent">
+            I consent to be contacted about my inquiry and agree to the{" "}
+            <a href="/privacy" className="underline decoration-teal-500/60 hover:decoration-teal-700">Privacy Policy</a>.
+          </label>
+          <input type="text" name="company" autoComplete="off" tabIndex={-1} aria-hidden="true" className="hidden" />
+        </div>
+
+        <div className="flex items-center justify-between gap-4">
+          <p role="status" aria-live="polite" className={`text-sm ${status === "error" ? "text-red-600" : "text-neutral-600"}`}>
+            {status === "loading" ? "Sending…" : message}
+          </p>
           <button
             type="submit"
-            className="rounded-full px-6 py-3 text-base font-medium text-white shadow-md
-                       bg-gradient-to-b from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800
-                       focus:outline-none focus:ring-2 focus:ring-teal-500"
+            disabled={disabled}
+            className={`rounded-full px-6 py-3 text-base font-medium text-white shadow-md
+                        bg-gradient-to-b from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800
+                        focus:outline-none focus:ring-2 focus:ring-teal-500
+                        ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
           >
-            Submit
+            {disabled ? "Sending…" : "Submit"}
           </button>
         </div>
       </div>
