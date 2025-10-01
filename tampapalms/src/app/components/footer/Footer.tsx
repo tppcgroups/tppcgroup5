@@ -1,6 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  PiMapPinBold,
+  PiPhoneBold,
+} from "react-icons/pi";
 
 const quickLinks = [
   { label: "Home", href: "/pages/Home" },
@@ -104,20 +108,7 @@ export function Footer() {
                   className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-amber-200/40 hover:text-amber-100"
                 >
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-300/20 text-amber-200">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.6"
-                      className="h-4 w-4"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M2.25 6.75c0 8.284 6.716 15 15 15h1.5a2.25 2.25 0 0 0 2.25-2.25v-1.065a1.125 1.125 0 0 0-.852-1.09l-4.423-1.106a1.125 1.125 0 0 0-1.173.417l-.97 1.293a1.125 1.125 0 0 1-1.21.39 12.035 12.035 0 0 1-7.04-7.04 1.125 1.125 0 0 1 .39-1.21l1.293-.97a1.125 1.125 0 0 0 .417-1.173L7.655 3.102a1.125 1.125 0 0 0-1.09-.852H5.5A2.25 2.25 0 0 0 3.25 4.5v2.25Z"
-                      />
-                    </svg>
+                  <PiPhoneBold aria-hidden="true" className="text-xl" />
                   </span>
                   <span className="font-medium text-white">
                     (813) 876-7697
@@ -133,25 +124,7 @@ export function Footer() {
                   className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-amber-200/40 hover:text-amber-100"
                 >
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-300/20 text-amber-200">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.6"
-                      className="h-4 w-4"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
-                      />
-                    </svg>
+                    <PiMapPinBold aria-hidden="true" className="text-xl"/>
                   </span>
                   <span className="font-medium text-white">
                     Get Directions

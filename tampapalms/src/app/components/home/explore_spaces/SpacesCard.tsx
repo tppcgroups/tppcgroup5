@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { PiArrowCircleRightBold } from "react-icons/pi";
 
 interface SpacesCardProps {
   title: string;
@@ -86,21 +87,7 @@ export const SpacesCard: React.FC<SpacesCardProps> = ({
 
         <span className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900 md:text-[1.05rem]">
           View Details
-          <svg
-            className="h-[18px] w-[18px] transition-transform duration-300 ease-out group-hover:translate-x-1.5"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path
-              d="M4 12L12 4M12 4H6M12 4V10"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+            <PiArrowCircleRightBold aria-hidden="true" className="text-xl" />
         </span>
       </div>
     </Link>
