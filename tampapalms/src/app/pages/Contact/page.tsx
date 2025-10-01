@@ -2,6 +2,7 @@ import ContactHeader from "./ContactHeader";
 import InfoBlock     from "./InfoBlock";
 import InfoBlurb     from "./InfoBlurb";
 import ContactForm   from "./ContactForm/ContactForm";
+import LocationInsights from "@/app/components/home/LocationsInsights/Location";
 
 export default function Page() {
   return (
@@ -20,6 +21,7 @@ export default function Page() {
         <div className="mx-auto max-w-6xl px-4 py-16">
           <ContactForm />
         </div>
+        <LocationInsights/>
       </section>
     </main>
   );
