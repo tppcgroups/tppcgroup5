@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+// AvailabilityHero renders the introductory banner for the availability page with CTAs and total suite count.
 type AvailabilityHeroProps = {
   availableCount: number;
 };
@@ -10,6 +11,7 @@ export function AvailabilityHero({ availableCount }: AvailabilityHeroProps) {
     <section className="bg-white py-16">
       <div className="mx-auto max-w-6xl px-4">
         <div className="grid gap-10 lg:grid-cols-[3fr_2fr]">
+          {/* Intro headline + description */}
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
               Available Spaces
@@ -23,6 +25,7 @@ export function AvailabilityHero({ availableCount }: AvailabilityHeroProps) {
                 specs, and highlights so you can compare options before touring in person.
               </p>
             </div>
+            {/* Primary calls-to-action */}
             <div className="mt-8 flex flex-wrap gap-3 text-sm">
               <Link
                 href="/pages/Apply"
@@ -39,6 +42,7 @@ export function AvailabilityHero({ availableCount }: AvailabilityHeroProps) {
             </div>
           </div>
 
+          {/* Hero imagery with overlay */}
           <div className="relative min-h-[260px] overflow-hidden rounded-3xl">
             <Image
               src="/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-10-LargeHighDefinition.jpg"
@@ -52,6 +56,7 @@ export function AvailabilityHero({ availableCount }: AvailabilityHeroProps) {
               className="absolute inset-0 bg-gradient-to-tr from-slate-900/80 via-slate-900/20 to-transparent"
               aria-hidden="true"
             />
+            {/* Overlay copy describing availability */}
             <div className="absolute inset-0 flex flex-col justify-between p-6 text-white">
               <div className="space-y-2">
                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
@@ -63,6 +68,7 @@ export function AvailabilityHero({ availableCount }: AvailabilityHeroProps) {
                   specifications, and highlights.
                 </p>
               </div>
+              {/* Available suite count badge */}
               <div className="flex items-center justify-center">
                 <div className="rounded-2xl border border-white/40 bg-white/10 px-6 py-4 text-center shadow-sm backdrop-blur">
                   <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
