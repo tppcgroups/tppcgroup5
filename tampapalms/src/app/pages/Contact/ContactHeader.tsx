@@ -1,21 +1,24 @@
 export default function ContactHeader() {
   return (
-    <section className="bg-white py-16">
-      <div className="mx-auto max-w-5xl px-6 text-center md:text-left">
-        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
-          Get In Touch
-        </p>
-        <div className="mt-6 space-y-4">
-          <h1 className="text-3xl font-semibold leading-tight text-slate-900 md:text-4xl">
-            Contact Tampa Palms Professional Center
-          </h1>
-          <p className="text-sm text-slate-600 md:text-base">
-            Our on-site ownership team is here to help with leasing, maintenance, and general campus
-            questions. Send us a note and we will respond within one business day.
+    <header className="relative">
+      <div className="relative h-[260px] md:h-[420px]">
+        <div
+          className="absolute inset-0 bg-center bg-cover"
+          style={{
+            backgroundImage:
+              'url("/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinitionEdit.png")',
+          }}
+          aria-hidden
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 to-black/40" />
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-white px-4">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight drop-shadow">Contact</h1>
+          <div className="mt-4 h-1 w-36 rounded-full bg-teal-600" />
+          <p className="mt-3 text-center max-w-2xl text-white/85">
+            We’re here to help—reach out and we’ll get back to you quickly.
           </p>
         </div>
-        <div className="mt-8 h-0.5 w-24 bg-slate-400" aria-hidden="true" />
       </div>
-    </section>
+    </header>
   );
 }

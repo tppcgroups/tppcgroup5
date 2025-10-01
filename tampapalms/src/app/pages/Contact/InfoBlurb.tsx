@@ -5,26 +5,29 @@ const bullets = [
 ];
 
 export default function InfoBlurb() {
+  const mapSrc =
+    "https://www.google.com/maps?q=17427+Bridge+Hill+Court,+Suite+C,+Tampa,+FL+33647&output=embed";
+
   return (
-    <div className="flex justify-center md:justify-end">
-      <div className="relative w-full max-w-md">
-        <span className="absolute -top-3 left-6 inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-slate-600">
-          Why Reach Out
-        </span>
-        <div className="rounded-3xl border border-slate-100 bg-white p-7 shadow-lg shadow-slate-900/10">
-          <p className="text-sm text-slate-600">
-            We're here to guide you through availability, applications, maintenance, and
-            general campus questions. Tell us what you need and we'll route your message to
-            the right member of our team.
-          </p>
-          <ul className="mt-4 space-y-2 text-sm text-slate-600">
-            {bullets.map((bullet) => (
-              <li key={bullet} className="flex items-start gap-2">
-                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-slate-400" aria-hidden="true" />
-                <span>{bullet}</span>
-              </li>
-            ))}
-          </ul>
+    <div className="flex md:justify-center">
+      <div className="w-full max-w-md overflow-hidden rounded-xl shadow-sm border border-white/50 bg-white/40 backdrop-blur">
+        <iframe
+          title="Tampa Palms Professional Center Map"
+          src={mapSrc}
+          className="w-full h-[280px] md:h-[320px] border-0"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
+        <div className="p-3 text-sm text-neutral-800/90">
+          <a
+            href="https://www.google.com/maps?q=17427+Bridge+Hill+Court,+Suite+C,+Tampa,+FL+33647"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-teal-500/50 hover:decoration-teal-600"
+          >
+            Open in Google Maps
+          </a>
         </div>
       </div>
     </div>
