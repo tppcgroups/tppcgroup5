@@ -134,8 +134,8 @@ export function Footer() {
 
       {/* Bottom Section */}
       <div className="relative border-t border-white/10 bg-black/50 py-6 text-sm text-stone-400">
-        <div className="container flex flex-col items-center justify-between text-center md:flex-row">
-          <p>
+        <div className="container mx-auto flex items-center justify-center text-center">
+          <p className="mx-auto">
             &copy; {currentYear} Tampa Palms Professional Center. All rights
             reserved.
           </p>
