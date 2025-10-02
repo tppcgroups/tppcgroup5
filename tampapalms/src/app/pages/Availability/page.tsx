@@ -10,6 +10,7 @@ import { SuiteHighlights } from "@/app/components/availability/SuiteHighlights";
 import { SuiteList } from "@/app/components/availability/SuiteList";
 import type { Suite } from "@/app/components/availability/type";
 
+// Suite catalog used to drive the availability page content.
 const suites: Suite[] = [
   {
     id: "ste-105",
@@ -149,6 +150,7 @@ const suiteFilterOptions: Array<{ label: string; value: "buildings" | "executive
   { label: "Executive Suites", value: "executive" },
 ];
 
+// Marketing blurbs featured near the bottom of the page.
 const campusHighlights = [
   {
     title: "Executive Offices",
@@ -165,17 +167,21 @@ const campusHighlights = [
 ];
 
 export default function AvailabilityPage() {
+  // UI state for the currently active suite, gallery image, and category filter.
   const [activeSuiteId, setActiveSuiteId] = useState<Suite["id"]>(suites[0]?.id ?? "");
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState<"buildings" | "executive">("buildings");
 
+  // Grab the suites that match the selected tab.
   const filteredSuites = useMemo(
     () => suites.filter((suite) => suite.category === selectedCategory),
     [selectedCategory]
   );
 
+  // Fall back to the full list if a category has no entries yet.
   const visibleSuites = filteredSuites.length ? filteredSuites : suites;
 
+  // Resolve the full suite record backing the current selection.
   const activeSuite = useMemo(
     () => visibleSuites.find((suite) => suite.id === activeSuiteId) ?? visibleSuites[0],
     [activeSuiteId, visibleSuites],
@@ -183,6 +189,7 @@ export default function AvailabilityPage() {
 
   const images = activeSuite?.images ?? [];
 
+  // Keep selections in sync when the visible suites set changes (e.g., new filter).
   useEffect(() => {
     if (!visibleSuites.some((suite) => suite.id === activeSuiteId)) {
       const fallback = visibleSuites[0]?.id ?? "";
@@ -191,6 +198,7 @@ export default function AvailabilityPage() {
     }
   }, [visibleSuites, activeSuiteId]);
 
+  // User interactions that update the active category or suite.
   const handleCategoryChange = (category: "buildings" | "executive") => {
     setSelectedCategory(category);
   };
@@ -202,9 +210,11 @@ export default function AvailabilityPage() {
 
   return (
     <main className="min-h-screen bg-gray-50 text-slate-900">
+      {/* Introduces the page and reports total availability. */}
       <AvailabilityHero availableCount={suites.filter((suite) => suite.status === "available").length} />
 
       <section className="mx-auto max-w-6xl px-4 pb-20">
+        {/* Category toggle pills. */}
         <div className="mb-8 flex flex-wrap items-center gap-3 text-sm">
           <div className="flex rounded-full border border-slate-200 bg-white p-1">
             {suiteFilterOptions.map((option) => (
@@ -224,6 +234,7 @@ export default function AvailabilityPage() {
           </div>
         </div>
 
+        {/* Core layout: list + gallery + supporting details. */}
         <div className="grid gap-8 lg:grid-cols-2">
           <SuiteList
             suites={visibleSuites}
@@ -247,6 +258,7 @@ export default function AvailabilityPage() {
           />
         </div>
 
+        {/* Detail panels for the selected suite. */}
         <div className="mt-12 grid gap-6 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)]">
           {activeSuite && <SuiteDetails suite={activeSuite} />}
           {activeSuite && <SuiteHighlights suite={activeSuite} />}
@@ -255,6 +267,7 @@ export default function AvailabilityPage() {
 
       <section className="bg-white py-16">
         <div className="mx-auto max-w-6xl px-4">
+          {/* Campus highlight cards and CTAs. */}
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
               Explore the Campus
