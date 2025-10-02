@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { PiCheckCircleBold } from "react-icons/pi";
 
+// Toggle buttons that swap the available suite data set.
 const suiteOptions = [
   {
     label: "Buildings/Suites",
@@ -16,6 +17,7 @@ const suiteOptions = [
   },
 ];
 
+// Amenities list displayed alongside the hero content.
 const amenities = [
   "Free parking campus-wide",
   "Frontier Smart Park/Fios connectivity",
@@ -28,15 +30,18 @@ const amenities = [
 ];
 
 export default function Features() {
+  // Track which suite option is active for both layouts.
   const [selectedOption, setSelectedOption] = useState<string>(suiteOptions[0]?.label ?? "");
 
   return (
+    // Shared page wrapper that provides the light background treatment.
     <main className="min-h-screen bg-gray-50 text-slate-900">
       {/* Desktop Layout */}
       <section className="relative hidden min-h-screen md:flex">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.18),_transparent_60%)]" aria-hidden="true" />
 
         <aside className="relative z-10 flex w-full max-w-[520px] flex-col gap-8 rounded-r-3xl bg-white p-12 shadow-2xl shadow-slate-900/10 ring-1 ring-slate-200">
+          {/* Intro copy and CTA buttons for the amenities experience. */}
           <div className="space-y-4 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.4em] text-slate-500">
               Amenities
@@ -75,7 +80,7 @@ export default function Features() {
             <ul className="flex flex-col gap-3 text-left text-sm text-slate-600">
               {amenities.map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <PiCheckCircleBold className="mt-0.5 w-5 h-5 shrink-0 text-slate-500" aria-hidden="true" />
+                  <PiCheckCircleBold className="mt-0.5 w-5 h-5 text-slate-500" aria-hidden="true" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -100,6 +105,7 @@ export default function Features() {
 
         <div className="relative flex flex-1 items-center justify-center">
           <div className="absolute inset-0 z-10" aria-hidden="true" />
+          {/* Lifestyle photography anchoring the desktop layout. */}
           <Image
             src="/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-14-LargeHighDefinition.jpg"
             alt="Office Suite interior"
@@ -117,6 +123,7 @@ export default function Features() {
       {/* Mobile Layout */}
       <section className="block min-h-screen px-5 py-16 md:hidden">
         <div className="rounded-3xl bg-white p-8 shadow-xl shadow-slate-900/10 ring-1 ring-slate-200">
+          {/* Mobile-first headline and supporting copy. */}
           <div className="space-y-4 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">Amenities</p>
             <h2 className="text-3xl font-semibold leading-tight text-slate-900">
@@ -129,6 +136,7 @@ export default function Features() {
           </div>
 
           <div className="mt-8 overflow-hidden rounded-2xl shadow-lg shadow-slate-900/10">
+            {/* Scaled image for mobile viewports. */}
             <Image
               src="/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-14-LargeHighDefinition.jpg"
               alt="Office Suite interior"
@@ -162,7 +170,7 @@ export default function Features() {
             <ul className="mt-4 flex flex-col gap-3 text-sm text-slate-600">
               {amenities.map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <PiCheckCircleBold className="mt-0.5 h-5 w-5 shrink-0 text-slate-500" aria-hidden="true" />
+                  <PiCheckCircleBold className="mt-0.5 h-5 w-5 text-slate-500" aria-hidden="true" />
                   <span>{item}</span>
                 </li>
               ))}
