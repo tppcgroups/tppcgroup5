@@ -5,7 +5,7 @@ import {
   PiMapPinBold,
   PiPhoneBold,
 } from "react-icons/pi";
-//Test
+
 const quickLinks = [
   { label: "Home", href: "/pages/Home" },
   { label: "Availability", href: "/pages/Availability" },

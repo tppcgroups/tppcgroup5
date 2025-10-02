@@ -75,7 +75,7 @@ export default function Features() {
             <ul className="flex flex-col gap-3 text-left text-sm text-slate-600">
               {amenities.map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <PiCheckCircleBold className="mt-0.5 text-lg text-slate-500" aria-hidden="true" />
+                  <PiCheckCircleBold className="mt-0.5 w-5 h-5 shrink-0 text-slate-500" aria-hidden="true" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -162,7 +162,7 @@ export default function Features() {
             <ul className="mt-4 flex flex-col gap-3 text-sm text-slate-600">
               {amenities.map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <PiCheckCircleBold className="mt-0.5 text-lg text-slate-500" aria-hidden="true" />
+                  <PiCheckCircleBold className="mt-0.5 h-5 w-5 shrink-0 text-slate-500" aria-hidden="true" />
                   <span>{item}</span>
                 </li>
               ))}

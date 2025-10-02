@@ -1,7 +1,7 @@
-import ContactHeader from "./ContactHeader";
-import InfoBlock from "./InfoBlock";
-import InfoBlurb from "./InfoBlurb";
-import ContactForm from "./ContactForm/ContactForm";
+import ContactHeader from "../../components/contact/ContactHeader";
+import InfoBlock from "../../components/contact/InfoBlock";
+import InfoBlurb from "../../components/contact/InfoBlurb";
+import ContactForm from "../../components/contact/ContactForm/ContactForm";
 
 export default function Page() {
   return (
