@@ -14,7 +14,7 @@ export default function HighlightedLocation() {
             <div className="w-60 h-auto bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-4 transition-all duration-300 hover:bg-white/20 hover:border-white/30">
             <div className="relative aspect-video overflow-hidden rounded-lg">
                 <Image
-                src="/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-5-LargeHighDefinition.jpg" // Placeholder - use an actual suite image
+                src="/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-5-LargeHighDefinition.jpg"
                 alt="Highlighted Suite"
                 width={2000}
                 height={4000}
