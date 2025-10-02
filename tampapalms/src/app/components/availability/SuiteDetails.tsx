@@ -49,27 +49,13 @@ export function SuiteDetails({ suite }: SuiteDetailsProps) {
       </dl>
 
       {/* Contextual actions for prospects. */}
-      <div className="mt-6 flex flex-wrap gap-3">
+      <div className="mt-6 flex items-center justify-center">
         <Link
           href="/pages/Contact"
           className="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/20 transition hover:bg-slate-800"
         >
           Request Tour
         </Link>
-        <Link
-          href={suite.brochureHref ?? "/pages/Apply"}
-          className="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-400 hover:bg-slate-100"
-        >
-          View Brochure
-        </Link>
-        {suite.floorplanHref && (
-          <Link
-            href={suite.floorplanHref}
-            className="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
-          >
-            View Floorplan
-          </Link>
-        )}
       </div>
     </div>
   );

@@ -114,7 +114,7 @@ const suites: Suite[] = [
     building: "Bridge Hill Court",
     size: "1974 SF",
     status: "occupied",
-    type: "Office",
+    type: "Building/Suites",
     rate: "Join Waitlist",
     description:
       "Functional flex office currently committed. Join the waitlist for the next availability in this configuration.",
@@ -265,48 +265,7 @@ export default function AvailabilityPage() {
         </div>
       </section>
 
-      <section className="bg-white py-16">
-        <div className="mx-auto max-w-6xl px-4">
-          {/* Campus highlight cards and CTAs. */}
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
-              Explore the Campus
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold text-slate-900">Workspace options for every stage</h2>
-            <p className="mt-4 text-sm text-slate-600">
-              From executive offices to flexible suites, Tampa Palms Professional Center pairs modern
-              workspace design with on-site hospitality and amenities.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {campusHighlights.map((category) => (
-              <article
-                key={category.title}
-                className="h-full rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-lg shadow-slate-900/10 transition hover:-translate-y-1 hover:shadow-xl"
-              >
-                <h3 className="text-xl font-semibold text-slate-900">{category.title}</h3>
-                <p className="mt-3 text-sm text-slate-600">{category.description}</p>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-12 flex flex-col items-center gap-3 text-sm md:flex-row md:justify-center">
-            <Link
-              href="/pages/Features"
-              className="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 font-semibold text-white shadow-sm shadow-slate-900/20 transition hover:bg-slate-800"
-            >
-              See Amenities
-            </Link>
-            <Link
-              href="/pages/Apply"
-              className="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 font-semibold text-slate-900 transition hover:border-slate-400 hover:bg-slate-100"
-            >
-              Start Your Application
-            </Link>
-          </div>
-        </div>
-      </section>
+      
     </main>
   );
 }
