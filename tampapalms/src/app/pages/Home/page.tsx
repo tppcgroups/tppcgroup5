@@ -16,7 +16,6 @@ import LocationInsights from "@/app/components/home/LocationsInsights/Location"
 export default function Home(){
     const images = [
         "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinitionEdit.png",
-        "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
         "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-9-LargeHighDefinition.jpg",
         "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Aerial-13-LargeHighDefinition.jpg",
     ];  
@@ -53,13 +52,13 @@ export default function Home(){
           <div className="w-full flex md:flex-row flex-col justify-center gap-8">
             <SpacesCard
               title="Buildings/Suites"
-              imageUrl="/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-10-LargeHighDefinition.jpg"
+              imageUrl="/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-11-LargeHighDefinition.jpg"
               href="https://www.loopnet.com/Listing/17425-Bridge-Hill-Ct-Tampa-FL/31448652/"
               features={officeFeatures}
             />
             <SpacesCard
               title="Executive Suites"
-              imageUrl="/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg"
+              imageUrl="/images/5331/5331-ExploreSpacesCardImage.jpg"
               href="https://www.loopnet.com/Listing/5331-Primrose-Lake-Cir-Tampa-FL/4151894/"
               features={executiveFeatures}
             />
