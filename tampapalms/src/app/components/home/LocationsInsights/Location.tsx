@@ -106,7 +106,7 @@ export default function LocationInsights({
 
                     // Creating a list item for each detail Icon and content label
                     return (
-                      <li className="flex gap-3">
+                      <li key={detail.label} className="flex gap-3">
                         <span className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-emerald-50 text-emerald-600"><Icon size={18} strokeWidth={1.75} /></span>
                         <div>
                           <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{detail.label}</p>
