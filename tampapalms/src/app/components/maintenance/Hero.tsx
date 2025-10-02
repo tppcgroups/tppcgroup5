@@ -37,7 +37,7 @@ export default function Hero({
               Access Maintenance Portal
             </Link>
             <Link
-              href="/pages/contact"
+              href="/pages/Contact"
               className="inline-flex items-center justify-center rounded-full border border-slate-300 px-8 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-400 hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-500"
             >
               Contact Us
