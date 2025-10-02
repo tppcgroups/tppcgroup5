@@ -28,7 +28,7 @@ const suites: Suite[] = [
     ],
     images: [
       {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-11-LargeHighDefinition.jpg",
+        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-5-LargeHighDefinition.jpg",
         alt: "Executive desk with natural light",
       },
       {
@@ -92,7 +92,7 @@ const suites: Suite[] = [
     ],
     images: [
       {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-11-LargeHighDefinition.jpg",
+        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-6-LargeHighDefinition.jpg",
         alt: "Executive desk with natural light",
       },
       {
@@ -124,16 +124,20 @@ const suites: Suite[] = [
     ],
     images: [
       {
+        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-14-LargeHighDefinition.jpg",
+        alt: "Indoor Office Picture",
+      },
+      {
         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-15-LargeHighDefinition.jpg",
         alt: "Workstations inside Suite 305",
       },
       {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-10-LargeHighDefinition.jpg",
-        alt: "Bridge Hill Court exterior angle",
-      },
-      {
         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-16-LargeHighDefinition.jpg",
         alt: "Kitchenette inside suite",
+      },
+      {
+        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-10-LargeHighDefinition.jpg",
+        alt: "Bridge Hill Court exterior angle",
       },
     ],
     category: "buildings",

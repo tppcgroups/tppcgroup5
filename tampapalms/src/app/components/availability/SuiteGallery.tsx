@@ -20,15 +20,15 @@ export function SuiteGallery({
 }: SuiteGalleryProps) {
   return (
     <div className="flex h-full flex-col gap-6">
-      <div className="relative flex-1 overflow-hidden rounded-3xl border border-slate-200 bg-slate-900/5">
+      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-3xl border border-slate-200 bg-slate-900/5">
         {images.length ? (
           <Image
             src={images[activeImageIndex]?.src ?? ""}
             alt={images[activeImageIndex]?.alt ?? suiteLabel ?? "Suite image"}
-            width={1200}
-            height={900}
-            className="h-full w-full object-cover"
+            fill
+            className="object-cover"
             priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-slate-500">
@@ -69,7 +69,12 @@ export function SuiteGallery({
                   : "border-slate-200 hover:border-slate-300"
               }`}
             >
-              <Image src={image.src} alt={image.alt} fill className="object-cover" />
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                className="object-cover"
+              />
             </button>
           ))}
         </div>
