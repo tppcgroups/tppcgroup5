@@ -1,3 +1,4 @@
+// Hero banner for the contact page with background imagery and headline copy.
 export default function ContactHeader() {
   return (
     <header className="relative">
@@ -11,6 +12,7 @@ export default function ContactHeader() {
           aria-hidden
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 to-black/40" />
+        {/* Centered greeting layered above the image and gradient. */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-white px-4">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight drop-shadow">Contact</h1>
           <div className="mt-4 h-1 w-36 rounded-full bg-slate-600" />

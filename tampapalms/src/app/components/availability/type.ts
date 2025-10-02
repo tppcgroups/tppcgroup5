@@ -1,3 +1,4 @@
+// Shared typings for availability data consumed across the availability page.
 export type AvailabilityStatus = "available" | "comingSoon" | "occupied";
 
 export type Suite = {

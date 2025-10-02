@@ -1,15 +1,11 @@
-const bullets = [
-  "Same-day responses for tenants and new inquiries",
-  "On-site ownership available for tours and meetings",
-  "Emergency maintenance hotline available 24/7",
-];
-
+// Map card that anchors the contact page and links to the full Google Maps listing.
 export default function InfoBlurb() {
   const mapSrc =
     "https://www.google.com/maps?q=17427+Bridge+Hill+Court,+Suite+C,+Tampa,+FL+33647&output=embed";
 
   return (
     <div className="flex md:justify-center">
+      {/* Glassmorphism container wrapping the embedded map. */}
       <div className="w-full max-w-md overflow-hidden rounded-xl shadow-sm border border-white/50 bg-white/40 backdrop-blur">
         <iframe
           title="Tampa Palms Professional Center Map"

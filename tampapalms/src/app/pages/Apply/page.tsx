@@ -29,17 +29,17 @@ export default function Apply() {
                 </header>
 
                 {/* Main Content */}
-                <div className="flex flex-1 flex-col-reverse md:flex-row md:h-[calc(100vh-220px)]">
+                <div className="flex flex-1 flex-col-reverse gap-12 md:flex-row md:items-start md:gap-16">
                     {/* Left info column */}
-                    <div className="flex w-full flex-col items-center gap-8 px-4 pb-12 pt-6 sm:px-6 md:w-2/5 md:items-start md:justify-start md:px-10 md:pt-10 md:gap-10">
+                    <div className="flex w-full flex-col items-center gap-8 px-4 pb-12 pt-6 sm:px-6 md:w-1/2 md:max-w-lg md:items-start md:justify-start md:px-10 md:pt-10 md:gap-10">
                         <ApplicationTitle />
                         <Perks />
                         <ApplicationLink />
                     </div>
 
                     {/* Right image column */}
-                    <div className="relative w-full h-56 sm:h-72 md:flex-1 md:h-auto px-4 sm:px-6 md:px-10 pb-8 pt-4 md:pt-10">
-                        <div className="relative h-full w-full overflow-hidden rounded-2xl md:rounded-3xl">
+                    <div className="relative w-full px-4 pb-8 pt-4 sm:px-6 md:flex-1 md:self-start md:px-10 md:pb-12 md:pt-10">
+                        <div className="relative h-56 w-full overflow-hidden rounded-2xl sm:h-72 md:aspect-[4/3] md:h-auto md:max-w-xl md:rounded-3xl">
                             <Image
                                 src={heroImage}
                                 alt="Aerial view of Tampa Palms Professional Center"
