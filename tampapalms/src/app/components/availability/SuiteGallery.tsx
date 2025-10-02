@@ -18,8 +18,10 @@ export function SuiteGallery({
   onSelectImage,
   suiteLabel,
 }: SuiteGalleryProps) {
+  // Carousel showing the selected suite imagery alongside thumbnail navigation.
   return (
     <div className="flex h-full flex-col gap-6">
+      {/* Primary image viewport with next/prev controls. */}
       <div className="relative w-full aspect-[4/3] overflow-hidden rounded-3xl border border-slate-200 bg-slate-900/5">
         {images.length ? (
           <Image
@@ -58,6 +60,7 @@ export function SuiteGallery({
 
       {images.length > 1 && (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {/* Thumbnail strip for quickly swapping images. */}
           {images.map((image, index) => (
             <button
               key={image.src}
@@ -82,4 +85,3 @@ export function SuiteGallery({
     </div>
   );
 }
-

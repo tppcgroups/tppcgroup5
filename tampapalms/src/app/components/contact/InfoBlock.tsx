@@ -1,23 +1,4 @@
-const items = [
-  {
-    label: "Phone",
-    value: "813.876.7697",
-    href: "tel:+18138767697",
-    helper: "Monday – Friday, 8:30 AM – 5:30 PM",
-  },
-  {
-    label: "Email",
-    value: "admin@tampapalmscenter.com",
-    href: "mailto:admin@tampapalmscenter.com",
-    helper: "Tenant support & leasing questions",
-  },
-  {
-    label: "Office & Mailing",
-    value: "17427 Bridge Hill Court, Suite C, Tampa, FL 33647",
-    helper: "Located within Tampa Palms Professional Center",
-  },
-];
-
+// Primary contact methods with quick links to call, email, and visit.
 export default function InfoBlock() {
   const googleDir =
     "https://www.google.com/maps/dir/?api=1&destination=17427+Bridge+Hill+Court,+Suite+C,+Tampa,+FL+33647";
@@ -44,6 +25,7 @@ export default function InfoBlock() {
         <p className="font-semibold">Corporate Office &amp; Mailing Address</p>
         <p className="text-neutral-800">17427 Bridge Hill Court, Suite C, Tampa, FL 33647</p>
 
+        {/* Driving directions shortcuts for common map apps. */}
         <div className="mt-3 flex gap-3">
           <a
             href={googleDir}
@@ -70,6 +52,7 @@ export default function InfoBlock() {
           <li>Mon–Fri: 9:00 AM – 5:00 PM</li>
           <li>Sat–Sun: Closed</li>
         </ul>
+        {/* Reinforces response expectations for prospects and tenants. */}
         <p className="mt-1 text-sm text-neutral-600">Typical response time: within 1 business day.</p>
       </div>
     </div>

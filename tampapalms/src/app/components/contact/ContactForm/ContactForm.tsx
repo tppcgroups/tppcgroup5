@@ -6,6 +6,7 @@ import Badge from "./Badge";
 type Status = "idle" | "loading" | "success" | "error";
 
 export default function ContactForm() {
+  // Tracks async submission state and feedback messaging.
   const [status, setStatus] = React.useState<Status>("idle");
   const [message, setMessage] = React.useState<string>("");
 
@@ -14,6 +15,7 @@ export default function ContactForm() {
     const form = e.currentTarget;
     const fd = new FormData(form);
 
+    // Honeypot check catches simple bots without blocking real users.
     if ((fd.get("company") as string)?.trim()) {
       setStatus("success");
       setMessage("Thanks! We’ll be in touch soon.");
@@ -24,6 +26,7 @@ export default function ContactForm() {
     setStatus("loading");
     setMessage("");
 
+    // Submit the form fields to the contact API route.
     const payload = Object.fromEntries(fd.entries());
     try {
       const res = await fetch("/api/contact", {
@@ -74,10 +77,12 @@ export default function ContactForm() {
             I consent to be contacted about my inquiry and agree to the{" "}
             <a href="/privacy" className="underline decoration-slate-500/60 hover:decoration-slate-700">Privacy Policy</a>.
           </label>
+          {/* Hidden field serves as a spam trap for automated submissions. */}
           <input type="text" name="company" autoComplete="off" tabIndex={-1} aria-hidden="true" className="hidden" />
         </div>
 
         <div className="flex items-center justify-between gap-4">
+          {/* Live submission feedback to keep ADA screen readers informed. */}
           <p role="status" aria-live="polite" className={`text-sm ${status === "error" ? "text-red-600" : "text-neutral-600"}`}>
             {status === "loading" ? "Sending…" : message}
           </p>

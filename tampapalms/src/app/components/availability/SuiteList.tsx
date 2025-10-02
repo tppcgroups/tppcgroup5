@@ -8,6 +8,7 @@ type SuiteListProps = {
 };
 
 export function SuiteList({ suites, activeSuiteId, onSelectSuite }: SuiteListProps) {
+  // Filterable list of suites that drives the detail and gallery panels.
   return (
     <aside className="rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-xl shadow-slate-900/10">
       <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Suites</p>
@@ -17,6 +18,7 @@ export function SuiteList({ suites, activeSuiteId, onSelectSuite }: SuiteListPro
       </p>
       <div className="mt-6 grid gap-3">
         {suites.map((suite) => {
+          // Derived flags for active state and status styling.
           const isActive = suite.id === activeSuiteId;
           const status = statusMap[suite.status];
 
@@ -51,4 +53,3 @@ export function SuiteList({ suites, activeSuiteId, onSelectSuite }: SuiteListPro
     </aside>
   );
 }
-

@@ -7,6 +7,7 @@ type SuiteDetailsProps = {
 };
 
 export function SuiteDetails({ suite }: SuiteDetailsProps) {
+  // Primary suite overview card with stats and actions.
   return (
     <div className="rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-lg shadow-slate-900/10">
       <div className="space-y-3">
@@ -15,6 +16,7 @@ export function SuiteDetails({ suite }: SuiteDetailsProps) {
         <p className="text-sm text-slate-600">{suite.description}</p>
       </div>
 
+      {/* Key specifications pulled from the suite record. */}
       <dl className="mt-6 grid gap-3 text-sm text-slate-600">
         <div className="flex items-center justify-between">
           <dt className="font-semibold text-slate-900">Building</dt>
@@ -46,6 +48,7 @@ export function SuiteDetails({ suite }: SuiteDetailsProps) {
         </div>
       </dl>
 
+      {/* Contextual actions for prospects. */}
       <div className="mt-6 flex flex-wrap gap-3">
         <Link
           href="/pages/Contact"
@@ -71,4 +74,3 @@ export function SuiteDetails({ suite }: SuiteDetailsProps) {
     </div>
   );
 }
-
