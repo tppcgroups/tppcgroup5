@@ -42,13 +42,13 @@ const Perks: React.FC = () => {
     };
 
     return (
-        <div className="flex w-full max-w-md flex-wrap items-stretch justify-center gap-5 md:flex-nowrap">
+        <div className="grid w-full max-w-sm gap-5 mx-auto sm:max-w-2xl sm:grid-cols-2 md:mx-0 xl:max-w-none xl:grid-cols-3">
             {perks.map((perk, index) => {
                 const isOpen = openIndex === index;
                 return (
                     <article
                         key={perk.title}
-                        className={`flex w-44 flex-col items-center rounded-2xl border px-5 py-5 text-center transition-all duration-300 ease-out md:w-48 ${
+                        className={`flex w-full flex-col items-center rounded-2xl border px-5 py-5 text-center transition-all duration-300 ease-out sm:justify-self-center sm:max-w-xs md:justify-self-start md:items-start md:text-left xl:max-w-sm ${
                             isOpen
                                 ? "border-slate-900 bg-slate-900 text-white shadow-xl shadow-slate-900/20"
                                 : "border-slate-200 bg-white text-slate-900 shadow-md shadow-slate-900/10 hover:-translate-y-1 hover:shadow-lg"
@@ -73,17 +73,19 @@ const Perks: React.FC = () => {
                         </button>
 
                         <div
-                            className={`grid w-full transition-[grid-template-rows,opacity] duration-300 ease-out ${
-                                isOpen ? "mt-4 grid-rows-[1fr] opacity-100" : "mt-0 grid-rows-[0fr] opacity-0"
+                            className={`w-full overflow-hidden transition-[max-height,opacity,margin-top] duration-300 ease-out ${
+                                isOpen ? "mt-4 max-h-48 opacity-100" : "mt-0 max-h-0 opacity-0"
                             }`}
                         >
-                            <div className="overflow-hidden text-left">
-                                <ul className={`list-disc list-inside text-xs ${isOpen ? "text-white/80" : "text-slate-500"}`}>
-                                    {perk.details.map((detail, i) => (
-                                        <li key={i}>{detail}</li>
-                                    ))}
-                                </ul>
-                            </div>
+                            <ul
+                                className={`list-disc list-inside text-left text-xs ${
+                                    isOpen ? "text-white/80" : "text-slate-500"
+                                }`}
+                            >
+                                {perk.details.map((detail, i) => (
+                                    <li key={i}>{detail}</li>
+                                ))}
+                            </ul>
                         </div>
                     </article>
                 );
@@ -93,4 +95,3 @@ const Perks: React.FC = () => {
 };
 
 export default Perks;
-
