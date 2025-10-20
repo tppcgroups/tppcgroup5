@@ -58,44 +58,45 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
       className="relative hidden h-[80dvh] overflow-hidden rounded-3xl mx-8 my-4 md:block"
       onMouseEnter={() => autoplayPlugin.current.stop()}
       onMouseLeave={() => autoplayPlugin.current.play()}
-    >
+  >
       <ImageCarousel
         imageUrls={imageUrls}
         className="absolute inset-0 z-10"
       />
 
-      <div
-        className="absolute inset-0 z-20 bg-gradient-to-b from-black/70 via-black/30 to-black/60"
-        aria-hidden="true"
-      />
-
       <div className="relative z-30 flex h-full flex-col justify-between px-14 py-12">
         <div className="flex items-start justify-between gap-10">
-          <div className="max-w-xl space-y-6 text-white">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
-              Flexible workspace in New Tampa
-            </p>
-            <h1 className="text-5xl font-semibold leading-tight">
-              Tampa Palms
-              <span className="block text-white">Professional Center</span>
-            </h1>
-            <p className="text-lg text-white/80">
-              Discover full-floor suites and executive offices designed to keep
-              teams connected, productive, and close to Tampa Palms amenities.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link
-                href="/pages/Availability"
-                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-900 shadow-sm transition hover:bg-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              >
-                View Availability
-              </Link>
-              <Link
-                href="/pages/Contact"
-                className="rounded-full border border-white/70 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              >
-                Schedule a Tour
-              </Link>
+          <div className="relative max-w-xl">
+            <div
+              className="pointer-events-none absolute inset-0 rounded-3xl bg-black/20 backdrop-blur-xl"
+              aria-hidden="true"
+            />
+            <div className="relative space-y-6 p-6 text-white">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+                Flexible workspace in New Tampa
+              </p>
+              <h1 className="text-5xl font-semibold leading-tight">
+                Tampa Palms
+                <span className="block text-white">Professional Center</span>
+              </h1>
+              <p className="text-lg text-white/80">
+                Discover full-floor suites and executive offices designed to keep
+                teams connected, productive, and close to Tampa Palms amenities.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href="/pages/Availability"
+                  className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-900 shadow-sm transition hover:bg-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  View Availability
+                </Link>
+                <Link
+                  href="/pages/Contact"
+                  className="rounded-full border border-white/70 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  Schedule a Tour
+                </Link>
+              </div>
             </div>
           </div>
 

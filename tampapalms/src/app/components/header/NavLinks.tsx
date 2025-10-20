@@ -34,8 +34,8 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen }) => {
         <Link key={link.href} href={link.href} passHref>
           <span
             onClick={handleLinkClick}
-            className={`relative font-medium py-2 text-gray-800 hover:text-black after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:w-0
-              after:bg-gray-800 after:transition-all after:duration-500
+            className={`relative font-medium py-2 text-white after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:w-0
+              after:bg-white after:transition-all after:duration-500
               hover:after:w-full ${
               pathname === link.href
                 ? "after:w-full"
