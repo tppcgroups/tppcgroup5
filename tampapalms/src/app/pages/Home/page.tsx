@@ -10,7 +10,6 @@ import { DesktopHome } from "@/app/components/home/HeroSection/DesktopHome"
 import Spacer from "@/app/components/Spacer"
 import * as React from "react"
 import Autoplay from "embla-carousel-autoplay";
-import AboutUs from "@/app/components/home/HeroSection/AboutUs"
 import LocationInsights from "@/app/components/home/LocationsInsights/Location"
 
 export default function Home(){
@@ -38,8 +37,6 @@ export default function Home(){
         <MobileHome imageUrls={images} />
         {/* Desktop Home Component */}
         <DesktopHome imageUrls={images} />
-        {/* About Us Component */}
-        <AboutUs />
         {/* Explore Spaces container */}
         <div className="rounded-xl my-16 md:my-24 mx-8">
             <div className="text-center my-16 md:my-24">
