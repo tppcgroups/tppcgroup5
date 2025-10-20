@@ -16,7 +16,7 @@ const Header = () => {
         <Logo className="object-contain h-auto" />
 
         {/* --- DESKTOP NAVIGATION --- */}
-        <div className="hidden md:flex flex-1 ml-4 items-center justify-center bg-slate-900 rounded-xl p-6">
+        <div className="hidden md:flex flex-1 ml-4 items-center justify-center bg-gray-200 rounded-xl p-6">
           <NavLinks setIsOpen={setIsOpen} />
         </div>
 
