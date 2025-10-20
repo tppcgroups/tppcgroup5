@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import SpacesCard from "@/app/components/availability/explore_spaces/SpacesCard";
+import TitleCard from "@/app/components/TitleCard";
+import Spacer from "@/app/components/Spacer";
 
 import { AvailabilityHero } from "@/app/components/availability/AvailabilityHero";
 import { SuiteDetails } from "@/app/components/availability/SuiteDetails";
@@ -208,10 +211,27 @@ export default function AvailabilityPage() {
     setActiveImageIndex(0);
   };
 
+  const officeFeatures = [
+    "Ideal for teams and businesses",
+    "Multiple office configurations",
+    "Entire suites available for lease",
+  ];
+
+  const executiveFeatures = [
+    "Perfect for individual professionals",
+    "Single, private office spaces",
+    "Flexible agreements available",
+  ];
+
   return (
+    
     <main className="min-h-screen bg-gray-50 text-slate-900">
       {/* Introduces the page and reports total availability. */}
-      <AvailabilityHero availableCount={suites.filter((suite) => suite.status === "available").length} />
+      <AvailabilityHero
+        availableCount={
+          suites.filter((suite) => suite.status === "available").length
+        }
+      />
 
       <section className="mx-auto max-w-6xl px-4 pb-20">
         {/* Category toggle pills. */}
@@ -247,7 +267,9 @@ export default function AvailabilityPage() {
             activeImageIndex={activeImageIndex}
             onPrev={() => {
               if (!images.length) return;
-              setActiveImageIndex((prev) => (prev - 1 + images.length) % images.length);
+              setActiveImageIndex(
+                (prev) => (prev - 1 + images.length) % images.length
+              );
             }}
             onNext={() => {
               if (!images.length) return;
@@ -265,7 +287,32 @@ export default function AvailabilityPage() {
         </div>
       </section>
 
-      
+      {/* Explore Spaces container */}
+      <div className="rounded-xl my-16 md:my-24 mx-8">
+        <div className="text-center my-16 md:my-24">
+          {/* The "eyebrow" text adds a touch of color and context */}
+          <p className="text-sm font-semibold  uppercase tracking-wider">
+            Our Properties
+          </p>
+          <TitleCard title="Explore Spaces" />
+        </div>
+        <div className="w-full flex md:flex-row flex-col justify-center gap-8">
+          <SpacesCard
+            title="Buildings/Suites"
+            imageUrl="/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-11-LargeHighDefinition.jpg"
+            href="https://www.loopnet.com/Listing/17425-Bridge-Hill-Ct-Tampa-FL/31448652/"
+            features={officeFeatures}
+          />
+          <SpacesCard
+            title="Executive Suites"
+            imageUrl="/images/5331/5331-ExploreSpacesCardImage.jpg"
+            href="https://www.loopnet.com/Listing/5331-Primrose-Lake-Cir-Tampa-FL/4151894/"
+            features={executiveFeatures}
+          />
+        </div>
+        {/* White space below the LoopNet locations */}
+        <Spacer />
+      </div>
     </main>
   );
 }

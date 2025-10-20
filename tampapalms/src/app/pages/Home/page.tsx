@@ -3,7 +3,7 @@
 "use client"
 
 // Import necessary components and libraries
-import SpacesCard from "@/app/components/home/explore_spaces/SpacesCard"
+import SpacesCard from "@/app/components/availability/explore_spaces/SpacesCard"
 import TitleCard from "@/app/components/TitleCard"
 import { MobileHome } from "@/app/components/home/HeroSection/MobileHome"
 import { DesktopHome } from "@/app/components/home/HeroSection/DesktopHome"
@@ -19,17 +19,7 @@ export default function Home(){
         "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Aerial-13-LargeHighDefinition.jpg",
     ];  
 
-    const officeFeatures = [
-      "Ideal for teams and businesses",
-      "Multiple office configurations",
-      "Entire suites available for lease",
-    ];
 
-    const executiveFeatures = [
-      "Perfect for individual professionals",
-      "Single, private office spaces",
-      "Flexible agreements available",
-    ];
 
     return (
       <div>
@@ -37,32 +27,7 @@ export default function Home(){
         <MobileHome imageUrls={images} />
         {/* Desktop Home Component */}
         <DesktopHome imageUrls={images} />
-        {/* Explore Spaces container */}
-        <div className="rounded-xl my-16 md:my-24 mx-8">
-            <div className="text-center my-16 md:my-24">
-                {/* The "eyebrow" text adds a touch of color and context */}
-                <p className="text-sm font-semibold  uppercase tracking-wider">
-                Our Properties
-                </p>
-                <TitleCard title="Explore Spaces" />
-            </div>
-          <div className="w-full flex md:flex-row flex-col justify-center gap-8">
-            <SpacesCard
-              title="Buildings/Suites"
-              imageUrl="/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-11-LargeHighDefinition.jpg"
-              href="https://www.loopnet.com/Listing/17425-Bridge-Hill-Ct-Tampa-FL/31448652/"
-              features={officeFeatures}
-            />
-            <SpacesCard
-              title="Executive Suites"
-              imageUrl="/images/5331/5331-ExploreSpacesCardImage.jpg"
-              href="https://www.loopnet.com/Listing/5331-Primrose-Lake-Cir-Tampa-FL/4151894/"
-              features={executiveFeatures}
-            />
-          </div>
-          {/* White space below the LoopNet locations */}
-          <Spacer />
-        </div>
+        
         <div></div>
         {/* <LocationInsights /> */}
       </div>
