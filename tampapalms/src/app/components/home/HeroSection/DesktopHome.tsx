@@ -65,34 +65,34 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
       />
 
       <div className="relative z-30 flex h-full flex-col justify-between px-14 py-12">
-        <div className="flex items-start justify-between gap-10">
-          <div className="relative max-w-xl">
+        <div className="flex items-start justify-between gap-8">
+          <div className="relative max-w-lg">
             <div
-              className="pointer-events-none absolute inset-0 rounded-3xl bg-black/20 backdrop-blur-xl"
+              className="pointer-events-none absolute inset-0 rounded-3xl bg-black/25 backdrop-blur-xl"
               aria-hidden="true"
             />
-            <div className="relative space-y-6 p-6 text-white">
+            <div className="relative space-y-5 p-5 text-white">
               <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
                 Flexible workspace in New Tampa
               </p>
-              <h1 className="text-5xl font-semibold leading-tight">
+              <h1 className="text-4xl font-semibold leading-snug">
                 Tampa Palms
                 <span className="block text-white">Professional Center</span>
               </h1>
-              <p className="text-lg text-white/80">
+              <p className="text-base text-white/80">
                 Discover full-floor suites and executive offices designed to keep
                 teams connected, productive, and close to Tampa Palms amenities.
               </p>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-3">
                 <Link
                   href="/pages/Availability"
-                  className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-900 shadow-sm transition hover:bg-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-neutral-900 shadow-sm transition hover:bg-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   View Availability
                 </Link>
                 <Link
                   href="/pages/Contact"
-                  className="rounded-full border border-white/70 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="rounded-full border border-white/70 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   Schedule a Tour
                 </Link>
