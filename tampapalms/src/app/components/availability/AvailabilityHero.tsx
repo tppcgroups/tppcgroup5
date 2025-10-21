@@ -28,12 +28,6 @@ export function AvailabilityHero({ availableCount }: AvailabilityHeroProps) {
             {/* Primary calls-to-action */}
             <div className="mt-8 flex flex-wrap gap-3 text-sm">
               <Link
-                href="/pages/Apply"
-                className="inline-flex items-center rounded-full bg-slate-900 px-6 py-3 font-semibold text-white shadow-sm shadow-slate-900/20 transition hover:bg-slate-800"
-              >
-                Begin Application
-              </Link>
-              <Link
                 href="/pages/Contact"
                 className="inline-flex items-center rounded-full border border-slate-300 px-6 py-3 font-semibold text-slate-900 transition hover:border-slate-400 hover:bg-slate-100"
               >

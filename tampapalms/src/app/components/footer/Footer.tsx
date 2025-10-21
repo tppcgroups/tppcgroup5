@@ -27,7 +27,7 @@ export function Footer() {
     // Dark-themed footer ties together leasing info, navigation, and CTAs.
     <footer className="relative overflow-hidden border-t border-stone-900 bg-neutral-950 text-stone-200">
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-neutral-900/90 via-neutral-950 to-black"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-800 via-neutral-950 to-slate-900"
         aria-hidden
       />
 

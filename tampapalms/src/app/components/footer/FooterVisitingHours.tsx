@@ -11,7 +11,7 @@ type FooterVisitingHoursProps = {
 export function FooterVisitingHours({ visitingHours }: FooterVisitingHoursProps) {
   return (
     <div>
-      <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white">Visiting Hours</h3>
+      <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white">Business Hours</h3>
       <ul className="mt-6 space-y-3 text-sm text-stone-300">
         {visitingHours.map((item) => (
           <li key={item.label} className="flex items-center justify-between gap-6">
