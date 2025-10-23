@@ -20,12 +20,12 @@ export function SuiteGallery({
 }: SuiteGalleryProps) {
   // Carousel showing the selected suite imagery alongside thumbnail navigation.
   return (
-    <div className="flex h-full flex-col gap-6">
+    <div className="flex h-full min-h-[480px] flex-col gap-6 rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-lg shadow-slate-900/10">
       {/* Primary image viewport with next/prev controls. */}
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-3xl border border-slate-200 bg-slate-900/5">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-slate-200 bg-slate-900/5">
         {images.length ? (
           <Image
-            src={images[activeImageIndex]?.src ?? ""}
+            src={images[activeImageIndex]?.src ?? null}
             alt={images[activeImageIndex]?.alt ?? suiteLabel ?? "Suite image"}
             fill
             className="object-cover"

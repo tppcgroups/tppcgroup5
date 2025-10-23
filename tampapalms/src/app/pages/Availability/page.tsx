@@ -9,7 +9,7 @@ import Spacer from "@/app/components/Spacer";
 import { AvailabilityHero } from "@/app/components/availability/AvailabilityHero";
 import { SuiteDetails } from "@/app/components/availability/SuiteDetails";
 import { SuiteGallery } from "@/app/components/availability/SuiteGallery";
-import { SuiteHighlights } from "@/app/components/availability/SuiteHighlights";
+import { SuiteFloorPlan } from "@/app/components/availability/SuiteFloorPlan";
 import { SuiteList } from "@/app/components/availability/SuiteList";
 import type { Suite } from "@/app/components/availability/type";
 
@@ -224,7 +224,6 @@ export default function AvailabilityPage() {
   ];
 
   return (
-    
     <main className="min-h-screen bg-gray-50 text-slate-900">
       {/* Introduces the page and reports total availability. */}
       <AvailabilityHero
@@ -255,40 +254,45 @@ export default function AvailabilityPage() {
         </div>
 
         {/* Core layout: list + gallery + supporting details. */}
-        <div className="grid gap-8 lg:grid-cols-2">
-          <SuiteList
-            suites={visibleSuites}
-            activeSuiteId={activeSuite?.id ?? ""}
-            onSelectSuite={handleSuiteSelect}
-          />
-
-          <SuiteGallery
-            images={images}
-            activeImageIndex={activeImageIndex}
-            onPrev={() => {
-              if (!images.length) return;
-              setActiveImageIndex(
-                (prev) => (prev - 1 + images.length) % images.length
-              );
-            }}
-            onNext={() => {
-              if (!images.length) return;
-              setActiveImageIndex((prev) => (prev + 1) % images.length);
-            }}
-            onSelectImage={setActiveImageIndex}
-            suiteLabel={activeSuite?.label}
-          />
+        <div className="grid auto-rows-fr items-stretch gap-8 lg:grid-cols-3">
+          <div className="h-full">
+            <SuiteList
+              suites={visibleSuites}
+              activeSuiteId={activeSuite?.id ?? ""}
+              onSelectSuite={handleSuiteSelect}
+            />
+          </div>
+          <div className="h-full">
+            {activeSuite && <SuiteDetails suite={activeSuite} />}
+          </div>
+          <div className="h-full">
+            <SuiteGallery
+              images={images}
+              activeImageIndex={activeImageIndex}
+              onPrev={() => {
+                if (!images.length) return;
+                setActiveImageIndex(
+                  (prev) => (prev - 1 + images.length) % images.length
+                );
+              }}
+              onNext={() => {
+                if (!images.length) return;
+                setActiveImageIndex((prev) => (prev + 1) % images.length);
+              }}
+              onSelectImage={setActiveImageIndex}
+              suiteLabel={activeSuite?.label}
+            />
+          </div>
         </div>
 
         {/* Detail panels for the selected suite. */}
-        <div className="mt-12 grid gap-6 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)]">
-          {activeSuite && <SuiteDetails suite={activeSuite} />}
-          {activeSuite && <SuiteHighlights suite={activeSuite} />}
-        </div>
+        {/* <div className="mt-12 w-full">
+          <SuiteFloorPlan />
+        </div> */}
       </section>
 
       {/* Explore Spaces container */}
-      <div className="rounded-xl my-16 md:my-24 mx-8">
+      <div className="rounded-xl my-16 md:my-24 mx-8 bg-gray-50">
         <div className="text-center my-16 md:my-24">
           {/* The "eyebrow" text adds a touch of color and context */}
           <p className="text-sm font-semibold  uppercase tracking-wider">
@@ -310,8 +314,6 @@ export default function AvailabilityPage() {
             features={executiveFeatures}
           />
         </div>
-        {/* White space below the LoopNet locations */}
-        <Spacer />
       </div>
     </main>
   );

@@ -10,13 +10,13 @@ type SuiteListProps = {
 export function SuiteList({ suites, activeSuiteId, onSelectSuite }: SuiteListProps) {
   // Filterable list of suites that drives the detail and gallery panels.
   return (
-    <aside className="rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-xl shadow-slate-900/10">
+    <aside className="flex h-full max-h-[480px] overflow-y-auto flex-col rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-lg shadow-slate-900/10">
       <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Suites</p>
       <p className="mt-2 text-sm text-slate-600">
         Select a suite to preview imagery and key details. The list updates as spaces become available
         across the campus.
       </p>
-      <div className="mt-6 grid gap-3">
+      <div className="mt-6 grid flex-1 content-start items-start gap-3 overflow-y-auto pr-1">
         {suites.map((suite) => {
           // Derived flags for active state and status styling.
           const isActive = suite.id === activeSuiteId;
