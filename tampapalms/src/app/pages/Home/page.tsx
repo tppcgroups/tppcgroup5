@@ -28,6 +28,8 @@ export default function Home(){
         <MobileHome imageUrls={images} />
         {/* Desktop Home Component */}
         <DesktopHome imageUrls={images} />
+
+        {/* Uncomment this to see HomeSection */}
         {/* <HomeSections/> */}
         
         <div></div>
