@@ -11,6 +11,7 @@ import Spacer from "@/app/components/Spacer"
 import * as React from "react"
 import Autoplay from "embla-carousel-autoplay";
 import LocationInsights from "@/app/components/home/LocationsInsights/Location"
+import HomeSections from "@/app/components/home/HeroSection/HomeSections"
 
 export default function Home(){
     const images = [
@@ -27,6 +28,7 @@ export default function Home(){
         <MobileHome imageUrls={images} />
         {/* Desktop Home Component */}
         <DesktopHome imageUrls={images} />
+        {/* <HomeSections/> */}
         
         <div></div>
         {/* <LocationInsights /> */}

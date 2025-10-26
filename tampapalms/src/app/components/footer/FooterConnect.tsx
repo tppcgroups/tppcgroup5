@@ -1,4 +1,5 @@
 import { PiMapPinBold, PiPhoneBold } from "react-icons/pi";
+import { FaLinkedinIn, FaFacebookF, FaInstagram } from "react-icons/fa";
 import Image from "next/image";
 
 // Call-to-action tiles for reaching the leasing team or launching maps.
@@ -47,13 +48,7 @@ export function FooterConnect() {
             className="flex w-1/3 items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-white sm:justify-start"
           >
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-300/20 text-white">
-              <Image
-                src="/images/linkedin-icon.png"
-                alt="LinkedIn"
-                width={2048}
-                height={2048}
-                className="w-full h-full object-cover invert-0"
-              />
+            <FaLinkedinIn className="text-xl"/>
             </span>
           </a>
           <a
@@ -63,13 +58,7 @@ export function FooterConnect() {
             className="flex w-1/3 items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-white sm:justify-start"
           >
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-300/20 text-white">
-              <Image
-                src="/images/facebook-icon.png"
-                alt="Facebook"
-                width={2048}
-                height={2048}
-                className="w-full h-full object-cover invert"
-              />
+              <FaFacebookF className="text-xl"/>
             </span>
           </a>
           <a
@@ -79,13 +68,7 @@ export function FooterConnect() {
             className="flex w-1/3 items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-white sm:justify-start"
           >
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-300/20 text-white">
-              <Image
-                src="/images/instagram-icon.png"
-                alt="Instagram"
-                width={2048}
-                height={2048}
-                className="w-full h-full object-cover invert"
-              />
+            <FaInstagram className="text-2xl"/>
             </span>
           </a>
         </div>
