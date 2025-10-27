@@ -323,8 +323,11 @@ export default function AvailabilityPage() {
 
         {/* Detail panels for the selected suite. */}
         {/* <div className="mt-12 w-full">
-          <SuiteFloorPlan />
+          
         </div> */}
+        <div className="mt-12">
+          <SuiteFloorPlan />
+        </div>
       </section>
 
       {/* Explore Spaces container */}
