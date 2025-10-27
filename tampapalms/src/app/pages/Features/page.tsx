@@ -15,6 +15,10 @@ const suiteOptions = [
     label: "Executive Suites",
     isPrimary: false,
   },
+  {
+    label: "S.O.A.R",
+    isPrimary: false
+  }
 ];
 
 // Amenities list displayed alongside the hero content.
@@ -40,7 +44,7 @@ export default function Features() {
       <section className="relative hidden min-h-screen md:flex">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.18),_transparent_60%)]" aria-hidden="true" />
 
-        <aside className="relative z-10 flex w-full max-w-[520px] flex-col gap-8 rounded-r-3xl bg-white p-12 shadow-2xl shadow-slate-900/10 ring-1 ring-slate-200">
+        <aside className="relative z-10 flex w-full max-w-[520px] flex-col gap-8 rounded-none bg-white p-12 shadow-2xl shadow-slate-900/10 ring-1 ring-slate-200">
           {/* Intro copy and CTA buttons for the amenities experience. */}
           <div className="space-y-4 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.4em] text-slate-500">
@@ -80,8 +84,8 @@ export default function Features() {
             <ul className="flex flex-col gap-3 text-left text-sm text-slate-600">
               {amenities.map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <PiCheckCircleBold className="mt-0.5 w-5 h-5 text-slate-500" aria-hidden="true" />
-                  <span>{item}</span>
+                  <PiCheckCircleBold className="w-4 h-5 flex-shrink-0 text-slate-500" aria-hidden="true" />
+                  <span className="leading-snug">{item}</span>
                 </li>
               ))}
             </ul>
@@ -170,8 +174,8 @@ export default function Features() {
             <ul className="mt-4 flex flex-col gap-3 text-sm text-slate-600">
               {amenities.map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <PiCheckCircleBold className="mt-0.5 h-5 w-5 text-slate-500" aria-hidden="true" />
-                  <span>{item}</span>
+                  <PiCheckCircleBold className="w-4 h-5 flex-shrink-0 text-slate-500" aria-hidden="true" />
+                  <span className="leading-snug">{item}</span>
                 </li>
               ))}
             </ul>
