@@ -12,7 +12,7 @@ export type Suite = {
   description: string;
   features: string[];
   images: { src: string; alt: string }[];
-  category: "buildings" | "executive";
+  category: "buildings" | "executive" | "soar";
   brochureHref?: string;
   floorplanHref?: string;
 };

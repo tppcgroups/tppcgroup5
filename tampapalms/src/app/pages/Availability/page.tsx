@@ -9,7 +9,7 @@ import Spacer from "@/app/components/Spacer";
 import { AvailabilityHero } from "@/app/components/availability/AvailabilityHero";
 import { SuiteDetails } from "@/app/components/availability/SuiteDetails";
 import { SuiteGallery } from "@/app/components/availability/SuiteGallery";
-import { SuiteHighlights } from "@/app/components/availability/SuiteHighlights";
+import { SuiteFloorPlan } from "@/app/components/availability/SuiteFloorPlan";
 import { SuiteList } from "@/app/components/availability/SuiteList";
 import type { Suite } from "@/app/components/availability/type";
 
@@ -146,11 +146,47 @@ const suites: Suite[] = [
     ],
     category: "buildings",
   },
+  {
+    id: "ste-111",
+    label: "Suite 111",
+    building: "Cublicle 111",
+    size: "100 SF",
+    status: "available",
+    type: "SOAR",
+    rate: "Upon Request",
+    description:
+      "Functional flex office currently committed. Join the waitlist for the next availability in this configuration.",
+    features: [
+      "Private office with open work bay",
+      "Shared lounge & kitchenette access",
+      "Proximity to wellness trail and campus amenities",
+    ],
+    images: [
+      {
+        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-14-LargeHighDefinition.jpg",
+        alt: "Indoor Office Picture",
+      },
+      {
+        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-15-LargeHighDefinition.jpg",
+        alt: "Workstations inside Suite 305",
+      },
+      {
+        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-16-LargeHighDefinition.jpg",
+        alt: "Kitchenette inside suite",
+      },
+      {
+        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-10-LargeHighDefinition.jpg",
+        alt: "Bridge Hill Court exterior angle",
+      },
+    ],
+    category: "soar",
+  },
 ];
 
-const suiteFilterOptions: Array<{ label: string; value: "buildings" | "executive" }> = [
+const suiteFilterOptions: Array<{ label: string; value: "buildings" | "executive" | "soar" }> = [
   { label: "Buildings/Suites", value: "buildings" },
   { label: "Executive Suites", value: "executive" },
+  { label: "SOAR", value: "soar"}
 ];
 
 // Marketing blurbs featured near the bottom of the page.
@@ -173,7 +209,7 @@ export default function AvailabilityPage() {
   // UI state for the currently active suite, gallery image, and category filter.
   const [activeSuiteId, setActiveSuiteId] = useState<Suite["id"]>(suites[0]?.id ?? "");
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState<"buildings" | "executive">("buildings");
+  const [selectedCategory, setSelectedCategory] = useState<"buildings" | "executive" | "soar">("buildings");
 
   // Grab the suites that match the selected tab.
   const filteredSuites = useMemo(
@@ -202,7 +238,7 @@ export default function AvailabilityPage() {
   }, [visibleSuites, activeSuiteId]);
 
   // User interactions that update the active category or suite.
-  const handleCategoryChange = (category: "buildings" | "executive") => {
+  const handleCategoryChange = (category: "buildings" | "executive" | "soar") => {
     setSelectedCategory(category);
   };
 
@@ -224,7 +260,6 @@ export default function AvailabilityPage() {
   ];
 
   return (
-    
     <main className="min-h-screen bg-gray-50 text-slate-900">
       {/* Introduces the page and reports total availability. */}
       <AvailabilityHero
@@ -255,40 +290,48 @@ export default function AvailabilityPage() {
         </div>
 
         {/* Core layout: list + gallery + supporting details. */}
-        <div className="grid gap-8 lg:grid-cols-2">
-          <SuiteList
-            suites={visibleSuites}
-            activeSuiteId={activeSuite?.id ?? ""}
-            onSelectSuite={handleSuiteSelect}
-          />
-
-          <SuiteGallery
-            images={images}
-            activeImageIndex={activeImageIndex}
-            onPrev={() => {
-              if (!images.length) return;
-              setActiveImageIndex(
-                (prev) => (prev - 1 + images.length) % images.length
-              );
-            }}
-            onNext={() => {
-              if (!images.length) return;
-              setActiveImageIndex((prev) => (prev + 1) % images.length);
-            }}
-            onSelectImage={setActiveImageIndex}
-            suiteLabel={activeSuite?.label}
-          />
+        <div className="grid auto-rows-fr items-stretch gap-8 lg:grid-cols-3">
+          <div className="h-full">
+            <SuiteList
+              suites={visibleSuites}
+              activeSuiteId={activeSuite?.id ?? ""}
+              onSelectSuite={handleSuiteSelect}
+            />
+          </div>
+          <div className="h-full">
+            {activeSuite && <SuiteDetails suite={activeSuite} />}
+          </div>
+          <div className="h-full">
+            <SuiteGallery
+              images={images}
+              activeImageIndex={activeImageIndex}
+              onPrev={() => {
+                if (!images.length) return;
+                setActiveImageIndex(
+                  (prev) => (prev - 1 + images.length) % images.length
+                );
+              }}
+              onNext={() => {
+                if (!images.length) return;
+                setActiveImageIndex((prev) => (prev + 1) % images.length);
+              }}
+              onSelectImage={setActiveImageIndex}
+              suiteLabel={activeSuite?.label}
+            />
+          </div>
         </div>
 
         {/* Detail panels for the selected suite. */}
-        <div className="mt-12 grid gap-6 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)]">
-          {activeSuite && <SuiteDetails suite={activeSuite} />}
-          {activeSuite && <SuiteHighlights suite={activeSuite} />}
+        {/* <div className="mt-12 w-full">
+          
+        </div> */}
+        <div className="mt-12">
+          <SuiteFloorPlan />
         </div>
       </section>
 
       {/* Explore Spaces container */}
-      <div className="rounded-xl my-16 md:my-24 mx-8">
+      <div className="rounded-xl my-16 md:my-24 mx-8 bg-gray-50">
         <div className="text-center my-16 md:my-24">
           {/* The "eyebrow" text adds a touch of color and context */}
           <p className="text-sm font-semibold  uppercase tracking-wider">
@@ -310,8 +353,6 @@ export default function AvailabilityPage() {
             features={executiveFeatures}
           />
         </div>
-        {/* White space below the LoopNet locations */}
-        <Spacer />
       </div>
     </main>
   );
