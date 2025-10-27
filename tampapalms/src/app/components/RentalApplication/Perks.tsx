@@ -17,7 +17,7 @@ const perks: Perk[] = [
         ],
     },
     {
-        title: "Onsite Support ",
+        title: "Onsite Support",
         details: [
             "On-site Maintenance Team",
             "On-site Management Team",
@@ -42,21 +42,23 @@ const Perks: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col w-full items-center justify-center gap-4">
+        <div className="flex flex-col items-center justify-center w-full gap-6">
             {perks.map((perk, index) => {
                 const isOpen = openIndex === index;
                 return (
                     <article
                         key={perk.title}
-                        className={`flex w-full max-w-2xl flex-col rounded-xl border px-6 py-4 text-center transition-all duration-300 ease-out ${
+                        className={`flex w-full max-w-2xl flex-col rounded-xl border px-6 py-4 transition-all duration-300 ease-out ${
                             isOpen
                                 ? "border-slate-900 bg-slate-900 text-white shadow-xl shadow-slate-900/20"
                                 : "border-slate-200 bg-white text-slate-900 shadow-md shadow-slate-900/10 hover:-translate-y-1 hover:shadow-lg"
                         }`}
                     >
-                        {/* Header Row */}
+                        {/* Header row */}
                         <div className="flex items-center justify-between">
-                            <h3 className="text-base font-semibold text-current">{perk.title}</h3>
+                            <h3 className="text-base font-semibold text-current">
+                                {perk.title}
+                            </h3>
 
                             <button
                                 onClick={() => toggleDetails(index)}
@@ -68,17 +70,21 @@ const Perks: React.FC = () => {
                                 type="button"
                                 aria-expanded={isOpen}
                             >
-              <span aria-hidden="true" className="leading-none">
-                {isOpen ? "−" : "+"}
-              </span>
-                                <span className="sr-only">{isOpen ? "Collapse" : "Expand"}</span>
+                <span aria-hidden="true" className="leading-none">
+                  {isOpen ? "−" : "+"}
+                </span>
+                                <span className="sr-only">
+                  {isOpen ? "Collapse" : "Expand"}
+                </span>
                             </button>
                         </div>
 
-                        {/* Details (expand/collapse) */}
+                        {/* Expandable details */}
                         <div
                             className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
-                                isOpen ? "mt-4 grid-rows-[1fr] opacity-100" : "mt-0 grid-rows-[0fr] opacity-0"
+                                isOpen
+                                    ? "mt-4 grid-rows-[1fr] opacity-100"
+                                    : "mt-0 grid-rows-[0fr] opacity-0"
                             }`}
                         >
                             <div className="overflow-hidden text-left">
@@ -101,6 +107,7 @@ const Perks: React.FC = () => {
 };
 
 export default Perks;
+
 
 
 
