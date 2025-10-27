@@ -30,7 +30,7 @@ export default function Home(){
         <DesktopHome imageUrls={images} />
 
         {/* Uncomment this to see HomeSection */}
-        {/* <HomeSections/> */}
+        <HomeSections/>
         
         <div></div>
         {/* <LocationInsights /> */}
