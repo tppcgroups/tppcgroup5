@@ -1,9 +1,15 @@
+import Card from "@/app/components/maintenance/Cards"
+import Hero from "@/app/components/maintenance/Hero"
+
 export default function Maintenance(){
     return(
-        <div className="bg-white">
-            
-            
+        // Maintenance hub with light background treatment.
+        <main className="min-h-screen bg-gray-50">
+            {/* Hero introduces the maintenance offering. */}
+            <Hero />
 
-        </div>
+            {/* Three-step maintenance process cards. */}
+            <Card/>
+        </main>
     );
 }
