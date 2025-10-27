@@ -15,6 +15,10 @@ const suiteOptions = [
     label: "Executive Suites",
     isPrimary: false,
   },
+  {
+    label: "S.O.A.R",
+    isPrimary: false
+  }
 ];
 
 // Amenities list displayed alongside the hero content.
@@ -36,11 +40,15 @@ export default function Features() {
   return (
     // Shared page wrapper that provides the light background treatment.
     <main className="min-h-screen bg-gray-50 text-slate-900">
+      <div className="h-10" />
       {/* Desktop Layout */}
-      <section className="relative hidden min-h-screen md:flex">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.18),_transparent_60%)]" aria-hidden="true" />
+      <section className="relative hidden min-h-screen md:flex mx-5">
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.18),_transparent_60%)]"
+          aria-hidden="true"
+        />
 
-        <aside className="relative z-10 flex w-full max-w-[520px] flex-col gap-8 rounded-r-3xl bg-white p-12 shadow-2xl shadow-slate-900/10 ring-1 ring-slate-200">
+        <aside className="relative z-10 flex w-full max-w-[520px] flex-col gap-8 rounded-none bg-white p-12 shadow-2xl shadow-slate-900/10 ring-1 ring-slate-200 rounded-bl-2xl rounded-tl-2xl">
           {/* Intro copy and CTA buttons for the amenities experience. */}
           <div className="space-y-4 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.4em] text-slate-500">
@@ -50,8 +58,9 @@ export default function Features() {
               Elevated campus experiences for every tenant
             </h1>
             <p className="text-sm text-slate-600">
-              With its ideal location, tailored amenities, and a responsive ownership team on-site daily,
-              Tampa Palms Professional Center delivers a polished setting where your business can thrive.
+              With its ideal location, tailored amenities, and a responsive
+              ownership team on-site daily, Tampa Palms Professional Center
+              delivers a polished setting where your business can thrive.
             </p>
           </div>
 
@@ -80,8 +89,11 @@ export default function Features() {
             <ul className="flex flex-col gap-3 text-left text-sm text-slate-600">
               {amenities.map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <PiCheckCircleBold className="mt-0.5 w-5 h-5 text-slate-500" aria-hidden="true" />
-                  <span>{item}</span>
+                  <PiCheckCircleBold
+                    className="w-4 h-5 flex-shrink-0 text-slate-500"
+                    aria-hidden="true"
+                  />
+                  <span className="leading-snug">{item}</span>
                 </li>
               ))}
             </ul>
@@ -111,7 +123,7 @@ export default function Features() {
             alt="Office Suite interior"
             width={1920}
             height={1080}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover rounded-br-2xl rounded-tr-2xl"
             priority
           />
           <div className="absolute bottom-8 right-8 z-20 rounded-full bg-white px-6 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-slate-900 shadow-lg shadow-slate-900/10 ring-1 ring-slate-200">
@@ -125,13 +137,16 @@ export default function Features() {
         <div className="rounded-3xl bg-white p-8 shadow-xl shadow-slate-900/10 ring-1 ring-slate-200">
           {/* Mobile-first headline and supporting copy. */}
           <div className="space-y-4 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">Amenities</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
+              Amenities
+            </p>
             <h2 className="text-3xl font-semibold leading-tight text-slate-900">
               Elevated campus experiences for every tenant
             </h2>
             <p className="text-sm text-slate-600">
-              With its ideal location, tailored amenities, and a responsive ownership team on-site daily,
-              Tampa Palms Professional Center delivers a polished setting where your business can thrive.
+              With its ideal location, tailored amenities, and a responsive
+              ownership team on-site daily, Tampa Palms Professional Center
+              delivers a polished setting where your business can thrive.
             </p>
           </div>
 
@@ -170,8 +185,11 @@ export default function Features() {
             <ul className="mt-4 flex flex-col gap-3 text-sm text-slate-600">
               {amenities.map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <PiCheckCircleBold className="mt-0.5 h-5 w-5 text-slate-500" aria-hidden="true" />
-                  <span>{item}</span>
+                  <PiCheckCircleBold
+                    className="w-4 h-5 flex-shrink-0 text-slate-500"
+                    aria-hidden="true"
+                  />
+                  <span className="leading-snug">{item}</span>
                 </li>
               ))}
             </ul>
@@ -193,6 +211,7 @@ export default function Features() {
           </div>
         </div>
       </section>
+      <div className="h-20" />
     </main>
   );
 }

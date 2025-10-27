@@ -13,11 +13,11 @@ const suiteOptions = [
     },
     {
         label: "Executive Suites",
-        isPrimary: true,
+        isPrimary: false,
     },
     {
         label: "S.O.A.R",
-        isPrimary: false
+        isPrimary: true
     }
 ];
 
@@ -111,7 +111,8 @@ export default function Features() {
                     <div className="absolute inset-0 z-10" aria-hidden="true" />
                     {/* Lifestyle photography anchoring the desktop layout. */}
                     <Image
-                        src="/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-11-LargeHighDefinition.jpg"                     alt="Office Suite interior"
+                        src="/images/SOAR4.jpg"
+                        alt="Office Suite interior"
                         width={1920}
                         height={1080}
                         className="h-full w-full object-cover"
@@ -141,7 +142,7 @@ export default function Features() {
                     <div className="mt-8 overflow-hidden rounded-2xl shadow-lg shadow-slate-900/10">
                         {/* Scaled image for mobile viewports. */}
                         <Image
-                            src="/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-11-LargeHighDefinition.jpg"
+                            src="/images/SOAR4.jpg"
                             alt="Office Suite interior"
                             width={1920}
                             height={1080}
