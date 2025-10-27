@@ -14,11 +14,12 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen }) => {
 
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/pages/Availability", label: "Office & Executive Suites Availability" },
+    { href: "/pages/Availability", label: "Availability" },
     { href: "/pages/Features", label: "Features & Amenities" },
     { href: "/pages/Maintenance", label: "Maintenance Request" },
     { href: "/pages/Apply", label: "Rental Application" },
     { href: "/pages/Contact", label: "Contact" },
+    { href: "/pages/About", label: "About" },
   ];
 
   // Function to close the menu on mobile when a link is clicked
@@ -34,8 +35,12 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen }) => {
         <Link key={link.href} href={link.href} passHref>
           <span
             onClick={handleLinkClick}
-            className={`font-medium text-gray-700 hover:text-black transition-colors ${
-              pathname === link.href ? "pb-1 border-b-2 border-gray-800" : ""
+            className={`relative font-medium py-2 text-gray-800 hover:text-black after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:w-0
+              after:bg-gray-800 after:transition-all after:duration-500
+              hover:after:w-full ${
+              pathname === link.href
+                ? "after:w-full"
+                : "after:w-0 hover:after:w-full"
             }`}
           >
             {link.label}

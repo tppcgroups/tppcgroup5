@@ -1,61 +1,105 @@
+import type { IconType } from "react-icons";
+import {
+  PiNotebookBold,
+  PiWrenchBold,
+  PiCheckCircleBold,
+  PiPhoneBold,
+} from "react-icons/pi";
 
-import { PiNotebookBold, PiWrenchBold, PiCheckCircleBold, PiPhoneBold  } from "react-icons/pi";
+const emergencyPhone = "(123) 456-7890";
+const emergencyTel = "tel:1234567890";
+
+type Step = {
+  title: string;
+  description: string;
+  icon: IconType;
+};
+
+const steps: Step[] = [
+  {
+    title: "Submit Request",
+    description:
+      "Log into the partner portal anytime to open a new work order and share supporting photos or notes.",
+    icon: PiNotebookBold,
+  },
+  {
+    title: "Handled by Experts",
+    description:
+      "Our maintenance partner assigns the right technician, coordinates scheduling, and keeps you informed.",
+    icon: PiWrenchBold,
+  },
+  {
+    title: "Stay Updated",
+    description:
+      "Track progress, receive notifications, and close out the request once the job is completed to your satisfaction.",
+    icon: PiCheckCircleBold,
+  },
+];
 
 const Card = () => {
-    return(
-        <div className="mx-auto max-w-6xl px-4 py-8">
-            {/*Header*/}
-            <div className="text-center">
-                <h1 className="text-2xl font-semibold tracking-tight text-gray-900">How It Works</h1>
-            </div>
+  return (
+    <section className="mx-auto max-w-6xl px-4 py-16">
+      <header className="mx-auto max-w-2xl text-center">
+        <p className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">
+          How It Works
+        </p>
+        <h2 className="mt-4 text-3xl font-bold text-slate-900 md:text-4xl">
+          A simple, transparent maintenance process
+        </h2>
+        <p className="mt-3 text-base text-slate-600 md:text-lg">
+          From submitting a request to receiving project updates, every step is
+          organized in one place so nothing falls through the cracks.
+        </p>
+      </header>
 
-            {/* Main grid*/}
-            <div className="flex justify-center items-center py-10 bg-transparent">
+      <div className="mt-12 grid gap-6 md:grid-cols-3">
+        {steps.map((step) => {
+          const Icon = step.icon;
+          return (
+            <article
+              key={step.title}
+              className="relative flex h-full flex-col gap-5 rounded-2xl bg-white/95 p-8 shadow-lg shadow-slate-900/5 ring-1 ring-black/5 transition  hover:shadow-xl"
+            >
+              <span
+                className="absolute left-8 top-0 h-1.5 w-16 rounded-full bg-slate-900"
+                aria-hidden="true"
+              />
+              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-3xl text-shadow-gray-800">
+                <Icon aria-hidden="true" />
+              </span>
+              <div className="space-y-3">
+                <h3 className="text-xl font-semibold text-slate-900">
+                  {step.title}
+                </h3>
+                <p className="text-base leading-relaxed text-slate-600">
+                  {step.description}
+                </p>
+              </div>
+            </article>
+          );
+        })}
+      </div>
 
-                <div className=" grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl w-full">
-                    {/* Card 1 - Submit Request */}
-                    <div className="relative bg-white rounded-2xl shadow-lg p-6 space-y-4 transition-transform duration-500 hover:scale-[1.02] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[6px] before:bg-gray-300 before:rounded-t-2xl">
-                        <span className="flex items-center justify-center text-black text-4xl"><PiNotebookBold /></span>
-                        <div className="flex items-center justify-center">
-                            <span><h2 className="text-xl font-semibold text-black ">Submit Request</h2></span>
-                        </div>
-                        <p className="text-black text-center">Log in to our partner system to submit a request online.</p>      
-                    </div>
-
-                    {/* Card 2 - Handled by Experts*/}
-                    <div className="relative bg-white rounded-2xl shadow-lg p-6 space-y-4 transition-transform duration-500 hover:scale-[1.02] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[6px] before:bg-gray-300 before:rounded-t-2xl">
-                        <span className="flex items-center justify-center text-black text-4xl"><PiWrenchBold /></span>
-                        <div className="flex items-center justify-center">
-                            <span><h2 className="text-xl font-semibold text-black ">Handled by Experts</h2></span>
-                        </div>
-                        <p className="text-black text-center">Our partner coordinates and resolves all maintenance issues.</p>      
-                    </div>
-
-                    {/* Card 3 - Stay Updated */}
-                    <div className="relative bg-white rounded-2xl shadow-lg p-6 space-y-4 transition-transform duration-500 hover:scale-[1.02] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[6px] before:bg-gray-300 before:rounded-t-2xl">
-                        <span className="flex items-center justify-center text-green-400 text-4xl"><PiCheckCircleBold /></span>
-                        <div className="flex items-center justify-center">
-                            <span><h2 className="text-xl font-semibold text-black ">Stay Updated</h2></span>
-                        </div>
-                        <p className="text-black text-center">Track the status of your request at any time.</p>      
-                    </div>
-                </div> 
-            </div>
-                {/* Card 4 - Emergency Phone*/}
-                <section className=" ">
-                    <div className="relative bg-white rounded-2xl shadow-lg p-6 space-y-4 transition-transform duration-500 hover:scale-[1.02] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[6px] before:bg-gray-300 before:rounded-t-2xl">
-                        <span className="flex items-center justify-center text-red-600 text-4xl"><PiPhoneBold/> </span>
-                        <div className="flex items-center justify-center">
-                            <span><h2 className="text-xl font-semibold text-black ">Emergency</h2></span>
-                        </div>
-                        <p className="text-black mt-3 mx-26 text-xl">If this is an emergency, such as problems with smoke, electrical spark, break-in, or active plumbing leak, please call the number below and opt 5 to report your problem.</p>
-                        <p className="text-2xl font-extrabold text-black mt-6 tracking-wide text-center">(123)-456-7890</p>
-                    </div>
-                </section> 
+      <div className="mt-14 rounded-2xl border border-red-200 bg-red-50/90 p-8 text-center shadow-lg shadow-red-200/40">
+        <div className="mx-auto flex max-w-xl flex-col gap-3 text-red-700">
+          <div className="flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-[0.25em]">
+            <PiPhoneBold aria-hidden="true" className="text-xl" />
+            Emergency Support
+          </div>
+          <p className="text-base text-red-800 md:text-lg">
+            If you experience smoke, sparking electricity, active leaks, or any
+            other urgent safety issue, call immediately and choose option 5.
+          </p>
+          <a
+            href={emergencyTel}
+            className="mx-auto inline-flex items-center justify-center rounded-full bg-red-600 px-8 py-3 text-sm font-semibold text-white shadow transition hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+          >
+            Call {emergencyPhone}
+          </a>
         </div>
-        
-    );
+      </div>
+    </section>
+  );
 };
 
 export default Card;
-

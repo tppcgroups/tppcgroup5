@@ -1,93 +1,58 @@
-// file: components/Footer.tsx
+import type { FooterLink } from "./FooterQuickLinks";
+import { FooterQuickLinks } from "./FooterQuickLinks";
+import FooterBottom from "./FooterBottom";
+import FooterConnect from "./FooterConnect";
+import FooterLeasingOffice from "./FooterLeasingOffice";
+import type { VisitingHour } from "./FooterVisitingHours";
+import { FooterVisitingHours } from "./FooterVisitingHours";
 
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
+const quickLinks: FooterLink[] = [
+  { label: "Home", href: "/pages/Home" },
+  { label: "Availability", href: "/pages/Availability" },
+  { label: "Features & Amenities", href: "/pages/Features" },
+  { label: "Maintenance Request", href: "/pages/Maintenance" },
+  { label: "Rental Application", href: "/pages/Apply" },
+  { label: "Contact", href: "/pages/Contact" },
+];
+
+const visitingHours: VisitingHour[] = [
+  { label: "Mon – Thu", value: "9:00 am – 5:00 pm" },
+  { label: "Fri", value: "9:00 am – 3:00 pm" },
+];
 
 export function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="bg-black text-gray-300">
-      <div className="container mx-auto px-8 py-12">
-        {/* Added 'items-center' to center the items when in a column on mobile */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-12">
-          {/* Logo will now be centered on mobile */}
-          <div className="flex-shrink-0">
-            <Image
-              src="/images/TampaPalmsLogo.png"
-              alt="Tampa Palms Professional Center Logo"
-              width={200}
-              height={50}
-              className=""
-            />
-          </div>
+    // Dark-themed footer ties together leasing info, navigation, and CTAs.
+    <footer className="relative overflow-hidden border-t border-stone-900 bg-neutral-950 text-stone-200">
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-800 via-neutral-950 to-slate-900"
+        aria-hidden
+      />
 
-          {/* Added responsive text alignment to this grid */}
-          <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-8 text-center md:text-left">
-            {/* Column 1: Quick Links */}
-            <div>
-              <h3 className="font-bold text-white uppercase mb-4">
-                Quick Links
-              </h3>
-              <nav className="flex flex-col space-y-2">
-                <Link href="/pages/Home" className="hover:text-white">
-                  Home
-                </Link>
-                <Link href="/pages/Availability" className="hover:text-white">
-                  Availability
-                </Link>
-                <Link href="/pages/Features" className="hover:text-white">
-                  Features & Amenities
-                </Link>
-                <Link href="/pages/Maintenance" className="hover:text-white">
-                  Maintenance Request
-                </Link>
-                <Link href="/pages/Apply" className="hover:text-white">
-                  Rental Application
-                </Link>
-                <Link href="/pages/Contact" className="hover:text-white">
-                  Contact
-                </Link>
-              </nav>
-            </div>
+      {/* Fading Color */}
+      <div
+        className="pointer-events-none absolute top-[-8rem] left-1/2 h-72 w-[120%] -translate-x-1/2 rounded-[999px] bg-slate-400/10 blur-3xl"
+        aria-hidden
+      />
 
-            {/* Column 2: Hours */}
-            <div>
-              <h3 className="font-bold text-white uppercase mb-4">Hours</h3>
-              <div className="space-y-2">
-                <p>Mon – Thu: 9am – 5pm</p>
-                <p>Fri: 9am – 3pm</p>
-                <p>Sat – Sun: Closed</p>
-              </div>
-            </div>
-
-            {/* Column 3: Contact */}
-            <div>
-              <h3 className="font-bold text-white uppercase mb-4">Contact</h3>
-              <div className="space-y-2">
-                <p>
-                  5331 Primrose Lake Cir
-                  <br />
-                  Tampa, FL 33647
-                </p>
-                <p>
-                  <a href="tel:555-555-5555" className="hover:text-white">
-                    (555) 555-5555
-                  </a>
-                </p>
-              </div>
-            </div>
+      {/* Leasing Office Section */}
+      <div className="relative">
+        <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 lg:px-16">
+          <div className="grid grid-cols-1 gap-12 text-center sm:grid-cols-2 lg:grid-cols-4 sm:text-left">
+            <FooterLeasingOffice />
+            <FooterQuickLinks links={quickLinks} />
+            <FooterVisitingHours visitingHours={visitingHours} />
+            <FooterConnect />
           </div>
         </div>
       </div>
 
-      {/* Bottom Bar with Copyright */}
-      <div className="bg-neutral-900 py-4">
-        <div className="container mx-auto px-8 text-center text-sm">
-          &copy; {new Date().getFullYear()} Tampa Palms Professional Center. All
-          Rights Reserved.
-        </div>
-      </div>
+      {/* Bottom Section */}
+      <FooterBottom year={currentYear} />
     </footer>
   );
 }
+
 export default Footer;
