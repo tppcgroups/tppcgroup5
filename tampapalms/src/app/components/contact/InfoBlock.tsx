@@ -9,21 +9,29 @@ export default function InfoBlock() {
     <div className="space-y-6 text-lg">
       <div>
         <p className="font-semibold">Phone</p>
-        <a href="tel:+18138767697" className="underline decoration-neutral-400 hover:decoration-slate-700">
+        <a
+          href="tel:+18138767697"
+          className="underline decoration-neutral-400 hover:decoration-slate-700"
+        >
           813.876.7697
         </a>
       </div>
 
       <div>
         <p className="font-semibold">Email</p>
-        <a href="mailto:admin@tampapalmscenter.com" className="underline decoration-neutral-400 hover:decoration-slate-700">
-          admin@tampapalmscenter.com
+        <a
+          href="mailto:marketing@tampapalmscenter.com"
+          className="underline decoration-neutral-400 hover:decoration-slate-700"
+        >
+          marketing@tampapalmscenter.com
         </a>
       </div>
 
       <div>
         <p className="font-semibold">Corporate Office &amp; Mailing Address</p>
-        <p className="text-neutral-800">17427 Bridge Hill Court, Suite C, Tampa, FL 33647</p>
+        <p className="text-neutral-800">
+          17427 Bridge Hill Court, Suite C, Tampa, FL 33647
+        </p>
 
         {/* Driving directions shortcuts for common map apps. */}
         <div className="mt-3 flex gap-3">
@@ -53,7 +61,9 @@ export default function InfoBlock() {
           <li>Sat–Sun: Closed</li>
         </ul>
         {/* Reinforces response expectations for prospects and tenants. */}
-        <p className="mt-1 text-sm text-neutral-600">Typical response time: within 1 business day.</p>
+        <p className="mt-1 text-sm text-neutral-600">
+          Typical response time: within 1 business day.
+        </p>
       </div>
     </div>
   );

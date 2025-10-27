@@ -146,11 +146,47 @@ const suites: Suite[] = [
     ],
     category: "buildings",
   },
+  {
+    id: "ste-111",
+    label: "Suite 111",
+    building: "Cublicle 111",
+    size: "100 SF",
+    status: "available",
+    type: "SOAR",
+    rate: "Upon Request",
+    description:
+      "Functional flex office currently committed. Join the waitlist for the next availability in this configuration.",
+    features: [
+      "Private office with open work bay",
+      "Shared lounge & kitchenette access",
+      "Proximity to wellness trail and campus amenities",
+    ],
+    images: [
+      {
+        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-14-LargeHighDefinition.jpg",
+        alt: "Indoor Office Picture",
+      },
+      {
+        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-15-LargeHighDefinition.jpg",
+        alt: "Workstations inside Suite 305",
+      },
+      {
+        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-16-LargeHighDefinition.jpg",
+        alt: "Kitchenette inside suite",
+      },
+      {
+        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-10-LargeHighDefinition.jpg",
+        alt: "Bridge Hill Court exterior angle",
+      },
+    ],
+    category: "soar",
+  },
 ];
 
-const suiteFilterOptions: Array<{ label: string; value: "buildings" | "executive" }> = [
+const suiteFilterOptions: Array<{ label: string; value: "buildings" | "executive" | "soar" }> = [
   { label: "Buildings/Suites", value: "buildings" },
   { label: "Executive Suites", value: "executive" },
+  { label: "SOAR", value: "soar"}
 ];
 
 // Marketing blurbs featured near the bottom of the page.
@@ -173,7 +209,7 @@ export default function AvailabilityPage() {
   // UI state for the currently active suite, gallery image, and category filter.
   const [activeSuiteId, setActiveSuiteId] = useState<Suite["id"]>(suites[0]?.id ?? "");
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState<"buildings" | "executive">("buildings");
+  const [selectedCategory, setSelectedCategory] = useState<"buildings" | "executive" | "soar">("buildings");
 
   // Grab the suites that match the selected tab.
   const filteredSuites = useMemo(
@@ -202,7 +238,7 @@ export default function AvailabilityPage() {
   }, [visibleSuites, activeSuiteId]);
 
   // User interactions that update the active category or suite.
-  const handleCategoryChange = (category: "buildings" | "executive") => {
+  const handleCategoryChange = (category: "buildings" | "executive" | "soar") => {
     setSelectedCategory(category);
   };
 
