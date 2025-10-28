@@ -48,7 +48,7 @@ export default function Features() {
           aria-hidden="true"
         />
 
-        <aside className="relative z-10 flex w-full max-w-[520px] flex-col gap-8 rounded-none bg-white p-12 shadow-2xl shadow-slate-900/10 ring-1 ring-slate-200 rounded-bl-2xl rounded-tl-2xl">
+        <aside className="relative z-10 flex flex-1 basis-[40%] min-w-0 flex-col gap-8 rounded-none bg-white p-12 shadow-2xl shadow-slate-900/10 ring-1 ring-slate-200 rounded-bl-2xl rounded-tl-2xl">
           {/* Intro copy and CTA buttons for the amenities experience. */}
           <div className="space-y-4 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.4em] text-slate-500">
@@ -64,12 +64,12 @@ export default function Features() {
             </p>
           </div>
 
-          <div className="flex w-full gap-4">
+          <div className="flex w-full flex-wrap justify-center gap-2 md:gap-4">
             {suiteOptions.map((option) => (
               <button
                 key={option.label}
                 onClick={() => setSelectedOption(option.label)}
-                className={`flex-1 rounded-full px-5 py-3 text-sm font-semibold transition ${
+                className={`flex-none w-[9.5rem] rounded-full px-2 py-3 text-sm font-semibold transition ${
                   selectedOption === option.label
                     ? "bg-slate-900 text-white shadow-lg shadow-slate-900/20 hover:bg-slate-800"
                     : "bg-white text-slate-900 ring-1 ring-slate-200 hover:bg-slate-100"
@@ -115,7 +115,7 @@ export default function Features() {
           </div>
         </aside>
 
-        <div className="relative flex flex-1 items-center justify-center">
+        <div className="relative flex flex-1 basis-[60%] min-w-0 items-center justify-center">
           <div className="absolute inset-0 z-10" aria-hidden="true" />
           {/* Lifestyle photography anchoring the desktop layout. */}
           <Image
@@ -167,7 +167,7 @@ export default function Features() {
               <button
                 key={option.label}
                 onClick={() => setSelectedOption(option.label)}
-                className={`w-full rounded-full px-5 py-3 text-sm font-semibold transition ${
+                className={`w-full rounded-full px-3 py-3 text-sm font-semibold transition ${
                   selectedOption === option.label
                     ? "bg-slate-900 text-white shadow-lg shadow-slate-900/20 hover:bg-slate-800"
                     : "bg-white text-slate-900 ring-1 ring-slate-200 hover:bg-slate-100"
