@@ -26,7 +26,7 @@ export const MobileHome: React.FC<MobileHomeProps> = ({ imageUrls }) => {
     );
 
     return (
-      <div className="md:hidden my-4 mx-4">
+      <div className="min-[900]:hidden my-4 mx-4">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-800">
             Tampa Palms

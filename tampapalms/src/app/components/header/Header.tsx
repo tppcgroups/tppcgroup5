@@ -16,13 +16,13 @@ const Header = () => {
         <Logo className="object-contain h-auto" />
 
         {/* --- DESKTOP NAVIGATION --- */}
-        <div className="hidden md:flex flex-1 ml-4 items-center justify-center transparent rounded-xl p-6">
+        <div className="hidden min-[900px]:flex flex-1 ml-4 items-center justify-center transparent rounded-xl p-6">
           <NavLinks setIsOpen={setIsOpen} />
         </div>
 
         {/* --- HAMBURGER BUTTON (Mobile Only) --- */}
         {/* The container for the button is now styled */}
-        <div className="md:hidden ml-4 rounded-xl p-4 flex items-center transparent justify-center">
+        <div className="min-[900px]:hidden ml-4 rounded-xl p-4 flex items-center transparent justify-center">
           {/* 2. Replace the old button with the new animated one */}
           <AnimatedHamburgerButton
             isOpen={isOpen}
@@ -34,7 +34,7 @@ const Header = () => {
       {/* --- MOBILE MENU (Dropdown) --- */}
       {/* The dropdown container is now styled */}
       <div
-        className={`md:hidden mx-4 overflow-hidden rounded-xl transparent transition-all duration-500 ${
+        className={`min-[900px]:hidden mx-4 overflow-hidden rounded-xl transparent transition-all duration-500 ${
           isOpen ? "max-h-96 opacity-100 p-6" : "max-h-0 opacity-0 p-0"
         }`}
       >
