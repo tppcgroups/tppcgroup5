@@ -16,7 +16,7 @@ const FAQMain: React.FC<FAQProps> = ({question, answer}) => {
             <span className="text-2xl font-medium text-slate-900 group-data-hover:text-slate-900/80">
               {question}
             </span>
-            <ChevronDownIcon className="size-8 fill-slate-900/60 group-data-hover:fill-slate-900/50 group-data-open:rotate-180 transition-all duration-500 ease-in-out" />
+            <ChevronDownIcon className="size-8 flex-shrink-0 fill-slate-900/60 group-data-hover:fill-slate-900/50 group-data-open:rotate-180 transition-all duration-500 ease-in-out" />
           </DisclosureButton>
           <Transition
             enter="transition-all duration-500 ease-out"
