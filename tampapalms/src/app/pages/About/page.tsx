@@ -1,5 +1,7 @@
 import AboutInfo from "@/app/components/about/AboutInfo";
 import AboutImage from "@/app/components/about/AboutImage";
+import FAQTitle from "@/app/components/about/FAQTitle";
+import FAQMain from "@/app/components/about/FAQMain";
 
 export default function About()  {
     return (
@@ -10,6 +12,9 @@ export default function About()  {
           {/* Right Side - Image */}
           <AboutImage />
         </div>
+        <hr className="mt-10 border border-slate-900"/>
+        <FAQTitle />
+        <FAQMain />
       </section>
     );
 }
