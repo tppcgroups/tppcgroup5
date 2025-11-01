@@ -34,6 +34,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen }) => {
       ],
     },
     { href: "/pages/Contact", label: "Contact" },
+    { href: "/pages/Testimonials", label: "Testimonials"},
     { href: "/pages/About", label: "About" },
   ];
 
@@ -89,7 +90,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen }) => {
             isDropdownOpen || isActive
               ? "after:w-full"
               : "after:w-0 md:hover:after:w-full";
-          const dropdownClasses = `relative inline-flex items-center justify-center px-4 py-2 text-center text-xl font-bold text-gray-800 hover:text-black ${underlineBase} ${dropdownUnderline} mx-auto md:mx-0`;
+          const dropdownClasses = `relative inline-flex items-center justify-center py-[5px] px-4 text-center text-xl font-bold text-gray-800 hover:text-black ${underlineBase} ${dropdownUnderline} mx-auto md:mx-0`;
           return (
             <div
               key={link.label}
