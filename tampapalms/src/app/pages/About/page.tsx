@@ -1,4 +1,5 @@
 'use client'
+import axios from 'axios';
 import AboutInfo from "@/app/components/about/AboutInfo";
 import AboutImage from "@/app/components/about/AboutImage";
 import FAQTitle from "@/app/components/about/FAQTitle";
@@ -18,14 +19,14 @@ export default function About()  {
 
   useEffect(() => {
     async function fetchFAQS() {
-      const {data, error} = await supabaseBrowser().from('faqs').select('*');
-      if (error) {
-        console.error("Error fetching FAQs:", error);
-      } else {
-        setFaqs(data || []);
-        console.log("FAQ rows:", data?.length, data); 
+      try {
+        const response = await axios.get('/api/faqs');
+        setFaqs(response.data || []);
+      } catch (error) {
+        console.error("Error loading FAQS:", error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
     fetchFAQS();
   }, [])
@@ -39,6 +40,7 @@ export default function About()  {
         </div>
         <hr className="mt-10 border border-slate-900"/>
         <FAQTitle />
+        {loading && (<p className='text-xl text-center'>Loading FAQS...</p>)}
         {faqs.map((faq, index) => {
           return <FAQMain key={index} question={faq.question} answer={faq.answer} />
         })}
