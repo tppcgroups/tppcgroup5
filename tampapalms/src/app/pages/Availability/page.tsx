@@ -11,178 +11,207 @@ import { SuiteDetails } from "@/app/components/availability/SuiteDetails";
 import { SuiteGallery } from "@/app/components/availability/SuiteGallery";
 import { SuiteFloorPlan } from "@/app/components/availability/SuiteFloorPlan";
 import { SuiteList } from "@/app/components/availability/SuiteList";
+import { BuildingList } from "@/app/components/availability/BuildingList";
 import type { Suite, Building } from "@/app/components/availability/type";
 import axios from "axios";
 
+type AvailabilityStatus = "available" | "comingSoon" | "occupied";
+
+// 1. Status Normalization
+const normalizeStatus = (
+  rawStatus: string | null | undefined
+): AvailabilityStatus => {
+  if (!rawStatus) return "occupied";
+  const status = rawStatus.toLowerCase().trim();
+  if (status === "available") return "available";
+  return "occupied"; // Default to occupied/waitlisted for all other values
+};
+
+// 2. Status Map (Needs to be defined or imported for the status badge logic)
+const statusMap: Record<
+  AvailabilityStatus,
+  { label: string; className: string }
+> = {
+  available: {
+    label: "Available",
+    className: "bg-emerald-100 text-emerald-700",
+  },
+  comingSoon: {
+    label: "Coming Soon",
+    className: "bg-slate-100 text-slate-700",
+  },
+  occupied: { label: "Waitlisted", className: "bg-slate-100 text-slate-600" },
+};
+
 // Suite catalog used to drive the availability page content.
-const suites: Suite[] = [
-  {
-    id: "ste-105",
-    label: "Suite 105",
-    building: "Primrose Lake Circle",
-    size: "354 SF",
-    status: "available",
-    type: "Executive Suite",
-    rate: "By Request",
-    description:
-      "Corner suite with floor-to-ceiling windows, reception area, four private offices, and a conference room ready for hybrid teams.",
-    features: [
-      "Fully wired for Frontier Smart Park/Fios",
-      "Dedicated break area with sink and cabinetry",
-      "Near main lobby and visitor parking",
-    ],
-    images: [
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-5-LargeHighDefinition.jpg",
-        alt: "Executive desk with natural light",
-      },
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-4-LargeHighDefinition.jpg",
-        alt: "Shared breakout seating",
-      },
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
-        alt: "Exterior of Primrose Lake Circle",
-      },
-    ],
-    category: "Exec",
-    brochureHref: "/documents/tppc-suite-101.pdf",
-  },
-  {
-    id: "ste-107",
-    label: "Suite 107",
-    building: "Primrose Lake Circle",
-    size: "274 SF",
-    status: "available",
-    type: "Executive Suite",
-    rate: "By Request",
-    description:
-      "Corner suite with floor-to-ceiling windows, reception area, four private offices, and a conference room ready for hybrid teams.",
-    features: [
-      "Fully wired for Frontier Smart Park/Fios",
-      "Dedicated break area with sink and cabinetry",
-      "Near main lobby and visitor parking",
-    ],
-    images: [
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-11-LargeHighDefinition.jpg",
-        alt: "Executive desk with natural light",
-      },
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-4-LargeHighDefinition.jpg",
-        alt: "Shared breakout seating",
-      },
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
-        alt: "Exterior of Primrose Lake Circle",
-      },
-    ],
-    category: "Exec",
-    brochureHref: "/documents/tppc-suite-101.pdf",
-  },
-  {
-    id: "ste-119",
-    label: "Suite 119",
-    building: "Primrose Lake Circle",
-    size: "323 SF",
-    status: "available",
-    type: "Executive Suite",
-    rate: "By Request",
-    description:
-      "Bright second-floor suite ideal for professional services. Includes a reception zone, two private offices, and generous storage.",
-    features: [
-      "Glass sidelights for natural light",
-      "Shared conference room access on floor",
-      "Steps from the elevator core",
-    ],
-    images: [
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-6-LargeHighDefinition.jpg",
-        alt: "Executive desk with natural light",
-      },
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-4-LargeHighDefinition.jpg",
-        alt: "Shared breakout seating",
-      },
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
-        alt: "Exterior of Primrose Lake Circle",
-      },
-    ],
-    category: "Exec",
-    brochureHref: "/documents/tppc-suite-220.pdf",
-  },
-  {
-    id: "ste-101",
-    label: "Suite 101",
-    building: "Bridge Hill Court",
-    size: "1974 SF",
-    status: "occupied",
-    type: "Building/Suites",
-    rate: "Join Waitlist",
-    description:
-      "Functional flex office currently committed. Join the waitlist for the next availability in this configuration.",
-    features: [
-      "Private office with open work bay",
-      "Shared lounge & kitchenette access",
-      "Proximity to wellness trail and campus amenities",
-    ],
-    images: [
-      {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-14-LargeHighDefinition.jpg",
-        alt: "Indoor Office Picture",
-      },
-      {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-15-LargeHighDefinition.jpg",
-        alt: "Workstations inside Suite 305",
-      },
-      {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-16-LargeHighDefinition.jpg",
-        alt: "Kitchenette inside suite",
-      },
-      {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-10-LargeHighDefinition.jpg",
-        alt: "Bridge Hill Court exterior angle",
-      },
-    ],
-    category: "Office",
-  },
-  {
-    id: "ste-111",
-    label: "Suite 111",
-    building: "Cublicle 111",
-    size: "100 SF",
-    status: "available",
-    type: "SOAR",
-    rate: "Upon Request",
-    description:
-      "Functional flex office currently committed. Join the waitlist for the next availability in this configuration.",
-    features: [
-      "Private office with open work bay",
-      "Shared lounge & kitchenette access",
-      "Proximity to wellness trail and campus amenities",
-    ],
-    images: [
-      {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-14-LargeHighDefinition.jpg",
-        alt: "Indoor Office Picture",
-      },
-      {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-15-LargeHighDefinition.jpg",
-        alt: "Workstations inside Suite 305",
-      },
-      {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-16-LargeHighDefinition.jpg",
-        alt: "Kitchenette inside suite",
-      },
-      {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-10-LargeHighDefinition.jpg",
-        alt: "Bridge Hill Court exterior angle",
-      },
-    ],
-    category: "SOAR",
-  },
-];
+// const suites: Suite[] = [
+//   {
+//     id: "ste-105",
+//     label: "Suite 105",
+//     building: "Primrose Lake Circle",
+//     size: "354 SF",
+//     status: "available",
+//     type: "Executive Suite",
+//     rate: "By Request",
+//     description:
+//       "Corner suite with floor-to-ceiling windows, reception area, four private offices, and a conference room ready for hybrid teams.",
+//     features: [
+//       "Fully wired for Frontier Smart Park/Fios",
+//       "Dedicated break area with sink and cabinetry",
+//       "Near main lobby and visitor parking",
+//     ],
+//     images: [
+//       {
+//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-5-LargeHighDefinition.jpg",
+//         alt: "Executive desk with natural light",
+//       },
+//       {
+//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-4-LargeHighDefinition.jpg",
+//         alt: "Shared breakout seating",
+//       },
+//       {
+//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
+//         alt: "Exterior of Primrose Lake Circle",
+//       },
+//     ],
+//     category: "Exec",
+//     brochureHref: "/documents/tppc-suite-101.pdf",
+//   },
+//   {
+//     id: "ste-107",
+//     label: "Suite 107",
+//     building: "Primrose Lake Circle",
+//     size: "274 SF",
+//     status: "available",
+//     type: "Executive Suite",
+//     rate: "By Request",
+//     description:
+//       "Corner suite with floor-to-ceiling windows, reception area, four private offices, and a conference room ready for hybrid teams.",
+//     features: [
+//       "Fully wired for Frontier Smart Park/Fios",
+//       "Dedicated break area with sink and cabinetry",
+//       "Near main lobby and visitor parking",
+//     ],
+//     images: [
+//       {
+//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-11-LargeHighDefinition.jpg",
+//         alt: "Executive desk with natural light",
+//       },
+//       {
+//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-4-LargeHighDefinition.jpg",
+//         alt: "Shared breakout seating",
+//       },
+//       {
+//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
+//         alt: "Exterior of Primrose Lake Circle",
+//       },
+//     ],
+//     category: "Exec",
+//     brochureHref: "/documents/tppc-suite-101.pdf",
+//   },
+//   {
+//     id: "ste-119",
+//     label: "Suite 119",
+//     building: "Primrose Lake Circle",
+//     size: "323 SF",
+//     status: "available",
+//     type: "Executive Suite",
+//     rate: "By Request",
+//     description:
+//       "Bright second-floor suite ideal for professional services. Includes a reception zone, two private offices, and generous storage.",
+//     features: [
+//       "Glass sidelights for natural light",
+//       "Shared conference room access on floor",
+//       "Steps from the elevator core",
+//     ],
+//     images: [
+//       {
+//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-6-LargeHighDefinition.jpg",
+//         alt: "Executive desk with natural light",
+//       },
+//       {
+//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-4-LargeHighDefinition.jpg",
+//         alt: "Shared breakout seating",
+//       },
+//       {
+//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
+//         alt: "Exterior of Primrose Lake Circle",
+//       },
+//     ],
+//     category: "Exec",
+//     brochureHref: "/documents/tppc-suite-220.pdf",
+//   },
+//   {
+//     id: "ste-101",
+//     label: "Suite 101",
+//     building: "Bridge Hill Court",
+//     size: "1974 SF",
+//     status: "occupied",
+//     type: "Building/Suites",
+//     rate: "Join Waitlist",
+//     description:
+//       "Functional flex office currently committed. Join the waitlist for the next availability in this configuration.",
+//     features: [
+//       "Private office with open work bay",
+//       "Shared lounge & kitchenette access",
+//       "Proximity to wellness trail and campus amenities",
+//     ],
+//     images: [
+//       {
+//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-14-LargeHighDefinition.jpg",
+//         alt: "Indoor Office Picture",
+//       },
+//       {
+//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-15-LargeHighDefinition.jpg",
+//         alt: "Workstations inside Suite 305",
+//       },
+//       {
+//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-16-LargeHighDefinition.jpg",
+//         alt: "Kitchenette inside suite",
+//       },
+//       {
+//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-10-LargeHighDefinition.jpg",
+//         alt: "Bridge Hill Court exterior angle",
+//       },
+//     ],
+//     category: "Office",
+//   },
+//   {
+//     id: "ste-111",
+//     label: "Suite 111",
+//     building: "Cublicle 111",
+//     size: "100 SF",
+//     status: "available",
+//     type: "SOAR",
+//     rate: "Upon Request",
+//     description:
+//       "Functional flex office currently committed. Join the waitlist for the next availability in this configuration.",
+//     features: [
+//       "Private office with open work bay",
+//       "Shared lounge & kitchenette access",
+//       "Proximity to wellness trail and campus amenities",
+//     ],
+//     images: [
+//       {
+//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-14-LargeHighDefinition.jpg",
+//         alt: "Indoor Office Picture",
+//       },
+//       {
+//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-15-LargeHighDefinition.jpg",
+//         alt: "Workstations inside Suite 305",
+//       },
+//       {
+//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-16-LargeHighDefinition.jpg",
+//         alt: "Kitchenette inside suite",
+//       },
+//       {
+//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-10-LargeHighDefinition.jpg",
+//         alt: "Bridge Hill Court exterior angle",
+//       },
+//     ],
+//     category: "SOAR",
+//   },
+// ];
 
 const buildingFilterOptions: Array<{ label: string; value: "Office" | "Exec" | "SOAR" }> = [
   { label: "Buildings/Suites", value: "Office" },
@@ -190,25 +219,31 @@ const buildingFilterOptions: Array<{ label: string; value: "Office" | "Exec" | "
   { label: "SOAR", value: "SOAR"}
 ];
 
-// Marketing blurbs featured near the bottom of the page.
-const campusHighlights = [
-  {
-    title: "Executive Offices",
-    description: "Private, move-in-ready suites for professionals seeking a polished home base.",
-  },
-  {
-    title: "Team Suites",
-    description: "Flexible layouts with space for collaboration, branding, and visitors.",
-  },
-  {
-    title: "Campus Amenities",
-    description: "Complimentary parking, fiber connectivity, and responsive on-site ownership.",
-  },
+// // Marketing blurbs featured near the bottom of the page.
+// const campusHighlights = [
+//   {
+//     title: "Executive Offices",
+//     description: "Private, move-in-ready suites for professionals seeking a polished home base.",
+//   },
+//   {
+//     title: "Team Suites",
+//     description: "Flexible layouts with space for collaboration, branding, and visitors.",
+//   },
+//   {
+//     title: "Campus Amenities",
+//     description: "Complimentary parking, fiber connectivity, and responsive on-site ownership.",
+//   },
+// ];
+
+const defaultImages = [
+  { src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-10-LargeHighDefinition.jpg", alt: "Modern executive office interior" },
+  { src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-5-LargeHighDefinition.jpg", alt: "Executive desk with natural light" },
 ];
+  
 
 export default function AvailabilityPage() {
   // UI state for the currently active suite, gallery image, and category filter.
-  const [activeSuiteId, setActiveSuiteId] = useState<Suite["id"]>(suites[0]?.id ?? "");
+  const [activeBuildingId, setActiveBuildingId] = useState<Building["building_id"]>("");
   const [buildings, setBuildings] = useState<Building[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -218,7 +253,35 @@ export default function AvailabilityPage() {
     async function fetchBuildings() {
       try {
         const response = await axios.get('/api/buildings');
-        setBuildings(response.data || []);
+        const rawBuildings = response.data || [];
+        const normalizedBuildings: Building[] = rawBuildings.map((b: any) => ({
+          ...b,
+          // Add ID/Label fields required by the old component structure
+          id: b.building_id,
+          label: b.street_address,
+          size: `${b.rental_sq_ft} SF`,
+          status: normalizeStatus(b.availability_status),
+
+          // Placeholder/Default fields for UI
+          images: defaultImages,
+          features:
+            b.office_type === "Exec" ? executiveFeatures : officeFeatures,
+          description: "Placeholder description for " + b.street_address,
+          category:
+            b.office_type === "Exec"
+              ? "Exec"
+              : b.office_type === "SOAR"
+              ? "SOAR"
+              : "Office",
+          brochureHref: undefined,
+          floorplanHref: undefined,
+        }));
+        setBuildings(normalizedBuildings);
+
+        // if normalize buildings exist, set the active building to the first one
+        if (normalizedBuildings.length > 0) {
+          setActiveBuildingId(normalizedBuildings[0].building_id);
+        }
       } catch (error) {
         console.error("Error loading buildings:", error);
       } finally {
@@ -229,38 +292,38 @@ export default function AvailabilityPage() {
   }, []);
 
   // Grab the suites that match the selected tab.
-  const filteredSuites = useMemo(
-    () => suites.filter((suite) => suite.category === selectedCategory),
-    [selectedCategory]
+  const filteredBuildings = useMemo(
+    () => buildings.filter((building) => building.category === selectedCategory),
+    [selectedCategory, buildings]
   );
 
   // Fall back to the full list if a category has no entries yet.
-  const visibleSuites = filteredSuites.length ? filteredSuites : suites;
+  const visibleBuildings = filteredBuildings.length ? filteredBuildings : buildings;
 
   // Resolve the full suite record backing the current selection.
-  const activeSuite = useMemo(
-    () => visibleSuites.find((suite) => suite.id === activeSuiteId) ?? visibleSuites[0],
-    [activeSuiteId, visibleSuites],
+  const activeBuilding = useMemo(
+    () => visibleBuildings.find((building) => building.building_id === activeBuildingId) ?? visibleBuildings[0],
+    [activeBuildingId, visibleBuildings],
   );
 
-  const images = activeSuite?.images ?? [];
+  const images = activeBuilding?.images ?? defaultImages;
 
   // Keep selections in sync when the visible suites set changes (e.g., new filter).
   useEffect(() => {
-    if (!visibleSuites.some((suite) => suite.id === activeSuiteId)) {
-      const fallback = visibleSuites[0]?.id ?? "";
-      setActiveSuiteId(fallback);
+    if (!visibleBuildings.some((building) => building.building_id === activeBuildingId)) {
+      const fallback = visibleBuildings[0]?.building_id ?? "";
+      setActiveBuildingId(fallback);
       setActiveImageIndex(0);
     }
-  }, [visibleSuites, activeSuiteId]);
+  }, [visibleBuildings, activeBuildingId]);
 
   // User interactions that update the active category or suite.
   const handleCategoryChange = (category: "Office" | "Exec" | "SOAR") => {
     setSelectedCategory(category);
   };
 
-  const handleSuiteSelect = (id: string) => {
-    setActiveSuiteId(id);
+  const handleBuildingSelect = (id: string) => {
+    setActiveBuildingId(id);
     setActiveImageIndex(0);
   };
 
@@ -276,9 +339,6 @@ export default function AvailabilityPage() {
     "Flexible agreements available",
   ];
 
-  const isActive = false;
-  const status = { label: "", className: "bg-emerald-100 text-emerald-700" };
-  const onSelectSuite = (id: string) => {};
 
   return (
     <main className="min-h-screen bg-gray-50 text-slate-900">
@@ -316,64 +376,12 @@ export default function AvailabilityPage() {
         {/* Core layout: list + gallery + supporting details. */}
         <div className="grid auto-rows-fr items-stretch gap-8 lg:grid-cols-3">
           <div className="h-full">
-            <aside className="flex h-full max-h-[480px] overflow-y-auto flex-col rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-lg shadow-slate-900/10">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
-                Suites
-              </p>
-              <p className="mt-2 text-sm text-slate-600">
-                Select a suite to preview imagery and key details. The list
-                updates as spaces become available across the campus.
-              </p>
-              <div className="mt-6 grid flex-1 content-start items-start gap-3 overflow-y-auto pr-1">
-                {loading && <p>Loading buildings...</p>}
-                {buildings.map((building, index) => {
-                  return (
-                    <button
-                      key={building.building_id}
-                      type="button"
-                      onClick={() => onSelectSuite(building.building_id)}
-                      className={`flex w-full flex-col gap-2 rounded-2xl border px-5 py-5 text-left transition ${
-                        isActive
-                          ? "border-slate-900 bg-slate-900 text-white shadow-lg shadow-slate-900/20"
-                          : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="text-base font-semibold">
-                          {`Building ${building.building_number} ${building.suite_number ? `- Suite ${building.suite_number}` : ""}`} 
-                        </span>
-                        <span
-                          className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                            isActive
-                              ? "bg-white/15 text-white"
-                              : status.className
-                          }`}
-                        >
-                          {status.label}
-                        </span>
-                      </div>
-                      <p
-                        className={`text-xs ${
-                          isActive ? "text-white/70" : "text-slate-500"
-                        }`}
-                      >
-                        {building.street_address} • {`${building.rental_sq_ft? `${building.rental_sq_ft} SF` : "Size N/A"}`}
-                      </p>
-                    </button>
-                  );
-                })}
-              </div>
-            </aside>
-            {/* <SuiteList
-              suites={visibleSuites}
-              activeSuiteId={activeSuite?.id ?? ""}
-              onSelectSuite={handleSuiteSelect}
-            /> */}
+            < BuildingList loading={loading} visibleBuildings={visibleBuildings} activeBuildingId={activeBuildingId} normalizeStatus={normalizeStatus} onSelectBuilding={handleBuildingSelect}/>
           </div>
-          <div className="h-full">
+          {/* <div className="h-full">
             {activeSuite && <SuiteDetails suite={activeSuite} />}
-          </div>
-          <div className="h-full">
+          </div> */}
+          {/* <div className="h-full">
             <SuiteGallery
               images={images}
               activeImageIndex={activeImageIndex}
@@ -390,7 +398,7 @@ export default function AvailabilityPage() {
               onSelectImage={setActiveImageIndex}
               suiteLabel={activeSuite?.label}
             />
-          </div>
+          </div> */}
         </div>
 
         {/* Detail panels for the selected suite. */}

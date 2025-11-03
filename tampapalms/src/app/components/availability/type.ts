@@ -38,7 +38,7 @@ export type Building = {
   images: Array<{ src: string; alt: string }>;
   features: string[];
   description: string;
-  category: "buildings" | "executive" | "soar";
+  category: "Office" | "Exec" | "SOAR";
   brochureHref?: string;
 };
 
