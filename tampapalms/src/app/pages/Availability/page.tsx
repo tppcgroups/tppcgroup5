@@ -11,7 +11,8 @@ import { SuiteDetails } from "@/app/components/availability/SuiteDetails";
 import { SuiteGallery } from "@/app/components/availability/SuiteGallery";
 import { SuiteFloorPlan } from "@/app/components/availability/SuiteFloorPlan";
 import { SuiteList } from "@/app/components/availability/SuiteList";
-import type { Suite } from "@/app/components/availability/type";
+import type { Suite, Building } from "@/app/components/availability/type";
+import axios from "axios";
 
 // Suite catalog used to drive the availability page content.
 const suites: Suite[] = [
@@ -44,7 +45,7 @@ const suites: Suite[] = [
         alt: "Exterior of Primrose Lake Circle",
       },
     ],
-    category: "executive",
+    category: "Exec",
     brochureHref: "/documents/tppc-suite-101.pdf",
   },
   {
@@ -76,7 +77,7 @@ const suites: Suite[] = [
         alt: "Exterior of Primrose Lake Circle",
       },
     ],
-    category: "executive",
+    category: "Exec",
     brochureHref: "/documents/tppc-suite-101.pdf",
   },
   {
@@ -108,7 +109,7 @@ const suites: Suite[] = [
         alt: "Exterior of Primrose Lake Circle",
       },
     ],
-    category: "executive",
+    category: "Exec",
     brochureHref: "/documents/tppc-suite-220.pdf",
   },
   {
@@ -144,7 +145,7 @@ const suites: Suite[] = [
         alt: "Bridge Hill Court exterior angle",
       },
     ],
-    category: "buildings",
+    category: "Office",
   },
   {
     id: "ste-111",
@@ -179,14 +180,14 @@ const suites: Suite[] = [
         alt: "Bridge Hill Court exterior angle",
       },
     ],
-    category: "soar",
+    category: "SOAR",
   },
 ];
 
-const suiteFilterOptions: Array<{ label: string; value: "buildings" | "executive" | "soar" }> = [
-  { label: "Buildings/Suites", value: "buildings" },
-  { label: "Executive Suites", value: "executive" },
-  { label: "SOAR", value: "soar"}
+const buildingFilterOptions: Array<{ label: string; value: "Office" | "Exec" | "SOAR" }> = [
+  { label: "Buildings/Suites", value: "Office" },
+  { label: "Executive Suites", value: "Exec" },
+  { label: "SOAR", value: "SOAR"}
 ];
 
 // Marketing blurbs featured near the bottom of the page.
@@ -208,8 +209,24 @@ const campusHighlights = [
 export default function AvailabilityPage() {
   // UI state for the currently active suite, gallery image, and category filter.
   const [activeSuiteId, setActiveSuiteId] = useState<Suite["id"]>(suites[0]?.id ?? "");
+  const [buildings, setBuildings] = useState<Building[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState<"buildings" | "executive" | "soar">("buildings");
+  const [selectedCategory, setSelectedCategory] = useState<"Office" | "Exec" | "SOAR">("Office");
+
+  useEffect(() => {
+    async function fetchBuildings() {
+      try {
+        const response = await axios.get('/api/buildings');
+        setBuildings(response.data || []);
+      } catch (error) {
+        console.error("Error loading buildings:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchBuildings();
+  }, []);
 
   // Grab the suites that match the selected tab.
   const filteredSuites = useMemo(
@@ -238,7 +255,7 @@ export default function AvailabilityPage() {
   }, [visibleSuites, activeSuiteId]);
 
   // User interactions that update the active category or suite.
-  const handleCategoryChange = (category: "buildings" | "executive" | "soar") => {
+  const handleCategoryChange = (category: "Office" | "Exec" | "SOAR") => {
     setSelectedCategory(category);
   };
 
@@ -259,12 +276,19 @@ export default function AvailabilityPage() {
     "Flexible agreements available",
   ];
 
+  const isActive = false;
+  const status = { label: "", className: "bg-emerald-100 text-emerald-700" };
+  const onSelectSuite = (id: string) => {};
+
   return (
     <main className="min-h-screen bg-gray-50 text-slate-900">
       {/* Introduces the page and reports total availability. */}
       <AvailabilityHero
         availableCount={
-          suites.filter((suite) => suite.status === "available").length
+          buildings.filter(
+            (building) =>
+              building.availability_status?.trim().toLowerCase() === "available"
+          ).length
         }
       />
 
@@ -272,7 +296,7 @@ export default function AvailabilityPage() {
         {/* Category toggle pills. */}
         <div className="mb-8 flex flex-wrap items-center gap-3 text-sm">
           <div className="flex rounded-full border border-slate-200 bg-white p-1">
-            {suiteFilterOptions.map((option) => (
+            {buildingFilterOptions.map((option) => (
               <button
                 key={option.value}
                 type="button"
@@ -292,11 +316,59 @@ export default function AvailabilityPage() {
         {/* Core layout: list + gallery + supporting details. */}
         <div className="grid auto-rows-fr items-stretch gap-8 lg:grid-cols-3">
           <div className="h-full">
-            <SuiteList
+            <aside className="flex h-full max-h-[480px] overflow-y-auto flex-col rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-lg shadow-slate-900/10">
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+                Suites
+              </p>
+              <p className="mt-2 text-sm text-slate-600">
+                Select a suite to preview imagery and key details. The list
+                updates as spaces become available across the campus.
+              </p>
+              <div className="mt-6 grid flex-1 content-start items-start gap-3 overflow-y-auto pr-1">
+                {loading && <p>Loading buildings...</p>}
+                {buildings.map((building, index) => {
+                  return (
+                    <button
+                      key={building.building_id}
+                      type="button"
+                      onClick={() => onSelectSuite(building.building_id)}
+                      className={`flex w-full flex-col gap-2 rounded-2xl border px-5 py-5 text-left transition ${
+                        isActive
+                          ? "border-slate-900 bg-slate-900 text-white shadow-lg shadow-slate-900/20"
+                          : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-base font-semibold">
+                          {`Building ${building.building_number} ${building.suite_number ? `- Suite ${building.suite_number}` : ""}`} 
+                        </span>
+                        <span
+                          className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
+                            isActive
+                              ? "bg-white/15 text-white"
+                              : status.className
+                          }`}
+                        >
+                          {status.label}
+                        </span>
+                      </div>
+                      <p
+                        className={`text-xs ${
+                          isActive ? "text-white/70" : "text-slate-500"
+                        }`}
+                      >
+                        {building.street_address} • {`${building.rental_sq_ft? `${building.rental_sq_ft} SF` : "Size N/A"}`}
+                      </p>
+                    </button>
+                  );
+                })}
+              </div>
+            </aside>
+            {/* <SuiteList
               suites={visibleSuites}
               activeSuiteId={activeSuite?.id ?? ""}
               onSelectSuite={handleSuiteSelect}
-            />
+            /> */}
           </div>
           <div className="h-full">
             {activeSuite && <SuiteDetails suite={activeSuite} />}
