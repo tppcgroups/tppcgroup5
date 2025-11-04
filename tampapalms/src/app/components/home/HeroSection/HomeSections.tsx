@@ -96,20 +96,7 @@ const onboardingSteps = [
   { title: "Move-in Day", detail: "Concierge welcome with ready-to-work suites and support.", meta: "Your timeline" },
 ];
 
-const testimonials = [
-  {
-    quote:
-      "The ownership team moves fast and treats our clients like their own—it's the boutique experience we wanted without sacrificing infrastructure.",
-    author: "Dana, Principal Broker",
-    role: "Tampa Palms-based advisory firm",
-  },
-  {
-    quote:
-      "We scaled from three offices to an entire floor and never skipped a beat. Technology, parking, and amenities were already dialed in.",
-    author: "Marcus, Managing Partner",
-    role: "Emerging healthcare group",
-  },
-];
+
 
 export default function HomeSections({
   highlights = [
