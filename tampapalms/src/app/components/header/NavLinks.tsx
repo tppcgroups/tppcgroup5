@@ -33,9 +33,9 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen }) => {
         { href: "/pages/Apply", label: "Apply" },
       ],
     },
-    { href: "/pages/Contact", label: "Contact" },
-    { href: "/pages/Testimonials", label: "Testimonials"},
+    { href: "/pages/Testimonials", label: "Testimonials" },
     { href: "/pages/About", label: "About" },
+    { href: "/pages/Contact", label: "Contact" },
   ];
 
   // Function to close the menu on mobile when a link is clicked

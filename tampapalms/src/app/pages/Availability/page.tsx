@@ -14,6 +14,7 @@ import { SuiteList } from "@/app/components/availability/SuiteList";
 import { BuildingList } from "@/app/components/availability/BuildingList";
 import type { Suite, Building } from "@/app/components/availability/type";
 import axios from "axios";
+import { BuildingDetails } from "@/app/components/availability/BuildingDetails";
 
 type AvailabilityStatus = "available" | "comingSoon" | "occupied";
 
@@ -376,11 +377,24 @@ export default function AvailabilityPage() {
         {/* Core layout: list + gallery + supporting details. */}
         <div className="grid auto-rows-fr items-stretch gap-8 lg:grid-cols-3">
           <div className="h-full">
-            < BuildingList loading={loading} visibleBuildings={visibleBuildings} activeBuildingId={activeBuildingId} normalizeStatus={normalizeStatus} onSelectBuilding={handleBuildingSelect}/>
+            <BuildingList
+              loading={loading}
+              visibleBuildings={visibleBuildings}
+              activeBuildingId={activeBuildingId}
+              normalizeStatus={normalizeStatus}
+              onSelectBuilding={handleBuildingSelect}
+            />
           </div>
-          {/* <div className="h-full">
-            {activeSuite && <SuiteDetails suite={activeSuite} />}
-          </div> */}
+          <div className="h-full">
+            {activeBuilding && (
+              <BuildingDetails
+                loading={loading}
+                activeBuilding={activeBuilding}
+                normalizeStatus={normalizeStatus}
+              />
+            )}
+          </div>
+
           {/* <div className="h-full">
             <SuiteGallery
               images={images}
