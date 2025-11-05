@@ -23,9 +23,9 @@ export function BuildingDetails({loading, activeBuilding, normalizeStatus}: Buil
               : ""
           }`}
         </h2>
-        <p className="text-sm text-slate-600">
-          Need to put static placeholder info here
-        </p>
+        {/* <p className="text-sm text-slate-600 font-bold">
+          Built For Your Next Era.
+        </p> */}
       </div>
 
       {/* Key specifications pulled from the suite record. */}

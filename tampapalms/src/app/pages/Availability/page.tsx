@@ -278,6 +278,10 @@ export default function AvailabilityPage() {
           floorplanHref: undefined,
         }));
         setBuildings(normalizedBuildings);
+        // want to grab any available spaces and put them at the beginning of the list
+        const availableSpaces = normalizedBuildings.filter(b => normalizeStatus(b.availability_status) === "available");
+        const occupiedSpaces = normalizedBuildings.filter(b => normalizeStatus(b.availability_status) !== "available");
+        setBuildings([...availableSpaces, ...occupiedSpaces])
 
         // if normalize buildings exist, set the active building to the first one
         if (normalizedBuildings.length > 0) {
