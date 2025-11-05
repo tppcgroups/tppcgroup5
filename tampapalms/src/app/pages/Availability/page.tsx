@@ -15,6 +15,7 @@ import { BuildingList } from "@/app/components/availability/BuildingList";
 import type { Suite, Building } from "@/app/components/availability/type";
 import axios from "axios";
 import { BuildingDetails } from "@/app/components/availability/BuildingDetails";
+import BuildingPhotos from "@/app/components/availability/BuildingPhotos";
 
 type AvailabilityStatus = "available" | "comingSoon" | "occupied";
 
@@ -44,216 +45,113 @@ const statusMap: Record<
   occupied: { label: "Waitlisted", className: "bg-slate-100 text-slate-600" },
 };
 
-// Suite catalog used to drive the availability page content.
-// const suites: Suite[] = [
-//   {
-//     id: "ste-105",
-//     label: "Suite 105",
-//     building: "Primrose Lake Circle",
-//     size: "354 SF",
-//     status: "available",
-//     type: "Executive Suite",
-//     rate: "By Request",
-//     description:
-//       "Corner suite with floor-to-ceiling windows, reception area, four private offices, and a conference room ready for hybrid teams.",
-//     features: [
-//       "Fully wired for Frontier Smart Park/Fios",
-//       "Dedicated break area with sink and cabinetry",
-//       "Near main lobby and visitor parking",
-//     ],
-//     images: [
-//       {
-//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-5-LargeHighDefinition.jpg",
-//         alt: "Executive desk with natural light",
-//       },
-//       {
-//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-4-LargeHighDefinition.jpg",
-//         alt: "Shared breakout seating",
-//       },
-//       {
-//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
-//         alt: "Exterior of Primrose Lake Circle",
-//       },
-//     ],
-//     category: "Exec",
-//     brochureHref: "/documents/tppc-suite-101.pdf",
-//   },
-//   {
-//     id: "ste-107",
-//     label: "Suite 107",
-//     building: "Primrose Lake Circle",
-//     size: "274 SF",
-//     status: "available",
-//     type: "Executive Suite",
-//     rate: "By Request",
-//     description:
-//       "Corner suite with floor-to-ceiling windows, reception area, four private offices, and a conference room ready for hybrid teams.",
-//     features: [
-//       "Fully wired for Frontier Smart Park/Fios",
-//       "Dedicated break area with sink and cabinetry",
-//       "Near main lobby and visitor parking",
-//     ],
-//     images: [
-//       {
-//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-11-LargeHighDefinition.jpg",
-//         alt: "Executive desk with natural light",
-//       },
-//       {
-//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-4-LargeHighDefinition.jpg",
-//         alt: "Shared breakout seating",
-//       },
-//       {
-//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
-//         alt: "Exterior of Primrose Lake Circle",
-//       },
-//     ],
-//     category: "Exec",
-//     brochureHref: "/documents/tppc-suite-101.pdf",
-//   },
-//   {
-//     id: "ste-119",
-//     label: "Suite 119",
-//     building: "Primrose Lake Circle",
-//     size: "323 SF",
-//     status: "available",
-//     type: "Executive Suite",
-//     rate: "By Request",
-//     description:
-//       "Bright second-floor suite ideal for professional services. Includes a reception zone, two private offices, and generous storage.",
-//     features: [
-//       "Glass sidelights for natural light",
-//       "Shared conference room access on floor",
-//       "Steps from the elevator core",
-//     ],
-//     images: [
-//       {
-//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-6-LargeHighDefinition.jpg",
-//         alt: "Executive desk with natural light",
-//       },
-//       {
-//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-4-LargeHighDefinition.jpg",
-//         alt: "Shared breakout seating",
-//       },
-//       {
-//         src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
-//         alt: "Exterior of Primrose Lake Circle",
-//       },
-//     ],
-//     category: "Exec",
-//     brochureHref: "/documents/tppc-suite-220.pdf",
-//   },
-//   {
-//     id: "ste-101",
-//     label: "Suite 101",
-//     building: "Bridge Hill Court",
-//     size: "1974 SF",
-//     status: "occupied",
-//     type: "Building/Suites",
-//     rate: "Join Waitlist",
-//     description:
-//       "Functional flex office currently committed. Join the waitlist for the next availability in this configuration.",
-//     features: [
-//       "Private office with open work bay",
-//       "Shared lounge & kitchenette access",
-//       "Proximity to wellness trail and campus amenities",
-//     ],
-//     images: [
-//       {
-//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-14-LargeHighDefinition.jpg",
-//         alt: "Indoor Office Picture",
-//       },
-//       {
-//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-15-LargeHighDefinition.jpg",
-//         alt: "Workstations inside Suite 305",
-//       },
-//       {
-//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-16-LargeHighDefinition.jpg",
-//         alt: "Kitchenette inside suite",
-//       },
-//       {
-//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-10-LargeHighDefinition.jpg",
-//         alt: "Bridge Hill Court exterior angle",
-//       },
-//     ],
-//     category: "Office",
-//   },
-//   {
-//     id: "ste-111",
-//     label: "Suite 111",
-//     building: "Cublicle 111",
-//     size: "100 SF",
-//     status: "available",
-//     type: "SOAR",
-//     rate: "Upon Request",
-//     description:
-//       "Functional flex office currently committed. Join the waitlist for the next availability in this configuration.",
-//     features: [
-//       "Private office with open work bay",
-//       "Shared lounge & kitchenette access",
-//       "Proximity to wellness trail and campus amenities",
-//     ],
-//     images: [
-//       {
-//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-14-LargeHighDefinition.jpg",
-//         alt: "Indoor Office Picture",
-//       },
-//       {
-//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-15-LargeHighDefinition.jpg",
-//         alt: "Workstations inside Suite 305",
-//       },
-//       {
-//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-16-LargeHighDefinition.jpg",
-//         alt: "Kitchenette inside suite",
-//       },
-//       {
-//         src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-10-LargeHighDefinition.jpg",
-//         alt: "Bridge Hill Court exterior angle",
-//       },
-//     ],
-//     category: "SOAR",
-//   },
-// ];
-
-const buildingFilterOptions: Array<{ label: string; value: "Office" | "Exec" | "SOAR" }> = [
+const buildingFilterOptions: Array<{
+  label: string;
+  value: "Office" | "Exec" | "SOAR";
+}> = [
   { label: "Buildings/Suites", value: "Office" },
   { label: "Executive Suites", value: "Exec" },
-  { label: "SOAR", value: "SOAR"}
+  { label: "SOAR", value: "SOAR" },
 ];
-
-// // Marketing blurbs featured near the bottom of the page.
-// const campusHighlights = [
-//   {
-//     title: "Executive Offices",
-//     description: "Private, move-in-ready suites for professionals seeking a polished home base.",
-//   },
-//   {
-//     title: "Team Suites",
-//     description: "Flexible layouts with space for collaboration, branding, and visitors.",
-//   },
-//   {
-//     title: "Campus Amenities",
-//     description: "Complimentary parking, fiber connectivity, and responsive on-site ownership.",
-//   },
-// ];
 
 const defaultImages = [
-  { src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-10-LargeHighDefinition.jpg", alt: "Modern executive office interior" },
-  { src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-5-LargeHighDefinition.jpg", alt: "Executive desk with natural light" },
+  {
+    src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-10-LargeHighDefinition.jpg",
+    alt: "Modern executive office interior",
+  },
+  {
+    src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-5-LargeHighDefinition.jpg",
+    alt: "Executive desk with natural light",
+  },
+  { src: "/images/TPPC-002.jpg", alt: "Entry Sign" },
+  {
+    src: "/images/TPPC-Entry-002.jpg",
+    alt: "Overhead picture of campus entry",
+  },
 ];
-  
+
+const officeFeatures = [
+  "Ideal for teams and businesses",
+  "Multiple office configurations",
+  "Entire suites available for lease",
+];
+
+const executiveFeatures = [
+  "Perfect for individual professionals",
+  "Single, private office spaces",
+  "Flexible agreements available",
+];
 
 export default function AvailabilityPage() {
   // UI state for the currently active suite, gallery image, and category filter.
-  const [activeBuildingId, setActiveBuildingId] = useState<Building["building_id"]>("");
+  const [activeBuildingId, setActiveBuildingId] =
+    useState<Building["building_id"]>("");
   const [buildings, setBuildings] = useState<Building[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState<"Office" | "Exec" | "SOAR">("Office");
+  const [selectedCategory, setSelectedCategory] = useState<
+    "Office" | "Exec" | "SOAR"
+  >("Office");
+  const [activeBuildingImages, setActiveBuildingImages] =
+    useState<Array<{ src: string; alt: string }>>(defaultImages);
+  const [globalImageMap, setGlobalImageMap] = useState<{
+    [key: string]: string[];
+  }>({});
+
+  // Add this helper function somewhere accessible if the direct building_id is wrong
+  const createSpaceKey = (id: string) => {
+    // This regex attempts to find '5-118' and map it to 'Bldg5-Suite118'
+    const match = id.match(/^(\d+-\d+)$/);
+    if (match) {
+      // Assuming the number before the dash is the building number, and the number after is the suite number
+      const parts = id.split("-");
+      if (parts.length === 2) {
+        // E.g., '5-118' becomes 'Bldg5-Suite118'
+        return `Bldg${parts[0]}-Suite${parts[1]}`;
+      }
+    }
+    return id; // Return the original ID if it doesn't match the pattern
+  };
+
+  // Function to handle image resolution (moved outside of effects)
+  const updateActiveImages = (
+    activeBuilding: Building | undefined,
+    imageMap: { [key: string]: string[] }
+  ) => {
+    if (!activeBuilding) {
+      setActiveBuildingImages(defaultImages);
+      return;
+    }
+
+    const rawId = activeBuilding.building_id;
+
+    const primaryKey = rawId;
+    const fallbackKey = createSpaceKey(rawId);
+
+    const newImagePaths = imageMap[primaryKey] || imageMap[fallbackKey];
+
+    if (newImagePaths && newImagePaths.length > 0) {
+      const formattedImages = newImagePaths.map((path) => ({
+        src: path,
+        alt: `${activeBuilding.street_address} image`,
+      }));
+      setActiveBuildingImages(formattedImages);
+      console.log("LOG 1: Setting new images for:", primaryKey, formattedImages);
+    } else {
+      setActiveBuildingImages(defaultImages);
+      console.log(
+        "LOG 2: No specific images found for:",
+        primaryKey,
+        "Falling back to defaults."
+      );
+    }
+    setActiveImageIndex(0);
+  };
 
   useEffect(() => {
     async function fetchBuildings() {
       try {
-        const response = await axios.get('/api/buildings');
+        const response = await axios.get("/api/buildings");
         const rawBuildings = response.data || [];
         const normalizedBuildings: Building[] = rawBuildings.map((b: any) => ({
           ...b,
@@ -277,45 +175,81 @@ export default function AvailabilityPage() {
           brochureHref: undefined,
           floorplanHref: undefined,
         }));
-        setBuildings(normalizedBuildings);
-        // want to grab any available spaces and put them at the beginning of the list
-        const availableSpaces = normalizedBuildings.filter(b => normalizeStatus(b.availability_status) === "available");
-        const occupiedSpaces = normalizedBuildings.filter(b => normalizeStatus(b.availability_status) !== "available");
-        setBuildings([...availableSpaces, ...occupiedSpaces])
 
-        // if normalize buildings exist, set the active building to the first one
-        if (normalizedBuildings.length > 0) {
-          setActiveBuildingId(normalizedBuildings[0].building_id);
+        // Sorting logic
+        const availableSpaces = normalizedBuildings.filter(
+          (b) => normalizeStatus(b.availability_status) === "available"
+        );
+        const occupiedSpaces = normalizedBuildings.filter(
+          (b) => normalizeStatus(b.availability_status) !== "available"
+        );
+        const finalBuildings = [...availableSpaces, ...occupiedSpaces];
+
+        setBuildings(finalBuildings);
+
+        // Fetch Image Map
+        const mapResponse = await axios.get("/api/image-map");
+        const fetchedImageMap = mapResponse.data;
+        setGlobalImageMap(fetchedImageMap); // Set map state
+
+        // Set initial active building and trigger image update immediately
+        let initialActiveBuilding: Building | undefined = undefined;
+        if (finalBuildings.length > 0) {
+          const initialID = finalBuildings[0].building_id;
+          setActiveBuildingId(initialID);
+          initialActiveBuilding = finalBuildings[0]; // Capture the object
+
+          // Manually trigger image update right after fetching data
+          updateActiveImages(initialActiveBuilding, fetchedImageMap);
         }
       } catch (error) {
         console.error("Error loading buildings:", error);
+        setGlobalImageMap({}); // Set empty map on error to prevent undefined issues
       } finally {
         setLoading(false);
       }
     }
     fetchBuildings();
-  }, []);
+  }, []); // Runs once on mount
 
   // Grab the suites that match the selected tab.
   const filteredBuildings = useMemo(
-    () => buildings.filter((building) => building.category === selectedCategory),
+    () =>
+      buildings.filter((building) => building.category === selectedCategory),
     [selectedCategory, buildings]
   );
 
   // Fall back to the full list if a category has no entries yet.
-  const visibleBuildings = filteredBuildings.length ? filteredBuildings : buildings;
+  const visibleBuildings = filteredBuildings.length
+    ? filteredBuildings
+    : buildings;
 
   // Resolve the full suite record backing the current selection.
   const activeBuilding = useMemo(
-    () => visibleBuildings.find((building) => building.building_id === activeBuildingId) ?? visibleBuildings[0],
-    [activeBuildingId, visibleBuildings],
+    () =>
+      visibleBuildings.find(
+        (building) => building.building_id === activeBuildingId
+      ) ?? visibleBuildings[0],
+    [activeBuildingId, visibleBuildings]
   );
 
-  const images = activeBuilding?.images ?? defaultImages;
+  // Image Update useEffect (Handles initial load and filter/category changes)
+  // NOTE: User clicks are now handled by handleBuildingSelect
+  useEffect(() => {
+    if (activeBuilding) {
+      // This runs if activeBuilding changes due to category filter change
+      updateActiveImages(activeBuilding, globalImageMap);
+    }
+    // Dependency array relies on activeBuilding and globalImageMap state
+  }, [activeBuilding, globalImageMap, defaultImages]);
 
   // Keep selections in sync when the visible suites set changes (e.g., new filter).
   useEffect(() => {
-    if (!visibleBuildings.some((building) => building.building_id === activeBuildingId)) {
+    if (
+      !visibleBuildings.some(
+        (building) => building.building_id === activeBuildingId
+      )
+    ) {
       const fallback = visibleBuildings[0]?.building_id ?? "";
       setActiveBuildingId(fallback);
       setActiveImageIndex(0);
@@ -327,23 +261,21 @@ export default function AvailabilityPage() {
     setSelectedCategory(category);
   };
 
+  // CRITICAL FIX: Resolve building and update images synchronously on click
   const handleBuildingSelect = (id: string) => {
     setActiveBuildingId(id);
     setActiveImageIndex(0);
+
+    // 1. Find the selected building object using the most recent visible list
+    const selectedBuilding = visibleBuildings.find((b) => b.building_id === id);
+
+    // 2. Immediately call the image update logic with the resolved object
+    if (selectedBuilding) {
+      updateActiveImages(selectedBuilding, globalImageMap);
+    } else {
+      setActiveBuildingImages(defaultImages);
+    }
   };
-
-  const officeFeatures = [
-    "Ideal for teams and businesses",
-    "Multiple office configurations",
-    "Entire suites available for lease",
-  ];
-
-  const executiveFeatures = [
-    "Perfect for individual professionals",
-    "Single, private office spaces",
-    "Flexible agreements available",
-  ];
-
 
   return (
     <main className="min-h-screen bg-gray-50 text-slate-900">
@@ -399,31 +331,31 @@ export default function AvailabilityPage() {
             )}
           </div>
 
-          {/* <div className="h-full">
-            <SuiteGallery
-              images={images}
+          <div className="h-full">
+            <BuildingPhotos
+              images={activeBuildingImages} // Uses the dynamically set images
               activeImageIndex={activeImageIndex}
               onPrev={() => {
-                if (!images.length) return;
+                if (!activeBuildingImages.length) return;
                 setActiveImageIndex(
-                  (prev) => (prev - 1 + images.length) % images.length
+                  (prev) =>
+                    (prev - 1 + activeBuildingImages.length) %
+                    activeBuildingImages.length
                 );
               }}
               onNext={() => {
-                if (!images.length) return;
-                setActiveImageIndex((prev) => (prev + 1) % images.length);
+                if (!activeBuildingImages.length) return;
+                setActiveImageIndex(
+                  (prev) => (prev + 1) % activeBuildingImages.length
+                );
               }}
               onSelectImage={setActiveImageIndex}
-              suiteLabel={activeSuite?.label}
+              suiteLabel={activeBuilding?.street_address}
             />
-          </div> */}
+          </div>
         </div>
 
-        {/* Detail panels for the selected suite. */}
-        {/* <div className="mt-12 w-full">
-          
-        </div> */}
-        <div className="mt-12 w-[80dvw] mx-auto">
+        <div className="mt-12 mx-auto">
           <SuiteFloorPlan />
         </div>
       </section>

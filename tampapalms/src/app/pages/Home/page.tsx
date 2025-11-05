@@ -3,14 +3,9 @@
 "use client"
 
 // Import necessary components and libraries
-import SpacesCard from "@/app/components/availability/explore_spaces/SpacesCard"
-import TitleCard from "@/app/components/TitleCard"
 import { MobileHome } from "@/app/components/home/HeroSection/MobileHome"
 import { DesktopHome } from "@/app/components/home/HeroSection/DesktopHome"
-import Spacer from "@/app/components/Spacer"
 import * as React from "react"
-import Autoplay from "embla-carousel-autoplay";
-import LocationInsights from "@/app/components/home/LocationsInsights/Location"
 import HomeSections from "@/app/components/home/HeroSection/HomeSections"
 
 export default function Home(){
