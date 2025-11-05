@@ -11,7 +11,7 @@ const Accessibility = () => {
         setIsOpen(!isOpen);
     }
   return (
-    <div className="fixed bottom-5 right-5 shadow-2xl w-10 h-10 rounded-full bg-white/95 z-100 hover:bg-black/5 transition-colors duration-300 ease-in-out">
+    <div className="fixed bottom-5 right-5 shadow-2xl w-10 h-10 rounded-full bg-white/95 z-100 hover:bg-black/5 hover:scale-105 transition-colors duration-300 ease-in-out">
       <Image
         src="/images/accessibility.png"
         alt="Accessibility Icon"
