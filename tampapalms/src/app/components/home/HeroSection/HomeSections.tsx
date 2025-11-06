@@ -29,6 +29,7 @@ type Props = {
   amenities?: string[];
   neighborhood?: { title: string; blurb: string; imageSrc: string; ctaHref?: string };
   gallery?: string[];
+  totalSize: number;
 };
 
 const highlightIcons = [Sparkles, Building2, Users2, ShieldCheck];
@@ -132,8 +133,11 @@ export default function HomeSections({
     ctaHref: "/pages/Contact",
   },
   gallery = ["/images/g1.jpg", "/images/g2.jpg", "/images/g3.jpg", "/images/g4.jpg"],
+  totalSize
 }: Props) {
   const galleryImages = gallery.length ? gallery.slice(0, 4) : [];
+
+  insightStats[0].value = `${(totalSize / 1000).toLocaleString()}K+`;
 
   const getAmenityIcon = (label: string): LucideIcon => {
     const key = Object.keys(amenityIconMap).find((mapKey) =>

@@ -59,7 +59,7 @@ export function BuildingPhotos({images, activeImageIndex, onPrev, onNext, onSele
           {images.length > 1 && (
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {/* Thumbnail strip for quickly swapping images. */}
-              {images.map((image, index) => (
+              {images.slice(0, 4).map((image, index) => (
                 <button
                   key={image.src}
                   type="button"
