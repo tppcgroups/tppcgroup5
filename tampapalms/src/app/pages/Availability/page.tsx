@@ -16,6 +16,7 @@ import type { Suite, Building } from "@/app/components/availability/type";
 import axios from "axios";
 import { BuildingDetails } from "@/app/components/availability/BuildingDetails";
 import BuildingPhotos from "@/app/components/availability/BuildingPhotos";
+import { useSearchParams } from "next/navigation";
 
 type AvailabilityStatus = "available" | "comingSoon" | "occupied";
 
@@ -82,6 +83,8 @@ const executiveFeatures = [
   "Flexible agreements available",
 ];
 
+
+
 export default function AvailabilityPage() {
   // UI state for the currently active suite, gallery image, and category filter.
   const [activeBuildingId, setActiveBuildingId] =
@@ -98,6 +101,8 @@ export default function AvailabilityPage() {
     [key: string]: string[];
   }>({});
 
+  const searchParams = useSearchParams();
+  const initialSpaceId = searchParams.get("spaceId");
   // Add this helper function somewhere accessible if the direct building_id is wrong
   const createSpaceKey = (id: string) => {
     // This regex attempts to find '5-118' and map it to 'Bldg5-Suite118'
@@ -192,15 +197,24 @@ export default function AvailabilityPage() {
         const fetchedImageMap = mapResponse.data;
         setGlobalImageMap(fetchedImageMap); // Set map state
 
+        let targetId = finalBuildings[0]?.building_id ?? "";
+
+        if (initialSpaceId) {
+          targetId = initialSpaceId;
+        }
+
         // Set initial active building and trigger image update immediately
         let initialActiveBuilding: Building | undefined = undefined;
-        if (finalBuildings.length > 0) {
-          const initialID = finalBuildings[0].building_id;
-          setActiveBuildingId(initialID);
-          initialActiveBuilding = finalBuildings[0]; // Capture the object
 
-          // Manually trigger image update right after fetching data
+        if (targetId) {
+          setActiveBuildingId(targetId);
+          initialActiveBuilding = finalBuildings.find(b => b.building_id === targetId);
+        }
+
+        if (initialActiveBuilding) {
           updateActiveImages(initialActiveBuilding, fetchedImageMap);
+        } else if (finalBuildings.length > 0) {
+          updateActiveImages(finalBuildings[0], fetchedImageMap);
         }
       } catch (error) {
         console.error("Error loading buildings:", error);
@@ -209,8 +223,10 @@ export default function AvailabilityPage() {
         setLoading(false);
       }
     }
-    fetchBuildings();
-  }, []); // Runs once on mount
+    if (initialSpaceId !== null || buildings.length === 0) {
+      fetchBuildings();
+    }
+  }, [initialSpaceId]); // Runs once on mount
 
   // Grab the suites that match the selected tab.
   const filteredBuildings = useMemo(
@@ -261,7 +277,7 @@ export default function AvailabilityPage() {
     setSelectedCategory(category);
   };
 
-  // CRITICAL FIX: Resolve building and update images synchronously on click
+  // pCRITICAL FIX: Resolve building and update images synchronously on click
   const handleBuildingSelect = (id: string) => {
     setActiveBuildingId(id);
     setActiveImageIndex(0);

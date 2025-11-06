@@ -8,9 +8,13 @@ import { FaArrowRight,FaArrowLeft } from "react-icons/fa6";
 
 
 export default function HighlightedLocation() {
+    const highlightedSpaceID = "5-226";
     return (
       /* Highlighted Location Card */
-      <Link href="/pages/Availability" className="block flex-shrink-0">
+      <Link href={{
+        pathname: "/pages/Availability",
+        query: {spaceId: highlightedSpaceID}}} 
+        className="block flex-shrink-0">
         <div className="w-60 h-auto bg-black/20 backdrop-blur-md rounded-xl border border-white/20 p-4 transition-all duration-300 hover:bg-white/20 hover:border-white/30">
           <div className="relative aspect-video overflow-hidden rounded-lg">
             <Image
