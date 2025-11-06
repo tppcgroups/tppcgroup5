@@ -164,14 +164,34 @@ export default function AvailabilityPage() {
       usedKey = baseBuildKey;
     }
 
+    // Logic for always grabbing an exterior image
+    const exteriorPaths =
+      baseBuildKey && imageMap[baseBuildKey] ? imageMap[baseBuildKey] : [];
+
+    let finalImages: Array<{ src: string; alt: string }> = [];
+
     console.log("Used image key:", usedKey);
 
+    if (exteriorPaths.length > 0) {
+      const exteriorImage = {
+        src: exteriorPaths[0], // Grab ONLY the first exterior image
+        alt: `${activeBuilding.street_address} exterior image`,
+      };
+      finalImages.push(exteriorImage);
+    }
+
     if (newImagePaths && newImagePaths.length > 0) {
-      const formattedImages = newImagePaths.map((path) => ({
+      let startIndex = 0;
+      if (usedKey === baseBuildKey && finalImages.length > 0) {
+        startIndex = 1;
+      }
+      const interiorImages = newImagePaths.slice(startIndex).map((path) => ({
         src: path,
-        alt: `${activeBuilding.street_address} image (${usedKey})`,
+        alt: `${activeBuilding.street_address} interior image (${usedKey})`,
       }));
-      setActiveBuildingImages(formattedImages);
+
+      finalImages.push(...interiorImages);
+      setActiveBuildingImages(interiorImages.length > 0 ? finalImages : defaultImages);
       console.log("LOG 1: Setting new images for:", usedKey);
     } else {
       setActiveBuildingImages(defaultImages);
