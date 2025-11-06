@@ -118,6 +118,13 @@ export default function AvailabilityPage() {
     return id; // Return the original ID if it doesn't match the pattern
   };
 
+  // Helper to extract base building key from spaceId
+  const getBaseBuildingKey = (spaceId: string): string | null => {
+    // Matches 'BldgX', where X is a number, even if followed by a dash.
+    const match = spaceId.match(/^(Bldg\d+)/);
+    return match ? match[1] : null;
+  };
+
   // Function to handle image resolution (moved outside of effects)
   const updateActiveImages = (
     activeBuilding: Building | undefined,
@@ -128,26 +135,55 @@ export default function AvailabilityPage() {
       return;
     }
 
-    const rawId = activeBuilding.building_id;
+    const rawSpaceId = activeBuilding.building_id;
 
-    const primaryKey = rawId;
-    const fallbackKey = createSpaceKey(rawId);
 
-    const newImagePaths = imageMap[primaryKey] || imageMap[fallbackKey];
+    const specificSpacekey = createSpaceKey(rawSpaceId);
+    const baseBuildKey = getBaseBuildingKey(specificSpacekey);
+
+    const sharedSuiteKey = baseBuildKey ? `${baseBuildKey}-SS` : null;
+
+    let newImagePaths: string[] | undefined;
+    let usedKey = "";
+
+    // Priority 1: Specific Suite Images
+    if (imageMap[specificSpacekey]) {
+      newImagePaths = imageMap[specificSpacekey];
+      usedKey = specificSpacekey;
+    }
+
+    // Check for shared suite images
+    else if (sharedSuiteKey && imageMap[sharedSuiteKey]) {
+      newImagePaths = imageMap[sharedSuiteKey];
+      usedKey = sharedSuiteKey;
+    }
+
+    // Check for base building images
+    else if (baseBuildKey && imageMap[baseBuildKey]) {
+      newImagePaths = imageMap[baseBuildKey];
+      usedKey = baseBuildKey;
+    }
+
+    console.log("Used image key:", usedKey);
 
     if (newImagePaths && newImagePaths.length > 0) {
       const formattedImages = newImagePaths.map((path) => ({
         src: path,
-        alt: `${activeBuilding.street_address} image`,
+        alt: `${activeBuilding.street_address} image (${usedKey})`,
       }));
       setActiveBuildingImages(formattedImages);
-      console.log("LOG 1: Setting new images for:", primaryKey, formattedImages);
+      console.log("LOG 1: Setting new images for:", usedKey);
     } else {
       setActiveBuildingImages(defaultImages);
       console.log(
         "LOG 2: No specific images found for:",
-        primaryKey,
-        "Falling back to defaults."
+        specificSpacekey,
+        "Falling back to defaults. Checked keys:",
+        {
+          specific: specificSpacekey,
+          shared: sharedSuiteKey,
+          base: baseBuildKey,
+        }
       );
     }
     setActiveImageIndex(0);
@@ -340,7 +376,6 @@ export default function AvailabilityPage() {
           <div className="h-full">
             {activeBuilding && (
               <BuildingDetails
-                loading={loading}
                 activeBuilding={activeBuilding}
                 normalizeStatus={normalizeStatus}
               />

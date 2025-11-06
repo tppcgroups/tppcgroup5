@@ -20,14 +20,32 @@ export function buildImageMap(): ImageMap {
 
         for (const filename of filenames) {
             // Regex to match filenames like Bldg5-Suite202
-            const match = filename.match(/^(Bldg\d+-Suite\d+)-\d{3}\.jpg$/);
-            if (match) {
-                const spaceKey = match[1];
+            const suiteMatch = filename.match(/^(Bldg\d+-Suite\d+)-\d{3}\.jpg$/);
+            const sharedSuiteeMatch = filename.match(/^(Bldg\d+-SS)-\d{3}\.jpg$/);
+            const buildingMatch = filename.match(/^(Bldg\d+)-\d{3}\.jpg$/);
+            if (suiteMatch) {
+                const spaceKey = suiteMatch[1];
 
                 if (!imageMap[spaceKey]) {
                     imageMap[spaceKey] = []; // Initialize array if key doesn't exist
                 }
 
+                const clientPath = `/images/${filename}`;
+                imageMap[spaceKey].push(clientPath);
+            } else if (sharedSuiteeMatch) {
+                const spaceKey = sharedSuiteeMatch[1];
+                
+                if (!imageMap[spaceKey]) {
+                    imageMap[spaceKey] = []; // Initialize array if key doesn't exist
+                }
+                const clientPath = `/images/${filename}`;
+                imageMap[spaceKey].push(clientPath);
+            } else if (buildingMatch) {
+                const spaceKey = buildingMatch[1];
+                
+                if (!imageMap[spaceKey]) {
+                    imageMap[spaceKey] = []; // Initialize array if key doesn't exist
+                }
                 const clientPath = `/images/${filename}`;
                 imageMap[spaceKey].push(clientPath);
             }
