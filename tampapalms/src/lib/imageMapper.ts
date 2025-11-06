@@ -20,7 +20,7 @@ export function buildImageMap(): ImageMap {
 
         for (const filename of filenames) {
             // Regex to match filenames like Bldg5-Suite202
-            const suiteMatch = filename.match(/^(Bldg\d+-Suite\d+)-\d{3}\.jpg$/);
+            const suiteMatch = filename.match(/^(Bldg\d+-Suite\w+)-\d{3}\.jpg$/);
             const sharedSuiteeMatch = filename.match(/^(Bldg\d+-SS)-\d{3}\.jpg$/);
             const buildingMatch = filename.match(/^(Bldg\d+)-\d{3}\.jpg$/);
             if (suiteMatch) {

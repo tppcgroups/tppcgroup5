@@ -106,7 +106,7 @@ export default function AvailabilityPage() {
   // Add this helper function somewhere accessible if the direct building_id is wrong
   const createSpaceKey = (id: string) => {
     // This regex attempts to find '5-118' and map it to 'Bldg5-Suite118'
-    const match = id.match(/^(\d+-\d+)$/);
+    const match = id.match(/^(\d+-\w+)$/);
     if (match) {
       // Assuming the number before the dash is the building number, and the number after is the suite number
       const parts = id.split("-");
