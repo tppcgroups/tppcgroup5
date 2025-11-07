@@ -37,9 +37,9 @@ const featureTiles = [
 
 const amenityColumns = [
   {
-    title: "Workspace Essentials",
+    title: "Buildings/Suites",
     description:
-      "Core amenities that anchor productive teams and support day-to-day comfort across every suite.",
+      "Modern, suites in a prime location, combining convenience, comfort, and style.",
     items: [
       "Private restrooms and break areas in most floor plans",
       "Generous glasslines, high ceilings, and efficient layouts",
@@ -48,14 +48,25 @@ const amenityColumns = [
     ],
   },
   {
-    title: "Campus Advantages",
+    title: "Executive Suites",
     description:
-      "Features beyond the front door that elevate Tampa Palms Professional Center above traditional office parks.",
+      "Flexible office spaces designed for professionals, startups, and growing businesses.",
     items: [
       "Extensive conservation areas with mature landscaping",
       "Direct visibility along the I-75 / Bruce B. Downs corridor",
       "Minutes to dining, retail, lodging, and medical services",
       "Daily ownership presence with rapid-response maintenance",
+    ],
+  },
+  {
+    title: "S.O.A.R",
+    description:
+        "Co-working spaces that offers private offices, shared workspaces, and meeting rooms for business and individuals.",
+    items: [
+      "Private restrooms and break areas in most floor plans",
+      "Generous glasslines, high ceilings, and efficient layouts",
+      "Free surface parking throughout the professional campus",
+      "Energy-conscious construction to moderate utility costs",
     ],
   },
 ];
@@ -209,7 +220,7 @@ export default function Features() {
             </p>
           </div>
 
-          <div className="mt-12 grid gap-10 md:grid-cols-2">
+          <div className="mt-12 grid gap-10 md:grid-cols-3">
             {amenityColumns.map((column) => (
               <div
                 key={column.title}
