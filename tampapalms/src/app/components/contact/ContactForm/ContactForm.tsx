@@ -51,6 +51,7 @@ export default function ContactForm() {
       <div className="space-y-6">
         <TextField label="Name" name="name" placeholder="Jane Doe" />
         <TextField label="Email" type="email" name="email" placeholder="jane@example.com" />
+        <TextField label="Phone Number" type="tel" name="phone-number" placeholder="(123) 456-7890" />
         <TextField label="Subject" name="subject" placeholder="Inquiry" />
       </div>
 

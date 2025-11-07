@@ -29,16 +29,12 @@ type Props = {
   amenities?: string[];
   neighborhood?: { title: string; blurb: string; imageSrc: string; ctaHref?: string };
   gallery?: string[];
+  totalSize?: number;
+  flexibleSuites?: number;
+  meetingRooms?: number;
 };
 
 const highlightIcons = [Sparkles, Building2, Users2, ShieldCheck];
-
-const insightStats = [
-  { value: "38K+", label: "Rentable sq. ft.", helper: "Across premier Tampa Palms office campus" },
-  { value: "24", label: "Flexible Suites", helper: "Ready for 1-15 professionals" },
-  { value: "4", label: "Meeting rooms", helper: "AV-ready & reservable" },
-  { value: "24/7", label: "Secure access", helper: "Key fob & on-site surveillance" },
-];
 
 const amenityIconMap: Record<string, LucideIcon> = {
   conference: Users2,
@@ -132,8 +128,38 @@ export default function HomeSections({
     ctaHref: "/pages/Contact",
   },
   gallery = ["/images/g1.jpg", "/images/g2.jpg", "/images/g3.jpg", "/images/g4.jpg"],
+  totalSize = 0,
+  flexibleSuites = 0,
+  meetingRooms = 0,
 }: Props) {
   const galleryImages = gallery.length ? gallery.slice(0, 4) : [];
+
+  const formattedTotalSize = totalSize
+    ? `${Math.round(totalSize / 1000).toLocaleString()}K+`
+    : "0";
+
+  const computedInsightStats = [
+    {
+      value: formattedTotalSize,
+      label: "Rentable sq. ft.",
+      helper: "Across premier Tampa Palms office campus",
+    },
+    {
+      value: flexibleSuites ? flexibleSuites.toLocaleString() : "0",
+      label: "Flexible Suites",
+      helper: "Ready for 1-15 professionals",
+    },
+    {
+      value: meetingRooms ? meetingRooms.toLocaleString() : "0",
+      label: "Meeting rooms",
+      helper: "AV-ready & reservable",
+    },
+    {
+      value: "24/7",
+      label: "Secure access",
+      helper: "Key fob & on-site surveillance",
+    },
+  ];
 
   const getAmenityIcon = (label: string): LucideIcon => {
     const key = Object.keys(amenityIconMap).find((mapKey) =>
@@ -185,7 +211,7 @@ export default function HomeSections({
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            {insightStats.map((stat) => (
+            {computedInsightStats.map((stat) => (
               <div
                 key={stat.label}
                 className="rounded-3xl border border-neutral-100 bg-white/80 p-6 text-neutral-800 shadow-sm"
