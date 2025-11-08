@@ -14,24 +14,24 @@ const stats = [
 
 const featureTiles = [
   {
-    heading: "Move-in ready interiors",
+    heading: "Ten-Foot Ceilings",
     blurb:
-      "Private entries, built-out breakrooms, and glass-lined conference rooms deliver a polished first impression from day one.",
+      "Open atmosphere that adds a sense of space and sophistication to every room.",
   },
   {
-    heading: "Technology-forward infrastructure",
+    heading: "Custom Wrought-Iron Entry Doors and Beautifully Landscaped Entries",
     blurb:
-      "Fiber connectivity, Smart Park capabilities, and robust HVAC systems keep operations reliable and efficient.",
+      "Custom craftsmanship and lush landscaping come together to create a warm, inviting, and memorable entrance.",
   },
   {
-    heading: "Indoor-outdoor balance",
+    heading: "Elegant Architectural Design With Professional Appeal",
     blurb:
-      "Tree-lined walkways, lakeside seating, and natural light across every building create a calm rhythm to the workday.",
+      "Sophisticated architecture combines elegance with a strong, professional presence.",
   },
   {
-    heading: "Scalable footprints",
+    heading: "Sound Insulated Walls and Solid Core Doors",
     blurb:
-      "Executive suites, full-floor options, and flexible demising plans make it easy to align space with team growth.",
+      "Thick, insulated walls and solid core doors ensure a quiet, private, and comfortable environment.",
   },
 ];
 
@@ -41,10 +41,19 @@ const amenityColumns = [
     description:
       "Modern, suites in a prime location, combining convenience, comfort, and style.",
     items: [
-      "Private restrooms and break areas in most floor plans",
-      "Generous glasslines, high ceilings, and efficient layouts",
-      "Free surface parking throughout the professional campus",
-      "Energy-conscious construction to moderate utility costs",
+      "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
+      "Assigned mailboxes with USPS delivery directly to the building",
+      "Two shared break rooms and eight private bathrooms",
+      "Professional business address with private mailbox",
+      "Fiber high speed optic internet",
+      "24/7 access with access cards",
+      "On-site management and maintenance team for tenant support",
+      "Peaceful, scenic surroundings near lakeside walkways",
+      "Located within a premier, multi-use business park for office, medical, and professional tenants",
+      "Interior signage",
+      "Ample on-site parking for tenants and visitors",
+      "24/7 access with keys",
+      "Conference room access with six complimentary hours per month"
     ],
   },
   {
@@ -52,21 +61,31 @@ const amenityColumns = [
     description:
       "Flexible office spaces designed for professionals, startups, and growing businesses.",
     items: [
-      "Extensive conservation areas with mature landscaping",
-      "Direct visibility along the I-75 / Bruce B. Downs corridor",
-      "Minutes to dining, retail, lodging, and medical services",
-      "Daily ownership presence with rapid-response maintenance",
+      "Located within a premier, multi-use business park for office, medical, and professional tenants",
+      "Fiber high speed optic internet",
+      "Assigned mailboxes with USPS delivery directly to the building",
+      "Professional business address with private mailbox",
+      "Peaceful, scenic surroundings near lakeside walkways",
+      "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
+      "Ample on-site parking for tenants and visitors"
     ],
   },
   {
     title: "S.O.A.R",
     description:
-        "Co-working spaces that offers private offices, shared workspaces, and meeting rooms for business and individuals.",
+        "Co-working spaces that offers private offices, shared workspaces, and meeting rooms.",
     items: [
-      "Private restrooms and break areas in most floor plans",
-      "Generous glasslines, high ceilings, and efficient layouts",
-      "Free surface parking throughout the professional campus",
-      "Energy-conscious construction to moderate utility costs",
+      "On-site management and maintenance team for tenant support",
+      "Fiber high speed optic internet",
+      "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
+      "Interior signage",
+      "Assigned mailboxes with USPS delivery directly to the building",
+      "Ample on-site parking for tenants and visitors",
+      "Professional business address with private mailbox",
+      "Four private bathrooms",
+      "24/7 access with access cards",
+      "Peaceful, scenic surroundings near lakeside walkways",
+      "Located within a premier, multi-use business park for office, medical, and professional tenants"
     ],
   },
 ];
@@ -228,7 +247,7 @@ export default function Features() {
               >
                 <h3 className="text-2xl font-semibold text-slate-900">{column.title}</h3>
                 <p className="mt-3 text-sm text-slate-600 md:text-base">{column.description}</p>
-                <ul className="mt-6 space-y-4">
+                <ul className="mt-6 space-y-3 list-none">
                   {column.items.map((item) => (
                     <li
                       key={item}
