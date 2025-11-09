@@ -1,7 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Link from 'next/link';
 import { statusMap } from './statusMap';
 import { Building, AvailabilityStatus } from './type';
+import { useRouter } from 'next/navigation';
+import NotifyPopUp from './NotifyPopUp';
 
 type BuildingProps = {
     activeBuilding: Building;
@@ -11,6 +13,18 @@ type BuildingProps = {
 export function BuildingDetails({activeBuilding, normalizeStatus}: BuildingProps) {
   const statusClass = statusMap[normalizeStatus(activeBuilding.availability_status)].className;
   const statusLabel = statusMap[normalizeStatus(activeBuilding.availability_status)].label;
+
+  const [notify, setNotify] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  
+    const togglePopUp = () => {
+        setIsOpen(!isOpen);
+    }
+  const router = useRouter();
+
+  const handleTourRequest = () => {
+    router.push("/pages/Contact");
+  }
   console.log(statusLabel);
   return (
     <div className="flex h-full min-h-[480px] flex-col rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-lg shadow-slate-900/10">
@@ -74,15 +88,18 @@ export function BuildingDetails({activeBuilding, normalizeStatus}: BuildingProps
 
       {/* Contextual actions for prospects. */}
       <div className="mt-auto flex items-center justify-center pt-6">
-        <Link
-          href="/pages/Contact"
-          className="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/20 transition hover:bg-slate-800"
+        <button
+          onClick={statusLabel === "Available" ? handleTourRequest : () => setIsOpen(true)}
+          className="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/20 transition hover:bg-slate-800 cursor-pointer"
         >
           {statusLabel === "Available"
             ? "Request Tour"
             : "Notify Me When Available"}
-        </Link>
+        </button>
       </div>
+      {isOpen && (
+        <NotifyPopUp onClose={togglePopUp} buildingId={activeBuilding.building_id} />
+      )}
     </div>
   );
 }

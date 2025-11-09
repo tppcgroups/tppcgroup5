@@ -17,6 +17,7 @@ import axios from "axios";
 import { BuildingDetails } from "@/app/components/availability/BuildingDetails";
 import BuildingPhotos from "@/app/components/availability/BuildingPhotos";
 import { useSearchParams } from "next/navigation";
+import { User } from "@supabase/supabase-js";
 
 type AvailabilityStatus = "available" | "comingSoon" | "occupied";
 
@@ -279,9 +280,11 @@ export default function AvailabilityPage() {
         setLoading(false);
       }
     }
+    
     if (initialSpaceId !== null || buildings.length === 0) {
       fetchBuildings();
     }
+    
   }, [initialSpaceId]); // Runs once on mount
 
   // Grab the suites that match the selected tab.
