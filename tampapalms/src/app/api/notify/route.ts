@@ -19,7 +19,25 @@ export async function GET() {
 export async function POST(request: Request) {
     try{    
         const newNotify: UserNotify = await request.json();
+        console.log("Received notify request:", newNotify);
         const supabase = supabaseServer();
+        // Check for existing notify request for the same email and building_id
+        const { data: existingData, error: fetchError } = await supabase
+            .from('notify')
+            .select('*')
+            .eq('email', newNotify.email)
+            .eq('building_id', newNotify.building_id)
+            .single();
+
+        if (fetchError && fetchError.code !== 'PGRST116') {
+            console.error("Supabase fetch error:", fetchError.message);
+            return NextResponse.json({ error: fetchError.message}, {status: 500});
+        }
+        
+        if (existingData) {
+            console.log("Notify request already exists for this email and building_id.");
+            return NextResponse.json({ message: 'Notify request already exists.' }, { status: 200 });
+        }
         // Insert the new notify record into the 'notify' table
         const {data, error} = await supabase.from('notify').insert([newNotify]).select();
         if (error) {
