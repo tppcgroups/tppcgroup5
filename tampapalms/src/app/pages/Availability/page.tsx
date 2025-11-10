@@ -1,23 +1,18 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import SpacesCard from "@/app/components/availability/explore_spaces/SpacesCard";
 import TitleCard from "@/app/components/TitleCard";
-import Spacer from "@/app/components/Spacer";
 
 import { AvailabilityHero } from "@/app/components/availability/AvailabilityHero";
-import { SuiteDetails } from "@/app/components/availability/SuiteDetails";
-import { SuiteGallery } from "@/app/components/availability/SuiteGallery";
 import { SuiteFloorPlan } from "@/app/components/availability/SuiteFloorPlan";
-import { SuiteList } from "@/app/components/availability/SuiteList";
 import { BuildingList } from "@/app/components/availability/BuildingList";
-import type { Suite, Building } from "@/app/components/availability/type";
+import type { Building } from "@/app/components/availability/type";
 import axios from "axios";
 import { BuildingDetails } from "@/app/components/availability/BuildingDetails";
 import BuildingPhotos from "@/app/components/availability/BuildingPhotos";
 import { useSearchParams } from "next/navigation";
-import { User } from "@supabase/supabase-js";
+import { CampusGroundMap } from "@/app/components/availability/CampusGroundMap";
 
 type AvailabilityStatus = "available" | "comingSoon" | "occupied";
 
@@ -29,22 +24,6 @@ const normalizeStatus = (
   const status = rawStatus.toLowerCase().trim();
   if (status === "available") return "available";
   return "occupied"; // Default to occupied/waitlisted for all other values
-};
-
-// 2. Status Map (Needs to be defined or imported for the status badge logic)
-const statusMap: Record<
-  AvailabilityStatus,
-  { label: string; className: string }
-> = {
-  available: {
-    label: "Available",
-    className: "bg-emerald-100 text-emerald-700",
-  },
-  comingSoon: {
-    label: "Coming Soon",
-    className: "bg-slate-100 text-slate-700",
-  },
-  occupied: { label: "Waitlisted", className: "bg-slate-100 text-slate-600" },
 };
 
 const buildingFilterOptions: Array<{
@@ -101,6 +80,7 @@ export default function AvailabilityPage() {
   const [globalImageMap, setGlobalImageMap] = useState<{
     [key: string]: string[];
   }>({});
+  const detailSectionRef = useRef<HTMLDivElement | null>(null);
 
   const searchParams = useSearchParams();
   const initialSpaceId = searchParams.get("spaceId");
@@ -127,7 +107,7 @@ export default function AvailabilityPage() {
   };
 
   // Function to handle image resolution (moved outside of effects)
-  const updateActiveImages = (
+  const updateActiveImages = useCallback((
     activeBuilding: Building | undefined,
     imageMap: { [key: string]: string[] }
   ) => {
@@ -169,7 +149,7 @@ export default function AvailabilityPage() {
     const exteriorPaths =
       baseBuildKey && imageMap[baseBuildKey] ? imageMap[baseBuildKey] : [];
 
-    let finalImages: Array<{ src: string; alt: string }> = [];
+    const finalImages: Array<{ src: string; alt: string }> = [];
 
     console.log("Used image key:", usedKey);
 
@@ -208,22 +188,15 @@ export default function AvailabilityPage() {
       );
     }
     setActiveImageIndex(0);
-  };
+  }, []);
 
   useEffect(() => {
     async function fetchBuildings() {
       try {
         const response = await axios.get("/api/buildings");
-        const rawBuildings = response.data || [];
-        const normalizedBuildings: Building[] = rawBuildings.map((b: any) => ({
+        const rawBuildings = (response.data ?? []) as Building[];
+        const normalizedBuildings: Building[] = rawBuildings.map((b) => ({
           ...b,
-          // Add ID/Label fields required by the old component structure
-          id: b.building_id,
-          label: b.street_address,
-          size: `${b.rental_sq_ft} SF`,
-          status: normalizeStatus(b.availability_status),
-
-          // Placeholder/Default fields for UI
           images: defaultImages,
           features:
             b.office_type === "Exec" ? executiveFeatures : officeFeatures,
@@ -235,7 +208,6 @@ export default function AvailabilityPage() {
               ? "SOAR"
               : "Office",
           brochureHref: undefined,
-          floorplanHref: undefined,
         }));
 
         // Sorting logic
@@ -285,7 +257,7 @@ export default function AvailabilityPage() {
       fetchBuildings();
     }
     
-  }, [initialSpaceId]); // Runs once on mount
+  }, [initialSpaceId, buildings.length, updateActiveImages]); // Runs once on mount
 
   // Grab the suites that match the selected tab.
   const filteredBuildings = useMemo(
@@ -316,7 +288,7 @@ export default function AvailabilityPage() {
       updateActiveImages(activeBuilding, globalImageMap);
     }
     // Dependency array relies on activeBuilding and globalImageMap state
-  }, [activeBuilding, globalImageMap, defaultImages]);
+  }, [activeBuilding, globalImageMap, updateActiveImages]);
 
   // Keep selections in sync when the visible suites set changes (e.g., new filter).
   useEffect(() => {
@@ -385,52 +357,59 @@ export default function AvailabilityPage() {
           </div>
         </div>
 
-        {/* Core layout: list + gallery + supporting details. */}
-        <div className="grid auto-rows-fr items-stretch gap-8 lg:grid-cols-3">
-          <div className="h-full">
-            <BuildingList
-              loading={loading}
-              visibleBuildings={visibleBuildings}
-              activeBuildingId={activeBuildingId}
-              normalizeStatus={normalizeStatus}
-              onSelectBuilding={handleBuildingSelect}
-            />
-          </div>
-          <div className="h-full">
-            {activeBuilding && (
-              <BuildingDetails
-                activeBuilding={activeBuilding}
+        <div className="flex flex-col gap-12">
+          {/* Ground map + suite list */}
+          <div className="grid gap-8 lg:grid-cols-6">
+            <div className="lg:col-span-3 h-full">
+              <CampusGroundMap />
+            </div>
+            <div className="lg:col-span-3 h-full">
+              <BuildingList
+                loading={loading}
+                visibleBuildings={visibleBuildings}
+                activeBuildingId={activeBuildingId}
                 normalizeStatus={normalizeStatus}
+                onSelectBuilding={handleBuildingSelect}
               />
-            )}
+            </div>
           </div>
 
-          <div className="h-full">
-            <BuildingPhotos
-              images={activeBuildingImages} // Uses the dynamically set images
-              activeImageIndex={activeImageIndex}
-              onPrev={() => {
-                if (!activeBuildingImages.length) return;
-                setActiveImageIndex(
-                  (prev) =>
-                    (prev - 1 + activeBuildingImages.length) %
-                    activeBuildingImages.length
-                );
-              }}
-              onNext={() => {
-                if (!activeBuildingImages.length) return;
-                setActiveImageIndex(
-                  (prev) => (prev + 1) % activeBuildingImages.length
-                );
-              }}
-              onSelectImage={setActiveImageIndex}
-              suiteLabel={activeBuilding?.street_address}
-            />
+          {/* Imagery + details */}
+          <div
+            ref={detailSectionRef}
+            className="grid gap-8 lg:grid-cols-5"
+          >
+            <div className="lg:col-span-3">
+              <BuildingPhotos
+                images={activeBuildingImages}
+                activeImageIndex={activeImageIndex}
+                onPrev={() => {
+                  if (!activeBuildingImages.length) return;
+                  setActiveImageIndex(
+                    (prev) =>
+                      (prev - 1 + activeBuildingImages.length) %
+                      activeBuildingImages.length
+                  );
+                }}
+                onNext={() => {
+                  if (!activeBuildingImages.length) return;
+                  setActiveImageIndex(
+                    (prev) => (prev + 1) % activeBuildingImages.length
+                  );
+                }}
+                onSelectImage={setActiveImageIndex}
+                suiteLabel={activeBuilding?.street_address}
+              />
+            </div>
+            <div className="lg:col-span-2">
+              {activeBuilding && (
+                <BuildingDetails
+                  activeBuilding={activeBuilding}
+                  normalizeStatus={normalizeStatus}
+                />
+              )}
+            </div>
           </div>
-        </div>
-
-        <div className="mt-12 mx-auto">
-          <SuiteFloorPlan />
         </div>
       </section>
 

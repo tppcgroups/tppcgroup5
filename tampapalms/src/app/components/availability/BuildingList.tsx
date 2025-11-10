@@ -11,17 +11,23 @@ type BuildingeListProps = {
 
 export function BuildingList({ loading, visibleBuildings, activeBuildingId, normalizeStatus, onSelectBuilding }: BuildingeListProps) {
     return (
-      <aside className="flex h-full max-h-[500px] overflow-y-auto flex-col rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-lg shadow-slate-900/10">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
-          Suites
-        </p>
-        <p className="mt-2 text-sm text-slate-600">
-          Select a suite to preview imagery and key details. The list updates as
-          spaces become available across the campus.
-        </p>
+      <aside className="flex h-full max-h-[520px] w-full flex-col rounded-[32px] border border-slate-200 bg-white/95 p-6 shadow-xl shadow-slate-900/5">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+            Suites
+          </p>
+          <p className="mt-2 text-sm text-slate-600">
+            Select a suite to preview imagery and key details. The list updates as
+            spaces become available across the campus.
+          </p>
+          <p className="mt-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs font-medium text-slate-500">
+            After choosing a suite, scroll down to explore the gallery and space
+            details.
+          </p>
+        </div>
         <div className="mt-6 grid flex-1 content-start items-start gap-3 overflow-y-auto pr-1">
           {loading && <p>Loading buildings...</p>}
-          {visibleBuildings.map((building, index) => {
+          {visibleBuildings.map((building) => {
             const isActive = activeBuildingId === building.building_id;
             const normalizedStatusKey = normalizeStatus(
               building.availability_status
