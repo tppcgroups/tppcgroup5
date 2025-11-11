@@ -5,12 +5,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PiCheckCircleBold } from "react-icons/pi";
+import axios from "axios";
+import {useEffect, useState} from "react";
+import type {Building} from "@/app/components/availability/type"
+type AvailabilityStatus = "available" | "comingSoon" | "occupied";
 
-const stats = [
-  { label: "Buildings Across Campus", value: "8" },
-  { label: "Move-In Ready Suites", value: "40+" },
-  { label: "On-Site Team Coverage", value: "7 Days" },
-];
+
+const normalizeStatus = (
+    rawStatus: string | null | undefined
+): AvailabilityStatus => {
+  if (!rawStatus) return "occupied";
+  const status = rawStatus.toLowerCase().trim();
+  if (status === "available") return "available";
+  return "occupied"; // Default to occupied/waitlisted for all other values
+};
 
 const featureTiles = [
   {
@@ -46,13 +54,12 @@ const amenityColumns = [
       "Two shared break rooms and eight private bathrooms",
       "Professional business address with private mailbox",
       "Fiber high speed optic internet",
-      "24/7 access with access cards",
+      "24/7 access with access cards and keys",
       "On-site management and maintenance team for tenant support",
       "Peaceful, scenic surroundings near lakeside walkways",
       "Located within a premier, multi-use business park for office, medical, and professional tenants",
       "Interior signage",
       "Ample on-site parking for tenants and visitors",
-      "24/7 access with keys",
       "Conference room access with six complimentary hours per month"
     ],
   },
@@ -112,6 +119,27 @@ const supportHighlights = [
 ];
 
 export default function Features() {
+  const [availableSuites, setAvailableSuites] = useState(0);
+  useEffect(()=>{
+    async function getBuildings() {
+      try {
+        const response = await axios.get("/api/buildings");
+        const rawBuildings = (response.data ?? []) as Building[];
+        const availableSpaces = rawBuildings.filter(
+          (b) => normalizeStatus(b.availability_status) === "available");
+        console.log(availableSpaces.length);
+        setAvailableSuites(availableSpaces.length)
+        } catch (error) {
+        console.error(error);
+      }
+    }
+    getBuildings();
+  },[])
+  const stats = [
+    { label: "Buildings Across Campus", value: "8" },
+    { label: "Move-In Ready Suites", value: `${availableSuites}`},
+    { label: "On-Site Team Coverage", value: "7 Days" },
+  ];
   return (
     <main className="min-h-screen bg-slate-100/70 text-slate-900">
       {/* Hero */}
@@ -225,7 +253,7 @@ export default function Features() {
         <div className="absolute inset-0">
           <div className="absolute left-1/2 top-0 h-64 w-[65%] -translate-x-1/2 bg-gradient-to-b from-slate-200/50 via-transparent to-transparent blur-3xl" />
         </div>
-        <div className="relative mx-auto max-w-6xl px-6 md:px-10">
+        <div className="relative mx-auto max-w-6xl px-4 md:px-10">
           <div className="space-y-6 text-center md:space-y-8">
             <span className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
               Amenities & Setting
@@ -239,7 +267,7 @@ export default function Features() {
             </p>
           </div>
 
-          <div className="mt-12 grid gap-10 md:grid-cols-3">
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
             {amenityColumns.map((column) => (
               <div
                 key={column.title}
