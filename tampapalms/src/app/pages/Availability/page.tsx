@@ -79,6 +79,14 @@ export default function AvailabilityPage() {
     [key: string]: string[];
   }>({});
   const detailSectionRef = useRef<HTMLDivElement | null>(null);
+  const scrollToDetails = useCallback(() => {
+    if (!detailSectionRef.current) return;
+    const targetTop = detailSectionRef.current.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({
+      top: targetTop - 140,
+      behavior: "smooth",
+    });
+  }, []);
 
   const searchParams = useSearchParams();
   const initialSpaceId = searchParams.get("spaceId");
@@ -321,6 +329,8 @@ export default function AvailabilityPage() {
     } else {
       setActiveBuildingImages(defaultImages);
     }
+
+    scrollToDetails();
   };
 
   return (
