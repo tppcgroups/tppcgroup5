@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useCallback, useMemo, useRef, useState } from "react";
+import { useRouter } from 'next/navigation';
 
 type CampusGroundMapProps = {
   imageSrc?: string;
@@ -8,12 +9,19 @@ type CampusGroundMapProps = {
 export function CampusGroundMap({
   imageSrc = "/images/Floor-plans/SiteplanEast&West.png",
 }: CampusGroundMapProps) {
+
+  const router = useRouter();
+  const [naturalWidth, setNaturalWidth] = useState(1);
+  const [naturalHeight, setNaturalHeight] = useState(1);
   const [scale, setScale] = useState(1.35);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [aspectRatio, setAspectRatio] = useState(4 / 3);
   const dragOffset = useRef({ x: 0, y: 0 });
   const pointerIdRef = useRef<number | null>(null);
+
+
+  
 
   const clamp = (value: number, min: number, max: number) =>
     Math.min(max, Math.max(min, value));
@@ -81,6 +89,38 @@ export function CampusGroundMap({
     ]
   );
 
+  const handleAreaClick = (
+    event: React.MouseEvent<SVGPolygonElement>,
+    path: string
+  ) => {
+    // Prevent default navigation 
+    event.preventDefault();
+
+    // Check if the user was dragging right before the click
+    // This is a common pattern to prevent clicks on drag events
+    // Since isDragging is reset on pointerUp, checking pointerId is a quick proxy
+    if (pointerIdRef.current !== null) {
+      // If a pointer ID is still set, it might have been a drag
+      return;
+    }
+
+    // Navigate using the Next.js router
+    router.push(path);
+  }
+
+  // Define building data including corrdinates and routes
+  const buildingAreas = [
+    {
+      id: "building_5",
+      coords: "2784,2081,2978,2135,2879,2451,2690,2401",
+      route: '/pages/Contact'
+    },
+  ];
+
+  const areaCoordsToSvgPoints = (coords: string): string => {
+    return coords.replace(/,/g, ' ');
+  }
+
   return (
     <section className="flex h-full max-h-[520px] flex-col overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-xl shadow-slate-900/5">
       <div className="border-b border-slate-100 px-6 py-6">
@@ -88,7 +128,8 @@ export function CampusGroundMap({
           Campus Overview
         </p>
         <h2 className="mt-2 text-lg font-semibold text-slate-900">
-          Select a building to preview suites, then explore the map to see how everything connects.
+          Select a building to preview suites, then explore the map to see how
+          everything connects.
         </h2>
       </div>
 
@@ -113,25 +154,43 @@ export function CampusGroundMap({
               transition: isDragging ? "none" : "transform 120ms ease-out",
             }}
           >
-            <Image
-              src={imageSrc}
-              alt="Tampa Palms Professional Center campus site plan"
-              fill
-              sizes="(max-width: 1024px) 90vw, 60vw"
-              className="object-contain"
-              priority={false}
-              draggable={false}
-              onLoad={(event) => {
-                const { naturalWidth, naturalHeight } = event.currentTarget;
-                if (naturalWidth && naturalHeight) {
-                  setAspectRatio(naturalWidth / naturalHeight);
-                }
-              }}
-              useMap="#image-map"
-            />
-            <map name="image-map">
-              <area target="_blank" alt="building_5" title="building_5" href="https://github.com/jrsussner18" coords="2784,2081,2978,2135,2879,2451,2690,2401" shape="poly" />
-          </map>
+            <div className="relative h-full w-full">
+              <Image
+                src={imageSrc}
+                alt="Tampa Palms Professional Center campus site plan"
+                fill
+                sizes="(max-width: 1024px) 90vw, 60vw"
+                className="object-contain"
+                priority={false}
+                draggable={false}
+                onLoad={(event) => {
+                  const { naturalWidth, naturalHeight } = event.currentTarget;
+                  if (naturalWidth && naturalHeight) {
+                    setAspectRatio(naturalWidth / naturalHeight);
+                    setNaturalHeight(naturalHeight);
+                    setNaturalWidth(naturalWidth);
+                  }
+                }}
+              />
+              <svg
+                className="absolute inset-0"
+                viewBox={`0 0 ${naturalWidth} ${naturalHeight}`} // need to get these variables here
+                style={{
+                  objectFit: 'contain',
+                  height: '100%',
+                  width: '100%',
+                }}
+              >
+                {buildingAreas.map((area) => (
+                  <polygon
+                    key={area.id}
+                    points={areaCoordsToSvgPoints(area.coords)}
+                    onClick={(e) => handleAreaClick(e, area.route)}
+                    className="fill-blue-500/30 stroke-blue-700/80 stroke-[10] transition-all duration-200 pointer-events-auto cursor-pointer hover:fill-blue-400/50"
+                  />
+                ))}
+              </svg>
+            </div>
           </div>
         </div>
 
@@ -172,9 +231,7 @@ export function CampusGroundMap({
       </div>
 
       <div className="flex flex-col gap-2 border-t border-slate-100 bg-slate-50 px-6 py-5 text-sm text-slate-600 md:flex-row md:items-center md:justify-between">
-        <p className="font-semibold text-slate-900">
-          Need a static copy?
-        </p>
+        <p className="font-semibold text-slate-900">Need a static copy?</p>
         <a
           href="/images/Floor-plans/TPPCSITEPLAN.pdf"
           target="_blank"

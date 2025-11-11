@@ -5,26 +5,43 @@ import React from 'react';
 import { EmailTemplate } from '@/app/components/email/EmailTemplate';
 
 const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT),
-    secure: Number(process.env.SMPT_PORT) === 467,
-    auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-    },
+  service: "gmail",
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_APP_PASS,
+  },
 });
+    
 
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { recipient, subject } = body;
+        const {
+          recipient,
+          subject,
+          buildingId,
+          marketingEmail,
+          subscribeUrl,
+          logoUrl,
+        } = body;
+
+        if (!recipient || !subject) {
+          return NextResponse.json(
+            { error: "Recipient and subject are required" },
+            { status: 400 }
+          );
+        }
 
         const { renderToString } = await import('react-dom/server');
         const htmlContent = renderToString(
-            React.createElement(EmailTemplate)
+            React.createElement(EmailTemplate, {
+              recipientEmail: recipient,
+              buildingId,
+              marketingEmail: marketingEmail || process.env.MARKETING_EMAIL || process.env.SMTP_USER,
+              subscribeUrl,
+              logoUrl: logoUrl || process.env.MARKETING_LOGO_URL,
+            })
         )
-
-        console.log("Received HTML Content:", htmlContent);
 
         if (
           !htmlContent ||

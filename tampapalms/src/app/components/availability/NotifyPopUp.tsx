@@ -1,4 +1,4 @@
-import React, { ReactEventHandler, useEffect } from 'react'
+import React from 'react'
 import axios from 'axios';
 import UserNotify from '@/app/api/notify/route';
 
@@ -6,6 +6,12 @@ interface PopupComponentProps {
   onClose: () => void;
   buildingId: string;
 }
+
+const marketingEmailAddress =
+  process.env.NEXT_PUBLIC_MARKETING_EMAIL ?? 'marketing@tampapalms.com';
+const subscribeUrl =
+  process.env.NEXT_PUBLIC_SUBSCRIBE_URL ?? 'https://tampapalms.com/updates';
+const logoUrl = process.env.NEXT_PUBLIC_LOGO_URL;
 
 function NotifyPopUp({onClose, buildingId}: PopupComponentProps) {
     const onSubmitHandler = async (e: React.FormEvent) => {
@@ -18,21 +24,25 @@ function NotifyPopUp({onClose, buildingId}: PopupComponentProps) {
                 email: emailInput,
                 building_id: buildingId,
             }
-            const response = await axios.post('/api/notify', user);
+            await axios.post('/api/notify', user);
         } catch (error) {
             console.error("Error submitting notify request:", error);
         }
         // EMAIL SEND TEST 
-        // try {
-        // const mail = {
-        //   recipient: 'csc350group5@gmail.com',
-        //   subject: 'test',
-        // }
+        try {
+          const mail = {
+            recipient: "jrsussner@gmail.com",
+            subject: `You're on the list for suite ${buildingId}`,
+            buildingId,
+            marketingEmail: marketingEmailAddress,
+            subscribeUrl,
+            logoUrl,
+          };
 
-        //   const response = await axios.post('/api/email', mail);
-        // } catch (error) {
-        //   console.error("Error sending email:", error);
-        // }
+          await axios.post('/api/email', mail);
+        } catch (error) {
+          console.error("Error sending email:", error);
+        }
 
         onClose();
     }
@@ -87,7 +97,7 @@ function NotifyPopUp({onClose, buildingId}: PopupComponentProps) {
               type="email"
               name="email"
               placeholder="you@example.com"
-              className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400"
               required
             />
 

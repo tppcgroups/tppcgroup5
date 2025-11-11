@@ -19,7 +19,6 @@ export async function GET() {
 export async function POST(request: Request) {
     try{    
         const newNotify: UserNotify = await request.json();
-        console.log("Received notify request:", newNotify);
         const supabase = supabaseServer();
         // Check for existing notify request for the same email and building_id
         const { data: existingData, error: fetchError } = await supabase
