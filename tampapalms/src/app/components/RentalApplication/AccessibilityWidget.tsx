@@ -22,7 +22,7 @@ const AccessibilityWidget: React.FC = () => {
                 <div className="fixed bottom-20 right-5 bg-white border border-gray-300
                         rounded-2xl shadow-xl w-64 p-4 animate-fade-in">
                     <h2 className="text-lg font-semibold mb-2 text-gray-800">
-                        Accessibilityi
+                        Accessibility
                     </h2>
                 </div>
             )}
