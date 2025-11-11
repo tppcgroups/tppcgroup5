@@ -15,10 +15,13 @@ const logoUrl = process.env.NEXT_PUBLIC_LOGO_URL;
 
 function NotifyPopUp({onClose, buildingId}: PopupComponentProps) {
     const onSubmitHandler = async (e: React.FormEvent) => {
+      const emailInput = (
+        document.querySelector('input[name="email"]') as HTMLInputElement
+      ).value;
         e.preventDefault();
         try {
             const uuid = crypto.randomUUID();
-            const emailInput = (document.querySelector('input[name="email"]') as HTMLInputElement).value;
+            
             const user: UserNotify = {
                 user_id: uuid,
                 email: emailInput,
@@ -31,7 +34,7 @@ function NotifyPopUp({onClose, buildingId}: PopupComponentProps) {
         // EMAIL SEND TEST 
         try {
           const mail = {
-            recipient: "jrsussner@gmail.com",
+            recipient: emailInput,
             subject: `You're on the list for suite ${buildingId}`,
             buildingId,
             marketingEmail: marketingEmailAddress,

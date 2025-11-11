@@ -16,11 +16,22 @@ type BuildingGalleryProps = {
 };
 
 export function BuildingPhotos({images, activeImageIndex, onPrev, onNext, onSelectImage, suiteLabel}: BuildingGalleryProps){
+
+  // Variables and logic for thumbnail wrapping
+  const imageIndices = [];
+  const numThumbnails = 4;
+  const totalImages = images.length;
+
+  for (let i = 0; i < numThumbnails; i++) {
+    const index = (activeImageIndex + i) % totalImages;
+    imageIndices.push(index);
+  }
+
   return (
     <section className="flex h-full min-h-[520px] flex-col rounded-[32px] border border-slate-200 bg-white/95 p-8 shadow-xl shadow-slate-900/5">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
             Gallery
           </p>
           <h3 className="mt-2 text-2xl font-semibold text-slate-900">
@@ -79,20 +90,20 @@ export function BuildingPhotos({images, activeImageIndex, onPrev, onNext, onSele
 
       {images.length > 1 && (
         <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {images.slice(0, 4).map((image, index) => (
+          {imageIndices.map((index, i) => (
             <button
-              key={image.src}
+              key={images[index].src}
               type="button"
               onClick={() => onSelectImage(index)}
               className={`relative flex h-24 items-center justify-center overflow-hidden rounded-2xl border transition ${
-                index === activeImageIndex
+                i === 0
                   ? "border-slate-900 shadow-md shadow-slate-900/25"
                   : "border-slate-200 hover:border-slate-300"
               }`}
             >
               <Image
-                src={image.src}
-                alt={image.alt}
+                src={images[index].src}
+                alt={images[index].alt}
                 fill
                 className="object-cover"
               />

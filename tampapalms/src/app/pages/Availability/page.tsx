@@ -3,9 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import SpacesCard from "@/app/components/availability/explore_spaces/SpacesCard";
 import TitleCard from "@/app/components/TitleCard";
-
 import { AvailabilityHero } from "@/app/components/availability/AvailabilityHero";
-import { SuiteFloorPlan } from "@/app/components/availability/SuiteFloorPlan";
 import { BuildingList } from "@/app/components/availability/BuildingList";
 import type { Building } from "@/app/components/availability/type";
 import axios from "axios";
@@ -172,6 +170,7 @@ export default function AvailabilityPage() {
       }));
 
       finalImages.push(...interiorImages);
+      console.log("These are the final images for this suite", finalImages);
       setActiveBuildingImages(interiorImages.length > 0 ? finalImages : defaultImages);
       console.log("LOG 1: Setting new images for:", usedKey);
     } else {

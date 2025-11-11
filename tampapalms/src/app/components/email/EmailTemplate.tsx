@@ -97,7 +97,7 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
                                   fontSize: 13,
                                   letterSpacing: 1.6,
                                   textTransform: "uppercase",
-                                  color: "rgba(255,255,255,0.85)",
+                                  color: "#ffffff",
                                 }}
                               >
                                 Tampa Palms Professional Center
@@ -107,6 +107,7 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
                                   margin: "6px 0 0",
                                   fontSize: 16,
                                   fontWeight: 600,
+                                  color: "#ffffff",
                                 }}
                               >
                                 Leasing & Marketing
@@ -122,6 +123,7 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
                           margin: 0,
                           fontSize: 28,
                           fontWeight: 600,
+                          color: "#ffffff",
                         }}
                       >
                         Availability Request Received
