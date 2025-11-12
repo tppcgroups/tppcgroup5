@@ -6,3 +6,18 @@ export const statusMap: Record<AvailabilityStatus, { label: string; className: s
   comingSoon: { label: "Coming Soon", className: "bg-slate-100 text-slate-700" },
   occupied: { label: "Waitlisted", className: "bg-slate-100 text-slate-600" },
 };
+
+export const normalizeAvailabilityStatus = (
+  rawStatus: string | null | undefined
+): AvailabilityStatus => {
+  if (!rawStatus) {
+    return "occupied";
+  }
+
+  const normalized = rawStatus.toLowerCase().trim();
+  if (normalized === 'available') {
+    return "available";
+  }
+
+  return "occupied";
+}

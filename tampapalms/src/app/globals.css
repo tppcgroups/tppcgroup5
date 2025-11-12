@@ -175,3 +175,12 @@ header nav {
 .white-image {
   filter: brightness(0) invert(1);
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

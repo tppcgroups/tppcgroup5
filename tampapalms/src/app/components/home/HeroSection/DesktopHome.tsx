@@ -55,7 +55,7 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
       plugins={[autoplayPlugin.current]}
       setApi={setApi}
       opts={{ align: "start", loop: true }}
-      className="relative hidden h-[80dvh] overflow-hidden rounded-3xl mx-8 my-4 md:block"
+      className="relative hidden h-[80dvh] overflow-hidden rounded-3xl mx-8 my-4 min-[900]:block"
       onMouseEnter={() => autoplayPlugin.current.stop()}
       onMouseLeave={() => autoplayPlugin.current.play()}
   >
