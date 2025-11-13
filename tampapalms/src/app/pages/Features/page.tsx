@@ -120,6 +120,7 @@ const supportHighlights = [
 
 export default function Features() {
   const [availableSuites, setAvailableSuites] = useState(0);
+  const [uniqueBuildings, setUniqueBuildings] = useState(0);
   useEffect(()=>{
     async function getBuildings() {
       try {
@@ -129,6 +130,16 @@ export default function Features() {
           (b) => normalizeStatus(b.availability_status) === "available");
         console.log(availableSpaces.length);
         setAvailableSuites(availableSpaces.length)
+        const uniqueByNumber = Array.from(
+          new Map(
+              rawBuildings.map((b)=>{
+                const match = b.street_address?.match(/^\d+/);
+                const buildingNumber = match ? match[0] : b.street_address;
+                return [buildingNumber, b];
+              })
+          ).values()
+        );
+        setUniqueBuildings(uniqueByNumber.length);
         } catch (error) {
         console.error(error);
       }
@@ -136,9 +147,9 @@ export default function Features() {
     getBuildings();
   },[])
   const stats = [
-    { label: "Buildings Across Campus", value: "8" },
+    { label: "Buildings Across Campus", value: `${uniqueBuildings}`},
     { label: "Move-In Ready Suites", value: `${availableSuites}`},
-    { label: "On-Site Team Coverage", value: "7 Days" },
+    { label: "On-Site Team Coverage", value: "7 Day" },
   ];
   return (
     <main className="min-h-screen bg-slate-100/70 text-slate-900">

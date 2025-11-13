@@ -31,7 +31,7 @@ type Props = {
   gallery?: string[];
   totalSize?: number;
   flexibleSuites?: number;
-  meetingRooms?: number;
+  buildingAvailable?: number;
 };
 
 const highlightIcons = [Sparkles, Building2, Users2, ShieldCheck];
@@ -130,7 +130,7 @@ export default function HomeSections({
   gallery = ["/images/g1.jpg", "/images/g2.jpg", "/images/g3.jpg", "/images/g4.jpg"],
   totalSize = 0,
   flexibleSuites = 0,
-  meetingRooms = 0,
+  buildingAvailable = 0,
 }: Props) {
   const galleryImages = gallery.length ? gallery.slice(0, 4) : [];
 
@@ -150,8 +150,8 @@ export default function HomeSections({
       helper: "Ready for 1-15 professionals",
     },
     {
-      value: meetingRooms ? meetingRooms.toLocaleString() : "0",
-      label: "Meeting rooms",
+      value: buildingAvailable ? buildingAvailable.toLocaleString() : "0",
+      label: "Buildings",
       helper: "AV-ready & reservable",
     },
     {
@@ -245,7 +245,7 @@ export default function HomeSections({
               <Link
                 key={`${highlight.title}-${index}`}
                 href={highlight.href ?? "#"}
-                className="group relative flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-lg shadow-black/5 transition hover:-translate-y-1 hover:border-[#c8b79f]"
+                className="group relative flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-lg shadow-black/5 hover:border-[#c8b79f]"
               >
                 <div className="inline-flex size-12 items-center justify-center rounded-2xl bg-[#ddd0bd] text-[#5a4b3c]">
                   <Icon className="h-5 w-5" aria-hidden />

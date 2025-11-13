@@ -12,14 +12,14 @@ import axios from "axios"
 export default function Home(){
   const [totalSize, setTotalSize] = useState(0);
   const [flexibleSuites, setFlexibleSuites] = useState(0);
-  const [meetingRooms, setMeetingRooms] = useState(0);
+  const [buildingAvailable, setBuildingAvailable] = useState(0);
     const images = [
       "/images/TPPC-Entry-002.jpg",
       "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinitionEdit.png",
       "/images/Bldg5-003.jpg",
-      "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-9-LargeHighDefinition.jpg",
+      // "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-9-LargeHighDefinition.jpg",
       "/images/Bldg6-001.jpg",
-      "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Aerial-13-LargeHighDefinition.jpg",
+      // "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Aerial-13-LargeHighDefinition.jpg",
       "/images/TPPC-002.jpg",
     ];  
 
@@ -58,6 +58,7 @@ export default function Home(){
           setTotalSize(total);
           console.log("Total building size:", total);
 
+
           // Suite Count Data
           const suiteCount = rawBuildings.reduce((acc: number, building: any) => {
             const officesCount = toNumeric(building.offices_count);
@@ -72,22 +73,19 @@ export default function Home(){
 
             return typeof building.offices_type === "string" && building.office_type.trim() ? acc + 1 : acc;
           }, 0);
-
           setFlexibleSuites(suiteCount);
           console.log("Total flexible suites:", suiteCount);
 
-          //TBD 
-          const meetingRoomCount = rawBuildings.reduce((acc: number, building: any) => {
-            const meetingValue =
-              toNumeric(building.meeting_rooms) ||
-              toNumeric(building.meeting_room_count) ||
-              toNumeric(building.conference_rooms) ||
-              toNumeric(building.conference_room_count);
-            return meetingValue ? acc + meetingValue : acc;
-          }, 0);
+          
+          // Number of buildings Available, taking the highest number from the database (that means the amount of buildings available) 
+          const buildingAvailable = rawBuildings.reduce((max: number, building: any) => {
+            const buildingValue =
+              toNumeric(building.building_number);
+            return buildingValue > max ? buildingValue : max;
+          }, 26);
 
-          setMeetingRooms(meetingRoomCount);
-          console.log("Total meeting rooms:", meetingRoomCount);
+          setBuildingAvailable(buildingAvailable);
+          console.log("Total meeting rooms:", buildingAvailable);
 
         } catch (error) {
           console.error("Error fetching building sizes:", error);
@@ -105,7 +103,7 @@ export default function Home(){
         <DesktopHome imageUrls={images} />
 
         {/* Uncomment this to see HomeSection */}
-        <HomeSections totalSize={totalSize} flexibleSuites={flexibleSuites} meetingRooms={meetingRooms} />
+        <HomeSections totalSize={totalSize} flexibleSuites={flexibleSuites} buildingAvailable={buildingAvailable} />
         
         <div></div>
         {/* <LocationInsights /> */}
