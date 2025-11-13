@@ -63,10 +63,10 @@ const TestimonialsPage = () => {
       <div className="space-y-12">
         <header className="relative -mx-4 overflow-hidden rounded-none shadow-[0_35px_90px_-70px_rgba(31,26,22,0.8)] sm:-mx-6">
           <Image
-            src="/images/TPPC-002.jpg"
+            src="/images/Bldg6-007.jpg"
             alt="Tenants collaborating at Tampa Palms Professional Center"
             fill
-            className="object-cover"
+            className="object-cover object-[center_60%]"
             sizes="(max-width: 1000px) 200vw, 1200px"
             priority
           />
@@ -87,8 +87,18 @@ const TestimonialsPage = () => {
           </div>
         </header>
 
-        <div className="-mx-4 space-y-6 bg-white/90 py-6 shadow-[0_35px_90px_-70px_rgba(31,26,22,0.5)] sm:-mx-6">
-
+        <div className="-mx-4 space-y-6 bg-white/95 py-12 shadow-[0_35px_90px_-70px_rgba(31,26,22,0.35)] sm:-mx-6">
+          <div className="mx-auto max-w-4xl px-6 text-center sm:px-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#a49382]">
+              tenant voices
+            </p>
+            <p className="mt-3 text-2xl font-semibold text-[#1f1a16] sm:text-3xl">
+              Insights from the tenants and partners who help make Tampa Palms a thriving professional community.
+            </p>
+            <p className="mt-3 text-sm text-[#7a6754]">
+              Collected from healthcare, legal, advisory, and growth-stage teams throughout the campus.
+            </p>
+          </div>
           <div className="space-y-5">
             {loading && (
               <p className="text-center text-sm text-[#7a6754]">Loading testimonials...</p>
@@ -103,7 +113,7 @@ const TestimonialsPage = () => {
             )}
 
             {!loading && !error && testimonials.length > 0 && (
-              <div className="space-y-5 p-12">
+              <div className="space-y-5 px-6 pb-6 md:px-12 md:pb-12">
                 {testimonials.map((testimonial) => {
                   const key = testimonial.id?.toString() ?? testimonial.name;
                   const isExpanded = expanded[key];

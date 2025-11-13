@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 interface MaintenanceHeroProps {
@@ -5,46 +6,46 @@ interface MaintenanceHeroProps {
   emergencyPhone?: string;
 }
 
-export default function Hero({
-}: MaintenanceHeroProps = {}) {
+export default function Hero({}: MaintenanceHeroProps = {}) {
   return (
-    <section className="relative overflow-hidden bg-white text-[#1f1a16]">
-      <div className="absolute inset-0" aria-hidden="true">
-        <div className="absolute -left-24 top-0 h-[140%] w-[60%] bg-[#efe7dd]/40 blur-3xl" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(122,103,84,0.2),_transparent_55%)]" />
-      </div>
-
-      <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-10 px-6 py-20 text-center md:items-start md:text-left">
-        <div className="space-y-5">
-          <p className="text-sm font-semibold uppercase tracking-[0.4em] text-[#a49382]">
-            Maintenance Support
-          </p>
-          <h1 className="text-4xl font-bold text-[#1f1a16] md:text-5xl">Maintenance Services</h1>
-          <p className="text-lg text-[#7a6754] md:max-w-3xl">
-            All maintenance requests are processed through our trusted partner
-            portal. Every work order is timestamped, monitored, and matched with
-            the right technician so tenants see faster, more transparent
-            resolutions.
-          </p>
-        </div>
-        
-        <div className="flex w-full flex-col items-center gap-5 md:max-w-4xl md:flex-row md:items-center md:justify-between">
-          <div className="flex flex-col items-center gap-3 md:flex-row md:gap-4">
+    <section className="bg-[#f9f7f3] px-4 sm:px-6">
+      <header className="relative -mx-4 overflow-hidden rounded-none shadow-[0_35px_90px_-70px_rgba(31,26,22,0.8)] sm:-mx-6 ">
+        <Image
+          src="/images/Bldg5-005.jpg"
+          alt="Maintenance coordination at Tampa Palms"
+          fill
+          className="object-cover object-[center_30%]"
+          sizes="(max-width: 768px) 100vw, 1200px"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1f1a16]/85 via-[#1f1a16]/40 to-transparent" />
+        <div className="relative z-10 flex flex-col items-center gap-6 px-6 py-16 text-center text-white md:items-start md:px-14 md:py-20 md:text-left">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white">
+            Maintenance support
+          </span>
+          <div className="space-y-4">
+            <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">
+              Maintenance Services
+            </h1>
+            <p className="max-w-xl text-base text-white/80">
+              All maintenance requests go through our trusted partner portal, where every work order is timestamped, tracked, and assigned to the right technician for faster, more transparent service.            </p>
+          </div>
+          <div className="flex flex-col gap-3 text-sm sm:flex-row">
             <Link
               href="https://tampapalmsprofessionalcenter.managebuilding.com/Resident/portal/login"
-              className="inline-flex items-center justify-center rounded-full bg-[#1f1a16] px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-[#1f1a16]/15 transition hover:bg-[#3a3127] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-[#1f1a16]"
+              className="inline-flex items-center justify-center rounded-full bg-white/90 px-6 py-3 font-semibold text-[#1f1a16] shadow-lg shadow-black/10 transition hover:bg-white"
             >
               Access Maintenance Portal
             </Link>
             <Link
               href="/pages/Contact"
-              className="inline-flex items-center justify-center rounded-full border border-[#d4c7b7] px-8 py-3 text-sm font-semibold text-[#1f1a16] transition hover:border-[#b6a895] hover:bg-[#f4ece1] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-[#7a6754]"
+              className="inline-flex items-center justify-center rounded-full border border-white/70 px-6 py-3 font-semibold text-white transition hover:bg-white/10"
             >
               Contact Us
             </Link>
           </div>
         </div>
-      </div>
+      </header>
     </section>
   );
 }
