@@ -14,12 +14,12 @@ export default function Home(){
   const [flexibleSuites, setFlexibleSuites] = useState(0);
   const [buildingAvailable, setBuildingAvailable] = useState(0);
     const images = [
-      "/images/TPPC-Entry-002.jpg",
       "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinitionEdit.png",
+      "/images/Bldg6-001.jpg",
       "/images/Bldg5-003.jpg",
       // "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-9-LargeHighDefinition.jpg",
-      "/images/Bldg6-001.jpg",
       // "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Aerial-13-LargeHighDefinition.jpg",
+      "/images/TPPC-Entry-002.jpg",
       "/images/TPPC-002.jpg",
     ];  
 

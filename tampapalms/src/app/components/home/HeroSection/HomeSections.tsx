@@ -267,14 +267,14 @@ export default function HomeSections({
       <div className="grid gap-8 lg:grid-cols-2">
         <div className="relative overflow-hidden rounded-[32px] border border-neutral-200">
           <Image
-            src={"/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinitionEdit.png"}
+            src={"/images/TPPC-Entry-002.jpg"}
             alt={neighborhood.title}
             fill
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 50vw"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
           <div className="absolute bottom-0 w-full space-y-2 p-8 text-white">
             <p className="text-sm uppercase tracking-[0.3em] text-[#f0d4a6]/90">Location</p>
             <h3 className="text-2xl font-semibold">{neighborhood.title}</h3>
