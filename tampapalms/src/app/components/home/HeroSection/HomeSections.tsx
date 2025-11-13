@@ -31,7 +31,7 @@ type Props = {
   gallery?: string[];
   totalSize?: number;
   flexibleSuites?: number;
-  meetingRooms?: number;
+  buildingAvailable?: number;
 };
 
 const highlightIcons = [Sparkles, Building2, Users2, ShieldCheck];
@@ -130,7 +130,7 @@ export default function HomeSections({
   gallery = ["/images/g1.jpg", "/images/g2.jpg", "/images/g3.jpg", "/images/g4.jpg"],
   totalSize = 0,
   flexibleSuites = 0,
-  meetingRooms = 0,
+  buildingAvailable = 0,
 }: Props) {
   const galleryImages = gallery.length ? gallery.slice(0, 4) : [];
 
@@ -150,8 +150,8 @@ export default function HomeSections({
       helper: "Ready for 1-15 professionals",
     },
     {
-      value: meetingRooms ? meetingRooms.toLocaleString() : "0",
-      label: "Meeting rooms",
+      value: buildingAvailable ? buildingAvailable.toLocaleString() : "0",
+      label: "Buildings",
       helper: "AV-ready & reservable",
     },
     {
