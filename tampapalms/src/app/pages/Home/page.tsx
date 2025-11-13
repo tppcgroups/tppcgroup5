@@ -8,6 +8,9 @@ import { DesktopHome } from "@/app/components/home/HeroSection/DesktopHome"
 import React, {useEffect, useState} from "react"
 import HomeSections from "@/app/components/home/HeroSection/HomeSections"
 import axios from "axios"
+import type { Building } from "@/app/components/availability/type"
+
+type BuildingApi = Partial<Building> & { offices_type?: unknown };
 
 export default function Home(){
   const [totalSize, setTotalSize] = useState(0);
@@ -29,7 +32,7 @@ export default function Home(){
           // 1. Fetch ALL building data (assuming your API returns the full objects)
           const response = await axios.get("/api/buildings");
 
-          const rawBuildings = Array.isArray(response.data) ? response.data : [];
+          const rawBuildings: BuildingApi[] = Array.isArray(response.data) ? response.data : [];
 
           const toNumeric = (value: unknown): number => {
             if (typeof value === "number" && Number.isFinite(value)) {
@@ -48,7 +51,7 @@ export default function Home(){
 
           // 2. Extract only the rental_sq_ft from each building object
           const buildingSizes = rawBuildings
-            .map((b: any) => toNumeric(b.rental_sq_ft))
+            .map((b) => toNumeric(b?.rental_sq_ft))
             .filter((size: number) => size > 0);
 
           console.log("Building sizes data:", buildingSizes);
@@ -60,7 +63,7 @@ export default function Home(){
 
 
           // Suite Count Data
-          const suiteCount = rawBuildings.reduce((acc: number, building: any) => {
+          const suiteCount = rawBuildings.reduce((acc: number, building) => {
             const officesCount = toNumeric(building.offices_count);
             if (officesCount) {
               return acc + officesCount;
@@ -71,14 +74,14 @@ export default function Home(){
               return acc + officeTypeAsNumber;
             }
 
-            return typeof building.offices_type === "string" && building.office_type.trim() ? acc + 1 : acc;
+            return typeof building.offices_type === "string" && building.office_type?.trim() ? acc + 1 : acc;
           }, 0);
           setFlexibleSuites(suiteCount);
           console.log("Total flexible suites:", suiteCount);
 
           
           // Number of buildings Available, taking the highest number from the database (that means the amount of buildings available) 
-          const buildingAvailable = rawBuildings.reduce((max: number, building: any) => {
+          const buildingAvailable = rawBuildings.reduce((max: number, building) => {
             const buildingValue =
               toNumeric(building.building_number);
             return buildingValue > max ? buildingValue : max;
