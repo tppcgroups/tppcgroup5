@@ -21,10 +21,9 @@ export default function Home(){
       "/images/Bldg6-001.jpg",
       "/images/Bldg5-003.jpg",
       "/images/Bldg6-012.jpg",
+      "/images/Bldg6-007.jpg",
       // "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-9-LargeHighDefinition.jpg",
       // "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Aerial-13-LargeHighDefinition.jpg",
-      "/images/TPPC-Entry-002.jpg",
-      "/images/TPPC-002.jpg",
     ];  
 
     useEffect(() => {

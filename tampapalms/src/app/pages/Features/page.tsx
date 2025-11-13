@@ -185,23 +185,6 @@ export default function Features() {
               </Link>
             </div>
           </div>
-
-          <div className="relative">
-            <div className="overflow-hidden rounded-3xl shadow-2xl shadow-[#1f1a16]/15 ring-1 ring-[#e1d9cf]/70">
-              <Image
-                src="/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-10-LargeHighDefinition.jpg"
-                alt="Lobby and seating area at Tampa Palms Professional Center"
-                width={1400}
-                height={933}
-                className="h-full w-full object-cover"
-                sizes="(min-width: 1024px) 560px, 90vw"
-                priority
-              />
-            </div>
-            <div className="absolute -bottom-6 left-1/2 w-[85%] -translate-x-1/2 rounded-2xl bg-white px-6 py-4 text-xs font-semibold uppercase tracking-[0.3em] text-[#4a4034] shadow-lg shadow-[#1f1a16]/10 ring-1 ring-[#e1d9cf]">
-              Modern interiors throughout campus
-            </div>
-          </div>
         </div>
       </section>
 

@@ -67,7 +67,7 @@ const TestimonialsPage = () => {
             alt="Tenants collaborating at Tampa Palms Professional Center"
             fill
             className="object-cover object-[center_60%]"
-            sizes="(max-width: 1000px) 200vw, 1200px"
+            sizes="(max-width: 768px) 100vw, 1200px"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#1f1a16]/85 via-[#1f1a16]/40 to-transparent" />
@@ -87,7 +87,7 @@ const TestimonialsPage = () => {
           </div>
         </header>
 
-        <div className="-mx-4 space-y-6 bg-white/95 py-12 shadow-[0_35px_90px_-70px_rgba(31,26,22,0.35)] sm:-mx-6">
+        <div className="-mx-4 space-y-6 bg-white/95 py-6 shadow-[0_35px_90px_-70px_rgba(31,26,22,0.35)] sm:-mx-6">
           <div className="mx-auto max-w-4xl px-6 text-center sm:px-10">
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#a49382]">
               tenant voices

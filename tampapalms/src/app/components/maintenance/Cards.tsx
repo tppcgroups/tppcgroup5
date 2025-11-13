@@ -1,8 +1,8 @@
 import type { IconType } from "react-icons";
 import {
-  PiNotebookBold,
-  PiWrenchBold,
-  PiCheckCircleBold,
+  PiNotebook,
+  PiWrench,
+  PiCheckCircle,
   PiPhoneBold,
 } from "react-icons/pi";
 
@@ -20,19 +20,19 @@ const steps: Step[] = [
     title: "Submit Request",
     description:
       "Log into the partner portal anytime to open a new work order and share supporting photos or notes.",
-    icon: PiNotebookBold,
+    icon: PiNotebook,
   },
   {
     title: "Handled by Experts",
     description:
       "Our maintenance partner assigns the right technician, coordinates scheduling, and keeps you informed.",
-    icon: PiWrenchBold,
+    icon: PiWrench,
   },
   {
     title: "Stay Updated",
     description:
       "Track progress, receive notifications, and close out the request once the job is completed to your satisfaction.",
-    icon: PiCheckCircleBold,
+    icon: PiCheckCircle,
   },
 ];
 

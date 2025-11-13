@@ -15,7 +15,7 @@ export default function HighlightedLocation() {
         pathname: "/pages/Availability",
         query: {spaceId: highlightedSpaceID}}} 
         className="block flex-shrink-0">
-        <div className="w-60 h-auto bg-gray/20 backdrop-blur-xl rounded-xl border border-white/20 p-4 transition-all duration-300 hover:bg-white/20 hover:border-white/30">
+        <div className="w-60 h-auto bg-gray/20 backdrop-blur-xl rounded-xl p-4 transition-all duration-300 hover:bg-black/10 hover:border-black/30">
           <div className="relative aspect-video overflow-hidden rounded-lg">
             <Image
               src="/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-5-LargeHighDefinition.jpg"
