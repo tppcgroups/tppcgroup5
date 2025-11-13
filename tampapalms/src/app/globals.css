@@ -160,6 +160,7 @@ header nav {
   }
   body {
     @apply bg-background text-foreground;
+    @apply text-[#1f1a16]
   }
 }
 
