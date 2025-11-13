@@ -7,8 +7,8 @@ import { EmailTemplate } from '@/app/components/email/EmailTemplate';
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_APP_PASS,
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
     
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
             React.createElement(EmailTemplate, {
               recipientEmail: recipient,
               buildingId,
-              marketingEmail: marketingEmail || process.env.MARKETING_EMAIL || process.env.SMTP_USER,
+              marketingEmail: marketingEmail || process.env.MARKETING_EMAIL || process.env.EMAIL_USER,
               subscribeUrl,
               logoUrl: logoUrl || process.env.MARKETING_LOGO_URL,
             })
