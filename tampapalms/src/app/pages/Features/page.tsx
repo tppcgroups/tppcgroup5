@@ -146,11 +146,6 @@ export default function Features() {
     }
     getBuildings();
   },[])
-  const stats = [
-    { label: "Buildings Across Campus", value: `${uniqueBuildings}`},
-    { label: "Move-In Ready Suites", value: `${availableSuites}`},
-    { label: "On-Site Team Coverage", value: "7 Day" },
-  ];
   return (
     <main className="min-h-screen bg-slate-100/70 text-slate-900">
       {/* Hero */}
@@ -207,23 +202,6 @@ export default function Features() {
               Modern interiors throughout campus
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Stats */}
-      <section className="bg-white">
-        <div className="mx-auto grid max-w-5xl gap-6 px-6 py-12 text-center md:grid-cols-3 md:px-10">
-          {stats.map((item) => (
-            <div
-              key={item.label}
-              className="rounded-3xl border border-slate-200 bg-slate-50/60 px-8 py-10 shadow-sm shadow-slate-900/5"
-            >
-              <p className="text-4xl font-semibold text-slate-900">{item.value}</p>
-              <p className="mt-2 text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">
-                {item.label}
-              </p>
-            </div>
-          ))}
         </div>
       </section>
 
