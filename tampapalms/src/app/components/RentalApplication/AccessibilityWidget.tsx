@@ -13,6 +13,16 @@ const AccessibilityWidget: React.FC = () => {
     const [darkMode, setDarkMode] = useState(false);
     const [highlightLinks, setHighlightLinks] = useState(false);
     const [reduceMotion, setReduceMotion] = useState(false);
+
+    useEffect(() => {
+        const html = document.documentElement;
+
+        html.style.setProperty("--text-scale", textScale.toString());
+        html.classList.toggle("high-contrast", highContrast);
+        html.classList.toggle("dark", darkMode);
+        html.classList.toggle("reduce-motion", reduceMotion);
+
+    })
     return (
         <>
             <button
