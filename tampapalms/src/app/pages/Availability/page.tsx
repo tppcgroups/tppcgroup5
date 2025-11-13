@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, Suspense } from "react";
 import SpacesCard from "@/app/components/availability/explore_spaces/SpacesCard";
 import TitleCard from "@/app/components/TitleCard";
 import { AvailabilityHero } from "@/app/components/availability/AvailabilityHero";
@@ -11,6 +11,7 @@ import { BuildingDetails } from "@/app/components/availability/BuildingDetails";
 import BuildingPhotos from "@/app/components/availability/BuildingPhotos";
 import { useSearchParams } from "next/navigation";
 import { CampusGroundMap } from "@/app/components/availability/CampusGroundMap";
+
 
 type AvailabilityStatus = "available" | "comingSoon" | "occupied";
 
@@ -63,7 +64,7 @@ const executiveFeatures = [
 
 
 
-export default function AvailabilityPage() {
+function AvailabilityContent() {
   // UI state for the currently active suite, gallery image, and category filter.
   const [activeBuildingId, setActiveBuildingId] =
     useState<Building["building_id"]>("");
@@ -473,4 +474,12 @@ export default function AvailabilityPage() {
       </div>
     </main>
   );
+}
+
+export default function AvailabilityPage() {
+    return (
+      <Suspense fallback={<div>Loading availability…</div>}>
+        <AvailabilityContent />
+      </Suspense>
+    );
 }
