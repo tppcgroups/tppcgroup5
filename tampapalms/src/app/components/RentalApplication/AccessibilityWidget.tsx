@@ -46,7 +46,55 @@ const AccessibilityWidget: React.FC = () => {
             {open && (
                 <div className="fixed bottom-20 right-5 z-[9999] bg-white border border-gray-300
                 rounded-2xl shadow-xl w-64 p-4 animate-fade-in">
+                    <div className = "fixed bottom-24 right-5 z-[9999] w-72 bg-white border border-gray-300 rounded-2xl shadow-2xl p-5">
+                        <span className="text-gray-800">
+                        Text Size
+                        </span>
 
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => setTextScale(prev => Math.max(0.8, prev - 0.1))}
+                                className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded"
+                            >
+                                A-
+                            </button>
+                            <button
+                                onClick={() => setTextScale(prev => Math.min(1.6, prev + 0.1))}
+                                className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded"
+                            >
+                                A+
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center justify-between mb-4">
+                        <span className="text-gray-800">
+                            High Contrast
+                        </span>
+                        <input type="checkbox" checked={highContrast} onChange={() => setHighContrast(!highContrast)} className="w-5 h-5" />
+                    </div>
+
+
+                    <div className="flex items-center justify-between mb-4">
+                        <span className="text-gray-800">
+                            Dark Mode
+                        </span>
+                        <input type="checkbox" checked={darkMode} onChange={() => setDarkMode(!darkMode)} className="w-5 h-5" />
+                    </div>
+
+                    <div className="flex items-center justify-between mb-4">
+                        <span className="text-gray-800">
+                            Highlight Links
+                        </span>
+                        <input type="checkbox" checked={highlightLinks} onChange={() => setHighlightLinks(!highlightLinks)} className="w-5 h-5" />
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                        <span className="text-gray-800">
+                            Reduce Motion
+                        </span>
+                        <input type="checkbox" checked={reduceMotion} onChange={() => setReduceMotion(!reduceMotion)} className="w-5 h-5" />
+                    </div>
                 <h2 className="text-lg font-semibold mb-2 text-gray-800">
                         Accessibility
                     </h2>
