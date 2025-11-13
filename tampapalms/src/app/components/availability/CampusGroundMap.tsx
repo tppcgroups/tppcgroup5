@@ -28,7 +28,7 @@ export function CampusGroundMap({
 
   const adjustScale = useCallback((direction: "in" | "out") => {
     setScale((prev) =>
-      clamp(prev + (direction === "in" ? 0.25 : -0.25), 1, 3)
+      clamp(prev + (direction === "in" ? 0.25 : -0.25), 0.50, 3)
     );
   }, []);
 

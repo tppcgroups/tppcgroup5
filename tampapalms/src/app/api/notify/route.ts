@@ -35,16 +35,16 @@ export async function POST(request: Request) {
         
         if (existingData) {
             console.log("Notify request already exists for this email and building_id.");
-            return NextResponse.json({ message: 'Notify request already exists.' }, { status: 200 });
+            return NextResponse.json({ warning: true, msg: 'Notify request already exists.' }, { status: 200 });
         }
         // Insert the new notify record into the 'notify' table
         const {data, error} = await supabase.from('notify').insert([newNotify]).select();
         if (error) {
             console.error("Supabase insert error:", error.message);
-            return NextResponse.json({ error: error.message}, {status: 500});
+            return NextResponse.json({ error: true, msg: error.message}, {status: 500});
         }
 
-        return NextResponse.json(data, {status: 201});
+        return NextResponse.json({success: true, msg: "Notify Email Saved"}, {status: 201});
     } catch (error) {
         console.error("Post handler internal error:", error);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

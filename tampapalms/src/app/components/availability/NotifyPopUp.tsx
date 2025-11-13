@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios';
 import UserNotify from '@/app/api/notify/route';
+import { toast } from 'react-toastify';
 
 interface PopupComponentProps {
   onClose: () => void;
@@ -27,26 +28,32 @@ function NotifyPopUp({onClose, buildingId}: PopupComponentProps) {
                 email: emailInput,
                 building_id: buildingId,
             }
-            await axios.post('/api/notify', user);
+            const response = await axios.post('/api/notify', user);
+            if (response.data.success) {
+              toast.success(response.data.msg, { autoClose: 2000 });
+              // EMAIL SEND TEST
+              try {
+                const mail = {
+                  recipient: emailInput,
+                  subject: `You're on the list for suite ${buildingId}`,
+                  buildingId,
+                  marketingEmail: marketingEmailAddress,
+                  subscribeUrl,
+                  logoUrl,
+                };
+
+                await axios.post("/api/email", mail);
+              } catch (error) {
+                console.error("Error sending email:", error);
+              }
+            } else if (response.data.warning) {
+              toast.warning(response.data.msg, {autoClose: 2000});
+            } else if (response.data.error) {
+              toast.error(response.data.msg, {autoClose: 2000});
+            }
         } catch (error) {
             console.error("Error submitting notify request:", error);
         }
-        // EMAIL SEND TEST 
-        try {
-          const mail = {
-            recipient: emailInput,
-            subject: `You're on the list for suite ${buildingId}`,
-            buildingId,
-            marketingEmail: marketingEmailAddress,
-            subscribeUrl,
-            logoUrl,
-          };
-
-          await axios.post('/api/email', mail);
-        } catch (error) {
-          console.error("Error sending email:", error);
-        }
-
         onClose();
     }
 
