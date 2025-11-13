@@ -22,7 +22,12 @@ const AccessibilityWidget: React.FC = () => {
         html.classList.toggle("dark", darkMode);
         html.classList.toggle("reduce-motion", reduceMotion);
 
-    })
+        const settings = {
+            textScale, highContrast, darkMode, highlightLinks, reduceMotion
+        };
+        localStorage.setItem("accessibilitySettings", JSON.stringify(settings));
+    }, [textScale, highContrast, darkMode, highlightLinks, reduceMotion]);
+
     return (
         <>
             <button
