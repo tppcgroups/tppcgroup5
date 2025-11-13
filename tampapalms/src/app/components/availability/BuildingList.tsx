@@ -11,7 +11,7 @@ type BuildingeListProps = {
 
 export function BuildingList({ loading, visibleBuildings, activeBuildingId, normalizeStatus, onSelectBuilding }: BuildingeListProps) {
     return (
-      <aside className="flex h-full max-h-[520px] w-full flex-col rounded-[32px] border border-slate-200 bg-white/95 p-6 shadow-xl shadow-slate-900/5">
+      <aside className="flex h-full w-full flex-col rounded-[32px] border border-slate-200 bg-white/95 p-6 shadow-xl shadow-slate-900/5">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
             Suites

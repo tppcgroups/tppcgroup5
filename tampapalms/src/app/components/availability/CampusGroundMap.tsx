@@ -13,7 +13,7 @@ export function CampusGroundMap({
   const router = useRouter();
   const [naturalWidth, setNaturalWidth] = useState(1);
   const [naturalHeight, setNaturalHeight] = useState(1);
-  const [scale, setScale] = useState(1.35);
+  const [scale, setScale] = useState(0.85);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [aspectRatio, setAspectRatio] = useState(4 / 3);
@@ -28,7 +28,7 @@ export function CampusGroundMap({
 
   const adjustScale = useCallback((direction: "in" | "out") => {
     setScale((prev) =>
-      clamp(prev + (direction === "in" ? 0.25 : -0.25), 1, 3)
+      clamp(prev + (direction === "in" ? 0.25 : -0.25), 0.50, 3)
     );
   }, []);
 
@@ -122,24 +122,18 @@ export function CampusGroundMap({
   }
 
   return (
-    <section className="flex h-full max-h-[520px] flex-col overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-xl shadow-slate-900/5">
+    <section className="flex w-full flex-col overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-xl shadow-slate-900/5">
       <div className="border-b border-slate-100 px-6 py-6">
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
           Campus Overview
         </p>
-        <h2 className="mt-2 text-lg font-semibold text-slate-900">
-          Select a building to preview suites, then explore the map to see how
-          everything connects.
-        </h2>
       </div>
 
       <div
-        className="relative mx-auto flex-1 overflow-hidden bg-slate-50"
+        className="relative mx-auto w-full overflow-hidden bg-slate-50"
         style={{
           aspectRatio,
-          minHeight: "420px",
           width: "100%",
-          maxWidth: "800px",
         }}
       >
         <div
@@ -176,9 +170,9 @@ export function CampusGroundMap({
                 className="absolute inset-0"
                 viewBox={`0 0 ${naturalWidth} ${naturalHeight}`} // need to get these variables here
                 style={{
-                  objectFit: 'contain',
-                  height: '100%',
-                  width: '100%',
+                  objectFit: "contain",
+                  height: "100%",
+                  width: "100%",
                 }}
               >
                 {buildingAreas.map((area) => (
@@ -195,10 +189,7 @@ export function CampusGroundMap({
         </div>
 
         <div className="pointer-events-none absolute inset-x-0 top-0 flex flex-col gap-3 p-5 sm:flex-row sm:items-start sm:justify-between">
-          <span className="rounded-full bg-white/90 px-4 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-slate-600 shadow-sm shadow-slate-900/10">
-            Drag to explore · Double-click to reset
-          </span>
-          <div className="pointer-events-auto flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-slate-700 shadow-md shadow-slate-900/10">
+          <div className="ml-auto pointer-events-auto flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-slate-700 shadow-md shadow-slate-900/10">
             <button
               type="button"
               onClick={() => adjustScale("out")}
@@ -219,7 +210,7 @@ export function CampusGroundMap({
               type="button"
               onClick={(event) => {
                 event.preventDefault();
-                setScale(1.35);
+                setScale(0.85);
                 setPosition({ x: 0, y: 0 });
               }}
               className="ml-1 rounded-full border border-slate-200 px-4 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-slate-600 transition hover:bg-slate-100"
@@ -228,18 +219,17 @@ export function CampusGroundMap({
             </button>
           </div>
         </div>
-      </div>
 
-      <div className="flex flex-col gap-2 border-t border-slate-100 bg-slate-50 px-6 py-5 text-sm text-slate-600 md:flex-row md:items-center md:justify-between">
-        <p className="font-semibold text-slate-900">Need a static copy?</p>
-        <a
-          href="/images/Floor-plans/TPPCSITEPLAN.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white shadow shadow-slate-900/20 transition hover:bg-slate-800"
-        >
-          Download the high-resolution map
-        </a>
+        <div className="pointer-events-none absolute inset-0 flex items-end justify-end p-5">
+          <a
+            href="/images/Floor-plans/SiteplanEast&West.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="pointer-events-auto inline-flex items-center rounded-full bg-slate-900 px-5 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white shadow shadow-slate-900/30 transition hover:bg-slate-800"
+          >
+            Download PDF
+          </a>
+        </div>
       </div>
     </section>
   );

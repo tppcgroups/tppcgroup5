@@ -79,6 +79,16 @@ export default function AvailabilityPage() {
     [key: string]: string[];
   }>({});
   const detailSectionRef = useRef<HTMLDivElement | null>(null);
+  const mapSectionRef = useRef<HTMLDivElement | null>(null);
+  const [mapHeight, setMapHeight] = useState<number | null>(null);
+  const scrollToDetails = useCallback(() => {
+    if (!detailSectionRef.current) return;
+    const targetTop = detailSectionRef.current.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({
+      top: targetTop - 140,
+      behavior: "smooth",
+    });
+  }, []);
 
   const searchParams = useSearchParams();
   const initialSpaceId = searchParams.get("spaceId");
@@ -187,6 +197,19 @@ export default function AvailabilityPage() {
       );
     }
     setActiveImageIndex(0);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof ResizeObserver === "undefined") {
+      return;
+    }
+    if (!mapSectionRef.current) return;
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      setMapHeight(entry.contentRect.height);
+    });
+    observer.observe(mapSectionRef.current);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -321,6 +344,8 @@ export default function AvailabilityPage() {
     } else {
       setActiveBuildingImages(defaultImages);
     }
+
+    scrollToDetails();
   };
 
   return (
@@ -359,10 +384,20 @@ export default function AvailabilityPage() {
         <div className="flex flex-col gap-12">
           {/* Ground map + suite list */}
           <div className="grid gap-8 lg:grid-cols-6">
-            <div className="lg:col-span-3 h-full">
+            <div ref={mapSectionRef} className="lg:col-span-3">
               <CampusGroundMap />
             </div>
-            <div className="lg:col-span-3 h-full">
+            <div
+              className="lg:col-span-3"
+              style={
+                mapHeight
+                  ? {
+                      minHeight: mapHeight,
+                      height: mapHeight,
+                    }
+                  : undefined
+              }
+            >
               <BuildingList
                 loading={loading}
                 visibleBuildings={visibleBuildings}
