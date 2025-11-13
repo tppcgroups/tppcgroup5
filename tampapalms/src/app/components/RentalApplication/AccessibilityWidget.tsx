@@ -1,6 +1,9 @@
 "use client";
+import accessibilityLogo from "../accessibility.png";
+
 
 import React, { useEffect, useState} from "react";
+import Image from "next/image";
 
 type AccessibilityWidget = {
     highContrast: boolean;
@@ -33,11 +36,20 @@ const AccessibilityWidget: React.FC = () => {
             <button
                 onClick={() => setOpen(!open)}
                 aria-label="Open accessibility settings"
-                className="fixed bottom-5 right-5 z-[9999] bg-blue-600 hover:bg-blue-700
-             text-white rounded-full w-12 h-12 text-2xl shadow-lg transition
-             flex items-center justify-center"
+                className="
+                            fixed bottom-5 right-5 z-[9999]
+                            bg-white hover:bg-gray-100
+                            rounded-full w-14 h-14 shadow-xl transition-all
+                            flex items-center justify-center
+                          "
             >
-                ♿
+                <Image
+                    src={accessibilityLogo}
+                    alt="Accessibility icon"
+                    width={32}
+                    height={32}
+                    className="object-contain"
+                />
             </button>
 
 
@@ -56,13 +68,13 @@ const AccessibilityWidget: React.FC = () => {
                                 onClick={() => setTextScale(prev => Math.max(0.8, prev - 0.1))}
                                 className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded"
                             >
-                                A-
+                                Zoom Out
                             </button>
                             <button
                                 onClick={() => setTextScale(prev => Math.min(1.6, prev + 0.1))}
                                 className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded"
                             >
-                                A+
+                                Zoom In
                             </button>
                         </div>
                     </div>
