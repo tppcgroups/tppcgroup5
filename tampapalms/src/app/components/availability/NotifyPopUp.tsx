@@ -82,7 +82,7 @@ function NotifyPopUp({onClose, buildingId}: PopupComponentProps) {
                 Notify Me When Available
               </h2>
               <p className="mt-1 text-sm text-slate-600">
-                Enter your email and we'll notify you when this suite becomes
+                Enter your email and we&apos;ll notify you when this suite becomes
                 available.
               </p>
             </div>
