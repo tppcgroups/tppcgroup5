@@ -10,7 +10,7 @@ const FAQTitle = () => {
         See our more frequently asked questions to guide your needs
       </h1>
       <p className="mx-auto mt-4 max-w-xl text-sm text-slate-600 sm:text-base md:max-w-2xl">
-        If you don't see the answer to you question below, please contant us
+        If you don&apos;t see the answer to your question below, please contact us
         with your inquiry.
       </p>
       <div
