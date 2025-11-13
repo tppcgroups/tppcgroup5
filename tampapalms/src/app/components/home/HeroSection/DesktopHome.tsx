@@ -64,11 +64,11 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
         className="absolute inset-0 z-10"
       />
 
-      <div className="relative z-30 flex h-full flex-col justify-between px-14 py-12">
+      <div className="relative z-30 flex h-full flex-col justify-between px-6 py-6">
         <div className="flex items-start justify-between gap-8">
           <div className="relative max-w-lg">
             <div
-              className="pointer-events-none absolute inset-0 rounded-3xl bg-black/25 backdrop-blur-xl"
+              className="pointer-events-none absolute inset-0 rounded-3xl bg-gray/20 backdrop-blur-xl"
               aria-hidden="true"
             />
             <div className="relative space-y-5 p-5 text-white">
