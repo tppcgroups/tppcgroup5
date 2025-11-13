@@ -68,31 +68,31 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
         <div className="flex items-start justify-between gap-8">
           <div className="relative max-w-lg">
             <div
-              className="pointer-events-none absolute inset-0 rounded-3xl bg-gray/20 backdrop-blur-xl"
+              className="pointer-events-none absolute inset-0 rounded-3xl bg-[#1f1a16]/35 backdrop-blur-xl"
               aria-hidden="true"
             />
-            <div className="relative space-y-5 p-5 text-white">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+            <div className="relative space-y-5 p-5 text-[#fdf8f3]">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#f0d4a6]">
                 Flexible workspace in New Tampa
               </p>
-              <h1 className="text-4xl font-semibold leading-snug">
+              <h1 className="text-4xl font-semibold leading-snug text-[#fdf8f3]">
                 Tampa Palms
                 <span className="block text-white">Professional Center</span>
               </h1>
-              <p className="text-base text-white/80">
+              <p className="text-base text-[#e7ded2]">
                 Discover full-floor suites and executive offices designed to keep
                 teams connected, productive, and close to Tampa Palms amenities.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/pages/Availability"
-                  className="rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-neutral-900 shadow-sm transition hover:bg-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-[#1f1a16] shadow-lg shadow-[#1f1a16]/20 transition hover:bg-[#3a3127] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f0d4a6]"
                 >
                   View Availability
                 </Link>
                 <Link
                   href="/pages/Contact"
-                  className="rounded-full border border-white/70 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="rounded-full border border-white  px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#f0d4a6]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f0d4a6]"
                 >
                   Schedule a Tour
                 </Link>
@@ -106,11 +106,11 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <CarouselPrevious
-              className=" flex h-12 w-20 translate-y-0 items-center justify-center rounded-full border border-transparent bg-white/5 text-white transition hover:border-white hover:bg-white/10"
+              className=" flex h-12 w-20 translate-y-0 items-center justify-center rounded-full border border-[#fdf8f3]/20 bg-[#fdf8f3]/10 text-[#fdf8f3] transition hover:border-[#fdf8f3]/40 hover:bg-[#fdf8f3]/15"
               iconClassName="h-6 w-8"
             />
             <CarouselNext
-              className=" flex h-12 w-20 translate-y-0 items-center justify-center rounded-full border border-transparent bg-white/5 text-white transition hover:border-white hover:bg-white/10"
+              className=" flex h-12 w-20 translate-y-0 items-center justify-center rounded-full border border-[#fdf8f3]/20 bg-[#fdf8f3]/10 text-[#fdf8f3] transition hover:border-[#fdf8f3]/40 hover:bg-[#fdf8f3]/15"
               iconClassName="h-6 w-8"
             />
           </div>
@@ -121,7 +121,7 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
                 <span
                   key={`desktop-hero-slide-${index}`}
                   className={`h-1.5 w-10 rounded-full transition ${
-                    index === currentSlide ? "bg-white" : "bg-white/40"
+                    index === currentSlide ? "bg-[#f0d4a6]" : "bg-[#f0d4a6]/40"
                   }`}
                 />
               ))}
