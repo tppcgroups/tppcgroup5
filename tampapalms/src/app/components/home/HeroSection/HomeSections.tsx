@@ -169,25 +169,25 @@ export default function HomeSections({
   };
 
   return (
-    <section className="mx-8 my-12  text-slate-900 md:space-y-20">
+    <section className="mx-8 my-12  text-[#1f1a16] md:space-y-20">
         
       {/* Overview */}
       <div className="overflow-hidden rounded-[32px] border border-neutral-200 bg-gradient-to-br from-[#faf8f5] via-white to-[#f0ebe3] shadow-[0_30px_80px_rgba(15,14,13,0.12)]">
         <div className="grid gap-10 p-8 md:p-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="space-y-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-600">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#7a6754]">
               Tampa Palms Professional Center
             </p>
-            <h2 className="text-3xl font-semibold leading-tight text-slate-900 md:text-4xl">
+            <h2 className="text-3xl font-semibold leading-tight text-[#1f1a16] md:text-4xl">
               Purpose-built offices for teams that want New Tampa convenience without compromise.
             </h2>
-            <p className="text-base text-slate-600 md:text-lg">
+            <p className="text-base text-[#7a6754] md:text-lg">
               Boutique hospitality meets enterprise infrastructure across secured suites, flexible floorplates, and
               curated amenity spaces that keep clients impressed and teams productive.
             </p>
-            <div className="flex flex-wrap gap-3 text-sm ttext-slate-600">
+            <div className="flex flex-wrap gap-3 text-sm ttext-[#7a6754]">
               {["Flexible lease terms", "Plug-and-play IT", "On-site property team"].map((tag) => (
-                <span key={tag} className="rounded-full border border-slate-600 bg-white px-4 py-1.5">
+                <span key={tag} className="rounded-full border border-[#7a6754] bg-white px-4 py-1.5">
                   {tag}
                 </span>
               ))}

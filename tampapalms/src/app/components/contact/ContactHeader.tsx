@@ -18,7 +18,7 @@ export default function ContactHeader() {
             <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight drop-shadow">
               Contact
             </h1>
-            <div className="flex mt-4 h-1 w-36 rounded-full bg-slate-600 mx-auto" />
+            <div className="flex mt-4 h-1 w-36 rounded-full bg-[#7a6754] mx-auto" />
             <p className="mt-3 max-w-2xl text-white/85">
               We’re here to help—reach out and we’ll get back to you quickly.
             </p>

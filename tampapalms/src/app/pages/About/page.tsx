@@ -38,7 +38,7 @@ export default function About()  {
           {/* Right Side - Image */}
           <AboutImage />
         </div>
-        <hr className="mt-10 border border-slate-900"/>
+        <hr className="mt-10 border border-[#4a4034]"/>
         <FAQTitle />
         {loading && (<p className='text-xl text-center'>Loading FAQS...</p>)}
         {faqs.map((faq, index) => {

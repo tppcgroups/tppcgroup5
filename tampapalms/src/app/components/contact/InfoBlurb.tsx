@@ -20,7 +20,7 @@ export default function InfoBlurb() {
             href="https://www.google.com/maps?q=17427+Bridge+Hill+Court,+Suite+C,+Tampa,+FL+33647"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline decoration-slate-500/50 hover:decoration-slate-600"
+            className="underline decoration-[#a49382]/50 hover:decoration-[#7a6754]"
           >
             Open in Google Maps
           </a>

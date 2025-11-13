@@ -50,8 +50,8 @@ const Perks: React.FC = () => {
                         key={perk.title}
                         className={`flex w-full max-w-2xl flex-col rounded-xl border px-6 py-4 transition-all duration-300 ease-out ${
                             isOpen
-                                ? "border-slate-900 bg-slate-900 text-white shadow-xl shadow-slate-900/20"
-                                : "border-slate-200 bg-white text-slate-900 shadow-md shadow-slate-900/10 hover:-translate-y-1 hover:shadow-lg"
+                                ? "border-[#4a4034] bg-[#1f1a16] text-white shadow-xl shadow-[#1f1a16]/20"
+                                : "border-[#e1d9cf] bg-white text-[#1f1a16] shadow-md shadow-[#1f1a16]/10 hover:-translate-y-1 hover:shadow-lg"
                         }`}
                     >
                         {/* Header row */}
@@ -65,7 +65,7 @@ const Perks: React.FC = () => {
                                 className={`inline-flex h-9 w-9 items-center justify-center rounded-full border text-base font-semibold transition ${
                                     isOpen
                                         ? "border-white/70 bg-white/15 text-white hover:bg-white/20"
-                                        : "border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-100"
+                                        : "border-[#d4c7b7] text-[#4a4034] hover:border-[#b6a895] hover:bg-[#f4ece1]"
                                 }`}
                                 type="button"
                                 aria-expanded={isOpen}
@@ -90,7 +90,7 @@ const Perks: React.FC = () => {
                             <div className="overflow-hidden text-left">
                                 <ul
                                     className={`list-disc list-inside text-sm ${
-                                        isOpen ? "text-white/80" : "text-slate-500"
+                                        isOpen ? "text-white/80" : "text-[#a49382]"
                                     }`}
                                 >
                                     {perk.details.map((detail, i) => (

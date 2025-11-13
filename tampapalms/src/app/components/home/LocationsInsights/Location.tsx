@@ -65,7 +65,7 @@ export default function LocationInsights({
 
         {/* Header Section */}
         <TitleCard title={title} />
-        <p className="mt-4 max-w-3xl text-base text-slate-600">{description}</p>
+        <p className="mt-4 max-w-3xl text-base text-[#7a6754]">{description}</p>
         <div className="mt-10 gap-8">
 
           {/* Map and Details Card */}
@@ -74,10 +74,10 @@ export default function LocationInsights({
 
               {/* Header Section in the Card */}
               <div className="flex items-baseline justify-between">
-                <h3 className="text-lg font-semibold text-slate-900">Plan Your Visit</h3>
+                <h3 className="text-lg font-semibold text-[#1f1a16]">Plan Your Visit</h3>
                 <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">Primary Location</span>
               </div>
-              <p className="mt-3 text-sm text-slate-600">
+              <p className="mt-3 text-sm text-[#7a6754]">
                 Discover nearby amenities, logistics, and accessibility highlights that make this
                 address a standout choice for professionals across Tampa Bay.
               </p>
@@ -99,7 +99,7 @@ export default function LocationInsights({
                         {detail.value}
                       </a>
                     ) : (
-                      <span className="text-sm font-semibold text-slate-900">
+                      <span className="text-sm font-semibold text-[#1f1a16]">
                         {detail.value}
                       </span>
                     );
@@ -109,7 +109,7 @@ export default function LocationInsights({
                       <li key={detail.label} className="flex gap-3">
                         <span className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-emerald-50 text-emerald-600"><Icon size={18} strokeWidth={1.75} /></span>
                         <div>
-                          <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{detail.label}</p>
+                          <p className="text-xs font-medium uppercase tracking-wide text-[#a49382]">{detail.label}</p>
                           {content}
                         </div>
                       </li>

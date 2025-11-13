@@ -25,15 +25,15 @@ export function Footer() {
 
   return (
     // Dark-themed footer ties together leasing info, navigation, and CTAs.
-    <footer className="relative overflow-hidden border-t border-stone-900 bg-neutral-950 text-stone-200">
+    <footer className="relative overflow-hidden border-t border-[#3d342a] bg-[#1f1a16] text-[#fdf8f3]">
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-950 via-neutral-950 to-neutral-900"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#1b1713] via-[#110f0c] to-[#120f0c]"
         aria-hidden
       />
 
       {/* Fading Color */}
       <div
-        className="pointer-events-none absolute top-[-8rem] left-1/2 h-72 w-[120%] -translate-x-1/2 rounded-[999px] bg-slate-400/10 blur-3xl"
+        className="pointer-events-none absolute top-[-8rem] left-1/2 h-72 w-[120%] -translate-x-1/2 rounded-[999px] bg-[#7a6754]/25 blur-3xl"
         aria-hidden
       />
 

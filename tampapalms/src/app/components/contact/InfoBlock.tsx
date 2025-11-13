@@ -11,7 +11,7 @@ export default function InfoBlock() {
         <p className="font-semibold">Phone</p>
         <a
           href="tel:+18138767697"
-          className="underline decoration-neutral-400 hover:decoration-slate-700"
+          className="underline decoration-neutral-400 hover:decoration-[#4a4034]"
         >
           813.876.7697
         </a>
@@ -21,7 +21,7 @@ export default function InfoBlock() {
         <p className="font-semibold">Email</p>
         <a
           href="mailto:marketing@tampapalmscenter.com"
-          className="underline decoration-neutral-400 hover:decoration-slate-700"
+          className="underline decoration-neutral-400 hover:decoration-[#4a4034]"
         >
           marketing@tampapalmscenter.com
         </a>
@@ -39,7 +39,7 @@ export default function InfoBlock() {
             href={googleDir}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full px-4 py-2 text-sm text-white bg-slate-700 hover:bg-slate-800 shadow"
+            className="rounded-full px-4 py-2 text-sm text-white bg-[#5a4b3c] hover:bg-[#3a3127] shadow"
           >
             Google Maps
           </a>
@@ -47,7 +47,7 @@ export default function InfoBlock() {
             href={appleDir}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full px-4 py-2 text-sm text-slate-800 bg-slate-50 hover:bg-slate-100 border border-slate-200"
+            className="rounded-full px-4 py-2 text-sm text-[#4a4034] bg-[#fdf8f3] hover:bg-[#f4ece1] border border-[#e1d9cf]"
           >
             Apple Maps
           </a>

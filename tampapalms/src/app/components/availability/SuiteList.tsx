@@ -10,9 +10,9 @@ type SuiteListProps = {
 export function SuiteList({ suites, activeSuiteId, onSelectSuite }: SuiteListProps) {
   // Filterable list of suites that drives the detail and gallery panels.
   return (
-    <aside className="flex h-full max-h-[480px] overflow-y-auto flex-col rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-lg shadow-slate-900/10">
-      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Suites</p>
-      <p className="mt-2 text-sm text-slate-600">
+    <aside className="flex h-full max-h-[480px] overflow-y-auto flex-col rounded-3xl border border-[#e1d9cf] bg-white/95 p-6 shadow-lg shadow-[#1f1a16]/10">
+      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#a49382]">Suites</p>
+      <p className="mt-2 text-sm text-[#7a6754]">
         Select a suite to preview imagery and key details. The list updates as spaces become available
         across the campus.
       </p>
@@ -29,8 +29,8 @@ export function SuiteList({ suites, activeSuiteId, onSelectSuite }: SuiteListPro
               onClick={() => onSelectSuite(suite.id)}
               className={`flex w-full flex-col gap-2 rounded-2xl border px-5 py-5 text-left transition ${
                 isActive
-                  ? "border-slate-900 bg-slate-900 text-white shadow-lg shadow-slate-900/20"
-                  : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
+                  ? "border-[#4a4034] bg-[#1f1a16] text-white shadow-lg shadow-[#1f1a16]/20"
+                  : "border-[#e1d9cf] bg-white hover:border-[#d4c7b7] hover:bg-[#fdf8f3]"
               }`}
             >
               <div className="flex items-center justify-between">
@@ -43,7 +43,7 @@ export function SuiteList({ suites, activeSuiteId, onSelectSuite }: SuiteListPro
                   {status.label}
                 </span>
               </div>
-              <p className={`text-xs ${isActive ? "text-white/70" : "text-slate-500"}`}>
+              <p className={`text-xs ${isActive ? "text-white/70" : "text-[#a49382]"}`}>
                 {suite.building} • {suite.size}
               </p>
             </button>

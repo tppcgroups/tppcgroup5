@@ -6,7 +6,7 @@ const ApplicationLink: React.FC = () => {
             href="https://tampapalmsprofessionalcenter.managebuilding.com/Resident/rental-application/new/apply"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 flex w-full max-w-md items-center justify-center rounded-full bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 px-10 py-4 text-lg font-semibold text-white shadow-xl shadow-slate-900/25 transition hover:from-slate-800 hover:via-slate-700 hover:to-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 transition-all duration-300 ease-out"
+            className="mt-8 flex w-full max-w-md items-center justify-center rounded-full bg-gradient-to-r from-[#1f1a16] via-[#3a3127] to-[#1f1a16] px-10 py-4 text-lg font-semibold text-white shadow-xl shadow-[#1f1a16]/25 transition hover:from-[#3a3127] hover:via-[#5a4b3c] hover:to-[#3a3127] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1a16] transition-all duration-300 ease-out"
         >
             Let’s Begin Your Application
         </a>
@@ -14,6 +14,5 @@ const ApplicationLink: React.FC = () => {
 };
 
 export default ApplicationLink;
-
 
 

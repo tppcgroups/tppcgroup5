@@ -72,16 +72,16 @@ function NotifyPopUp({onClose, buildingId}: PopupComponentProps) {
       />
 
       <div className="relative z-10 w-full max-w-lg px-6">
-        <div className="rounded-3xl bg-white/95 p-6 shadow-lg shadow-slate-900/10">
+        <div className="rounded-3xl bg-white/95 p-6 shadow-lg shadow-[#1f1a16]/10">
           <div className="flex items-start justify-between">
             <div>
               <h2
                 id="notify-title"
-                className="text-lg font-semibold text-slate-900"
+                className="text-lg font-semibold text-[#1f1a16]"
               >
                 Notify Me When Available
               </h2>
-              <p className="mt-1 text-sm text-slate-600">
+              <p className="mt-1 text-sm text-[#7a6754]">
                 Enter your email and we&apos;ll notify you when this suite becomes
                 available.
               </p>
@@ -89,7 +89,7 @@ function NotifyPopUp({onClose, buildingId}: PopupComponentProps) {
             <button
               onClick={onClose}
               aria-label="Close notify dialog"
-              className="ml-4 inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 cursor-pointer"
+              className="ml-4 inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#e1d9cf] bg-white text-[#4a4034] hover:bg-[#fdf8f3] cursor-pointer"
             >
               ×
             </button>
@@ -107,7 +107,7 @@ function NotifyPopUp({onClose, buildingId}: PopupComponentProps) {
               type="email"
               name="email"
               placeholder="you@example.com"
-              className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400"
+              className="w-full rounded-lg border border-[#e1d9cf] bg-white px-4 py-3 text-sm text-[#1f1a16] shadow-sm placeholder:text-[#c8b79f] focus:outline-none focus:ring-2 focus:ring-[#b6a895]"
               required
             />
 
@@ -115,13 +115,13 @@ function NotifyPopUp({onClose, buildingId}: PopupComponentProps) {
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-full px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 cursor-pointer"
+                className="rounded-full px-4 py-2 text-sm font-medium text-[#4a4034] hover:bg-[#f4ece1] cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="inline-flex items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 cursor-pointer"
+                className="inline-flex items-center justify-center rounded-full bg-[#1f1a16] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#3a3127] cursor-pointer"
               >
                 Notify Me
               </button>

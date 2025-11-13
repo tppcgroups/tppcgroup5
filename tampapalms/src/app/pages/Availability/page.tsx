@@ -350,7 +350,7 @@ function AvailabilityContent() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 text-slate-900">
+    <main className="min-h-screen bg-[#f9f7f3] text-[#1f1a16]">
       {/* Introduces the page and reports total availability. */}
       <AvailabilityHero
         availableCount={
@@ -364,7 +364,7 @@ function AvailabilityContent() {
       <section className="mx-auto max-w-6xl px-4 pb-20">
         {/* Category toggle pills. */}
         <div className="mb-8 flex flex-wrap items-center gap-3 text-sm">
-          <div className="flex rounded-full border border-slate-200 bg-white p-1">
+          <div className="flex rounded-full border border-[#e1d9cf] bg-white p-1">
             {buildingFilterOptions.map((option) => (
               <button
                 key={option.value}
@@ -372,8 +372,8 @@ function AvailabilityContent() {
                 onClick={() => handleCategoryChange(option.value)}
                 className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] transition ${
                   selectedCategory === option.value
-                    ? "bg-slate-900 text-white shadow-md shadow-slate-900/20"
-                    : "bg-transparent text-slate-600 hover:text-slate-900"
+                    ? "bg-[#4a4034] text-white shadow-md shadow-[#1f1a16]/20"
+                    : "bg-transparent text-[#7a6754] hover:text-[#1f1a16]"
                 }`}
               >
                 {option.label}

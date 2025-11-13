@@ -11,12 +11,12 @@ export default function TextField({
         <div className="-mb-3 pl-3"><Badge>{label}</Badge></div>
         {/* Shared form chrome for text inputs. */}
         <div className="rounded-2xl bg-white p-4 pt-6 shadow-inner border border-neutral-300
-                        focus-within:ring-2 focus-within:ring-slate-500">
+                        focus-within:ring-2 focus-within:ring-[#7a6754]">
           <input
             type={type}
             name={name}
             placeholder={placeholder}
-            className="w-full bg-transparent text-[15px] !text-slate-900 outline-none placeholder:text-slate-400"
+            className="w-full bg-transparent text-[15px] !text-[#1f1a16] outline-none placeholder:text-[#c8b79f]"
           />
           <div className="mt-3 border-t border-dashed border-neutral-300" />
         </div>
