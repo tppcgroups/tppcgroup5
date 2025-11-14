@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { useRouter } from 'next/navigation';
 
 type CampusGroundMapProps = {
   imageSrc?: string;
@@ -9,8 +8,6 @@ type CampusGroundMapProps = {
 export function CampusGroundMap({
   imageSrc = "/images/Floor-plans/SiteplanEast&West.png",
 }: CampusGroundMapProps) {
-
-  const router = useRouter();
   const [naturalWidth, setNaturalWidth] = useState(1);
   const [naturalHeight, setNaturalHeight] = useState(1);
   const [scale, setScale] = useState(0.85);
@@ -89,38 +86,6 @@ export function CampusGroundMap({
     ]
   );
 
-  const handleAreaClick = (
-    event: React.MouseEvent<SVGPolygonElement>,
-    path: string
-  ) => {
-    // Prevent default navigation 
-    event.preventDefault();
-
-    // Check if the user was dragging right before the click
-    // This is a common pattern to prevent clicks on drag events
-    // Since isDragging is reset on pointerUp, checking pointerId is a quick proxy
-    if (pointerIdRef.current !== null) {
-      // If a pointer ID is still set, it might have been a drag
-      return;
-    }
-
-    // Navigate using the Next.js router
-    router.push(path);
-  }
-
-  // Define building data including corrdinates and routes
-  const buildingAreas = [
-    {
-      id: "building_5",
-      coords: "2784,2081,2978,2135,2879,2451,2690,2401",
-      route: '/pages/Contact'
-    },
-  ];
-
-  const areaCoordsToSvgPoints = (coords: string): string => {
-    return coords.replace(/,/g, ' ');
-  }
-
   return (
     <section className="flex w-full flex-col overflow-hidden rounded-[32px] border border-[#e1d9cf] bg-white shadow-xl shadow-[#1f1a16]/5">
       <div className="border-b border-[#f4ece1] px-6 py-6">
@@ -166,24 +131,6 @@ export function CampusGroundMap({
                   }
                 }}
               />
-              <svg
-                className="absolute inset-0"
-                viewBox={`0 0 ${naturalWidth} ${naturalHeight}`} // need to get these variables here
-                style={{
-                  objectFit: "contain",
-                  height: "100%",
-                  width: "100%",
-                }}
-              >
-                {buildingAreas.map((area) => (
-                  <polygon
-                    key={area.id}
-                    points={areaCoordsToSvgPoints(area.coords)}
-                    onClick={(e) => handleAreaClick(e, area.route)}
-                    className="fill-blue-500/30 stroke-blue-700/80 stroke-[10] transition-all duration-200 pointer-events-auto cursor-pointer hover:fill-blue-400/50"
-                  />
-                ))}
-              </svg>
             </div>
           </div>
         </div>

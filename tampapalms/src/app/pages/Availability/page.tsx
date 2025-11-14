@@ -361,7 +361,7 @@ function AvailabilityContent() {
         }
       />
 
-      <section className="mx-auto max-w-6xl px-4 pb-20">
+      <section className="mx-auto max-w-6xl px-4 pb-20 my-4">
         {/* Category toggle pills. */}
         <div className="mb-8 flex flex-wrap items-center gap-3 text-sm">
           <div className="flex rounded-full border border-[#e1d9cf] bg-white p-1">
@@ -452,7 +452,7 @@ function AvailabilityContent() {
       <div className="rounded-xl my-16 md:my-24 mx-8 bg-gray-50">
         <div className="text-center my-16 md:my-24">
           {/* The "eyebrow" text adds a touch of color and context */}
-          <p className="text-sm font-semibold  uppercase tracking-wider">
+          <p className="text-sm font-semibold uppercase tracking-wider">
             Our Properties
           </p>
           <TitleCard title="Explore Spaces" />

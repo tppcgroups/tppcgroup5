@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PiCheckCircleBold } from "react-icons/pi";
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import type {Building} from "@/app/components/availability/type"
 type AvailabilityStatus = "available" | "comingSoon" | "occupied";
 
@@ -120,25 +120,49 @@ const supportHighlights = [
 
 const AmenityCard = ({ column }: { column: (typeof amenityColumns)[number] }) => {
   const [expanded, setExpanded] = useState(false);
-  const itemsToShow = expanded ? column.items : column.items.slice(0, 3);
+  const listRef = useRef<HTMLUListElement | null>(null);
+  const collapsedHeight = 220;
+  const [maxHeight, setMaxHeight] = useState(collapsedHeight);
+  const [hasOverflow, setHasOverflow] = useState(false);
+
+  useEffect(() => {
+    if (!listRef.current) return;
+    const fullHeight = listRef.current.scrollHeight;
+    setHasOverflow(fullHeight > collapsedHeight);
+    setMaxHeight(expanded ? fullHeight : collapsedHeight);
+  }, [expanded, column.items, collapsedHeight]);
 
   return (
-    <div className="rounded-3xl border border-[#e1d9cf]/60 bg-[#fdf8f3] p-8 shadow-lg shadow-[#1f1a16]/10">
+    <div className="rounded-3xl border border-[#e1d9cf]/60 bg-[#fdf8f3] p-8 shadow-lg shadow-[#1f1a16]/10 transition-all ease-in-out duration-200">
       <h3 className="text-2xl font-semibold text-[#1f1a16]">{column.title}</h3>
-      <p className="mt-3 text-sm text-[#7a6754] md:text-base">{column.description}</p>
-      <ul className="mt-6 space-y-3 list-none">
-        {itemsToShow.map((item) => (
-          <li key={item} className="flex items-start gap-3 text-sm text-[#7a6754] md:text-base">
-            <PiCheckCircleBold className="mt-1 h-5 w-5 flex-shrink-0 text-[#a49382]" />
-            <span className="leading-snug">{item}</span>
-          </li>
-        ))}
-      </ul>
-      {column.items.length > 3 && (
+      <p className="mt-3 text-sm text-[#7a6754] md:text-base">
+        {column.description}
+      </p>
+      <div className="relative mt-6">
+        <ul
+          ref={listRef}
+          className="space-y-3 list-none overflow-hidden transition-[max-height] duration-500 ease-in-out"
+          style={{ maxHeight }}
+        >
+          {column.items.map((item) => (
+            <li
+              key={item}
+              className="flex items-start gap-3 text-sm text-[#7a6754] md:text-base"
+            >
+              <PiCheckCircleBold className="mt-1 h-5 w-5 flex-shrink-0 text-[#a49382]" />
+              <span className="leading-snug">{item}</span>
+            </li>
+          ))}
+        </ul>
+        {!expanded && hasOverflow && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#fdf8f3] to-transparent" />
+        )}
+      </div>
+      {hasOverflow && (
         <button
           type="button"
           onClick={() => setExpanded((prev) => !prev)}
-          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#7a6754] transition hover:text-[#4a4034]"
+          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#7a6754] hover:text-[#4a4034]"
         >
           {expanded ? "Show fewer amenities" : "View full list"}
         </button>
