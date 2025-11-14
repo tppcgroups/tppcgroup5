@@ -5,11 +5,10 @@ import * as React from "react";
 import Link from "next/link";
 import { ImageCarousel } from "@/app/components/home/carousel/ImageCarousel";
 import HighlightedLocation from "./HighlightedLocation";
+import { HiOutlineArrowSmDown } from "react-icons/hi";
 
 import {
   Carousel,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi,
 } from "@/app/components/home/carousel/carousel";
 import Autoplay from "embla-carousel-autoplay";
@@ -24,6 +23,16 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
   );
   const [api, setApi] = React.useState<CarouselApi>();
   const [currentSlide, setCurrentSlide] = React.useState(0);
+  const handleScrollDown = React.useCallback(() => {
+    const target = document.getElementById("home-sections");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    if (typeof window !== "undefined") {
+      window.scrollBy({ top: window.innerHeight * 0.7, behavior: "smooth" });
+    }
+  }, []);
 
   React.useEffect(() => {
     if (!api) {
@@ -55,7 +64,8 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
       plugins={[autoplayPlugin.current]}
       setApi={setApi}
       opts={{ align: "start", loop: true }}
-      className="relative hidden h-[80dvh] overflow-hidden rounded-3xl mx-8 my-4 min-[900]:block"
+      showScrollButton={false}
+      className="relative hidden h-[80dvh] overflow-hidden rounded-3xl mx-8 my-2 min-[900]:block"
       onMouseEnter={() => autoplayPlugin.current.stop()}
       onMouseLeave={() => autoplayPlugin.current.play()}
   >
@@ -63,12 +73,14 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
         imageUrls={imageUrls}
         className="absolute inset-0 z-10"
       />
-
+      <div className="absolute inset-0 z-20 bg-gradient-to-r from-[#1f1a16]/35 via-[#1f1a16]/10 to-transparent" />
+      {/* Title and Header */}
       <div className="relative z-30 flex h-full flex-col justify-between px-6 py-6">
         <div className="flex items-start justify-between gap-8">
           <div className="relative max-w-lg">
             <div
-              className="pointer-events-none absolute inset-0 rounded-3xl bg-gray/25 backdrop-blur-xl"
+            // bg-gray/25 backdrop-blur-xl
+              className="pointer-events-none absolute inset-0 rounded-3xl bg-black/10 backdrop-blur-[2px]"
               aria-hidden="true"
             />
             <div className="relative space-y-5 p-5 text-[#fdf8f3]">
@@ -79,7 +91,7 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
                 Tampa Palms
                 <span className="block text-white">Professional Center</span>
               </h1>
-              <p className="text-base text-[#fdf8f3]">
+              <p className="text-base text-white">
                 Discover full-floor suites and executive offices designed to keep
                 teams connected, productive, and close to Tampa Palms amenities.
               </p>
@@ -92,7 +104,7 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
                 </Link>
                 <Link
                   href="/pages/Contact"
-                  className="rounded-full border border-white  px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-black/10 hover:border-black/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f0d4a6]"
+                  className="rounded-full border border-322b23  px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-black/10 hover:border-black/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f0d4a6]"
                 >
                   Schedule a Tour
                 </Link>
@@ -100,28 +112,27 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
             </div>
           </div>
 
-          <HighlightedLocation />
+          {/* <HighlightedLocation /> */}
         </div>
-
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <CarouselPrevious
-              className=" flex h-12 w-20 translate-y-0 items-center justify-center rounded-full border border-[#fdf8f3]/20 bg-[#fdf8f3]/10 text-[#fdf8f3] transition hover:border-[#fdf8f3]/40 hover:bg-[#fdf8f3]/15"
-              iconClassName="h-6 w-8"
-            />
-            <CarouselNext
-              className=" flex h-12 w-20 translate-y-0 items-center justify-center rounded-full border border-[#fdf8f3]/20 bg-[#fdf8f3]/10 text-[#fdf8f3] transition hover:border-[#fdf8f3]/40 hover:bg-[#fdf8f3]/15"
-              iconClassName="h-6 w-8"
-            />
-          </div>
-
+        <div className="flex flex-col items-center justify-center pb-2 relative">
+          <button
+            type="button"
+            onClick={handleScrollDown}
+            className="z-20 mb-3 inline-flex h-12 w-12 items-center justify-center text-white shadow-2xl shadow-black/25 transition text-7xl"
+            aria-label="Scroll to next section"
+          >
+            <HiOutlineArrowSmDown className="h-10 w-10" />
+          </button>
           {totalSlides > 1 && (
             <div className="flex items-center gap-2">
               {Array.from({ length: totalSlides }).map((_, index) => (
-                <span
+                <button
                   key={`desktop-hero-slide-${index}`}
-                  className={`h-1.5 w-10 rounded-full transition ${
-                    index === currentSlide ? "bg-white" : "bg-white/40"
+                  type="button"
+                  aria-label={`Go to slide ${index + 1}`}
+                  onClick={() => api?.scrollTo(index)}
+                  className={`h-2 w-12 rounded-full transition ${
+                    index === currentSlide ? "bg-white" : "bg-white/40 hover:bg-white/70"
                   }`}
                 />
               ))}

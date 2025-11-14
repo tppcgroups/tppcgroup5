@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 // The component is now simpler
 type LeafLink = { href: string; label: string };
@@ -107,7 +108,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
             dropdownActive
               ? "after:w-full"
               : "after:w-0 md:hover:after:w-full";
-          const dropdownClasses = `relative inline-flex items-center justify-center py-[5px] px-4 text-center text-xl font-bold text-[#1f1a16] hover:text-[#1f1a16] ${underlineBase} ${dropdownUnderline} mx-auto md:mx-0`;
+          const dropdownClasses = `group relative inline-flex items-center justify-center gap-2 py-[5px] px-4 text-center text-xl font-bold text-[#1f1a16] hover:text-[#1f1a16] ${underlineBase} ${dropdownUnderline} mx-auto md:mx-0`;
           return (
             <div
               key={link.label}
@@ -123,6 +124,11 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                 className={dropdownClasses}
               >
                 {link.label}
+                <ChevronDown
+                  className={`h-6 w-6 font-bold text-[#1f1a16] transition-transform duration-300 group-hover:text-[#1f1a16] ${
+                    dropdownActive ? "rotate-180 text-[#1f1a16]" : ""
+                  }`}
+                />
               </button>
               <div
                 className={`flex flex-col items-center md:items-stretch md:absolute md:left-1/2 md:-translate-x-1/2 md:top-full md:z-20 md:mt-2 md:min-w-[220px] md:rounded-lg md:border md:border-white/30 bg-white/70 md:bg-white/70 backdrop-blur-md md:shadow-lg transition-all duration-300 ease-out md:duration-200 transform origin-top overflow-hidden md:overflow-visible w-full md:w-auto ${
