@@ -86,13 +86,13 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/pages/Availability"
-                  className="rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-[#1f1a16] shadow-lg shadow-[#1f1a16]/20 transition hover:bg-black/10 hover:border-black/30 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f0d4a6]"
+                  className="rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-[#1f1a16] shadow-lg shadow-[#1f1a16]/20 transition hover:bg-black/10 hover:border-black/30 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f0d4a6]"
                 >
                   View Availability
                 </Link>
                 <Link
                   href="/pages/Contact"
-                  className="rounded-full border border-white  px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-black/10 hover:border-black/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f0d4a6]"
+                  className="rounded-full border border-white  px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-black/10 hover:border-black/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f0d4a6]"
                 >
                   Schedule a Tour
                 </Link>

@@ -12,6 +12,8 @@ const quickLinks: FooterLink[] = [
   { label: "Features & Amenities", href: "/pages/Features" },
   { label: "Maintenance Request", href: "/pages/Maintenance" },
   { label: "Rental Application", href: "/pages/Apply" },
+  { label: "Testimonials", href: "/pages/Testimonials" },
+  { label: "About", href: "/pages/About" },
   { label: "Contact", href: "/pages/Contact" },
 ];
 

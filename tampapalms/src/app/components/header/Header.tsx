@@ -4,7 +4,6 @@
 import React, { useState } from "react";
 import Logo from "./Logo";
 import NavLinks from "./NavLinks";
-import { Menu, X } from "lucide-react";
 import { AnimatedHamburgerButton } from "./AnimatedHamburgerButton";
 
 const Header = () => {
@@ -38,7 +37,7 @@ const Header = () => {
           isOpen ? "max-h-96 opacity-100 p-6" : "max-h-0 opacity-0 p-0"
         }`}
       >
-        <NavLinks setIsOpen={setIsOpen} />
+        <NavLinks setIsOpen={setIsOpen} isMobile />
       </div>
     </header>
   );
