@@ -6,7 +6,7 @@ export default function InfoBlurb() {
   return (
     <div className="flex md:justify-center my-auto">
       {/* Glassmorphism container wrapping the embedded map. */}
-      <div className="w-full max-w-md overflow-hidden rounded-xl shadow-sm border border-white/50 bg-white/40 backdrop-blur">
+      <div className="w-full max-w-md overflow-hidden rounded-xl shadow-sm border border-white/50 bg-white/10 backdrop-blur">
         <iframe
           title="Tampa Palms Professional Center Map"
           src={mapSrc}

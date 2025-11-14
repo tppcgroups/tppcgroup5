@@ -10,10 +10,9 @@ export default function InfoBlock() {
       <div>
         <p className="font-semibold">Phone</p>
         <a
-          href="tel:+18138767697"
-          className="underline decoration-neutral-400 hover:decoration-[#4a4034]"
+          className=" decoration-neutral-400 hover:decoration-[#4a4034] "
         >
-          813.876.7697
+          813-876-7697
         </a>
       </div>
 
