@@ -47,7 +47,7 @@ const amenityColumns = [
   {
     title: "Buildings/Suites",
     description:
-      "Modern, suites in a prime location, combining convenience, comfort, and style.",
+      "Modern, suites in a prime location, combining convenience, comfort, and style.\n",
     items: [
       "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
       "Assigned mailboxes with USPS delivery directly to the building",
@@ -66,7 +66,7 @@ const amenityColumns = [
   {
     title: "Executive Suites",
     description:
-      "Flexible office spaces designed for professionals, startups, and growing businesses.",
+      "Flexible office spaces designed for professionals, startups, and businesses.",
     items: [
       "Located within a premier, multi-use business park for office, medical, and professional tenants",
       "Fiber high speed optic internet",
@@ -80,7 +80,7 @@ const amenityColumns = [
   {
     title: "S.O.A.R",
     description:
-        "Co-working spaces that offers private offices, shared workspaces, and meeting rooms.",
+        "Co-working spaces that offers private offices, shared workspaces, and meeting rooms.\n",
     items: [
       "On-site management and maintenance team for tenant support",
       "Fiber high speed optic internet",
@@ -119,38 +119,46 @@ const supportHighlights = [
 ];
 
 export default function Features() {
-  const [availableSuites, setAvailableSuites] = useState(0);
-  const [uniqueBuildings, setUniqueBuildings] = useState(0);
-  useEffect(()=>{
-    async function getBuildings() {
-      try {
-        const response = await axios.get("/api/buildings");
-        const rawBuildings = (response.data ?? []) as Building[];
-        const availableSpaces = rawBuildings.filter(
-          (b) => normalizeStatus(b.availability_status) === "available");
-        console.log(availableSpaces.length);
-        setAvailableSuites(availableSpaces.length)
-        const uniqueByNumber = Array.from(
-          new Map(
-              rawBuildings.map((b)=>{
-                const match = b.street_address?.match(/^\d+/);
-                const buildingNumber = match ? match[0] : b.street_address;
-                return [buildingNumber, b];
-              })
-          ).values()
-        );
-        setUniqueBuildings(uniqueByNumber.length);
-        } catch (error) {
-        console.error(error);
-      }
-    }
-    getBuildings();
-  },[])
-  const stats = [
-    { label: "Buildings Across Campus", value: `${uniqueBuildings}`},
-    { label: "Move-In Ready Suites", value: `${availableSuites}`},
-    { label: "On-Site Team Coverage", value: "7 Day" },
-  ];
+  const [openCards, setOpenCards] = useState<{ [key: string]: boolean }>({});
+
+  const toggleCard = (title: string) => {
+    setOpenCards((prev) => ({
+      ...prev,
+      [title]: !prev[title],
+    }));
+  };
+  function AmenityDropdown({ column, isOpen, toggle }: { column: typeof amenityColumns[0]; isOpen: boolean; toggle: () => void }) {
+    return (
+        <div className="cursor-pointer" onClick={toggle}>
+          <div className="px-6 py-4 bg-white rounded-3xl border border-slate-200/60 shadow-lg shadow-slate-900/10 transition-all duration-200">
+            <h3 className="text-2xl font-semibold text-slate-900">{column.title}</h3>
+            <p className="mt-2 text-sm text-slate-600">{column.description}</p>
+
+            <div className="mt-3 flex items-center justify-between text-sm font-semibold text-slate-900">
+              <span>View</span>
+              <span
+                  className={`inline-block transform transition-transform duration-200 ${
+                      isOpen ? "rotate-180" : "rotate-0"
+                  }`}
+              >
+            ▼
+          </span>
+            </div>
+
+            {isOpen && (
+                <ul className="mt-4 space-y-2 text-sm text-slate-600">
+                  {column.items.map((item) => (
+                      <li key={item} className="flex items-start gap-3">
+                        <PiCheckCircleBold className="mt-1 h-5 w-5 flex-shrink-0 text-slate-500" />
+                        <span>{item}</span>
+                      </li>
+                  ))}
+                </ul>
+            )}
+          </div>
+        </div>
+    );
+  }
   return (
     <main className="min-h-screen bg-slate-100/70 text-slate-900">
       {/* Hero */}
@@ -210,23 +218,6 @@ export default function Features() {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="bg-white">
-        <div className="mx-auto grid max-w-5xl gap-6 px-6 py-12 text-center md:grid-cols-3 md:px-10">
-          {stats.map((item) => (
-            <div
-              key={item.label}
-              className="rounded-3xl border border-slate-200 bg-slate-50/60 px-8 py-10 shadow-sm shadow-slate-900/5"
-            >
-              <p className="text-4xl font-semibold text-slate-900">{item.value}</p>
-              <p className="mt-2 text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">
-                {item.label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Feature Grid */}
       <section className="mx-auto max-w-6xl px-6 py-20 md:px-10">
         <div className="space-y-6 text-center md:space-y-8">
@@ -266,38 +257,26 @@ export default function Features() {
         </div>
         <div className="relative mx-auto max-w-6xl px-4 md:px-10">
           <div className="space-y-6 text-center md:space-y-8">
-            <span className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
-              Amenities & Setting
-            </span>
+      <span className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
+        Amenities & Setting
+      </span>
             <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
               Designed to elevate every workday experience
             </h2>
-            <p className="mx-auto max-w-3xl text-sm text-slate-600 md:text-base">
+            <p className="mx-auto max-w-3xl text-sm text-slate-600 md:text-base mb-8">
               From tailored interiors to surroundings that encourage balance, the campus blends convenience with
               comfort.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-3">
             {amenityColumns.map((column) => (
-              <div
-                key={column.title}
-                className="rounded-3xl border border-slate-200/60 bg-slate-50/70 p-8 shadow-lg shadow-slate-900/10"
-              >
-                <h3 className="text-2xl font-semibold text-slate-900">{column.title}</h3>
-                <p className="mt-3 text-sm text-slate-600 md:text-base">{column.description}</p>
-                <ul className="mt-6 space-y-3 list-none">
-                  {column.items.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-3 text-sm text-slate-600 md:text-base"
-                    >
-                      <PiCheckCircleBold className="mt-1 h-5 w-5 flex-shrink-0 text-slate-500" />
-                      <span className="leading-snug">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                <AmenityDropdown
+                    key={column.title}
+                    column={column}
+                    isOpen={!!openCards[column.title]}
+                    toggle={() => toggleCard(column.title)}
+                />
             ))}
           </div>
         </div>
