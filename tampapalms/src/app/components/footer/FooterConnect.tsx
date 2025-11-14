@@ -11,7 +11,7 @@ export function FooterConnect() {
         Connect With Us
       </h3>
       <div className="mt-6 flex w-full flex-col items-center gap-4 text-sm text-[#e7ded2] sm:items-start">
-        {/* --- 📞 Phone Link --- */}
+        {/* --- Phone Link --- */}
         <a
           href="tel:8138767697"
           className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#fdf8f3]/15 bg-white/5 px-4 py-3 transition hover:border-[#fdf8f3]/40 sm:justify-start"
@@ -30,7 +30,7 @@ export function FooterConnect() {
           </span>
         </a>
 
-        {/* --- 📧 Email Link (with previous fix) --- */}
+        {/* --- Email Link (with previous fix) --- */}
         <a
           href="mailto:marketing@tampapalmscenter.com"
           className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#fdf8f3]/15 bg-white/5 px-4 py-3 transition hover:border-[#fdf8f3]/40 sm:justify-start"
@@ -52,7 +52,7 @@ export function FooterConnect() {
           </span>
         </a>
 
-        {/* --- 🗺️ Map Link --- */}
+        {/* --- Map Link --- */}
         <a
           href="https://maps.google.com/?q=17427+Bridge+Hill+Ct+STE+C,+Tampa,+FL+33647"
           target="_blank"

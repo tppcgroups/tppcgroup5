@@ -107,7 +107,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
             dropdownActive
               ? "after:w-full"
               : "after:w-0 md:hover:after:w-full";
-          const dropdownClasses = `relative inline-flex items-center justify-center text-center max-[950px]:text-[12px] max-[1045px]:text-sm max-[1120px]:text-[16px] max-[1175px]:text-lg text-xl font-bold text-[#1f1a16] hover:text-[#1f1a16] ${underlineBase} ${dropdownUnderline} mx-auto md:mx-0`;
+          const dropdownClasses = `relative inline-flex items-center justify-center py-[5px] px-4 text-center text-xl font-bold text-[#1f1a16] hover:text-[#1f1a16] ${underlineBase} ${dropdownUnderline} mx-auto md:mx-0`;
           return (
             <div
               key={link.label}
@@ -125,7 +125,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                 {link.label}
               </button>
               <div
-                className={`flex flex-col items-center md:flex-col md:space-y-2 md:items-stretch md:absolute md:left-1/2 md:-translate-x-1/2 md:top-full md:z-20 md:mt-2 md:min-w-[220px] md:rounded-lg md:border md:border-white/30 bg-white/70 md:bg-white/70 backdrop-blur-md md:shadow-lg transition-all duration-300 ease-out md:duration-200 transform origin-top overflow-hidden md:overflow-visible w-full md:w-auto ${
+                className={`flex flex-col items-center md:items-stretch md:absolute md:left-1/2 md:-translate-x-1/2 md:top-full md:z-20 md:mt-2 md:min-w-[220px] md:rounded-lg md:border md:border-white/30 bg-white/70 md:bg-white/70 backdrop-blur-md md:shadow-lg transition-all duration-300 ease-out md:duration-200 transform origin-top overflow-hidden md:overflow-visible w-full md:w-auto ${
                   openDropdown === link.label
                     ? "max-h-96 opacity-100 scale-100 md:translate-y-1 translate-y-0 pointer-events-auto"
                     : "max-h-0 opacity-0 scale-95 md:-translate-y-2 pointer-events-none"
@@ -135,10 +135,10 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                   const childActive = pathname === child.href;
                   return (
                     <Link key={child.href} href={child.href} passHref>
-                      <div className="flex items-center justify-center w-full">
+                      <div className="flex items-center justify-center ">
                         <span
                           onClick={handleLinkClick}
-                          className={`justify-center w-full md:justify-start relative max-[1120px]:text-[16px] max-[1175px]:text-lg inline-flex px-4 py-2 text-xl font-bold text-[#1f1a16] hover:text-[#080706] ${underlineBase} ${
+                          className={`relative inline-flex px-4 py-2 text-xl font-bold text-[#1f1a16] hover:text-[#080706] ${underlineBase} ${
                             childActive ? "after:w-full" : "after:w-0 hover:after:w-full"
                           }`}
                         >
