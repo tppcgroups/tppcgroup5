@@ -176,7 +176,7 @@ export default function Features() {
     getBuildings();
   },[])
   return (
-    <main className="min-h-screen bg-[#f9f7f3] text-[#1f1a16]">
+    <main className="min-h-screen bg-[#f9f7f3] text-[#1f1a16] pb-20">
       <header className="relative -mx-4 overflow-hidden rounded-none shadow-[0_35px_90px_-70px_rgba(31,26,22,0.8)] sm:-mx-6">
         <Image
           src="/images/Bldg5-019.jpg"
@@ -306,39 +306,6 @@ export default function Features() {
           ))}
         </div>
       </section>
-
-      {/* CTA */}
-      {/* <section className="relative overflow-hidden pb-24">
-        <div className="absolute inset-x-0 bottom-0 top-10 bg-[radial-gradient(circle_at_top,_rgba(122,103,84,0.2),_transparent_70%)]" />
-        <div className="relative mx-auto max-w-5xl px-6 md:px-10">
-          <div className="rounded-3xl border border-[#e1d9cf] bg-white/90 px-8 py-12 text-center shadow-2xl shadow-[#1f1a16]/20 backdrop-blur md:px-16">
-            <span className="text-xs font-semibold uppercase tracking-[0.4em] text-[#a49382]">
-              Next Steps
-            </span>
-            <h2 className="mt-4 text-3xl font-semibold text-[#1f1a16] md:text-4xl">
-              Let&apos;s plan your visit to Tampa Palms Professional Center
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-sm text-[#7a6754] md:text-base">
-              Reach out for current availability, arrange a tour, or connect with ownership directly to explore
-              how the campus can support your work.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 text-sm sm:flex-row sm:justify-center">
-              <Link
-                href="/pages/Contact"
-                className="inline-flex items-center justify-center rounded-full bg-[#4a4034] px-8 py-3 font-semibold text-white shadow-lg shadow-[#1f1a16]/15 transition hover:bg-[#3a3127]"
-              >
-                Connect With Us
-              </Link>
-              <Link
-                href="/pages/Availability"
-                className="inline-flex items-center justify-center rounded-full border border-[#d4c7b7] px-8 py-3 font-semibold text-[#1f1a16] transition hover:border-[#b6a895] hover:bg-[#f4ece1]"
-              >
-                Explore Availability
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section> */}
     </main>
   );
 }

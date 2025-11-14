@@ -9,6 +9,7 @@ import React, {useEffect, useState} from "react"
 import HomeSections from "@/app/components/home/HeroSection/HomeSections"
 import axios from "axios"
 import type { Building } from "@/app/components/availability/type"
+import FadeIn from "@/app/components/animations/FadeIn"
 
 type BuildingApi = Partial<Building> & { offices_type?: unknown };
 
@@ -99,14 +100,19 @@ export default function Home(){
     }, []);
 
     return (
-      <div>
+      <div className="pb-20">
         {/* Mobile Home Component */}
-        <MobileHome imageUrls={images} />
+        <FadeIn delay={10}>
+          <MobileHome imageUrls={images} />
+        </FadeIn>
         {/* Desktop Home Component */}
-        <DesktopHome imageUrls={images} />
+        <FadeIn delay={50}>
+          <DesktopHome imageUrls={images} />
+        </FadeIn>
 
-        {/* Uncomment this to see HomeSection */}
-        <HomeSections totalSize={totalSize} flexibleSuites={flexibleSuites} buildingAvailable={buildingAvailable} />
+        <FadeIn delay={50}>
+          <HomeSections totalSize={totalSize} flexibleSuites={flexibleSuites} buildingAvailable={buildingAvailable} />
+        </FadeIn>
         
         <div></div>
         {/* <LocationInsights /> */}

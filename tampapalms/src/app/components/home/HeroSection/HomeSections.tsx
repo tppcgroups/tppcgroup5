@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
+import FadeIn from "@/app/components/animations/FadeIn";
 import {
   ArrowUpRight,
   Building2,
@@ -172,6 +173,7 @@ export default function HomeSections({
     <section className="mx-8 my-12  text-[#1f1a16] md:space-y-20">
         
       {/* Overview */}
+      <FadeIn>
       <div className="overflow-hidden rounded-[32px] border border-neutral-200 bg-gradient-to-br from-[#faf8f5] via-white to-[#f0ebe3] shadow-[0_30px_80px_rgba(15,14,13,0.12)]">
         <div className="grid gap-10 p-8 md:p-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="space-y-6">
@@ -224,8 +226,10 @@ export default function HomeSections({
           </div>
         </div>
       </div>
+      </FadeIn>
 
       {/* Highlights */}
+      <FadeIn delay={150}>
       <div className="space-y-6 rounded-[32px] border border-neutral-200 bg-gradient-to-br from-[#faf8f5] via-white to-[#f6f3ef] p-8 shadow-inner">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -262,8 +266,10 @@ export default function HomeSections({
           })}
         </div>
       </div>
+      </FadeIn>
 
       {/* Neighborhood */}
+      <FadeIn delay={250}>
       <div className="grid gap-8 lg:grid-cols-2">
         <div className="relative overflow-hidden rounded-[32px] border border-neutral-200">
           <Image
@@ -311,11 +317,7 @@ export default function HomeSections({
           )}
         </div>
       </div>
-
-
-      {/* Testimonials */}
-      
-
+      </FadeIn>
     </section>
   );
 }
