@@ -89,7 +89,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
   return (
     // This component now renders the links for either desktop or mobile
     // The parent (Header.tsx) decides WHEN to show it.
-    <div className="flex flex-col md:flex-row md:flex-1 md:justify-evenly items-center md:space-x-4 space-y-4 md:space-y-0 py-4 md:py-0 ">
+    <div className="flex flex-col items-center space-y-4 py-4 md:flex-row md:flex-1 md:justify-end md:space-x-6 md:space-y-0 md:py-0">
       {menuItems.map((link) => {
         const isDropdownLink = !isMobile && "children" in link;
         const isActive = "href" in link ? pathname === link.href : false;
@@ -108,7 +108,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
             dropdownActive
               ? "after:w-full"
               : "after:w-0 md:hover:after:w-full";
-          const dropdownClasses = `group relative inline-flex items-center justify-center gap-2 py-[5px] px-4 text-center text-xl font-bold text-[#1f1a16] hover:text-[#1f1a16] ${underlineBase} ${dropdownUnderline} mx-auto md:mx-0`;
+          const dropdownClasses = `group relative inline-flex items-center justify-center gap-2 py-[5px] text-center text-xl font-bold text-[#1f1a16] hover:text-[#1f1a16] ${underlineBase} ${dropdownUnderline} mx-auto md:mx-0`;
           return (
             <div
               key={link.label}
@@ -144,7 +144,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                       <div className="flex items-center justify-center ">
                         <span
                           onClick={handleLinkClick}
-                          className={`relative inline-flex px-4 py-2 text-xl font-bold text-[#1f1a16] hover:text-[#080706] ${underlineBase} ${
+                          className={`relative inline-flex  py-2 text-xl font-bold text-[#1f1a16] hover:text-[#080706] ${underlineBase} ${
                             childActive ? "after:w-full" : "after:w-0 hover:after:w-full"
                           }`}
                         >
