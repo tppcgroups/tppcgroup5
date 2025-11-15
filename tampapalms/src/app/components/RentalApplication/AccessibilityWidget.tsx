@@ -18,6 +18,24 @@ const AccessibilityWidget: React.FC = () => {
     const [reduceMotion, setReduceMotion] = useState(false);
 
     useEffect(() => {
+        const saved = localStorage.getItem("accessibilitySettings");
+
+        if (!saved) return;
+        try {
+            const settings = JSON.parse(saved);
+
+            setTextScale(settings.textScale ?? 1);
+            setHighContrast(settings.highContrast ?? false);
+            setDarkMode(settings.darkMode ?? false);
+            setHighlightLinks(settings.highlightLinks ?? false);
+            setReduceMotion(settings.reduceMotion ?? false);
+        } catch (err) {
+            console.error("Failed to load saved settings ")
+        }
+    }, []);
+
+
+    useEffect(() => {
         const html = document.documentElement;
 
         html.style.setProperty("--text-scale", textScale.toString());
@@ -33,9 +51,9 @@ const AccessibilityWidget: React.FC = () => {
             highlightLinks,
             reduceMotion
         };
-
         localStorage.setItem("accessibilitySettings", JSON.stringify(settings));
     }, [textScale, highContrast, darkMode, highlightLinks, reduceMotion]);
+
 
     return (
         <>
