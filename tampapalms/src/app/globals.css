@@ -175,3 +175,48 @@ header nav {
 .white-image {
   filter: brightness(0) invert(1);
 }
+
+:root {
+    --text-scale: 1;
+}
+html {
+    font-size: calc(16px * var(--text-scale, 1));
+}
+
+.high-contrast {
+    filter: contrast(1.4);
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+.high-contrast a {
+    color: #00e6ff !important;
+    text-decoration: underline !important;
+}
+
+.dark {
+    background-color: #111;
+    color: #eee;
+}
+
+.dark a {
+    color: #80bfff;
+}
+
+
+
+.highlight-links a {
+    background-color: yellow;
+    color: black !important;
+    padding: 2px 4px;
+    border-radius: 4px;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+
+.reduce-motion * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+}
