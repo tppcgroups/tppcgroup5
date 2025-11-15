@@ -16,11 +16,22 @@ const AccessibilityWidget: React.FC = () => {
     const [darkMode, setDarkMode] = useState(false);
     const [highlightLinks, setHighlightLinks] = useState(false);
     const [reduceMotion, setReduceMotion] = useState(false);
+
     const contrastModes = ["normal", "dark", "inverted", "grayscale"];
     const [contrastIndex, setContrastIndex] = useState(0);
 
+    const nextContrast = () => {
+        setContrastIndex((prev) => (prev + 1) % contrastModes.length);
+    };
 
-    useEffect(() => {
+    const prevContrast = () => {
+        setContrastIndex((prev) =>
+            prev === 0 ? contrastModes.length - 1 : prev - 1
+        );
+    };
+
+
+useEffect(() => {
         const saved = localStorage.getItem("accessibilitySettings");
         if (!saved) return;
 
@@ -41,6 +52,21 @@ const AccessibilityWidget: React.FC = () => {
 
     useEffect(() => {
         const html = document.documentElement;
+
+        html.classList.remove("contrast-dark", "contrast-invert", "contrast-grayscale");
+
+        const currentMode = contrastModes[contrastIndex];
+        if (currentMode === "dark") {
+            html.classList.add("contrast-dark");
+        }
+
+        else if (currentMode === "invert") {
+            html.classList.add("contrast-invert");
+        }
+
+        else if (currentMode === "grayscale") {
+            html.classList.add("contrast-grayscale");
+        }
 
         html.style.setProperty("--text-scale", textScale.toString());
         html.classList.toggle("high-contrast", highContrast);
