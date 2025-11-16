@@ -13,7 +13,7 @@ const AccessibilityWidget: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [textScale, setTextScale] = useState(1);
     const [highContrast, setHighContrast] = useState(false);
-    const [darkMode, setDarkMode] = useState(false);
+    const [language, setLanguage] = useState("English");
     const [highlightLinks, setHighlightLinks] = useState(false);
     const [reduceMotion, setReduceMotion] = useState(false);
 
@@ -40,7 +40,6 @@ const AccessibilityWidget: React.FC = () => {
 
             setTextScale(settings.textScale ?? 1);
             setHighContrast(settings.highContrast ?? false);
-            setDarkMode(settings.darkMode ?? false);
             setHighlightLinks(settings.highlightLinks ?? false);
             setReduceMotion(settings.reduceMotion ?? false);
             setContrastIndex(settings.contrastIndex ?? 0);
@@ -71,11 +70,10 @@ const AccessibilityWidget: React.FC = () => {
 
         html.style.setProperty("--text-scale", textScale.toString());
         html.classList.toggle("high-contrast", highContrast);
-        html.classList.toggle("dark", darkMode);
         html.classList.toggle("reduce-motion", reduceMotion);
         html.classList.toggle("highlight-links", highlightLinks);
 
-    }, [textScale, highContrast, darkMode, highlightLinks, reduceMotion, contrastIndex]); // ⭐ FIXED
+    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex]); // ⭐ FIXED
 
 
 
@@ -84,7 +82,6 @@ const AccessibilityWidget: React.FC = () => {
             const settings = {
                 textScale,
                 highContrast,
-                darkMode,
                 highlightLinks,
                 reduceMotion,
                 contrastIndex
@@ -93,7 +90,7 @@ const AccessibilityWidget: React.FC = () => {
         }, 300);
 
         return () => clearTimeout(timeout);
-    }, [textScale, highContrast, darkMode, highlightLinks, reduceMotion, contrastIndex]);
+    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex]);
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -167,6 +164,23 @@ const AccessibilityWidget: React.FC = () => {
                         </button>
                     </div>
 
+                    <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50">
+                        <span className="font-medium text-gray-800">Language</span>
+
+                        <select
+                            value={language}
+                            onChange={(e) => setLanguage(e.target.value)}
+                            className="mt-2 border rounded-lg p-1 text-sm"
+                        >
+                            <option>English</option>
+                            <option>Spanish</option>
+                            <option>French</option>
+                            <option>Arabic</option>
+                            <option>Chinese</option>
+                        </select>
+                    </div>
+
+
                     {/* GRID LAYOUT */}
                     <div className="grid grid-cols-2 gap-4">
 
@@ -228,17 +242,6 @@ const AccessibilityWidget: React.FC = () => {
                             </div>
                         </div>
 
-
-                        {/* DARK MODE */}
-                        <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50">
-                            <span className="font-medium text-gray-800">Dark Mode</span>
-                            <input
-                                type="checkbox"
-                                checked={darkMode}
-                                onChange={() => setDarkMode(!darkMode)}
-                                className="mt-3 w-5 h-5"
-                            />
-                        </div>
 
                         {/* HIGHLIGHT LINKS */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50">
