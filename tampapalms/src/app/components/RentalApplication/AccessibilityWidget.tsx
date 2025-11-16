@@ -1,8 +1,4 @@
 "use client";
-import flagEnglish from "../flags/english.png";
-import flagSpanish from "../flags/spanish.png";
-import flagFrench from "../flags/french.png";
-import flagSwahili from "../flags/swahili.png";
 import accessibilityLogo from "../accessibility.png";
 
 
@@ -11,7 +7,7 @@ import Image from "next/image";
 
 import type { StaticImageData } from "next/image";
 
-type Language = "English" | "Spanish" | "French" | "Swahili";
+type Language = "English" | "Espanol" | "French" | "Swahili";
 
 
 
@@ -42,12 +38,6 @@ const AccessibilityWidget: React.FC = () => {
 
     const languages = ["English", "Spanish", "French", "Swahili"];
 
-    const flagImages: Record<Language, StaticImageData> = {
-        English: flagEnglish,
-        Spanish: flagSpanish,
-        French: flagFrench,
-        Swahili: flagSwahili
-    };
 
 
 
@@ -63,6 +53,46 @@ const AccessibilityWidget: React.FC = () => {
             prev === 0 ? languages.length - 1 : prev - 1
         );
     };
+
+    const translations = {
+        English: {
+            language: "Language",
+            textSize: "Text Size",
+            contrastMode: "Contrast Mode",
+            highlightLinks: "Highlight Links",
+            reduceMotion: "Reduce Motion",
+            accessibilityOptions: "Accessibility Options",
+            footer: "Accessibility tools for the Tampa Palms Professional Center website"
+        },
+        Spanish: {
+            language: "Idioma",
+            textSize: "Tamaño del texto",
+            contrastMode: "Modo de contraste",
+            highlightLinks: "Resaltar enlaces",
+            reduceMotion: "Reducir movimiento",
+            accessibilityOptions: "Opciones de accesibilidad",
+            footer: "Herramientas de accesibilidad para el sitio web de Tampa Palms Professional Center"
+        },
+        French: {
+            language: "Langue",
+            textSize: "Taille du texte",
+            contrastMode: "Mode de contraste",
+            highlightLinks: "Surligner les liens",
+            reduceMotion: "Réduire les mouvements",
+            accessibilityOptions: "Options d'accessibilité",
+            footer: "Outils d'accessibilité pour le site de Tampa Palms Professional Center"
+        },
+        Swahili: {
+            language: "Lugha",
+            textSize: "Ukubwa wa maandishi",
+            contrastMode: "Hali ya utofautishaji",
+            highlightLinks: "Angazia viungo",
+            reduceMotion: "Punguza mwendo",
+            accessibilityOptions: "Chaguo za upatikanaji",
+            footer: "Zana za upatikanaji kwa tovuti ya Tampa Palms Professional Center"
+        }
+    };
+
 
 
     useEffect(() => {
@@ -129,6 +159,7 @@ const AccessibilityWidget: React.FC = () => {
 
         return () => clearTimeout(timeout);
     }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex]);
+
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -217,20 +248,9 @@ const AccessibilityWidget: React.FC = () => {
                                 ←
                             </button>
 
-                            {/* FLAG + NAME */}
-                            <div className="flex flex-col items-center">
-                                <Image
-                                    src={flagImages[languages[languageIndex] as Language]}
-                                    alt={languages[languageIndex]}
-                                    width={35}
-                                    height={35}
-                                    className="rounded shadow"
-                                />
-
-                                <span className="text-sm font-medium text-gray-900 mt-1">
-                                    {languages[languageIndex]}
-                                </span>
-                            </div>
+                            <span className="text-sm font-medium text-gray-900 min-w-[90px] text-center">
+                                {languages[languageIndex]}
+                            </span>
 
                             {/* NEXT BUTTON */}
                             <button
