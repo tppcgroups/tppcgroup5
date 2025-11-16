@@ -33,6 +33,7 @@ export type Building = {
   owned_leased: string,
   offices_count: number,
   bathrooms_count: string,
+  loopnet_url: string,
 
   // NEED PLACEHOLDER DATA FOR THESE FIELDS
   images: Array<{ src: string; alt: string }>;

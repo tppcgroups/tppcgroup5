@@ -36,7 +36,9 @@ export function BuildingDetails({activeBuilding, normalizeStatus}: BuildingProps
               : ""
           }`}
         </h2>
-        <p className="text-sm text-[#a49382]">{activeBuilding.street_address}</p>
+        <p className="text-sm text-[#a49382]">
+          {activeBuilding.street_address}
+        </p>
       </div>
 
       <div className="mt-8 grid gap-3 text-sm text-[#7a6754]">
@@ -76,18 +78,32 @@ export function BuildingDetails({activeBuilding, normalizeStatus}: BuildingProps
         </dl>
       </div>
 
-      <div className="mt-auto flex items-center justify-center pt-6">
+      <div className="mt-auto flex items-center justify-center pt-6 gap-4">
         <button
-          onClick={statusLabel === "Available" ? handleTourRequest : () => setIsOpen(true)}
+          onClick={
+            statusLabel === "Available"
+              ? handleTourRequest
+              : () => setIsOpen(true)
+          }
           className="inline-flex items-center justify-center rounded-full bg-[#1f1a16] px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-[#1f1a16]/20 transition hover:bg-[#3a3127] cursor-pointer"
         >
           {statusLabel === "Available"
             ? "Request Tour"
             : "Notify Me When Available"}
         </button>
+        {activeBuilding.loopnet_url && (
+          <a href={activeBuilding.loopnet_url}>
+            <button className="inline-flex items-center justify-center rounded-full bg-[#1f1a16] px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-[#1f1a16]/20 transition hover:bg-[#3a3127] cursor-pointer">
+              Loopnet
+            </button>
+          </a>
+        )}
       </div>
       {isOpen && (
-        <NotifyPopUp onClose={togglePopUp} buildingId={activeBuilding.building_id} />
+        <NotifyPopUp
+          onClose={togglePopUp}
+          buildingId={activeBuilding.building_id}
+        />
       )}
     </div>
   );
