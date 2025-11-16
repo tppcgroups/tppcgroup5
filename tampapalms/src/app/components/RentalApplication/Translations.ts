@@ -7,7 +7,11 @@ export const translations = {
         contrastMode: "Contrast Mode",
         highlightLinks: "Highlight Links",
         reduceMotion: "Reduce Motion",
-        footer: "Accessibility tools for the Tampa Palms Professional Center website"
+        footer: "Accessibility tools for the Tampa Palms Professional Center website",
+        cursorSize: "Cursor Size",
+        cursorSmall: "Small",
+        cursorMedium: "Medium",
+        cursorLarge: "Large",
     },
 
     Spanish: {
@@ -18,7 +22,11 @@ export const translations = {
         contrastMode: "Modo de contraste",
         highlightLinks: "Resaltar enlaces",
         reduceMotion: "Reducir movimiento",
-        footer: "Herramientas de accesibilidad para el sitio web de Tampa Palms Professional Center"
+        footer: "Herramientas de accesibilidad para el sitio web de Tampa Palms Professional Center",
+        cursorSize: "Tamaño del Cursor",
+        cursorSmall: "Pequeño",
+        cursorMedium: "Mediano",
+        cursorLarge: "Grande",
     },
 
     French: {
@@ -29,7 +37,11 @@ export const translations = {
         contrastMode: "Mode de contraste",
         highlightLinks: "Mettre en évidence les liens",
         reduceMotion: "Réduire les animations",
-        footer: "Outils d’accessibilité pour le site web de Tampa Palms Professional Center"
+        footer: "Outils d’accessibilité pour le site web de Tampa Palms Professional Center",
+        cursorSize: "Taille du Curseur",
+        cursorSmall: "Petit",
+        cursorMedium: "Moyen",
+        cursorLarge: "Grand",
     },
 
     Swahili: {
@@ -40,7 +52,11 @@ export const translations = {
         contrastMode: "Hali ya utofautishaji",
         highlightLinks: "Angazia viungo",
         reduceMotion: "Punguza mwendo",
-        footer: "Zana za ufikiaji kwa tovuti ya Tampa Palms Professional Center"
+        footer: "Zana za ufikiaji kwa tovuti ya Tampa Palms Professional Center",
+        cursorSize: "Ukubwa wa Kielekezi",
+        cursorSmall: "Kidogo",
+        cursorMedium: "Kati",
+        cursorLarge: "Kubwa",
     }
 } as const;
 
