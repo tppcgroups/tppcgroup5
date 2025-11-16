@@ -5,9 +5,10 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid'
 interface FAQProps {
   question: string,
   answer: string,
+  exec_only: string,
 }
 
-const FAQMain: React.FC<FAQProps> = ({question, answer}) => {
+const FAQMain: React.FC<FAQProps> = ({question, answer, exec_only}) => {
   return (
     <div className="h-full w-full px-4 pt-5">
       <div className="mx-auto w-full divide-y divide-[#1f1a16]/5 rounded-xl">
@@ -26,8 +27,13 @@ const FAQMain: React.FC<FAQProps> = ({question, answer}) => {
             leaveFrom="opacity-100 max-h-[500px]"
             leaveTo="opacity-0 max-h-0"
           >
-            <DisclosurePanel className="mt-2 text-lg text-[#1f1a16]/50 overflow-hidden">
-              {answer}
+            <DisclosurePanel className="mt-2 justify-between">
+              <p className="text-lg text-[#1f1a16]/50 overflow-hidden">
+                {answer}
+              </p>
+              <p className="text-lg text-[#1f1a16]/50 overflow-hidden font-bold">
+                {exec_only === "Y" ? "Executive Suite's Only" : ""}
+              </p>
             </DisclosurePanel>
           </Transition>
         </Disclosure>

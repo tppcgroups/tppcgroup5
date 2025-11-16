@@ -42,7 +42,7 @@ export default function About()  {
         <FAQTitle />
         {loading && (<p className='text-xl text-center'>Loading FAQS...</p>)}
         {faqs.map((faq, index) => {
-          return <FAQMain key={index} question={faq.question} answer={faq.answer} />
+          return <FAQMain key={index} question={faq.question} answer={faq.answer} exec_only={faq.executive_suite_only} />
         })}
       </section>
     );
