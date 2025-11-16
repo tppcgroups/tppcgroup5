@@ -171,23 +171,32 @@ const AccessibilityWidget: React.FC = () => {
                     <div className="grid grid-cols-2 gap-4">
 
                         {/* TEXT SIZE */}
-                        <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50">
-                            <span className="font-medium text-gray-800">Text Size</span>
-                            <div className="flex gap-2 mt-2">
-                                <button
-                                    onClick={() => setTextScale(prev => Math.max(0.8, prev - 0.1))}
-                                    className="px-2 py-1 bg-gray-200 rounded"
-                                >
-                                    A-
-                                </button>
-                                <button
-                                    onClick={() => setTextScale(prev => Math.min(1.6, prev + 0.1))}
-                                    className="px-2 py-1 bg-gray-200 rounded"
-                                >
-                                    A+
-                                </button>
-                            </div>
+                        <div className="flex items-center justify-between p-3 border rounded-xl bg-gray-50 col-span-2">
+
+                            {/* Minus Button */}
+                            <button
+                                onClick={() => setTextScale(prev => Math.max(0.8, prev - 0.1))}
+                                className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-lg"
+                                aria-label="Decrease text size"
+                            >
+                                –
+                            </button>
+
+                            {/* Label */}
+                            <span className="font-medium text-gray-800 text-center">
+                                Text Size
+                            </span>
+
+                            {/* Plus Button */}
+                            <button
+                                onClick={() => setTextScale(prev => Math.min(1.6, prev + 0.1))}
+                                className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-lg"
+                                aria-label="Increase text size"
+                            >
+                                +
+                            </button>
                         </div>
+
 
                         {/* HIGH CONTRAST */}
                         {/* CONTRAST MODE CAROUSEL */}
