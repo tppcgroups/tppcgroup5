@@ -17,15 +17,12 @@ export function CampusGroundMap({
   const dragOffset = useRef({ x: 0, y: 0 });
   const pointerIdRef = useRef<number | null>(null);
 
-
-  
-
   const clamp = (value: number, min: number, max: number) =>
     Math.min(max, Math.max(min, value));
 
   const adjustScale = useCallback((direction: "in" | "out") => {
     setScale((prev) =>
-      clamp(prev + (direction === "in" ? 0.25 : -0.25), 0.50, 3)
+      clamp(prev + (direction === "in" ? 0.25 : -0.25), 0.5, 3)
     );
   }, []);
 
@@ -78,24 +75,19 @@ export function CampusGroundMap({
       onPointerLeave: handlePointerUp,
       onDoubleClick: handleDoubleClick,
     }),
-    [
-      handlePointerDown,
-      handlePointerMove,
-      handlePointerUp,
-      handleDoubleClick,
-    ]
+    [handlePointerDown, handlePointerMove, handlePointerUp, handleDoubleClick]
   );
 
   return (
-    <section className="flex w-full flex-col overflow-hidden rounded-[32px] border border-[#e1d9cf] bg-white shadow-xl shadow-[#1f1a16]/5">
-      <div className="border-b border-[#f4ece1] px-6 py-6">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#a49382]">
+    <section className="flex w-full flex-col overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-xl shadow-slate-900/5">
+      <div className="border-b border-slate-100 px-6 py-6">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
           Campus Overview
         </p>
       </div>
 
       <div
-        className="relative mx-auto w-full overflow-hidden bg-[#fdf8f3]"
+        className="relative mx-auto w-full overflow-hidden bg-slate-50"
         style={{
           aspectRatio,
           width: "100%",
@@ -136,11 +128,11 @@ export function CampusGroundMap({
         </div>
 
         <div className="pointer-events-none absolute inset-x-0 top-0 flex flex-col gap-3 p-5 sm:flex-row sm:items-start sm:justify-between">
-          <div className="ml-auto pointer-events-auto flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-[#4a4034] shadow-md shadow-[#1f1a16]/10">
+          <div className="ml-auto pointer-events-auto flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-slate-700 shadow-md shadow-slate-900/10">
             <button
               type="button"
               onClick={() => adjustScale("out")}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-[#e1d9cf] text-base font-semibold transition hover:bg-[#f4ece1]"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-base font-semibold transition hover:bg-slate-100"
               aria-label="Zoom out"
             >
               –
@@ -148,7 +140,7 @@ export function CampusGroundMap({
             <button
               type="button"
               onClick={() => adjustScale("in")}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-[#e1d9cf] text-base font-semibold transition hover:bg-[#f4ece1]"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-base font-semibold transition hover:bg-slate-100"
               aria-label="Zoom in"
             >
               +
@@ -160,7 +152,7 @@ export function CampusGroundMap({
                 setScale(0.85);
                 setPosition({ x: 0, y: 0 });
               }}
-              className="ml-1 rounded-full border border-[#e1d9cf] px-4 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-[#7a6754] transition hover:bg-[#f4ece1]"
+              className="ml-1 rounded-full border border-slate-200 px-4 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-slate-600 transition hover:bg-slate-100"
             >
               Reset
             </button>
@@ -172,7 +164,7 @@ export function CampusGroundMap({
             href="/images/Floor-plans/SiteplanEast&West.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="pointer-events-auto inline-flex items-center rounded-full bg-[#1f1a16] px-5 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white shadow shadow-[#1f1a16]/30 transition hover:bg-[#3a3127]"
+            className="pointer-events-auto inline-flex items-center rounded-full bg-slate-900 px-5 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white shadow shadow-slate-900/30 transition hover:bg-slate-800"
           >
             Download PDF
           </a>
