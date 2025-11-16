@@ -181,21 +181,35 @@ const AccessibilityWidget: React.FC = () => {
                         </button>
                     </div>
 
-                    <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50">
+                    {/* LANGUAGE SELECTOR SLIDER */}
+                    <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
                         <span className="font-medium text-gray-800">Language</span>
 
-                        <select
-                            value={language}
-                            onChange={(e) => setLanguage(e.target.value)}
-                            className="mt-2 border rounded-lg p-1 text-sm"
-                        >
-                            <option>English</option>
-                            <option>Spanish</option>
-                            <option>French</option>
-                            <option>Arabic</option>
-                            <option>Chinese</option>
-                        </select>
+                        <div className="flex items-center gap-4 mt-3">
+
+                            {/* Prev Button */}
+                            <button
+                                onClick={prevLanguage}
+                                className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                            >
+                                ←
+                            </button>
+
+                            {/* Current Language */}
+                            <span className="text-sm font-medium text-gray-900 min-w-[90px] text-center">
+                                {languages[languageIndex]}
+                            </span>
+
+                            {/* Next Button */}
+                            <button
+                                onClick={nextLanguage}
+                                className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                            >
+                                →
+                            </button>
+                        </div>
                     </div>
+
 
 
                     {/* GRID LAYOUT */}
