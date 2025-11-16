@@ -1,13 +1,14 @@
 "use client";
 import accessibilityLogo from "../accessibility.png";
+import { translations } from "./Translations";
 
 
 import React, { useEffect, useState} from "react";
 import Image from "next/image";
 
-import type { StaticImageData } from "next/image";
 
-type Language = "English" | "Espanol" | "French" | "Swahili";
+
+type Language = "English" | "Spanish" | "French" | "Swahili";
 
 
 
@@ -36,13 +37,14 @@ const AccessibilityWidget: React.FC = () => {
         );
     };
 
-    const languages = ["English", "Spanish", "French", "Swahili"];
+    const languages: Language[] = ["English", "Spanish", "French", "Swahili"];
 
 
 
 
 
     const [languageIndex, setLanguageIndex] = useState(0);
+    const t = translations[languages[languageIndex] as Language];
 
     const nextLanguage = () => {
         setLanguageIndex((prev) => (prev + 1) % languages.length);
@@ -54,44 +56,6 @@ const AccessibilityWidget: React.FC = () => {
         );
     };
 
-    const translations = {
-        English: {
-            language: "Language",
-            textSize: "Text Size",
-            contrastMode: "Contrast Mode",
-            highlightLinks: "Highlight Links",
-            reduceMotion: "Reduce Motion",
-            accessibilityOptions: "Accessibility Options",
-            footer: "Accessibility tools for the Tampa Palms Professional Center website"
-        },
-        Spanish: {
-            language: "Idioma",
-            textSize: "Tamaño del texto",
-            contrastMode: "Modo de contraste",
-            highlightLinks: "Resaltar enlaces",
-            reduceMotion: "Reducir movimiento",
-            accessibilityOptions: "Opciones de accesibilidad",
-            footer: "Herramientas de accesibilidad para el sitio web de Tampa Palms Professional Center"
-        },
-        French: {
-            language: "Langue",
-            textSize: "Taille du texte",
-            contrastMode: "Mode de contraste",
-            highlightLinks: "Surligner les liens",
-            reduceMotion: "Réduire les mouvements",
-            accessibilityOptions: "Options d'accessibilité",
-            footer: "Outils d'accessibilité pour le site de Tampa Palms Professional Center"
-        },
-        Swahili: {
-            language: "Lugha",
-            textSize: "Ukubwa wa maandishi",
-            contrastMode: "Hali ya utofautishaji",
-            highlightLinks: "Angazia viungo",
-            reduceMotion: "Punguza mwendo",
-            accessibilityOptions: "Chaguo za upatikanaji",
-            footer: "Zana za upatikanaji kwa tovuti ya Tampa Palms Professional Center"
-        }
-    };
 
 
 
@@ -221,7 +185,7 @@ const AccessibilityWidget: React.FC = () => {
                         <h2
                             id="accessibility-panel-title"
                             className="text-lg font-semibold text-gray-800">
-                            Accessibility Options
+                            {t.header}
                         </h2>
 
                         <button
@@ -236,7 +200,8 @@ const AccessibilityWidget: React.FC = () => {
                     {/* LANGUAGE SELECTOR (WITH FLAGS + SLIDER) */}
                     <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
 
-                        <span className="font-medium text-gray-800">Language</span>
+                        <span className="font-medium text-gray-800">{t.language}</span>
+
 
                         <div className="flex items-center gap-4 mt-3">
 
@@ -282,7 +247,7 @@ const AccessibilityWidget: React.FC = () => {
 
                             {/* Label */}
                             <span className="font-medium text-gray-800 text-center">
-                                Text Size
+                                {t.textSize}
                             </span>
 
                             {/* Plus Button */}
@@ -299,7 +264,7 @@ const AccessibilityWidget: React.FC = () => {
                         {/* HIGH CONTRAST */}
                         {/* CONTRAST MODE CAROUSEL */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                            <span className="font-medium text-gray-800">Contrast Mode</span>
+                            <span className="font-medium text-gray-800">{t.contrastMode}</span>
 
                             <div className="flex items-center gap-4 mt-3">
 
@@ -329,7 +294,7 @@ const AccessibilityWidget: React.FC = () => {
 
                         {/* HIGHLIGHT LINKS */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50">
-                            <span className="font-medium text-gray-800">Highlight Links</span>
+                            <span className="font-medium text-gray-800">{t.highlightLinks}</span>
                             <input
                                 type="checkbox"
                                 checked={highlightLinks}
@@ -340,7 +305,7 @@ const AccessibilityWidget: React.FC = () => {
 
                         {/* REDUCE MOTION */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                            <span className="font-medium text-gray-800">Reduce Motion</span>
+                            <span className="font-medium text-gray-800">{t.reduceMotion}</span>
                             <input
                                 type="checkbox"
                                 checked={reduceMotion}
@@ -353,7 +318,7 @@ const AccessibilityWidget: React.FC = () => {
 
 
                     <div className="text-center text-xs text-gray-500 mt-2">
-                        Accessibility tools for the Tampa Palms Professional Center website
+                        {t.footer}
                     </div>
                 </div>
             )}
