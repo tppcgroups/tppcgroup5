@@ -1,9 +1,19 @@
 "use client";
+import flagEnglish from "../flags/english.png";
+import flagSpanish from "../flags/spanish.png";
+import flagFrench from "../flags/french.png";
+import flagSwahili from "../flags/swahili.png";
 import accessibilityLogo from "../accessibility.png";
 
 
 import React, { useEffect, useState} from "react";
 import Image from "next/image";
+
+import type { StaticImageData } from "next/image";
+
+type Language = "English" | "Spanish" | "French" | "Swahili";
+
+
 
 type AccessibilityWidget = {
     highContrast: boolean;
@@ -13,7 +23,7 @@ const AccessibilityWidget: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [textScale, setTextScale] = useState(1);
     const [highContrast, setHighContrast] = useState(false);
-    const [language, setLanguage] = useState("English");
+    const [language, setLanguage] = useState<Language>("English");
     const [highlightLinks, setHighlightLinks] = useState(false);
     const [reduceMotion, setReduceMotion] = useState(false);
 
@@ -31,6 +41,17 @@ const AccessibilityWidget: React.FC = () => {
     };
 
     const languages = ["English", "Spanish", "French", "Swahili"];
+
+    const flagImages: Record<Language, StaticImageData> = {
+        English: flagEnglish,
+        Spanish: flagSpanish,
+        French: flagFrench,
+        Swahili: flagSwahili
+    };
+
+
+
+
     const [languageIndex, setLanguageIndex] = useState(0);
 
     const nextLanguage = () => {
@@ -56,7 +77,7 @@ const AccessibilityWidget: React.FC = () => {
             setHighlightLinks(settings.highlightLinks ?? false);
             setReduceMotion(settings.reduceMotion ?? false);
             setContrastIndex(settings.contrastIndex ?? 0);
-            setLanguage(settings.languageIndex ?? 0);
+            setLanguageIndex(settings.languageIndex ?? 0);
 
         } catch (err) {
             console.error("Failed to load saved settings", err);
@@ -89,7 +110,7 @@ const AccessibilityWidget: React.FC = () => {
         html.classList.toggle("reduce-motion", reduceMotion);
         html.classList.toggle("highlight-links", highlightLinks);
 
-    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex]); // ⭐ FIXED
+    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex]);
 
 
 
@@ -107,7 +128,7 @@ const AccessibilityWidget: React.FC = () => {
         }, 300);
 
         return () => clearTimeout(timeout);
-    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex]);
+    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex]);
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -181,13 +202,14 @@ const AccessibilityWidget: React.FC = () => {
                         </button>
                     </div>
 
-                    {/* LANGUAGE SELECTOR SLIDER */}
+                    {/* LANGUAGE SELECTOR (WITH FLAGS + SLIDER) */}
                     <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
+
                         <span className="font-medium text-gray-800">Language</span>
 
                         <div className="flex items-center gap-4 mt-3">
 
-                            {/* Prev Button */}
+                            {/* PREV BUTTON */}
                             <button
                                 onClick={prevLanguage}
                                 className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
@@ -195,12 +217,22 @@ const AccessibilityWidget: React.FC = () => {
                                 ←
                             </button>
 
-                            {/* Current Language */}
-                            <span className="text-sm font-medium text-gray-900 min-w-[90px] text-center">
-                                {languages[languageIndex]}
-                            </span>
+                            {/* FLAG + NAME */}
+                            <div className="flex flex-col items-center">
+                                <Image
+                                    src={flagImages[languages[languageIndex] as Language]}
+                                    alt={languages[languageIndex]}
+                                    width={35}
+                                    height={35}
+                                    className="rounded shadow"
+                                />
 
-                            {/* Next Button */}
+                                <span className="text-sm font-medium text-gray-900 mt-1">
+                                    {languages[languageIndex]}
+                                </span>
+                            </div>
+
+                            {/* NEXT BUTTON */}
                             <button
                                 onClick={nextLanguage}
                                 className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
@@ -209,6 +241,7 @@ const AccessibilityWidget: React.FC = () => {
                             </button>
                         </div>
                     </div>
+
 
 
 
