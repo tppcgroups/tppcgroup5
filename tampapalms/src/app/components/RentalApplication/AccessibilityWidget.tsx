@@ -95,12 +95,30 @@ const AccessibilityWidget: React.FC = () => {
         return () => clearTimeout(timeout);
     }, [textScale, highContrast, darkMode, highlightLinks, reduceMotion, contrastIndex]);
 
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                setOpen(false);
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, []);
+
 
     return (
         <>
             <button
                 onClick={() => setOpen(!open)}
-                aria-label="Open accessibility settings"
+                aria-label="Accessibility options"
+                tabIndex = {0}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setOpen((prev) => !prev);
+                    }
+                }}
                 className="
                             fixed bottom-5 right-5 z-[9999]
                             bg-white hover:bg-gray-100
@@ -121,7 +139,11 @@ const AccessibilityWidget: React.FC = () => {
 
 
             {open && (
-                <div className="
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="accessibility-panel-title"
+                    className="
                               fixed bottom-20 right-5 z-[9999]
                               bg-white border border-gray-300 shadow-xl
                               rounded-2xl w-80 p-5
@@ -130,7 +152,9 @@ const AccessibilityWidget: React.FC = () => {
 
                     {/* HEADER */}
                     <div className="flex items-center justify-between">
-                        <h2 className="text-lg font-semibold text-gray-800">
+                        <h2
+                            id="accessibility-panel-title"
+                            className="text-lg font-semibold text-gray-800">
                             Accessibility Options
                         </h2>
 
