@@ -17,7 +17,7 @@ const AccessibilityWidget: React.FC = () => {
     const [highlightLinks, setHighlightLinks] = useState(false);
     const [reduceMotion, setReduceMotion] = useState(false);
 
-    const contrastModes = ["normal", "dark", "inverted", "grayscale"];
+    const contrastModes = ["normal", "dark", "invert", "grayscale"];
     const [contrastIndex, setContrastIndex] = useState(0);
 
     const nextContrast = () => {

@@ -226,10 +226,28 @@ html {
 }
 
 .contrast-invert {
-    filter: invert(1) hue-rotate(180deg);
-    background-color: white;
+    filter: invert(1) hue-rotate(180deg) !important;
+}
+
+.contrast-invert img,
+.contrast-invert video {
+    filter: invert(1) hue-rotate(180deg) !important;
+}
+
+.contrast-dark {
+    filter: brightness(0.7) contrast(1.4) !important;
 }
 
 .contrast-grayscale {
     filter: grayscale(1);
+}
+
+.high-contrast * {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+.high-contrast a {
+    color: #00bfff !important;
+    text-decoration: underline !important;
 }
