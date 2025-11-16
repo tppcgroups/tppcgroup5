@@ -26,6 +26,7 @@ const AccessibilityWidget: React.FC = () => {
 
     const contrastModes = ["normal", "dark", "invert", "grayscale"];
     const [contrastIndex, setContrastIndex] = useState(0);
+    const [cursorSize, setCursorSize] = useState<"normal" | "medium" | "large">("normal");
 
     const nextContrast = () => {
         setContrastIndex((prev) => (prev + 1) % contrastModes.length);
@@ -38,9 +39,6 @@ const AccessibilityWidget: React.FC = () => {
     };
 
     const languages: Language[] = ["English", "Spanish", "French", "Swahili"];
-
-
-
 
 
     const [languageIndex, setLanguageIndex] = useState(0);
@@ -72,6 +70,7 @@ const AccessibilityWidget: React.FC = () => {
             setReduceMotion(settings.reduceMotion ?? false);
             setContrastIndex(settings.contrastIndex ?? 0);
             setLanguageIndex(settings.languageIndex ?? 0);
+            setCursorSize(settings.cursorSize ?? "normal");
 
         } catch (err) {
             console.error("Failed to load saved settings", err);
@@ -103,8 +102,21 @@ const AccessibilityWidget: React.FC = () => {
         html.classList.toggle("high-contrast", highContrast);
         html.classList.toggle("reduce-motion", reduceMotion);
         html.classList.toggle("highlight-links", highlightLinks);
+        html.classList.toggle("cursor-normal", cursorSize === "normal");
+        html.classList.toggle("cursor-medium", cursorSize === "medium");
+        html.classList.toggle("cursor-large", cursorSize === "large");
 
-    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex]);
+        if (cursorSize === "medium") {
+            html.classList.add("cursor-medium");
+        }
+        else if (cursorSize === "large") {
+            html.classList.add("cursor-large");
+        }
+        else if (cursorSize === "normal") {
+            html.classList.add("cursor-normal");
+        }
+
+    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex, cursorSize]);
 
 
 
@@ -116,13 +128,14 @@ const AccessibilityWidget: React.FC = () => {
                 highlightLinks,
                 reduceMotion,
                 contrastIndex,
-                languageIndex
+                languageIndex,
+                cursorSize
             };
             localStorage.setItem("accessibilitySettings", JSON.stringify(settings));
         }, 300);
 
         return () => clearTimeout(timeout);
-    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex]);
+    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex, cursorSize]);
 
 
     useEffect(() => {
@@ -315,6 +328,37 @@ const AccessibilityWidget: React.FC = () => {
                         </div>
 
                     </div>
+
+                    {/* CURSOR SIZE */}
+                    <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
+                        <span className="font-medium text-gray-800">{t.cursorSize}</span>
+
+                        <div className="flex gap-3 mt-3">
+
+                            <button
+                                onClick={() => setCursorSize("normal")}
+                                className={`px-3 py-1 rounded 
+                                    ${cursorSize === "normal" ? "bg-gray-300" : "bg-gray-200"}`}
+                            >
+                                {t.cursorSmall}
+                            </button>
+
+                            <button
+                                onClick={() => setCursorSize("medium")}
+                                className={`px-3 py-1 rounded 
+                                    ${cursorSize === "medium" ? "bg-gray-300" : "bg-gray-200"}`}>
+                                {t.cursorMedium}
+                            </button>
+
+                            <button
+                                onClick={() => setCursorSize("large")}
+                                className={`px-3 py-1 rounded 
+                                    ${cursorSize === "large" ? "bg-gray-300" : "bg-gray-200"}`}>
+                                {t.cursorLarge}
+                            </button>
+                        </div>
+                    </div>
+
 
 
                     <div className="text-center text-xs text-gray-500 mt-2">
