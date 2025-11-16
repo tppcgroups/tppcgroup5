@@ -31,7 +31,7 @@ const AccessibilityWidget: React.FC = () => {
     };
 
 
-useEffect(() => {
+    useEffect(() => {
         const saved = localStorage.getItem("accessibilitySettings");
         if (!saved) return;
 
@@ -43,11 +43,13 @@ useEffect(() => {
             setDarkMode(settings.darkMode ?? false);
             setHighlightLinks(settings.highlightLinks ?? false);
             setReduceMotion(settings.reduceMotion ?? false);
+            setContrastIndex(settings.contrastIndex ?? 0);
 
         } catch (err) {
             console.error("Failed to load saved settings", err);
         }
     }, []);
+
 
 
     useEffect(() => {
@@ -56,14 +58,13 @@ useEffect(() => {
         html.classList.remove("contrast-dark", "contrast-invert", "contrast-grayscale");
 
         const currentMode = contrastModes[contrastIndex];
+
         if (currentMode === "dark") {
             html.classList.add("contrast-dark");
         }
-
         else if (currentMode === "invert") {
             html.classList.add("contrast-invert");
         }
-
         else if (currentMode === "grayscale") {
             html.classList.add("contrast-grayscale");
         }
@@ -73,7 +74,8 @@ useEffect(() => {
         html.classList.toggle("dark", darkMode);
         html.classList.toggle("reduce-motion", reduceMotion);
         html.classList.toggle("highlight-links", highlightLinks);
-    }, [textScale, highContrast, darkMode, highlightLinks, reduceMotion]);
+
+    }, [textScale, highContrast, darkMode, highlightLinks, reduceMotion, contrastIndex]); // ⭐ FIXED
 
 
 
@@ -84,13 +86,14 @@ useEffect(() => {
                 highContrast,
                 darkMode,
                 highlightLinks,
-                reduceMotion
+                reduceMotion,
+                contrastIndex
             };
             localStorage.setItem("accessibilitySettings", JSON.stringify(settings));
         }, 300);
 
         return () => clearTimeout(timeout);
-    }, [textScale, highContrast, darkMode, highlightLinks, reduceMotion]);
+    }, [textScale, highContrast, darkMode, highlightLinks, reduceMotion, contrastIndex]);
 
 
     return (
@@ -163,15 +166,35 @@ useEffect(() => {
                         </div>
 
                         {/* HIGH CONTRAST */}
-                        <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50">
-                            <span className="font-medium text-gray-800">High Contrast</span>
-                            <input
-                                type="checkbox"
-                                checked={highContrast}
-                                onChange={() => setHighContrast(!highContrast)}
-                                className="mt-3 w-5 h-5"
-                            />
+                        {/* CONTRAST MODE CAROUSEL */}
+                        <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
+                            <span className="font-medium text-gray-800">Contrast Mode</span>
+
+                            <div className="flex items-center gap-4 mt-3">
+
+                                {/* Prev Button */}
+                                <button
+                                    onClick={prevContrast}
+                                    className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                                >
+                                    ←
+                                </button>
+
+                                {/* Mode Display */}
+                                <span className="text-sm font-medium text-gray-900 min-w-[90px] text-center">
+                                    {contrastModes[contrastIndex]}
+                                </span>
+
+                                {/* Next Button */}
+                                <button
+                                    onClick={nextContrast}
+                                    className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                                >
+                                    →
+                                </button>
+                            </div>
                         </div>
+
 
                         {/* DARK MODE */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50">
