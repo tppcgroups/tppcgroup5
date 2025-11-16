@@ -30,6 +30,19 @@ const AccessibilityWidget: React.FC = () => {
         );
     };
 
+    const languages = ["English", "Spanish", "French", "Swahili"];
+    const [languageIndex, setLanguageIndex] = useState(0);
+
+    const nextLanguage = () => {
+        setLanguageIndex((prev) => (prev + 1) % languages.length);
+    };
+
+    const prevLanguage = () => {
+        setLanguageIndex((prev) =>
+            prev === 0 ? languages.length - 1 : prev - 1
+        );
+    };
+
 
     useEffect(() => {
         const saved = localStorage.getItem("accessibilitySettings");
@@ -43,6 +56,7 @@ const AccessibilityWidget: React.FC = () => {
             setHighlightLinks(settings.highlightLinks ?? false);
             setReduceMotion(settings.reduceMotion ?? false);
             setContrastIndex(settings.contrastIndex ?? 0);
+            setLanguage(settings.languageIndex ?? 0);
 
         } catch (err) {
             console.error("Failed to load saved settings", err);
@@ -68,12 +82,14 @@ const AccessibilityWidget: React.FC = () => {
             html.classList.add("contrast-grayscale");
         }
 
+        html.setAttribute("lang", languages[languageIndex]);
+
         html.style.setProperty("--text-scale", textScale.toString());
         html.classList.toggle("high-contrast", highContrast);
         html.classList.toggle("reduce-motion", reduceMotion);
         html.classList.toggle("highlight-links", highlightLinks);
 
-    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex]); // ⭐ FIXED
+    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex]); // ⭐ FIXED
 
 
 
@@ -84,7 +100,8 @@ const AccessibilityWidget: React.FC = () => {
                 highContrast,
                 highlightLinks,
                 reduceMotion,
-                contrastIndex
+                contrastIndex,
+                languageIndex
             };
             localStorage.setItem("accessibilitySettings", JSON.stringify(settings));
         }, 300);
