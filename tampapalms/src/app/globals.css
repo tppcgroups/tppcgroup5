@@ -220,3 +220,16 @@ html {
     transition: none !important;
     scroll-behavior: auto !important;
 }
+
+.contrast-dark {
+    filter: brightness(0.8) contrast(1.4);
+}
+
+.contrast-invert {
+    filter: invert(1) hue-rotate(180deg);
+    background-color: white;
+}
+
+.contrast-grayscale {
+    filter: grayscale(1);
+}
