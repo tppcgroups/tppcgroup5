@@ -251,3 +251,11 @@ html {
     color: #00bfff !important;
     text-decoration: underline !important;
 }
+
+.cursor-medium {
+    cursor: zoom-in;
+}
+
+.cursor-large {
+    cursor: zoom-out;
+}
