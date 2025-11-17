@@ -148,7 +148,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
               >
                 {link.label}
                 <ChevronDown
-                  className={`h-6 w-6 font-bold text-[#1f1a16] transition-transform duration-300 group-hover:text-[#1f1a16]  flex ${
+                  className={`flex font-bold text-[#1f1a16] transition-transform duration-300 group-hover:text-[#1f1a16] max-[925px]:h-3 max-[925px]:w-3 max-[985px]:h-4 max-[985px]:w-4 max-[1065px]:h-5 max-[1065px]:w-5 h-6 w-6 ${
                     dropdownActive ? "rotate-180" : ""
                   }`}
                 />
