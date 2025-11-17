@@ -80,6 +80,7 @@ export function CampusGroundMap({
   const [selectedBuildingId, setSelectedBuildingId] = useState<number | null>(
     null
   );
+  const [seeBuildingPopUp, setSeeBuildingPopUp] = useState(false);
   const dragOffset = useRef({ x: 0, y: 0 });
   const pointerIdRef = useRef<number | null>(null);
 
@@ -92,13 +93,14 @@ export function CampusGroundMap({
     );
   }, []);
 
-  const handlePolygonClick = useCallback(
+  const handlePolygonClick =
     (buildingId: number) => {
       setSelectedBuildingId(buildingId);
       onBuildingSelect?.(buildingId);
-    },
-    [onBuildingSelect]
-  );
+      console.log("you have selected: ", buildingId);
+      setSeeBuildingPopUp(!seeBuildingPopUp);
+      console.log("See building pop up: ", seeBuildingPopUp);
+    };
 
   const handlePointerDown = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
@@ -268,6 +270,33 @@ export function CampusGroundMap({
 
         {/* Zoom and Download Controls */}
         <div className="pointer-events-none absolute inset-x-0 top-0 flex flex-col gap-3 p-5 sm:flex-row sm:items-start sm:justify-between">
+          {seeBuildingPopUp && (
+            <div className="pointer-events-auto inline-flex items-center gap-3 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-slate-700 shadow-md shadow-slate-900/10">
+              <span className="text-xs font-semibold tracking-[0.35em] text-slate-500">
+                View Building?
+              </span>
+              <button
+                type="button"
+                onClick={() =>
+                  console.log(
+                    "You have selected to see ",
+                    selectedBuildingId,
+                    " pop up."
+                  )
+                }
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 text-base font-semibold transition hover:bg-slate-100"
+              >
+                Y
+              </button>
+              <button
+                type="button"
+                onClick={() => setSeeBuildingPopUp(false)}
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 text-base font-semibold transition hover:bg-slate-100"
+              >
+                N
+              </button>
+            </div>
+          )}
           <div className="ml-auto pointer-events-auto flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-slate-700 shadow-md shadow-slate-900/10">
             <button
               type="button"
