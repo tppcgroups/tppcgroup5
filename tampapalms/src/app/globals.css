@@ -237,9 +237,6 @@ html {
     scroll-behavior: auto !important;
 }
 
-.contrast-dark {
-    filter: brightness(0.8) contrast(1.4);
-}
 
 .contrast-invert {
     filter: invert(1) hue-rotate(180deg) !important;
@@ -250,9 +247,63 @@ html {
     filter: invert(1) hue-rotate(180deg) !important;
 }
 
+
+
 .contrast-dark {
-    filter: brightness(0.7) contrast(1.4) !important;
+    color: #d2b48c !important;
 }
+
+
+.contrast-dark * {
+    background-color: transparent !important;
+}
+
+
+.contrast-dark .bg-white,
+.contrast-dark [style*="background-color: white"],
+.contrast-dark [style*="background-color:#ffffff"],
+.contrast-dark [style*="background-color: #fff"] {
+    background-color: #444 !important;
+}
+
+
+.contrast-dark h1,
+.contrast-dark h2,
+.contrast-dark h3,
+.contrast-dark h4,
+.contrast-dark p,
+.contrast-dark span,
+.contrast-dark li {
+    color: #d2b48c !important;
+}
+
+
+.contrast-dark button {
+    background-color: #555 !important;
+    color: #d2b48c !important;
+    border-color: #777 !important;
+}
+
+
+.contrast-dark input,
+.contrast-dark select,
+.contrast-dark textarea {
+    background-color: #555 !important;
+    color: #d2b48c !important;
+    border-color: #777 !important;
+}
+
+
+.contrast-dark header,
+.contrast-dark nav {
+    background-color: rgb(18,25,43) !important;
+}
+
+
+footer {
+    background-color: rgb(18,25,43) !important;
+}
+
 
 .contrast-grayscale {
     filter: grayscale(1);
@@ -268,18 +319,18 @@ html {
     text-decoration: underline !important;
 }
 
-/* SMALL */
+
 .cursor-small {
     cursor: url("/images/smallcursor.webp") 0 0, auto;
 }
 
-/* MEDIUM */
+
 .cursor-medium {
     cursor: url("/images/mediumcursor.webp") 0 0 / 32px 32px, auto;
     image-rendering: pixelated;
 }
 
-/* LARGE */
+
 .cursor-large {
     cursor: url("/images/largecursor.webp") 0 0 / 48px 48px, auto;
     image-rendering: pixelated;
