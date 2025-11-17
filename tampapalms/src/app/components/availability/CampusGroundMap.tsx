@@ -1,19 +1,83 @@
+"use client";
+
 import Image from "next/image";
 import { useCallback, useMemo, useRef, useState } from "react";
 
+// Define the actual base dimensions of the image file (SiteplanEast&West.jpg)
+const BASE_IMAGE_WIDTH = 4928;
+const BASE_IMAGE_HEIGHT = 5758;
+
+// Define the original dimensions the polygons were mapped to (from SitePlan.tsx [cite: 1])
+const OLD_BASE_WIDTH = 1700;
+const OLD_BASE_HEIGHT = 2200;
+
+// Scaling factors
+const K_X = BASE_IMAGE_WIDTH / OLD_BASE_WIDTH; // ~2.8988
+const K_Y = BASE_IMAGE_HEIGHT / OLD_BASE_HEIGHT; // ~2.6173
+
+// Original coordinates from code.zip/BuildingMap.tsx.txt [cite: 11]
+const ORIGINAL_BUILDING_POLYGONS = [
+  [1054, 299, 1101, 314, 1085, 371, 1036, 358], // 1
+  [1017, 434, 1085, 457, 1058, 567, 987, 549], // 2
+  [990, 562, 1040, 580, 1024, 640, 972, 625], // 3
+  [978, 639, 948, 752, 1002, 768, 1034, 658], // 4
+  [930, 762, 899, 891, 966, 915, 1001, 786], // 5
+  [675, 1228, 731, 1294, 641, 1381, 583, 1314], // 6
+  [588, 1339, 627, 1393, 544, 1472, 501, 1410], // 7
+  [499, 1432, 522, 1478, 474, 1515, 447, 1470], // 8
+  [651, 1497, 683, 1552, 592, 1617, 561, 1562], // 9
+  [650, 1594, 708, 1690, 655, 1727, 603, 1625], // 10
+  [768, 1743, 804, 1795, 770, 1820, 741, 1767], // 11
+  [672, 1845, 671, 1887, 729, 1895, 731, 1855], // 12
+  [604, 1840, 599, 1880, 655, 1887, 660, 1847], // 13
+  [534, 1832, 523, 1946, 581, 1956, 591, 1840], // 14
+  [611, 1897, 719, 1910, 710, 1970, 603, 1960], // 15
+  [734, 1912, 731, 1955, 789, 1961, 794, 1923], // 16
+  [810, 1921, 809, 1985, 915, 1981, 917, 1920], // 17
+  [1421, 702, 1466, 747, 1393, 836, 1351, 790], // 18
+  [1465, 650, 1503, 659, 1486, 723, 1447, 709], // 19
+  [1348, 542, 1360, 592, 1427, 572, 1414, 520], // 20
+  [1324, 599, 1360, 611, 1346, 676, 1307, 663], // 21
+  [1265, 581, 1313, 595, 1294, 667, 1249, 654], // 22
+  [1271, 491, 1319, 492, 1318, 567, 1270, 565], // 23
+  [1330, 477, 1343, 525, 1410, 505, 1396, 456], // 24
+  [1333, 250, 1396, 227, 1429, 342, 1361, 362], // 25
+  [1264, 274, 1319, 253, 1349, 366, 1295, 382], // 26
+];
+
+// Function to scale and round coordinates
+const scalePolygon = (points: number[]) => {
+  const scaledPoints: number[] = [];
+  for (let i = 0; i < points.length; i += 2) {
+    // X-coordinate
+    scaledPoints.push(Math.round(points[i] * K_X));
+    // Y-coordinate
+    scaledPoints.push(Math.round(points[i + 1] * K_Y));
+  }
+  return scaledPoints;
+};
+
+// Apply scaling to the entire array
+const SCALED_BUILDING_POLYGONS = ORIGINAL_BUILDING_POLYGONS.map(scalePolygon);
+
 type CampusGroundMapProps = {
   imageSrc?: string;
+  onBuildingSelect?: (buildingId: number | null) => void;
 };
 
 export function CampusGroundMap({
   imageSrc = "/images/Floor-plans/SiteplanEast&West.png",
+  onBuildingSelect,
 }: CampusGroundMapProps) {
-  const [naturalWidth, setNaturalWidth] = useState(1);
-  const [naturalHeight, setNaturalHeight] = useState(1);
   const [scale, setScale] = useState(0.85);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
-  const [aspectRatio, setAspectRatio] = useState(4 / 3);
+  const [aspectRatio, setAspectRatio] = useState(
+    BASE_IMAGE_WIDTH / BASE_IMAGE_HEIGHT
+  );
+  const [selectedBuildingId, setSelectedBuildingId] = useState<number | null>(
+    null
+  );
   const dragOffset = useRef({ x: 0, y: 0 });
   const pointerIdRef = useRef<number | null>(null);
 
@@ -26,8 +90,19 @@ export function CampusGroundMap({
     );
   }, []);
 
+  const handlePolygonClick = useCallback(
+    (buildingId: number) => {
+      setSelectedBuildingId(buildingId);
+      onBuildingSelect?.(buildingId);
+    },
+    [onBuildingSelect]
+  );
+
   const handlePointerDown = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
+      if ((event.target as HTMLElement).tagName.toUpperCase() === "POLYGON") {
+        return;
+      }
       pointerIdRef.current = event.pointerId;
       event.currentTarget.setPointerCapture(event.pointerId);
       dragOffset.current = {
@@ -61,11 +136,16 @@ export function CampusGroundMap({
     []
   );
 
-  const handleDoubleClick = useCallback((event: React.MouseEvent) => {
-    event.preventDefault();
-    setScale(1.35);
-    setPosition({ x: 0, y: 0 });
-  }, []);
+  const handleDoubleClick = useCallback(
+    (event: React.MouseEvent) => {
+      event.preventDefault();
+      setScale(1.35);
+      setPosition({ x: 0, y: 0 });
+      setSelectedBuildingId(null);
+      onBuildingSelect?.(null);
+    },
+    [onBuildingSelect]
+  );
 
   const interactionHandlers = useMemo(
     () => ({
@@ -106,6 +186,7 @@ export function CampusGroundMap({
             }}
           >
             <div className="relative h-full w-full">
+              {/* The Base Map Image */}
               <Image
                 src={imageSrc}
                 alt="Tampa Palms Professional Center campus site plan"
@@ -115,18 +196,65 @@ export function CampusGroundMap({
                 priority={false}
                 draggable={false}
                 onLoad={(event) => {
-                  const { naturalWidth, naturalHeight } = event.currentTarget;
-                  if (naturalWidth && naturalHeight) {
-                    setAspectRatio(naturalWidth / naturalHeight);
-                    setNaturalHeight(naturalHeight);
-                    setNaturalWidth(naturalWidth);
+                  const {
+                    naturalWidth: actualWidth,
+                    naturalHeight: actualHeight,
+                  } = event.currentTarget;
+                  if (actualWidth && actualHeight) {
+                    setAspectRatio(actualWidth / actualHeight);
                   }
                 }}
               />
+
+              {/* The Interactive SVG Overlay */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <svg
+                  // CRITICAL FIX: The viewBox is set to the actual image dimensions (4928x5758)
+                  // and the polygons now use coordinates scaled to this viewBox.
+                  width={BASE_IMAGE_WIDTH}
+                  height={BASE_IMAGE_HEIGHT}
+                  viewBox={`0 0 ${BASE_IMAGE_WIDTH} ${BASE_IMAGE_HEIGHT}`}
+                  className="w-full h-full"
+                  style={{
+                    objectFit: "contain",
+                    position: "absolute",
+                  }}
+                  preserveAspectRatio="xMidYMid meet"
+                >
+                  {SCALED_BUILDING_POLYGONS.map((points, i) => {
+                    const buildingId = i + 1;
+                    const pointsStr = points.join(" ");
+
+                    return (
+                      <polygon
+                        key={i}
+                        points={pointsStr}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handlePolygonClick(buildingId);
+                        }}
+                        fill={
+                          selectedBuildingId === buildingId
+                            ? "rgba(255, 0, 0, 0.4)"
+                            : "rgba(255, 0, 0, 0.15)"
+                        }
+                        stroke={
+                          selectedBuildingId === buildingId
+                            ? "#cc0000"
+                            : "#ff0000"
+                        }
+                        strokeWidth="15" // Adjusted stroke width for better visibility on a 4928x5758 map
+                        className={`cursor-pointer transition-all hover:fill-red-300/80`}
+                      />
+                    );
+                  })}
+                </svg>
+              </div>
             </div>
           </div>
         </div>
 
+        {/* Zoom and Download Controls */}
         <div className="pointer-events-none absolute inset-x-0 top-0 flex flex-col gap-3 p-5 sm:flex-row sm:items-start sm:justify-between">
           <div className="ml-auto pointer-events-auto flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-slate-700 shadow-md shadow-slate-900/10">
             <button
@@ -151,6 +279,8 @@ export function CampusGroundMap({
                 event.preventDefault();
                 setScale(0.85);
                 setPosition({ x: 0, y: 0 });
+                setSelectedBuildingId(null);
+                onBuildingSelect?.(null);
               }}
               className="ml-1 rounded-full border border-slate-200 px-4 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-slate-600 transition hover:bg-slate-100"
             >
