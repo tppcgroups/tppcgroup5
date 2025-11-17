@@ -238,14 +238,27 @@ html {
 }
 
 
+/* FALSE COLOR MODE — UT STYLE */
 .contrast-invert {
-    filter: invert(1) hue-rotate(180deg) !important;
+    filter:
+            invert(1)
+            hue-rotate(235deg)
+            saturate(1.8)
+            contrast(1.2)
+            brightness(0.9) !important;
 }
 
+/* Images also get transformed */
 .contrast-invert img,
 .contrast-invert video {
-    filter: invert(1) hue-rotate(180deg) !important;
+    filter:
+            invert(1)
+            hue-rotate(235deg)
+            saturate(1.8)
+            contrast(1.2)
+            brightness(0.9) !important;
 }
+
 
 
 
