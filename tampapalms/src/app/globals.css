@@ -205,29 +205,43 @@ html {
 
 
 
+/* ----------------------------- */
+/*   TAN HIGHLIGHT STYLING       */
+/* ----------------------------- */
+
+/* Highlight LINKS */
 .highlight-links a {
-    background-color: yellow;
+    background-color: #d2b48c !important; /* tan */
     color: black !important;
     padding: 2px 4px;
     border-radius: 4px;
     font-weight: bold;
 }
 
-.highlight-buttons button {
-    outline: 3px solid orange !important;
-    background-color: #fff3cd !important;
+/* Highlight BUTTONS */
+.highlight-buttons button,
+.highlight-buttons a.button,
+.highlight-buttons input[type="submit"],
+.highlight-buttons input[type="button"] {
+    outline: 3px solid #d2b48c !important;
+    background-color: #fff7e6 !important; /* very light tan */
     color: black !important;
+    border-color: #d2b48c !important;
 }
 
+/* Highlight HEADERS */
 .highlight-headers h1,
 .highlight-headers h2,
 .highlight-headers h3,
-.highlight-headers h4 {
-    background-color: lightblue !important;
+.highlight-headers h4,
+.highlight-headers h5,
+.highlight-headers h6 {
+    background-color: #d2b48c !important;
     color: black !important;
-    padding: 3px 6px;
+    padding: 4px 6px;
     border-radius: 4px;
 }
+
 
 
 
