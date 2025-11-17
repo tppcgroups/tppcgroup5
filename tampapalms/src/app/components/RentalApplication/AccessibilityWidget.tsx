@@ -26,7 +26,6 @@ const AccessibilityWidget: React.FC = () => {
 
     const contrastModes = ["normal", "dark", "invert", "grayscale"];
     const [contrastIndex, setContrastIndex] = useState(0);
-    const [cursorSize, setCursorSize] = useState<"normal" | "medium" | "large">("normal");
 
     const nextContrast = () => {
         setContrastIndex((prev) => (prev + 1) % contrastModes.length);
@@ -54,6 +53,23 @@ const AccessibilityWidget: React.FC = () => {
         );
     };
 
+    const cursorSizes = ["small", "medium", "large"] as const;
+    const [cursorIndex, setCursorIndex] = useState(0);
+    const cursorSize = cursorSizes[cursorIndex];
+
+    const nextCursor = () => {
+        setCursorIndex((prev) => (prev + 1) % cursorSizes.length);
+    };
+
+    const prevCursor = () => {
+        setCursorIndex((prev) =>
+            prev === 0 ? cursorSizes.length - 1 : prev - 1
+        );
+    };
+
+
+
+
 
 
 
@@ -70,7 +86,9 @@ const AccessibilityWidget: React.FC = () => {
             setReduceMotion(settings.reduceMotion ?? false);
             setContrastIndex(settings.contrastIndex ?? 0);
             setLanguageIndex(settings.languageIndex ?? 0);
-            setCursorSize(settings.cursorSize ?? "normal");
+            setCursorIndex(settings.cursorSize ?? 0);
+            setCursorIndex(settings.cursorIndex ?? 0);
+
 
         } catch (err) {
             console.error("Failed to load saved settings", err);
@@ -102,21 +120,15 @@ const AccessibilityWidget: React.FC = () => {
         html.classList.toggle("high-contrast", highContrast);
         html.classList.toggle("reduce-motion", reduceMotion);
         html.classList.toggle("highlight-links", highlightLinks);
-        html.classList.toggle("cursor-normal", cursorSize === "normal");
-        html.classList.toggle("cursor-medium", cursorSize === "medium");
-        html.classList.toggle("cursor-large", cursorSize === "large");
 
-        if (cursorSize === "medium") {
-            html.classList.add("cursor-medium");
-        }
-        else if (cursorSize === "large") {
-            html.classList.add("cursor-large");
-        }
-        else if (cursorSize === "normal") {
-            html.classList.add("cursor-normal");
-        }
 
-    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex, cursorSize]);
+        html.classList.remove("cursor-small", "cursor-medium", "cursor-large");
+        html.classList.add(`cursor-${cursorSizes[cursorIndex]}`);
+
+
+
+
+    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex, cursorIndex]);
 
 
 
@@ -129,13 +141,13 @@ const AccessibilityWidget: React.FC = () => {
                 reduceMotion,
                 contrastIndex,
                 languageIndex,
-                cursorSize
+                cursorIndex,
             };
             localStorage.setItem("accessibilitySettings", JSON.stringify(settings));
         }, 300);
 
         return () => clearTimeout(timeout);
-    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex, cursorSize]);
+    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex, cursorIndex]);
 
 
     useEffect(() => {
@@ -149,6 +161,12 @@ const AccessibilityWidget: React.FC = () => {
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, []);
 
+
+    const cursorLabelKey: Record<typeof cursorSizes[number], keyof typeof t> = {
+        small: "cursorSmall",
+        medium: "cursorMedium",
+        large: "cursorLarge",
+    };
 
     return (
         <>
@@ -329,35 +347,36 @@ const AccessibilityWidget: React.FC = () => {
 
                     </div>
 
-                    {/* CURSOR SIZE */}
+                    {/* CURSOR SIZE SELECTOR */}
                     <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
                         <span className="font-medium text-gray-800">{t.cursorSize}</span>
 
-                        <div className="flex gap-3 mt-3">
+                        <div className="flex items-center gap-4 mt-3">
 
+                            {/* Prev Button */}
                             <button
-                                onClick={() => setCursorSize("normal")}
-                                className={`px-3 py-1 rounded 
-                                    ${cursorSize === "normal" ? "bg-gray-300" : "bg-gray-200"}`}
+                                onClick={prevCursor}
+                                className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
                             >
-                                {t.cursorSmall}
+                                ←
                             </button>
 
-                            <button
-                                onClick={() => setCursorSize("medium")}
-                                className={`px-3 py-1 rounded 
-                                    ${cursorSize === "medium" ? "bg-gray-300" : "bg-gray-200"}`}>
-                                {t.cursorMedium}
-                            </button>
+                            {/* Current size */}
+                            <span className="text-sm font-medium text-gray-900 min-w-[90px] text-center">
+                                {t[cursorLabelKey[cursorSizes[cursorIndex]]]}
+                            </span>
 
+                            {/* Next Button */}
                             <button
-                                onClick={() => setCursorSize("large")}
-                                className={`px-3 py-1 rounded 
-                                    ${cursorSize === "large" ? "bg-gray-300" : "bg-gray-200"}`}>
-                                {t.cursorLarge}
+                                onClick={nextCursor}
+                                className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                            >
+                                →
                             </button>
                         </div>
                     </div>
+
+
 
 
 
