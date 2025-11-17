@@ -22,7 +22,7 @@ const AccessibilityWidget: React.FC = () => {
     const [highContrast, setHighContrast] = useState(false);
     const [language, setLanguage] = useState<Language>("English");
 
-    const highlightOptions = ["off", "links", "buttons", "headers"] as const;
+    const highlightOptions = ["default", "links", "buttons", "headers"] as const;
     const [highlightIndex, setHighlightIndex] = useState(0);
     const nextHighlight = () =>
         setHighlightIndex(prev => (prev + 1) % highlightOptions.length);
@@ -31,7 +31,7 @@ const AccessibilityWidget: React.FC = () => {
 
     const [reduceMotion, setReduceMotion] = useState(false);
 
-    const contrastModes = ["normal", "dark", "invert", "grayscale"];
+    const contrastModes = ["default", "dark", "invert", "grayscale"];
     const [contrastIndex, setContrastIndex] = useState(0);
 
     const nextContrast = () => {
@@ -345,7 +345,7 @@ const AccessibilityWidget: React.FC = () => {
 
                         {/* HIGHLIGHTS SECTION */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                            <span className="font-medium text-gray-800">{t.highlight_off}</span>
+                            <span className="font-medium text-gray-800">{t.highlights}</span>
 
                             <div className="flex items-center gap-4 mt-3">
 
