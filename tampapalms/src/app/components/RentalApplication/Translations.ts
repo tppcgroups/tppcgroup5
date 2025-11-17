@@ -12,10 +12,10 @@ export const translations = {
         cursorMedium: "Medium",
         cursorLarge: "Large",
         reset: "Reset Settings",
-        highlights: "Highlights",
-        highlightLinks: "Highlight Links",
-        highlightButtons: "Highlight Buttons",
-        highlightHeaders: "Highlight Headers",
+        highlights_off: "Highlights",
+        highlight_links: "Highlight Links",
+        highlight_buttons: "Highlight Buttons",
+        highlight_headers: "Highlight Headers",
     },
 
     Spanish: {
@@ -31,10 +31,10 @@ export const translations = {
         cursorMedium: "Mediano",
         cursorLarge: "Grande",
         reset: "Restablecer ajustes",
-        highlights: "Resaltados",
-        highlightLinks: "Resaltar Enlaces",
-        highlightButtons: "Resaltar Botones",
-        highlightHeaders: "Resaltar Encabezados",
+        highlights_off: "Resaltados",
+        highlight_links: "Resaltar Enlaces",
+        highlight_buttons: "Resaltar Botones",
+        highlight_headers: "Resaltar Encabezados",
     },
 
     French: {
@@ -50,10 +50,10 @@ export const translations = {
         cursorMedium: "Moyen",
         cursorLarge: "Grand",
         reset: "Réinitialiser les paramètres",
-        highlights: "Mises en évidence",
-        highlightLinks: "Mettre en évidence les liens",
-        highlightButtons: "Mettre en évidence les boutons",
-        highlightHeaders: "Mettre en évidence les en-têtes",
+        highlights_off: "Mises en évidence",
+        highlight_links: "Mettre en évidence les liens",
+        highlight_buttons: "Mettre en évidence les boutons",
+        highlight_headers: "Mettre en évidence les en-têtes",
     },
 
     Swahili: {
@@ -69,10 +69,10 @@ export const translations = {
         cursorMedium: "Kati",
         cursorLarge: "Kubwa",
         reset: "Weka upya mipangilio",
-        highlights: "Uangazaji",
-        highlightLinks: "Angazia Viungo",
-        highlightButtons: "Angazia Vitufe",
-        highlightHeaders: "Angazia Vichwa",
+        highlights_off: "Uangazaji",
+        highlight_links: "Angazia Viungo",
+        highlight_buttons: "Angazia Vitufe",
+        highlight_headers: "Angazia Vichwa",
     }
 } as const;
 
