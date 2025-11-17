@@ -89,7 +89,7 @@ const AccessibilityWidget: React.FC = () => {
 
             setTextScale(settings.textScale ?? 1);
             setHighContrast(settings.highContrast ?? false);
-            setHighlightIndex(Number(settings.highlightIndex) || 0);
+            setHighlightIndex(settings.highlightIndex ?? 0);
             setReduceMotion(settings.reduceMotion ?? false);
             setContrastIndex(settings.contrastIndex ?? 0);
             setLanguageIndex(settings.languageIndex ?? 0);
@@ -359,7 +359,7 @@ const AccessibilityWidget: React.FC = () => {
                                 </button>
 
                                 {/* Display Current Highlight Mode */}
-                                <span className="text-sm font-medium text-gray-900 min-w-[120px] text-center">
+                                <span className="text-sm font-medium text-gray-900 min-w-[90px] text-center">
                                     {t[`highlight_${highlightOptions[highlightIndex]}`]}
                                 </span>
 
