@@ -61,7 +61,7 @@ const Card = () => {
               className="relative flex h-full flex-col gap-5 rounded-2xl bg-white/95 p-8 shadow-lg shadow-[#1f1a16]/5 ring-1 ring-black/5 transition  hover:shadow-xl"
             >
               <span
-                className="absolute left-8 top-0 h-1.5 w-16 rounded-full bg-[#1f1a16]"
+                className="absolute left-8 top-0 h-1.5 w-16 rounded-full bg-[#7a6754]"
                 aria-hidden="true"
               />
               <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f4ece1] text-3xl text-shadow-gray-800">
