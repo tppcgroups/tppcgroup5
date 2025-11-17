@@ -174,10 +174,29 @@ const AccessibilityWidget: React.FC = () => {
         const currentBackgroundTheme: backgroundThemeMode = backgroundThemeModes[backgroundThemeIndex];
         document.documentElement.classList.toggle("dark", currentBackgroundTheme === "dark");
         document.documentElement.classList.toggle("light", currentBackgroundTheme === "light");
+        const body = document.body
+        if (backgroundThemeModes[backgroundThemeIndex] === "dark") {
+            body.classList.add("dark");
+        }
 
 
 
     }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex, cursorIndex]);
+
+    useEffect(() => {
+        const html = document.documentElement;
+
+        // Remove any previous theme classes
+        html.classList.remove("dark");
+
+        const currentTheme = backgroundThemeModes[backgroundThemeIndex];
+
+        if (currentTheme === "dark") {
+            html.classList.add("dark");
+        }
+
+    }, [backgroundThemeIndex]);
+
 
 
 

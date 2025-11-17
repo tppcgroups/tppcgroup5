@@ -194,14 +194,6 @@ html {
     text-decoration: underline !important;
 }
 
-.dark {
-    background-color: #111;
-    color: #eee;
-}
-
-.dark a {
-    color: #80bfff;
-}
 
 
 
@@ -272,53 +264,53 @@ html {
 
 
 
-.contrast-dark {
+.dark {
     color: #d2b48c !important;
 }
 
 
-.contrast-dark * {
+.dark * {
     background-color: transparent !important;
 }
 
 
-.contrast-dark .bg-white,
-.contrast-dark [style*="background-color: white"],
-.contrast-dark [style*="background-color:#ffffff"],
-.contrast-dark [style*="background-color: #fff"] {
+.dark .bg-white,
+.dark [style*="background-color: white"],
+.dark [style*="background-color:#ffffff"],
+.dark [style*="background-color: #fff"] {
     background-color: #444 !important;
 }
 
 
-.contrast-dark h1,
-.contrast-dark h2,
-.contrast-dark h3,
-.contrast-dark h4,
-.contrast-dark p,
-.contrast-dark span,
-.contrast-dark li {
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark p,
+.dark span,
+.dark li {
     color: #d2b48c !important;
 }
 
 
-.contrast-dark button {
+.dark button {
     background-color: #555 !important;
     color: #d2b48c !important;
     border-color: #777 !important;
 }
 
 
-.contrast-dark input,
-.contrast-dark select,
-.contrast-dark textarea {
+.dark input,
+.dark select,
+.dark textarea {
     background-color: #555 !important;
     color: #d2b48c !important;
     border-color: #777 !important;
 }
 
 
-.contrast-dark header,
-.contrast-dark nav {
+.dark header,
+.dark nav {
     background-color: rgb(18,25,43) !important;
 }
 

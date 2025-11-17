@@ -6,24 +6,56 @@ import Link from "next/link";
 import { ImageCarousel } from "@/app/components/home/carousel/ImageCarousel";
 import HighlightedLocation from "./HighlightedLocation";
 
+
 import {
   Carousel,
   CarouselNext,
   CarouselPrevious,
   type CarouselApi,
 } from "@/app/components/home/carousel/carousel";
+
 import Autoplay from "embla-carousel-autoplay";
 
+
+function useHtmlReduceMotion() {
+    const [reduceMotion, setReduceMotion] = React.useState(false);
+
+    React.useEffect(() => {
+        if (typeof window === "undefined") return;
+
+        const html = document.documentElement;
+
+        const update = () => {
+            setReduceMotion(html.classList.contains("reduce-motion"));
+        };
+
+        // Run once on mount
+        update();
+
+        // Watch for class changes on <html>
+        const observer = new MutationObserver(update);
+        observer.observe(html, { attributes: true, attributeFilter: ["class"] });
+
+        return () => observer.disconnect();
+    }, []);
+
+    return reduceMotion;
+}
+
 interface DesktopHomeProps {
-  imageUrls: string[];
+    imageUrls: string[];
 }
 
 export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
-  const autoplayPlugin = React.useRef(
-    Autoplay({ delay: 3000, stopOnInteraction: false })
-  );
+
+  const reduceMotion = useHtmlReduceMotion();
   const [api, setApi] = React.useState<CarouselApi>();
   const [currentSlide, setCurrentSlide] = React.useState(0);
+
+
+  const autoplayPlugin = React.useRef(
+      reduceMotion ? null : Autoplay({ delay: 3000, stopOnInteraction: false }),
+  );
 
   React.useEffect(() => {
     if (!api) {
@@ -52,12 +84,10 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
 
   return (
     <Carousel
-      plugins={[autoplayPlugin.current]}
+      plugins={reduceMotion ? [] : [autoplayPlugin.current!]}
       setApi={setApi}
       opts={{ align: "start", loop: true }}
       className="relative hidden h-[80dvh] overflow-hidden rounded-3xl mx-8 my-4 md:block"
-      onMouseEnter={() => autoplayPlugin.current.stop()}
-      onMouseLeave={() => autoplayPlugin.current.play()}
   >
       <ImageCarousel
         imageUrls={imageUrls}
