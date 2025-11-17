@@ -5,7 +5,6 @@ export const translations = {
         language: "Language",
         textSize: "Text Size",
         contrastMode: "Contrast Mode",
-        highlightLinks: "Highlight Links",
         reduceMotion: "Reduce Motion",
         footer: "Accessibility tools for the Tampa Palms Professional Center website",
         cursorSize: "Cursor Size",
@@ -13,6 +12,10 @@ export const translations = {
         cursorMedium: "Medium",
         cursorLarge: "Large",
         reset: "Reset Settings",
+        highlights: "Highlights",
+        highlightLinks: "Highlight Links",
+        highlightButtons: "Highlight Buttons",
+        highlightHeaders: "Highlight Headers",
     },
 
     Spanish: {
@@ -21,7 +24,6 @@ export const translations = {
         language: "Idioma",
         textSize: "Tamaño del texto",
         contrastMode: "Modo de contraste",
-        highlightLinks: "Resaltar enlaces",
         reduceMotion: "Reducir movimiento",
         footer: "Herramientas de accesibilidad para el sitio web de Tampa Palms Professional Center",
         cursorSize: "Tamaño del Cursor",
@@ -29,6 +31,10 @@ export const translations = {
         cursorMedium: "Mediano",
         cursorLarge: "Grande",
         reset: "Restablecer ajustes",
+        highlights: "Resaltados",
+        highlightLinks: "Resaltar Enlaces",
+        highlightButtons: "Resaltar Botones",
+        highlightHeaders: "Resaltar Encabezados",
     },
 
     French: {
@@ -37,7 +43,6 @@ export const translations = {
         language: "Langue",
         textSize: "Taille du texte",
         contrastMode: "Mode de contraste",
-        highlightLinks: "Mettre en évidence les liens",
         reduceMotion: "Réduire les animations",
         footer: "Outils d’accessibilité pour le site web de Tampa Palms Professional Center",
         cursorSize: "Taille du Curseur",
@@ -45,6 +50,10 @@ export const translations = {
         cursorMedium: "Moyen",
         cursorLarge: "Grand",
         reset: "Réinitialiser les paramètres",
+        highlights: "Mises en évidence",
+        highlightLinks: "Mettre en évidence les liens",
+        highlightButtons: "Mettre en évidence les boutons",
+        highlightHeaders: "Mettre en évidence les en-têtes",
     },
 
     Swahili: {
@@ -53,7 +62,6 @@ export const translations = {
         language: "Lugha",
         textSize: "Ukubwa wa maandishi",
         contrastMode: "Hali ya utofautishaji",
-        highlightLinks: "Angazia viungo",
         reduceMotion: "Punguza mwendo",
         footer: "Zana za ufikiaji kwa tovuti ya Tampa Palms Professional Center",
         cursorSize: "Ukubwa wa Kielekezi",
@@ -61,6 +69,10 @@ export const translations = {
         cursorMedium: "Kati",
         cursorLarge: "Kubwa",
         reset: "Weka upya mipangilio",
+        highlights: "Uangazaji",
+        highlightLinks: "Angazia Viungo",
+        highlightButtons: "Angazia Vitufe",
+        highlightHeaders: "Angazia Vichwa",
     }
 } as const;
 
