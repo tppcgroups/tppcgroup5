@@ -46,6 +46,155 @@ const ORIGINAL_BUILDING_POLYGONS = [
   [1264, 274, 1319, 253, 1349, 366, 1295, 382], // 26
 ];
 
+// polygon coordinates for the floorplans
+const FLOOR_PLAN_POLYGONS: BuildingFloorPlanPolygons[] = [
+  {
+    building_number: 5,
+
+    floor_maps: {
+      "/images/Floor-plans/BUILDING5FIRSTFLOOR1.png": [
+        [57, 1054, 133, 1055, 248, 1158, 245, 1391, 52, 1395], // 101
+        [257, 1190, 416, 1186, 418, 1391, 250, 1391], // 102
+        [416, 1188, 595, 1188, 596, 1389, 413, 1397], // 103
+        [598, 1190, 596, 1393, 773, 1393, 773, 1188], // 104
+        [564, 864, 561, 987, 460, 989, 458, 1113, 718, 1115, 720, 865], // 105
+        [775, 1191, 914, 1190, 950, 1216, 946, 1393, 773, 1393], // 106
+        [723, 865, 883, 865, 883, 1118, 720, 1118], // 107
+        [888, 867, 1045, 865, 1042, 1069, 976, 1069, 974, 1109, 886, 1111], // 108
+        [1047, 864, 1204, 867, 1202, 1116, 1117, 1116, 1117, 1074, 1043, 1070], // 109
+        [1063, 1216, 1091, 1186, 1285, 1190, 1282, 1395, 1061, 1395], // 110
+        [1202, 865, 1365, 867, 1363, 1116, 1202, 1116], // 111
+        [1285, 1191, 1506, 1191, 1503, 1391, 1284, 1395], // 112
+        [1368, 867, 1531, 869, 1526, 1116, 1367, 1115], // 113
+        [1508, 1191, 1731, 1191, 1731, 1397, 1504, 1393], // 114
+        [
+          1794, 1096, 1750, 1184, 1731, 1190, 1727, 1388, 1950, 1398, 1948,
+          1089,
+        ], // 115
+
+        [1715, 444, 1958, 444, 1953, 642, 1716, 640], // 116
+        [1584, 198, 1958, 200, 1962, 440, 1591, 440], // 117
+        [1407, 202, 1580, 200, 1584, 438, 1404, 440], // 118
+        [1197, 204, 1405, 199, 1402, 439, 1193, 438], // 119
+        [1052, 201, 1192, 199, 1193, 438, 1047, 434], // 120
+        [799, 201, 966, 197, 969, 436, 798, 438], // 121
+        [596, 201, 794, 199, 794, 441, 595, 439], // 122
+        [351, 198, 589, 203, 589, 445, 349, 440], // 123
+        [52, 197, 347, 199, 342, 438, 52, 434], // 124
+        [49, 444, 47, 619, 201, 619, 208, 560, 250, 557, 246, 442], // 125
+        [720, 561, 883, 563, 875, 697, 718, 703], // 126
+        [874, 707, 874, 854, 720, 859, 722, 711], // 127
+        [1026, 567, 1125, 567, 1125, 742, 1027, 746], // 128
+        [1130, 572, 1287, 570, 1287, 745, 1130, 743], // 129
+        [1423, 533, 1421, 658, 1610, 655, 1612, 526], // 130
+      ],
+      "/images/Floor-plans/BUILDING5SECONDFLOOR.png": [
+        [
+          577, 521, 575, 391, 605, 387, 605, 182, 93, 186, 91, 608, 254, 619,
+          259, 529,
+        ], // 202
+        [607, 182, 743, 187, 741, 394, 607, 387], // 207
+        [748, 191, 957, 189, 958, 387, 743, 389], // 208
+        [960, 189, 1172, 194, 1172, 392, 960, 392], // 209
+        [1172, 192, 1390, 190, 1386, 386, 1174, 390], // 210
+        [1393, 189, 1580, 189, 1584, 389, 1390, 389], // 211
+        [
+          1582, 188, 1934, 186, 1936, 630, 1722, 634, 1720, 706, 1542, 704,
+          1545, 392, 1586, 390,
+        ], // 212
+        [
+          1547, 809, 1780, 807, 1782, 1046, 1934, 1047, 1939, 1350, 1731, 1346,
+          1526, 1351, 1522, 1143, 1542, 1143,
+        ], // 219
+        [1322, 1145, 1321, 1351, 1524, 1349, 1519, 1144], // 223
+        [1123, 1140, 1126, 1347, 1321, 1347, 1321, 1144], // 224
+        [927, 1145, 1123, 1141, 1121, 1346, 925, 1343], // 225
+        [927, 1144, 732, 1142, 727, 1349, 923, 1347], // 226
+        [529, 1144, 527, 1349, 725, 1349, 725, 1140], // 227
+        [
+          405, 830, 593, 832, 593, 1136, 527, 1143, 527, 1348, 91, 1348, 89,
+          878, 255, 878, 255, 980, 405, 980,
+        ], // 228
+        [1142, 478, 1144, 660, 950, 660, 948, 476], // 235
+        [1148, 479, 1337, 479, 1337, 665, 1144, 659], // 236
+        [1144, 874, 1335, 876, 1333, 1056, 1144, 1056], // 243
+        [948, 871, 1142, 873, 1140, 1054, 951, 1055], // 244
+        [944, 894, 681, 893, 681, 1059, 946, 1055], // 245
+        [681, 698, 946, 700, 948, 891, 679, 887], // 246
+      ],
+    },
+  },
+  {
+    building_number: 6,
+
+    floor_maps: {
+      "/images/Floor-plans/BUILDING6FIRSTFLOOR1025.png": [
+        [
+          1904, 185, 1907, 618, 1856, 620, 1856, 579, 1715, 572, 1711, 618,
+          1667, 627, 1660, 678, 951, 677, 950, 509, 444, 510, 441, 774, 264,
+          774, 266, 689, 112, 684, 114, 184,
+        ], // 100
+        [
+          951, 797, 948, 915, 448, 908, 443, 779, 262, 777, 264, 1019, 110,
+          1019, 116, 1307, 1905, 1304, 1905, 862, 1861, 858, 1856, 901, 1713,
+          903, 1708, 864, 1663, 862, 1663, 945, 1330, 952, 1335, 927, 1211, 920,
+          1204, 802,
+        ], // 101
+      ],
+      "/images/Floor-plans/BUILDING6SECONDFLOOR.png": [
+        [787, 247, 1784, 247, 1785, 844, 1345, 828, 1351, 722, 789, 726], // 200
+        [787, 244, 787, 728, 338, 727, 338, 249], // 201
+        [66, 242, 335, 246, 337, 649, 248, 654, 252, 622, 66, 615], // 202
+        [
+          522, 849, 632, 855, 635, 812, 785, 811, 789, 1316, 70, 1320, 68, 1049,
+          232, 1046, 236, 1017, 519, 1017,
+        ], // 203
+        [
+          791, 806, 978, 806, 978, 939, 1117, 937, 1119, 834, 1238, 833, 1232,
+          981, 1552, 983, 1559, 838, 1785, 834, 1785, 1326, 787, 1315,
+        ], // 204
+      ],
+    },
+  },
+  {
+    building_number: 25,
+
+    floor_maps: {
+      "/images/Floor-plans/BUILDING251025.png": [
+        [82, 817, 314, 818, 321, 780, 428, 778, 430, 1319, 80, 1313], // A
+        [658, 151, 1001, 151, 999, 650, 769, 648, 766, 687, 658, 683], // B
+        [
+          1003, 150, 1466, 154, 1466, 688, 1354, 681, 1358, 638, 1231, 635,
+          1234, 649, 1001, 643,
+        ], // C
+        [1467, 153, 1920, 156, 1920, 646, 1681, 648, 1681, 687, 1466, 685], // D
+        [
+          1913, 818, 1918, 1313, 1460, 1309, 1457, 1053, 1538, 1047, 1538, 908,
+          1409, 908, 1409, 782, 1679, 784, 1679, 816,
+        ], // E
+        [
+          1109, 814, 1234, 812, 1234, 780, 1407, 780, 1405, 904, 1538, 909,
+          1536, 1047, 1457, 1051, 1455, 1311, 1109, 1313,
+        ], // F
+        [773, 811, 1109, 816, 1105, 1309, 768, 1309], // G
+        [434, 777, 626, 779, 630, 830, 768, 833, 768, 1311, 430, 1313], // H
+        [80, 151, 656, 153, 656, 685, 321, 690, 326, 648, 87, 650], // I
+      ],
+    },
+  },
+];
+
+// Type for floor plan data
+interface FloorMapData {
+  [imagePath: string]: number[][];
+}
+
+// Type for polygons
+interface BuildingFloorPlanPolygons {
+  building_number: number;
+  floor_maps: FloorMapData;
+}
+
 // Function to scale and round coordinates
 const scalePolygon = (points: number[]) => {
   const scaledPoints: number[] = [];
@@ -108,6 +257,7 @@ export function CampusGroundMap({
   const [seeBuildingPopUp, setSeeBuildingPopUp] = useState(false);
   const [buildingFloorPlan, setBuildingFloorPlan] = useState(false);
   const [selectedFloorIndex, setSelectedFloorIndex] = useState(0);
+  const [floorPlanDimesions, setFloorPlanDimensions] = useState({ width: 0, height: 0});
   const dragOffset = useRef({ x: 0, y: 0 });
   const pointerIdRef = useRef<number | null>(null);
 
@@ -171,6 +321,24 @@ export function CampusGroundMap({
 
     setSelectedFloorIndex((prevIndex) => (prevIndex - 1 + totalFloors) % totalFloors);
   }, [selectedBuildingId]);
+
+  const currentFloorPolygons = useMemo(() => {
+    if (!selectedBuildingId || !firstFloorPlanSrc) {
+      return [];
+    }
+
+    // Get the buildings polygon data
+    const buildingData = FLOOR_PLAN_POLYGONS.find(
+      (plan) => plan.building_number === selectedBuildingId
+    );
+
+    if (!buildingData) {
+      return [];
+    }
+
+    // Look up the polygons using the current image source as the key
+    return buildingData.floor_maps[firstFloorPlanSrc] || [];
+  }, [selectedBuildingId, firstFloorPlanSrc]);
 
   const handlePolygonClick = (buildingId: number) => {
       setSelectedBuildingId(buildingId);
@@ -455,7 +623,55 @@ export function CampusGroundMap({
                   src={firstFloorPlanSrc ? firstFloorPlanSrc : ""}
                   alt="Building floor plan"
                   className="w-full object-contain"
+                  // Capture dimensions on load
+                  onLoad={(e) => {
+                    const img = e.currentTarget;
+                    setFloorPlanDimensions({
+                      width: img.naturalWidth,
+                      height: img.naturalHeight,
+                    });
+                  }}
                 />
+
+                {/* Only render svg if dimensions are available */}
+                {floorPlanDimesions.width > 0 &&
+                  floorPlanDimesions.height > 0 && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <svg
+                        // Replace with your actual floor plan image dimensions (e.g., 800x600)
+                        width="100%"
+                        height="100%"
+                        viewBox={`0 0 ${floorPlanDimesions.width} ${floorPlanDimesions.height}`} // <-- **IMPORTANT: Set this to the floor plan image's dimensions**
+                        className="w-full h-full"
+                        style={{ objectFit: "contain", position: "absolute" }}
+                        preserveAspectRatio="xMidYMid meet"
+                      >
+                        {currentFloorPolygons.map((points, index) => {
+                          const pointsStr = points.join(" ");
+                          // You'll need logic here to determine the suite ID, availability, etc.
+
+                          return (
+                            <polygon
+                              key={index}
+                              points={pointsStr}
+                              onClick={() => {
+                                // TODO: Add handler for clicking a suite/room
+                                console.log(
+                                  `Clicked suite on floor ${
+                                    selectedFloorIndex + 1
+                                  }`
+                                );
+                              }}
+                              fill="rgba(255, 255, 0, 0.4)" // Example fill color
+                              stroke="#ffcc00"
+                              strokeWidth="5"
+                              className="cursor-pointer transition-all hover:fill-yellow-600/80"
+                            />
+                          );
+                        })}
+                      </svg>
+                    </div>
+                  )}
 
                 {(FLOOR_PLANS.find(
                   (plan) => plan.building_number === selectedBuildingId
