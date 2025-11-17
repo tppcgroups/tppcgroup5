@@ -2,7 +2,7 @@ import React from 'react'
 
 const FAQTitle = () => {
   return (
-    <header className="px-4 pb-8 pt-8 text-center sm:px-6 md:pb-12">
+    <header className="px-4 pt-2 text-center sm:px-6 md:pb-12">
       <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#a49382]">
         Frequently Asked Questions
       </p>

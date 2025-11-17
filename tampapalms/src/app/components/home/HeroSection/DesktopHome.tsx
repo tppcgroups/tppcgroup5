@@ -79,7 +79,6 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
         <div className="flex items-start justify-between gap-8">
           <div className="relative max-w-lg">
             <div
-            // bg-gray/25 backdrop-blur-xl
               className="pointer-events-none absolute inset-0 rounded-3xl bg-black/10 backdrop-blur-[2px]"
               aria-hidden="true"
             />
