@@ -107,6 +107,7 @@ export function CampusGroundMap({
   );
   const [seeBuildingPopUp, setSeeBuildingPopUp] = useState(false);
   const [buildingFloorPlan, setBuildingFloorPlan] = useState(false);
+  const [selectedFloorIndex, setSelectedFloorIndex] = useState(0);
   const dragOffset = useRef({ x: 0, y: 0 });
   const pointerIdRef = useRef<number | null>(null);
 
@@ -129,9 +130,46 @@ export function CampusGroundMap({
       (plan) => plan.building_number === selectedBuildingId
     );
 
+    if (!buildingPlan) {
+      return null;
+    }
+
+    // get the total number of floors for building
+    const totalFloors = buildingPlan.floor_plans.length;
+
+    // reset the index if the selected building changes and has fewer floors
+    if (selectedFloorIndex >= totalFloors) {
+      setSelectedFloorIndex(0);
+    }
     // If found, return the first floor plan image path (index 0)
     // Otherwise, return a default/fallback path or null
-    return buildingPlan?.floor_plans[0] || null;
+    return buildingPlan?.floor_plans[selectedFloorIndex] || null;
+  }, [selectedBuildingId, selectedFloorIndex]);
+
+  // function to handle next click on floor plans
+  const handleNextFloor = useCallback(() => {
+    const buildingPlan = FLOOR_PLANS.find(
+      (plan) => plan.building_number === selectedBuildingId
+    );
+
+    if (!buildingPlan) return;
+
+    const totalFloors = buildingPlan.floor_plans.length;
+
+    setSelectedFloorIndex((prevIndex) => (prevIndex + 1) % totalFloors);
+  }, [selectedBuildingId]);
+
+  // function to handle previous click on floor plans
+  const handlePrevFloor = useCallback(() => {
+    const buildingPlan = FLOOR_PLANS.find(
+      (plan) => plan.building_number === selectedBuildingId
+    );
+
+    if (!buildingPlan) return;
+
+    const totalFloors = buildingPlan.floor_plans.length;
+
+    setSelectedFloorIndex((prevIndex) => (prevIndex - 1 + totalFloors) % totalFloors);
   }, [selectedBuildingId]);
 
   const handlePolygonClick = (buildingId: number) => {
@@ -393,7 +431,10 @@ export function CampusGroundMap({
         </div>
 
         {buildingFloorPlan && (
-          <div className="pointer-events-auto absolute inset-x-0 top-1/2 z-20 flex -translate-y-1/2 items-center justify-center px-5">
+          <div
+            className="pointer-events-auto absolute inset-x-0 top-1/2 z-30 flex -translate-y-1/2 items-center justify-center px-5"
+            onPointerDown={(event) => event.stopPropagation()}
+          >
             <div className="relative w-full max-w-4xl rounded-[32px] border border-slate-200 bg-white/95 p-6 text-slate-700 shadow-xl shadow-slate-900/20">
               <button
                 type="button"
@@ -409,12 +450,35 @@ export function CampusGroundMap({
               <h3 className="text-lg font-semibold uppercase tracking-[0.3em] text-slate-500">
                 Building {selectedBuildingId ?? ""} Floor Plan
               </h3>
-              <div className="mt-4 overflow-hidden rounded-2xl border border-slate-100 bg-slate-50">
+              <div className="mt-4 relative overflow-hidden rounded-2xl border border-slate-100 bg-slate-50">
                 <img
-                  src={firstFloorPlanSrc? firstFloorPlanSrc : ""}
+                  src={firstFloorPlanSrc ? firstFloorPlanSrc : ""}
                   alt="Building floor plan"
                   className="w-full object-contain"
                 />
+
+                {(FLOOR_PLANS.find(
+                  (plan) => plan.building_number === selectedBuildingId
+                )?.floor_plans.length ?? 0) > 1 && (
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-between px-4">
+                    <button
+                      type="button"
+                      onClick={handlePrevFloor}
+                      className="pointer-events-auto z-10 rounded-full bg-white/80 p-2 text-lg font-bold text-slate-700 shadow-lg transition hover:bg-white"
+                      aria-label="Previous Floor"
+                    >
+                      &lt;
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleNextFloor}
+                      className="pointer-events-auto z-10 rounded-full bg-white/80 p-2 text-lg font-bold text-slate-700 shadow-lg transition hover:bg-white"
+                      aria-label="Next Floor"
+                    >
+                      &gt;
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
