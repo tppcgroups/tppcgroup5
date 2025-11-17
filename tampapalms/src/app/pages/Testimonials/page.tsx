@@ -6,8 +6,8 @@ import { HiStar, HiChevronDown } from "react-icons/hi";
 
 type Testimonial = {
   id?: number;
-  description: string;
-  name: string;
+  testimonial_text?: string | null;
+  person_name?: string | null;
   company?: string | null;
 };
 
@@ -115,7 +115,10 @@ const TestimonialsPage = () => {
             {!loading && !error && testimonials.length > 0 && (
               <div className="space-y-5 px-6 pb-6 md:px-12 md:pb-12">
                 {testimonials.map((testimonial) => {
-                  const key = testimonial.id?.toString() ?? testimonial.name;
+                  const description = testimonial.testimonial_text ?? "";
+                  const name = testimonial.person_name ?? "Anonymous";
+
+                  const key = testimonial.id?.toString() ?? name;
                   const isExpanded = expanded[key];
 
                   return (
@@ -136,10 +139,10 @@ const TestimonialsPage = () => {
                             isExpanded ? "fade-in-text" : "opacity-100"
                           }`}
                         >
-                          “{isExpanded ? testimonial.description : getExcerpt(testimonial.description)}”
+                          “{isExpanded ? description : getExcerpt(description)}”
                         </span>
                       </blockquote>
-                    {testimonial.description.length > 220 && (
+                    {description.length > 220 && (
                       <button
                         type="button"
                         onClick={() => toggleExpanded(key)}
@@ -150,7 +153,7 @@ const TestimonialsPage = () => {
                       </button>
                     )}
                       <figcaption className="mt-5 text-sm text-[#7a6754]">
-                        <p className="font-semibold text-[#1f1a16]">{testimonial.name}</p>
+                        <p className="font-semibold text-[#1f1a16]">{name}</p>
                         {testimonial.company && <p>{testimonial.company}</p>}
                       </figcaption>
                     </figure>
