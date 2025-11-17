@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useMemo, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 // Define the actual base dimensions of the image file (SiteplanEast&West.jpg)
 const BASE_IMAGE_WIDTH = 4928;
@@ -60,6 +61,30 @@ const scalePolygon = (points: number[]) => {
 // Apply scaling to the entire array
 const SCALED_BUILDING_POLYGONS = ORIGINAL_BUILDING_POLYGONS.map(scalePolygon);
 
+// Array for mapping building numbers to their floorplans
+const FLOOR_PLANS = [
+  {
+    building_number: 5,
+    floor_plans: [
+      "/images/Floor-plans/BUILDING5FIRSTFLOOR1.png",
+      "/images/Floor-plans/BUILDING5SECONDFLOOR.png",
+    ],
+  },
+  {
+    building_number: 6,
+    floor_plans: [
+      "/images/Floor-plans/BUILDING6FIRSTFLOOR1025.png",
+      "/images/Floor-plans/BUILDING6SECONDFLOOR.png",
+    ], 
+  },
+  {
+    building_number: 25,
+    floor_plans: [
+      "/images/Floor-plans/BUILDING251025.png",
+    ],
+  },
+];
+
 type CampusGroundMapProps = {
   imageSrc?: string;
   onBuildingSelect?: (buildingId: number | null) => void;
@@ -81,6 +106,7 @@ export function CampusGroundMap({
     null
   );
   const [seeBuildingPopUp, setSeeBuildingPopUp] = useState(false);
+  const [buildingFloorPlan, setBuildingFloorPlan] = useState(false);
   const dragOffset = useRef({ x: 0, y: 0 });
   const pointerIdRef = useRef<number | null>(null);
 
@@ -93,14 +119,45 @@ export function CampusGroundMap({
     );
   }, []);
 
-  const handlePolygonClick =
-    (buildingId: number) => {
+  const firstFloorPlanSrc = useMemo(() => {
+    if (selectedBuildingId === null) {
+      return null;
+    }
+
+    // Find the matching building object
+    const buildingPlan = FLOOR_PLANS.find(
+      (plan) => plan.building_number === selectedBuildingId
+    );
+
+    // If found, return the first floor plan image path (index 0)
+    // Otherwise, return a default/fallback path or null
+    return buildingPlan?.floor_plans[0] || null;
+  }, [selectedBuildingId]);
+
+  const handlePolygonClick = (buildingId: number) => {
       setSelectedBuildingId(buildingId);
       onBuildingSelect?.(buildingId);
       console.log("you have selected: ", buildingId);
-      setSeeBuildingPopUp(!seeBuildingPopUp);
+
+      // Make sure the building has an available suite
+      const isAvailable = availableBuildings?.includes(buildingId);
+
+      // If its available, let the user see the floor plan
+      if (isAvailable) {
+        setSeeBuildingPopUp(true);
+        setBuildingFloorPlan(false);
+      } else {
+        setSeeBuildingPopUp(false);
+        setBuildingFloorPlan(false);
+        toast.warning("Building must have available spaces to see floor plan", { autoClose: 2000 });
+      }
       console.log("See building pop up: ", seeBuildingPopUp);
     };
+
+  // function for showing the floor plan once yes is clicked for the building floor plan
+  const toggleBuildingFloorPlan = () => {
+    setBuildingFloorPlan(!buildingFloorPlan);
+  };
 
   const handlePointerDown = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
@@ -168,6 +225,9 @@ export function CampusGroundMap({
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
           Campus Overview
         </p>
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 mt-1">
+          Select Green Buildings for Floor Plans
+        </p>
       </div>
 
       <div
@@ -228,7 +288,8 @@ export function CampusGroundMap({
                   {SCALED_BUILDING_POLYGONS.map((points, i) => {
                     const buildingId = i + 1;
                     const pointsStr = points.join(" ");
-                    const hasAvailableSuite = availableBuildings?.includes(buildingId);
+                    const hasAvailableSuite =
+                      availableBuildings?.includes(buildingId);
 
                     return (
                       <polygon
@@ -258,7 +319,11 @@ export function CampusGroundMap({
                             : "#ff0000"
                         }
                         strokeWidth="15" // Adjusted stroke width for better visibility on a 4928x5758 map
-                        className={`cursor-pointer transition-all ${hasAvailableSuite ? "hover:fill-green-300/80" : "hover:fill-red-300/80"}`}
+                        className={`cursor-pointer transition-all ${
+                          hasAvailableSuite
+                            ? "hover:fill-green-300/80"
+                            : "hover:fill-red-300/80"
+                        }`}
                       />
                     );
                   })}
@@ -277,20 +342,17 @@ export function CampusGroundMap({
               </span>
               <button
                 type="button"
-                onClick={() =>
-                  console.log(
-                    "You have selected to see ",
-                    selectedBuildingId,
-                    " pop up."
-                  )
-                }
+                onClick={() => toggleBuildingFloorPlan()}
                 className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 text-base font-semibold transition hover:bg-slate-100"
               >
                 Y
               </button>
               <button
                 type="button"
-                onClick={() => setSeeBuildingPopUp(false)}
+                onClick={() => {
+                  setSeeBuildingPopUp(false);
+                  setBuildingFloorPlan(false);
+                }}
                 className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 text-base font-semibold transition hover:bg-slate-100"
               >
                 N
@@ -329,6 +391,34 @@ export function CampusGroundMap({
             </button>
           </div>
         </div>
+
+        {buildingFloorPlan && (
+          <div className="pointer-events-auto absolute inset-x-0 top-1/2 z-20 flex -translate-y-1/2 items-center justify-center px-5">
+            <div className="relative w-full max-w-4xl rounded-[32px] border border-slate-200 bg-white/95 p-6 text-slate-700 shadow-xl shadow-slate-900/20">
+              <button
+                type="button"
+                aria-label="Close building floor plan"
+                onClick={() => {
+                  toggleBuildingFloorPlan();
+                  setSeeBuildingPopUp(false);
+                }}
+                className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-lg font-semibold text-slate-600 transition hover:bg-slate-100"
+              >
+                ×
+              </button>
+              <h3 className="text-lg font-semibold uppercase tracking-[0.3em] text-slate-500">
+                Building {selectedBuildingId ?? ""} Floor Plan
+              </h3>
+              <div className="mt-4 overflow-hidden rounded-2xl border border-slate-100 bg-slate-50">
+                <img
+                  src={firstFloorPlanSrc? firstFloorPlanSrc : ""}
+                  alt="Building floor plan"
+                  className="w-full object-contain"
+                />
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="pointer-events-none absolute inset-0 flex items-end justify-end p-5">
           <a
