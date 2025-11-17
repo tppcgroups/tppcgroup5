@@ -121,13 +121,6 @@ const AccessibilityWidget: React.FC = () => {
         html.classList.toggle("reduce-motion", reduceMotion);
         html.classList.toggle("highlight-links", highlightLinks);
 
-
-        html.classList.remove("cursor-small", "cursor-medium", "cursor-large");
-        html.classList.add(`cursor-${cursorSizes[cursorIndex]}`);
-
-
-
-
     }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex, cursorIndex]);
 
 
@@ -160,6 +153,13 @@ const AccessibilityWidget: React.FC = () => {
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, []);
+
+    useEffect(() => {
+        const html = document.documentElement;
+
+        html.classList.remove("cursor-small", "cursor-medium", "cursor-large");
+        html.classList.add(`cursor-${cursorSizes[cursorIndex]}`);
+    }, [cursorIndex]);
 
 
     const cursorLabelKey: Record<typeof cursorSizes[number], keyof typeof t> = {
