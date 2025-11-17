@@ -82,6 +82,7 @@ function AvailabilityContent() {
   const detailSectionRef = useRef<HTMLDivElement | null>(null);
   const mapSectionRef = useRef<HTMLDivElement | null>(null);
   const [mapHeight, setMapHeight] = useState<number | null>(null);
+  const [availableBuildingNumbers, setAvailableBuildingNumbers] = useState<number[]>([6, 25]);
   const scrollToDetails = useCallback(() => {
     if (!detailSectionRef.current) return;
     const targetTop = detailSectionRef.current.getBoundingClientRect().top + window.scrollY;
@@ -237,6 +238,8 @@ function AvailabilityContent() {
         const availableSpaces = normalizedBuildings.filter(
           (b) => normalizeStatus(b.availability_status) === "available"
         );
+
+        setAvailableBuildingNumbers([...availableBuildingNumbers, ...availableSpaces.map((b: Building) => b.building_number),]);
         const occupiedSpaces = normalizedBuildings.filter(
           (b) => normalizeStatus(b.availability_status) !== "available"
         );
@@ -386,7 +389,7 @@ function AvailabilityContent() {
           {/* Ground map + suite list */}
           <div className="grid gap-8 lg:grid-cols-6">
             <div ref={mapSectionRef} className="lg:col-span-3">
-              <CampusGroundMap />
+              <CampusGroundMap availableBuildings={availableBuildingNumbers}/>
             </div>
             <div
               className="lg:col-span-3"

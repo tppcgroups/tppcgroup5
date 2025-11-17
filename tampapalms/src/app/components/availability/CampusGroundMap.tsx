@@ -63,11 +63,13 @@ const SCALED_BUILDING_POLYGONS = ORIGINAL_BUILDING_POLYGONS.map(scalePolygon);
 type CampusGroundMapProps = {
   imageSrc?: string;
   onBuildingSelect?: (buildingId: number | null) => void;
+  availableBuildings?: number[];
 };
 
 export function CampusGroundMap({
   imageSrc = "/images/Floor-plans/SiteplanEast&West.png",
   onBuildingSelect,
+  availableBuildings,
 }: CampusGroundMapProps) {
   const [scale, setScale] = useState(0.85);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -224,6 +226,7 @@ export function CampusGroundMap({
                   {SCALED_BUILDING_POLYGONS.map((points, i) => {
                     const buildingId = i + 1;
                     const pointsStr = points.join(" ");
+                    const hasAvailableSuite = availableBuildings?.includes(buildingId);
 
                     return (
                       <polygon
@@ -234,17 +237,26 @@ export function CampusGroundMap({
                           handlePolygonClick(buildingId);
                         }}
                         fill={
-                          selectedBuildingId === buildingId
+                          // Change to check for available suite first
+                          hasAvailableSuite
+                            ? selectedBuildingId === buildingId // Available, make green
+                              ? "rgba(0, 150, 0, 0.6)"
+                              : "rgba(0, 150, 0, 0.3)"
+                            : selectedBuildingId === buildingId // Not available, make red
                             ? "rgba(255, 0, 0, 0.4)"
                             : "rgba(255, 0, 0, 0.15)"
                         }
                         stroke={
-                          selectedBuildingId === buildingId
+                          hasAvailableSuite
+                            ? selectedBuildingId === buildingId
+                              ? "#006600"
+                              : "#009900"
+                            : selectedBuildingId === buildingId
                             ? "#cc0000"
                             : "#ff0000"
                         }
                         strokeWidth="15" // Adjusted stroke width for better visibility on a 4928x5758 map
-                        className={`cursor-pointer transition-all hover:fill-red-300/80`}
+                        className={`cursor-pointer transition-all ${hasAvailableSuite ? "hover:fill-green-300/80" : "hover:fill-red-300/80"}`}
                       />
                     );
                   })}
