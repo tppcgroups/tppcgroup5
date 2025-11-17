@@ -18,12 +18,14 @@ export function SuiteGallery({
   onSelectImage,
   suiteLabel,
 }: SuiteGalleryProps) {
+  // Carousel showing the selected suite imagery alongside thumbnail navigation.
   return (
-    <div className="flex h-full flex-col gap-6">
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-3xl border border-slate-200 bg-slate-900/5">
+    <div className="flex h-full min-h-[480px] flex-col gap-6 rounded-3xl border border-[#e1d9cf] bg-white/95 p-6 shadow-lg shadow-[#1f1a16]/10">
+      {/* Primary image viewport with next/prev controls. */}
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-[#e1d9cf] bg-[#1f1a16]/5">
         {images.length ? (
           <Image
-            src={images[activeImageIndex]?.src ?? ""}
+            src={images[activeImageIndex]?.src ?? null}
             alt={images[activeImageIndex]?.alt ?? suiteLabel ?? "Suite image"}
             fill
             className="object-cover"
@@ -31,13 +33,13 @@ export function SuiteGallery({
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-sm text-slate-500">
+          <div className="flex h-full items-center justify-center text-sm text-[#a49382]">
             Image coming soon
           </div>
         )}
 
         {images.length > 1 && (
-          <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent px-6 pb-5 pt-12">
+          <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-[#1f1a16]/80 via-[#1f1a16]/30 to-transparent px-6 pb-5 pt-12">
             <button
               type="button"
               onClick={onPrev}
@@ -58,6 +60,7 @@ export function SuiteGallery({
 
       {images.length > 1 && (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {/* Thumbnail strip for quickly swapping images. */}
           {images.map((image, index) => (
             <button
               key={image.src}
@@ -65,8 +68,8 @@ export function SuiteGallery({
               onClick={() => onSelectImage(index)}
               className={`relative flex h-24 items-center justify-center overflow-hidden rounded-2xl border transition ${
                 index === activeImageIndex
-                  ? "border-slate-900 shadow-md shadow-slate-900/25"
-                  : "border-slate-200 hover:border-slate-300"
+                  ? "border-[#4a4034] shadow-md shadow-[#1f1a16]/25"
+                  : "border-[#e1d9cf] hover:border-[#d4c7b7]"
               }`}
             >
               <Image
@@ -82,4 +85,3 @@ export function SuiteGallery({
     </div>
   );
 }
-

@@ -3,69 +3,117 @@
 "use client"
 
 // Import necessary components and libraries
-import SpacesCard from "@/app/components/home/explore_spaces/SpacesCard"
-import TitleCard from "@/app/components/TitleCard"
 import { MobileHome } from "@/app/components/home/HeroSection/MobileHome"
 import { DesktopHome } from "@/app/components/home/HeroSection/DesktopHome"
-import Spacer from "@/app/components/Spacer"
-import * as React from "react"
-import Autoplay from "embla-carousel-autoplay";
-import AboutUs from "@/app/components/home/HeroSection/AboutUs"
-import LocationInsights from "@/app/components/home/LocationsInsights/Location"
+import React, {useEffect, useState} from "react"
+import HomeSections from "@/app/components/home/HeroSection/HomeSections"
+import axios from "axios"
+import type { Building } from "@/app/components/availability/type"
+import FadeIn from "@/app/components/animations/FadeIn"
+
+type BuildingApi = Partial<Building> & { offices_type?: unknown };
 
 export default function Home(){
+  const [totalSize, setTotalSize] = useState(0);
+  const [flexibleSuites, setFlexibleSuites] = useState(0);
+  const [buildingAvailable, setBuildingAvailable] = useState(0);
     const images = [
-        "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinitionEdit.png",
-        "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-9-LargeHighDefinition.jpg",
-        "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Aerial-13-LargeHighDefinition.jpg",
+      "/images/Bldg5-003.jpg",
+      "/images/Bldg6-001.jpg",
+      "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinitionEdit.png",
+      // "/images/Bldg6-012.jpg",
+      "/images/Bldg6-007.jpg",
+      // "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-9-LargeHighDefinition.jpg",
+      // "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Aerial-13-LargeHighDefinition.jpg",
     ];  
 
-    const officeFeatures = [
-      "Ideal for teams and businesses",
-      "Multiple office configurations",
-      "Entire suites available for lease",
-    ];
+    useEffect(() => {
+      async function fetchBuildingStats() {
+        try {
+          // 1. Fetch ALL building data (assuming your API returns the full objects)
+          const response = await axios.get("/api/buildings");
 
-    const executiveFeatures = [
-      "Perfect for individual professionals",
-      "Single, private office spaces",
-      "Flexible agreements available",
-    ];
+          const rawBuildings: BuildingApi[] = Array.isArray(response.data) ? response.data : [];
+
+          const toNumeric = (value: unknown): number => {
+            if (typeof value === "number" && Number.isFinite(value)) {
+              return value;
+            }
+
+            if (typeof value === "string") {
+              const numericPortion = value.replace(/[^0-9.]/g, "");
+              if (!numericPortion) return 0;
+              const parsed = Number(numericPortion);
+              return Number.isFinite(parsed) ? parsed : 0;
+            }
+
+            return 0;
+          };
+
+          // 2. Extract only the rental_sq_ft from each building object
+          const buildingSizes = rawBuildings
+            .map((b) => toNumeric(b?.rental_sq_ft))
+            .filter((size: number) => size > 0);
+
+          console.log("Building sizes data:", buildingSizes);
+
+          const total = buildingSizes.reduce((acc: number, size: number) => acc + size, 0);
+
+          setTotalSize(total);
+          console.log("Total building size:", total);
+
+
+          // Suite Count Data
+          const suiteCount = rawBuildings.reduce((acc: number, building) => {
+            const officesCount = toNumeric(building.offices_count);
+            if (officesCount) {
+              return acc + officesCount;
+            }
+
+            const officeTypeAsNumber = toNumeric(building.offices_type);
+            if (officeTypeAsNumber) {
+              return acc + officeTypeAsNumber;
+            }
+
+            return typeof building.offices_type === "string" && building.office_type?.trim() ? acc + 1 : acc;
+          }, 0);
+          setFlexibleSuites(suiteCount);
+          console.log("Total flexible suites:", suiteCount);
+
+          
+          // Number of buildings Available, taking the highest number from the database (that means the amount of buildings available) 
+          const buildingAvailable = rawBuildings.reduce((max: number, building) => {
+            const buildingValue =
+              toNumeric(building.building_number);
+            return buildingValue > max ? buildingValue : max;
+          }, 26);
+
+          setBuildingAvailable(buildingAvailable);
+          console.log("Total meeting rooms:", buildingAvailable);
+
+        } catch (error) {
+          console.error("Error fetching building sizes:", error);
+        } finally {
+        }
+      }
+      fetchBuildingStats();
+    }, []);
 
     return (
-      <div>
+      <div className="pb-20">
         {/* Mobile Home Component */}
-        <MobileHome imageUrls={images} />
+        <FadeIn delay={10}>
+          <MobileHome imageUrls={images} />
+        </FadeIn>
         {/* Desktop Home Component */}
-        <DesktopHome imageUrls={images} />
-        {/* About Us Component */}
-        <AboutUs />
-        {/* Explore Spaces container */}
-        <div className="rounded-xl my-16 md:my-24 mx-8">
-            <div className="text-center my-16 md:my-24">
-                {/* The "eyebrow" text adds a touch of color and context */}
-                <p className="text-sm font-semibold  uppercase tracking-wider">
-                Our Properties
-                </p>
-                <TitleCard title="Explore Spaces" />
-            </div>
-          <div className="w-full flex md:flex-row flex-col justify-center gap-8">
-            <SpacesCard
-              title="Buildings/Suites"
-              imageUrl="/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-11-LargeHighDefinition.jpg"
-              href="https://www.loopnet.com/Listing/17425-Bridge-Hill-Ct-Tampa-FL/31448652/"
-              features={officeFeatures}
-            />
-            <SpacesCard
-              title="Executive Suites"
-              imageUrl="/images/5331/5331-ExploreSpacesCardImage.jpg"
-              href="https://www.loopnet.com/Listing/5331-Primrose-Lake-Cir-Tampa-FL/4151894/"
-              features={executiveFeatures}
-            />
-          </div>
-          {/* White space below the LoopNet locations */}
-          <Spacer />
-        </div>
+        <FadeIn delay={50}>
+          <DesktopHome imageUrls={images} />
+        </FadeIn>
+
+        <FadeIn delay={50}>
+          <HomeSections totalSize={totalSize} flexibleSuites={flexibleSuites} buildingAvailable={buildingAvailable} />
+        </FadeIn>
+        
         <div></div>
         {/* <LocationInsights /> */}
       </div>

@@ -1,3 +1,4 @@
+// Shared typings for availability data consumed across the availability page.
 export type AvailabilityStatus = "available" | "comingSoon" | "occupied";
 
 export type Suite = {
@@ -11,9 +12,35 @@ export type Suite = {
   description: string;
   features: string[];
   images: { src: string; alt: string }[];
-  category: "buildings" | "executive";
+  category: "Office" | "Exec" | "SOAR";
   brochureHref?: string;
   floorplanHref?: string;
+};
+
+
+export type Building = {
+  building_id: string,
+  building_number: number,
+  street_address: string,
+  suite_number: string,
+  floor_count: number,
+  office_type: string,
+  rental_sq_ft: number,
+  lease_term: string,
+  space_use: string,
+  price: string,
+  availability_status: string | null,
+  owned_leased: string,
+  offices_count: number,
+  bathrooms_count: string,
+  loopnet_url: string,
+
+  // NEED PLACEHOLDER DATA FOR THESE FIELDS
+  images: Array<{ src: string; alt: string }>;
+  features: string[];
+  description: string;
+  category: "Office" | "Exec" | "SOAR";
+  brochureHref?: string;
 };
 
 export type AvailabilityStats = {

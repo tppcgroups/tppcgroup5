@@ -17,7 +17,7 @@ const perks: Perk[] = [
         ],
     },
     {
-        title: "Onsite Support ",
+        title: "Onsite Support",
         details: [
             "On-site Maintenance Team",
             "On-site Management Team",
@@ -42,43 +42,57 @@ const Perks: React.FC = () => {
     };
 
     return (
-        <div className="flex w-full max-w-md flex-wrap items-stretch justify-center gap-5 md:flex-nowrap">
+        <div className="flex flex-col items-center justify-center w-full gap-6">
             {perks.map((perk, index) => {
                 const isOpen = openIndex === index;
                 return (
                     <article
                         key={perk.title}
-                        className={`flex w-44 flex-col items-center rounded-2xl border px-5 py-5 text-center transition-all duration-300 ease-out md:w-48 ${
+                        className={`flex w-full max-w-2xl flex-col rounded-xl border px-6 py-4 transition-all duration-300 ease-out ${
                             isOpen
-                                ? "border-slate-900 bg-slate-900 text-white shadow-xl shadow-slate-900/20"
-                                : "border-slate-200 bg-white text-slate-900 shadow-md shadow-slate-900/10 hover:-translate-y-1 hover:shadow-lg"
+                                ? "border-[#4a4034] bg-[#1f1a16] text-white shadow-xl shadow-[#1f1a16]/20"
+                                : "border-[#e1d9cf] bg-white text-[#1f1a16] shadow-md shadow-[#1f1a16]/10 hover:-translate-y-1 hover:shadow-lg"
                         }`}
                     >
-                        <h3 className="text-sm font-semibold text-current">{perk.title}</h3>
+                        {/* Header row */}
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-base font-semibold text-current">
+                                {perk.title}
+                            </h3>
 
-                        <button
-                            onClick={() => toggleDetails(index)}
-                            className={`mt-3 inline-flex h-9 w-9 items-center justify-center rounded-full border text-base font-semibold transition ${
-                                isOpen
-                                    ? "border-white/70 bg-white/15 text-white hover:bg-white/20"
-                                    : "border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-100"
-                            }`}
-                            type="button"
-                            aria-expanded={isOpen}
-                        >
-                            <span aria-hidden="true" className="leading-none">
-                                {isOpen ? "−" : "+"}
-                            </span>
-                            <span className="sr-only">{isOpen ? "Collapse" : "Expand"}</span>
-                        </button>
+                            <button
+                                onClick={() => toggleDetails(index)}
+                                className={`inline-flex h-9 w-9 items-center justify-center rounded-full border text-base font-semibold transition ${
+                                    isOpen
+                                        ? "border-white/70 bg-white/15 text-white hover:bg-white/20"
+                                        : "border-[#d4c7b7] text-[#4a4034] hover:border-[#b6a895] hover:bg-[#f4ece1]"
+                                }`}
+                                type="button"
+                                aria-expanded={isOpen}
+                            >
+                <span aria-hidden="true" className="leading-none">
+                  {isOpen ? "−" : "+"}
+                </span>
+                                <span className="sr-only">
+                  {isOpen ? "Collapse" : "Expand"}
+                </span>
+                            </button>
+                        </div>
 
+                        {/* Expandable details */}
                         <div
-                            className={`grid w-full transition-[grid-template-rows,opacity] duration-300 ease-out ${
-                                isOpen ? "mt-4 grid-rows-[1fr] opacity-100" : "mt-0 grid-rows-[0fr] opacity-0"
+                            className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                                isOpen
+                                    ? "mt-4 grid-rows-[1fr] opacity-100"
+                                    : "mt-0 grid-rows-[0fr] opacity-0"
                             }`}
                         >
                             <div className="overflow-hidden text-left">
-                                <ul className={`list-disc list-inside text-xs ${isOpen ? "text-white/80" : "text-slate-500"}`}>
+                                <ul
+                                    className={`list-disc list-inside text-sm ${
+                                        isOpen ? "text-white/80" : "text-[#a49382]"
+                                    }`}
+                                >
                                     {perk.details.map((detail, i) => (
                                         <li key={i}>{detail}</li>
                                     ))}
@@ -93,4 +107,9 @@ const Perks: React.FC = () => {
 };
 
 export default Perks;
+
+
+
+
+
 

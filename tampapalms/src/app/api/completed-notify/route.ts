@@ -1,0 +1,95 @@
+import { NextResponse } from "next/server";
+import { supabaseServer } from "@/lib/supabase/serverClient";
+import { PostgrestError } from "@supabase/supabase-js";
+
+// Define the interface for the data received from the client
+interface CompletedNotifyPayload {
+  notify_request_id: string; // The UUID generated when the request was saved
+  user_email: string; // The email used to find the user_id
+  buildingId: string; // The ID of the building/suite (space_id)
+}
+
+// Helper function for clearer error handling
+const handleSupabaseError = (error: PostgrestError, operation: string) => {
+  console.error(`Supabase ${operation} error:`, error.message);
+  return NextResponse.json(
+    { error: true, msg: `Server error during ${operation}: ${error.message}` },
+    { status: 500 }
+  );
+};
+
+export async function POST(request: Request) {
+  const supabase = supabaseServer();
+
+  try {
+    const {
+      notify_request_id,
+      user_email,
+      buildingId,
+    }: CompletedNotifyPayload = await request.json();
+
+    if (!notify_request_id || !user_email || !buildingId) {
+      return NextResponse.json(
+        {
+          error: true,
+          msg: "Missing required fields (request ID, email, or building ID)",
+        },
+        { status: 400 }
+      );
+    }
+
+    // --- 1. GET USER ID FROM EMAIL ---
+
+    // We need the user_id for the completed_notify foreign key
+    const { data: userData, error: fetchUserError } = await supabase
+      .from("users")
+      .select("user_id")
+      .eq("email", user_email)
+      .single();
+
+    if (fetchUserError) {
+      // Note: If the error code is PGRST116 (No rows found), we can't log the completion.
+      if (fetchUserError.code === "PGRST116") {
+        console.warn(
+          `User not found for email: ${user_email}. Cannot log completion.`
+        );
+        return NextResponse.json(
+          { warning: true, msg: "User record not found, logging skipped." },
+          { status: 200 }
+        );
+      }
+      return handleSupabaseError(fetchUserError, "user lookup for completion");
+    }
+
+    const userId = userData.user_id;
+
+    // --- 2. INSERT COMPLETED NOTIFY LOG ---
+
+    const { error: insertError } = await supabase
+      .from("completed_notify")
+      .insert([
+        {
+          user_id: userId,
+          notify_request_id: notify_request_id,
+          space_id: buildingId, // Maps buildingId to space_id in the database
+          // notified_at field defaults to NOW() in the database schema
+          // Other detailed fields (building_number, title, etc.) are left null
+        },
+      ]);
+
+    if (insertError) {
+      return handleSupabaseError(insertError, "completion log insertion");
+    }
+
+    return NextResponse.json(
+      { success: true, msg: "Notification completion logged successfully." },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error("Post handler internal error:", error);
+    return NextResponse.json(
+      { error: true, msg: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}

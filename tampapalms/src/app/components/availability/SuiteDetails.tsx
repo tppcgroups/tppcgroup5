@@ -7,33 +7,35 @@ type SuiteDetailsProps = {
 };
 
 export function SuiteDetails({ suite }: SuiteDetailsProps) {
+  // Primary suite overview card with stats and actions.
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-lg shadow-slate-900/10">
+    <div className="flex h-full min-h-[480px] flex-col rounded-3xl border border-[#e1d9cf] bg-white/95 p-6 shadow-lg shadow-[#1f1a16]/10">
       <div className="space-y-3">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Details</p>
-        <h2 className="text-2xl font-semibold text-slate-900">{suite.label}</h2>
-        <p className="text-sm text-slate-600">{suite.description}</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#a49382]">Details</p>
+        <h2 className="text-2xl font-semibold text-[#1f1a16]">{suite.label}</h2>
+        <p className="text-sm text-[#7a6754]">{suite.description}</p>
       </div>
 
-      <dl className="mt-6 grid gap-3 text-sm text-slate-600">
+      {/* Key specifications pulled from the suite record. */}
+      <dl className="mt-6 grid gap-3 text-sm text-[#7a6754]">
         <div className="flex items-center justify-between">
-          <dt className="font-semibold text-slate-900">Building</dt>
+          <dt className="font-semibold text-[#1f1a16]">Building</dt>
           <dd>{suite.building}</dd>
         </div>
         <div className="flex items-center justify-between">
-          <dt className="font-semibold text-slate-900">Size</dt>
+          <dt className="font-semibold text-[#1f1a16]">Size</dt>
           <dd>{suite.size}</dd>
         </div>
         <div className="flex items-center justify-between">
-          <dt className="font-semibold text-slate-900">Type</dt>
+          <dt className="font-semibold text-[#1f1a16]">Type</dt>
           <dd>{suite.type}</dd>
         </div>
         <div className="flex items-center justify-between">
-          <dt className="font-semibold text-slate-900">Rate</dt>
+          <dt className="font-semibold text-[#1f1a16]">Rate</dt>
           <dd>{suite.rate}</dd>
         </div>
         <div className="flex items-center justify-between">
-          <dt className="font-semibold text-slate-900">Status</dt>
+          <dt className="font-semibold text-[#1f1a16]">Status</dt>
           <dd>
             <span
               className={`rounded-full px-3 py-1 text-xs font-semibold ${
@@ -46,29 +48,15 @@ export function SuiteDetails({ suite }: SuiteDetailsProps) {
         </div>
       </dl>
 
-      <div className="mt-6 flex flex-wrap gap-3">
+      {/* Contextual actions for prospects. */}
+      <div className="mt-auto flex items-center justify-center pt-6">
         <Link
           href="/pages/Contact"
-          className="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/20 transition hover:bg-slate-800"
+          className="inline-flex items-center justify-center rounded-full bg-[#1f1a16] px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-[#1f1a16]/20 transition hover:bg-[#3a3127]"
         >
           Request Tour
         </Link>
-        <Link
-          href={suite.brochureHref ?? "/pages/Apply"}
-          className="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-400 hover:bg-slate-100"
-        >
-          View Brochure
-        </Link>
-        {suite.floorplanHref && (
-          <Link
-            href={suite.floorplanHref}
-            className="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
-          >
-            View Floorplan
-          </Link>
-        )}
       </div>
     </div>
   );
 }
-
