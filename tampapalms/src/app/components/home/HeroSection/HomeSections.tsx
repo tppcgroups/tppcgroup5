@@ -187,7 +187,7 @@ export default function HomeSections({
               Boutique hospitality meets enterprise infrastructure across secured suites, flexible floorplates, and
               curated amenity spaces that keep clients impressed and teams productive.
             </p>
-            <div className="flex flex-wrap gap-3 text-sm ttext-[#7a6754]">
+            <div className="flex flex-wrap gap-3 text-sm ttext-[#7a6754] ">
               {["Flexible lease terms", "Plug-and-play IT", "On-site property team"].map((tag) => (
                 <span key={tag} className="rounded-full border border-[#7a6754] bg-white px-4 py-1.5">
                   {tag}
@@ -216,7 +216,7 @@ export default function HomeSections({
             {computedInsightStats.map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-3xl border border-neutral-100 bg-white/80 p-6 text-neutral-800 shadow-sm"
+                className="rounded-3xl border  bg-white/80 p-6 text-neutral-800 shadow-sm border-[#c8b79f]"
               >
                 <p className="text-3xl font-semibold text-[#1f1a16]">{stat.value}</p>
                 <p className="mt-1 text-sm uppercase tracking-wide text-neutral-500">{stat.label}</p>
@@ -249,7 +249,7 @@ export default function HomeSections({
               <Link
                 key={`${highlight.title}-${index}`}
                 href={highlight.href ?? "#"}
-                className="group relative flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-lg shadow-black/5 hover:border-[#c8b79f]"
+                className="group relative flex h-full flex-col gap-4 rounded-3xl border border-[#c8b79f] bg-white p-6 shadow-lg shadow-black/5 hover:border-[#5a4b3c]"
               >
                 <div className="inline-flex size-12 items-center justify-center rounded-2xl bg-[#ddd0bd] text-[#5a4b3c]">
                   <Icon className="h-5 w-5" aria-hidden />
