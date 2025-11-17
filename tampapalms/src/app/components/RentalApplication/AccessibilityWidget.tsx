@@ -76,7 +76,7 @@ const AccessibilityWidget: React.FC = () => {
         );
     };
 
-    const [screenReaderMode, setScreenreaderMode] = useState(false);
+    const [screenReaderMode, setScreenReaderMode] = useState(false);
 
 
 
@@ -97,12 +97,34 @@ const AccessibilityWidget: React.FC = () => {
             setLanguageIndex(settings.languageIndex ?? 0);
             setCursorIndex(settings.cursorSize ?? 0);
             setCursorIndex(settings.cursorIndex ?? 0);
+            setScreenReaderMode(settings.screenReader ?? false);
 
 
         } catch (err) {
             console.error("Failed to load saved settings", err);
         }
     }, []);
+
+    useEffect(() => {
+        const saved = localStorage.getItem("screenReaderMode");
+        if (saved === "true") {
+            setScreenReaderMode(true);
+            document.documentElement.classList.add("screen-reader-mode");
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("screenReaderMode", screenReaderMode.toString());
+
+        if (screenReaderMode) {
+            document.documentElement.classList.add("screen-reader-mode");
+            announce("Screen reader mode enabled. Reading page.");
+            announce(document.title);
+        } else {
+            document.documentElement.classList.remove("screen-reader-mode");
+            window.speechSynthesis.cancel();
+        }
+    }, [screenReaderMode]);
 
 
 
@@ -395,6 +417,20 @@ const AccessibilityWidget: React.FC = () => {
                                 className="mt-3 w-5 h-5"
                             />
                         </div>
+
+                        {/* SCREEN READER MODE */}
+                        <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
+                            <span className="font-medium text-gray-800">Screen Reader Mode</span>
+
+                            <input
+                                type="checkbox"
+                                checked={screenReaderMode}
+                                onChange={() => setScreenReaderMode(!screenReaderMode)}
+                                className="mt-3 w-5 h-5"
+                                aria-label="Toggle screen reader mode"
+                            />
+                        </div>
+
 
                     </div>
 
