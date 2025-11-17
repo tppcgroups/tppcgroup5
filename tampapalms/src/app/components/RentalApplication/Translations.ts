@@ -12,6 +12,7 @@ export const translations = {
         cursorSmall: "Small",
         cursorMedium: "Medium",
         cursorLarge: "Large",
+        reset: "Reset Settings",
     },
 
     Spanish: {
@@ -27,6 +28,7 @@ export const translations = {
         cursorSmall: "Pequeño",
         cursorMedium: "Mediano",
         cursorLarge: "Grande",
+        reset: "Restablecer ajustes",
     },
 
     French: {
@@ -42,6 +44,7 @@ export const translations = {
         cursorSmall: "Petit",
         cursorMedium: "Moyen",
         cursorLarge: "Grand",
+        reset: "Réinitialiser les paramètres",
     },
 
     Swahili: {
@@ -57,6 +60,7 @@ export const translations = {
         cursorSmall: "Kidogo",
         cursorMedium: "Kati",
         cursorLarge: "Kubwa",
+        reset: "Weka upya mipangilio",
     }
 } as const;
 

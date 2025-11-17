@@ -205,11 +205,16 @@ const AccessibilityWidget: React.FC = () => {
                     aria-modal="true"
                     aria-labelledby="accessibility-panel-title"
                     className="
-                              fixed bottom-20 right-5 z-[9999]
-                              bg-white border border-gray-300 shadow-xl
-                              rounded-2xl w-80 p-5
-                              flex flex-col gap-4
-                          ">
+                        fixed bottom-20 right-5 z-[9999]
+                        bg-white border border-gray-300 shadow-xl
+                        rounded-2xl w-80 p-5
+                        flex flex-col gap-4
+
+                        max-h-[80vh]     /* Prevents panel from going off-screen */
+                        overflow-y-auto  /* Enables scrolling */
+                        overscroll-contain
+                    "
+                >
 
                     {/* HEADER */}
                     <div className="flex items-center justify-between">
@@ -265,31 +270,30 @@ const AccessibilityWidget: React.FC = () => {
                     <div className="grid grid-cols-2 gap-4">
 
                         {/* TEXT SIZE */}
-                        <div className="flex items-center justify-between p-3 border rounded-xl bg-gray-50 col-span-2">
+                        <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
+                            <span className="font-medium text-gray-800">{t.textSize}</span>
 
-                            {/* Minus Button */}
-                            <button
-                                onClick={() => setTextScale(prev => Math.max(0.8, prev - 0.1))}
-                                className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-lg"
-                                aria-label="Decrease text size"
-                            >
-                                –
-                            </button>
+                            <div className="flex items-center gap-4 mt-3">
+                                <button
+                                    onClick={() => setTextScale(prev => Math.max(0.8, prev - 0.1))}
+                                    className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-lg"
+                                >
+                                    –
+                                </button>
 
-                            {/* Label */}
-                            <span className="font-medium text-gray-800 text-center">
-                                {t.textSize}
-                            </span>
+                                <span className="text-sm font-medium text-gray-900 min-w-[90px] text-center">
+                                    {textScale.toFixed(1)}x
+                                 </span>
 
-                            {/* Plus Button */}
-                            <button
-                                onClick={() => setTextScale(prev => Math.min(1.6, prev + 0.1))}
-                                className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-lg"
-                                aria-label="Increase text size"
-                            >
-                                +
-                            </button>
+                                <button
+                                    onClick={() => setTextScale(prev => Math.min(1.6, prev + 0.1))}
+                                    className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-lg"
+                                >
+                                    +
+                                </button>
+                            </div>
                         </div>
+
 
 
                         {/* HIGH CONTRAST */}
@@ -324,15 +328,19 @@ const AccessibilityWidget: React.FC = () => {
 
 
                         {/* HIGHLIGHT LINKS */}
-                        <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50">
+                        <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
                             <span className="font-medium text-gray-800">{t.highlightLinks}</span>
-                            <input
-                                type="checkbox"
-                                checked={highlightLinks}
-                                onChange={() => setHighlightLinks(!highlightLinks)}
-                                className="mt-3 w-5 h-5"
-                            />
+
+                            <div className="flex items-center justify-center mt-3">
+                                <input
+                                    type="checkbox"
+                                    checked={highlightLinks}
+                                    onChange={() => setHighlightLinks(!highlightLinks)}
+                                    className="w-5 h-5 accent-blue-600"
+                                />
+                            </div>
                         </div>
+
 
                         {/* REDUCE MOTION */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
@@ -375,7 +383,26 @@ const AccessibilityWidget: React.FC = () => {
                             </button>
                         </div>
                     </div>
+                    {/* RESET BUTTON */}
+                    <button
+                        onClick={() => {
+                            // Reset state values
+                            setTextScale(1);
+                            setHighContrast(false);
+                            setHighlightLinks(false);
+                            setReduceMotion(false);
+                            setContrastIndex(0);
+                            setLanguageIndex(0);
+                            setCursorIndex(0);
 
+                            // Clear localStorage
+                            localStorage.removeItem("accessibilitySettings");
+                        }}
+                        className="w-full py-2 mt-4 rounded-lg text-white font-semibold"
+                        style={{ backgroundColor: "rgb(18,25,43" }}
+                    >
+                        {t.reset || "Reset Settings"}
+                    </button>
 
 
 
