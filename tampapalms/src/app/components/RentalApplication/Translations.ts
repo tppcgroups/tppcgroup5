@@ -17,6 +17,9 @@ export const translations = {
         highlight_links: "Highlight Links",
         highlight_buttons: "Highlight Buttons",
         highlight_headers: "Highlight Headers",
+        backgroundTheme: "Background Theme",
+        backgroundTheme_light: "Light",
+        backgroundTheme_dark: "Dark",
     },
 
     Spanish: {
@@ -37,6 +40,9 @@ export const translations = {
         highlight_links: "Resaltar Enlaces",
         highlight_buttons: "Resaltar Botones",
         highlight_headers: "Resaltar Encabezados",
+        backgroundTheme: "Fondo Tema",
+        backgroundTheme_light: "Claro",
+        backgroundTheme_dark: "Oscuro",
     },
 
     French: {
@@ -57,6 +63,9 @@ export const translations = {
         highlight_links: "Mettre en évidence les liens",
         highlight_buttons: "Mettre en évidence les boutons",
         highlight_headers: "Mettre en évidence les en-têtes",
+        backgroundTheme: "Arrière-plan Thème",
+        backgroundTheme_light: "Clair",
+        backgroundTheme_dark: "Sombre",
     },
 
     Swahili: {
@@ -77,6 +86,9 @@ export const translations = {
         highlight_links: "Angazia Viungo",
         highlight_buttons: "Angazia Vitufe",
         highlight_headers: "Angazia Vichwa",
+        backgroundTheme: "Mandharinyuma Mada",
+        backgroundTheme_light: "Mwanga",
+        backgroundTheme_dark: "Giza",
     }
 } as const;
 

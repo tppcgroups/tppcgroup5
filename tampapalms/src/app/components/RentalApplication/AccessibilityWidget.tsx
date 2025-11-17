@@ -78,7 +78,16 @@ const AccessibilityWidget: React.FC = () => {
 
     const [screenReaderMode, setScreenReaderMode] = useState(false);
 
+    const backgroundThemeModes = ["light", "dark"] as const;
+    type backgroundThemeMode = typeof backgroundThemeModes[number];
+    const [backgroundThemeIndex, setBackgroundThemeIndex] = useState(0);
 
+    const nextBackgroundTheme = () => {
+        setBackgroundThemeIndex((prev) => (prev + 1) % backgroundThemeModes.length);
+    };
+    const prevBackgroundTheme = () => {
+        setBackgroundThemeIndex((prev) => prev === 0 ? backgroundThemeModes.length - 1 : prev - 1);
+    };
 
 
 
@@ -98,6 +107,7 @@ const AccessibilityWidget: React.FC = () => {
             setCursorIndex(settings.cursorSize ?? 0);
             setCursorIndex(settings.cursorIndex ?? 0);
             setScreenReaderMode(settings.screenReader ?? false);
+            setBackgroundThemeIndex(settings.backgroundTheme ?? 0);
 
 
         } catch (err) {
@@ -161,6 +171,12 @@ const AccessibilityWidget: React.FC = () => {
 
         html.classList.toggle("screen-reader-mode", screenReaderMode);
 
+        const currentBackgroundTheme: backgroundThemeMode = backgroundThemeModes[backgroundThemeIndex];
+        document.documentElement.classList.toggle("dark", currentBackgroundTheme === "dark");
+        document.documentElement.classList.toggle("light", currentBackgroundTheme === "light");
+
+
+
     }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex, cursorIndex]);
 
 
@@ -175,12 +191,13 @@ const AccessibilityWidget: React.FC = () => {
                 contrastIndex,
                 languageIndex,
                 cursorIndex,
+                backgroundThemeIndex,
             };
             localStorage.setItem("accessibilitySettings", JSON.stringify(settings));
         }, 300);
 
         return () => clearTimeout(timeout);
-    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex, cursorIndex]);
+    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex, cursorIndex, backgroundThemeIndex]);
 
 
     useEffect(() => {
@@ -281,7 +298,7 @@ const AccessibilityWidget: React.FC = () => {
                         </button>
                     </div>
 
-                    {/* LANGUAGE SELECTOR (WITH FLAGS + SLIDER) */}
+                    {/* LANGUAGE SELECTOR  (SLIDER) */}
                     <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
 
                         <span className="font-medium text-gray-800">{t.language}</span>
@@ -374,6 +391,36 @@ const AccessibilityWidget: React.FC = () => {
                                 </button>
                             </div>
                         </div>
+
+                        {/* LIGHT / DARK THEME */}
+                        <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
+                            <span className="font-medium text-gray-800">Theme</span>
+
+                            <div className="flex items-center gap-4 mt-3">
+
+                                {/* Prev Button */}
+                                <button
+                                    onClick={prevBackgroundTheme}
+                                    className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                                >
+                                    ←
+                                </button>
+
+                                {/* Current Theme Display */}
+                                <span className="text-sm font-medium text-gray-900 min-w-[90px] text-center capitalize">
+                                    {backgroundThemeModes[backgroundThemeIndex]}
+                                </span>
+
+                                {/* Next Button */}
+                                <button
+                                    onClick={nextBackgroundTheme}
+                                    className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                                >
+                                    →
+                                </button>
+                            </div>
+                        </div>
+
 
 
                         {/* HIGHLIGHTS SECTION */}
