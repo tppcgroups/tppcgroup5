@@ -10,30 +10,30 @@ interface FAQProps {
 
 const FAQMain: React.FC<FAQProps> = ({question, answer, exec_only}) => {
   return (
-    <div className="h-full w-full px-4 pt-5">
-      <div className="mx-auto w-full divide-y divide-[#1f1a16]/5 rounded-xl">
-        <Disclosure as="div" className="p-6" defaultOpen={true}>
-          <DisclosureButton className="group flex w-full items-center justify-between">
-            <span className="text-2xl font-medium text-[#1f1a16] group-data-hover:text-[#1f1a16]/80">
+    <div className="h-full w-full px-1 sm:px-2">
+      <div className="mx-auto w-full rounded-2xl border border-white/60 bg-white/80 shadow-sm backdrop-blur">
+        <Disclosure as="div" defaultOpen={true} className="p-2 md:p-6">
+          <DisclosureButton className="group flex w-full items-center justify-between gap-3 text-left">
+            <span className="text-lg font-semibold text-[#1f1a16] md:text-xl group-data-hover:text-[#1f1a16]/80">
               {question}
             </span>
-            <ChevronDownIcon className="size-8 flex-shrink-0 fill-[#1f1a16]/60 group-data-hover:fill-[#1f1a16]/50 group-data-open:rotate-180 transition-all duration-500 ease-in-out" />
+            <ChevronDownIcon className="size-7 flex-shrink-0 fill-[#1f1a16]/60 transition-all duration-400 group-data-open:rotate-180 group-data-hover:fill-[#1f1a16]/50" />
           </DisclosureButton>
           <Transition
-            enter="transition-all duration-500 ease-out"
+            enter="transition-all duration-400 ease-out"
             enterFrom="opacity-0 max-h-0"
             enterTo="opacity-100 max-h-[500px]"
-            leave="transition-all duration-500 ease-in"
+            leave="transition-all duration-400 ease-in"
             leaveFrom="opacity-100 max-h-[500px]"
             leaveTo="opacity-0 max-h-0"
           >
-            <DisclosurePanel className="mt-2 justify-between">
-              <p className="text-lg text-[#1f1a16]/50 overflow-hidden">
+            <DisclosurePanel className="mt-3 space-y-1 text-[#4a4034]">
+              <p className="text-base md:text-lg">
                 {answer}
               </p>
-              <p className="text-lg text-[#1f1a16]/50 overflow-hidden font-bold">
-                {exec_only === "Y" ? "Executive Suite's Only" : ""}
-              </p>
+              {exec_only === "Y" && (
+                <p className="text-sm font-semibold text-cirtRed/80">Executive Suites only</p>
+              )}
             </DisclosurePanel>
           </Transition>
         </Disclosure>

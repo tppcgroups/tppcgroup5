@@ -79,7 +79,6 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
         <div className="flex items-start justify-between gap-8">
           <div className="relative max-w-lg">
             <div
-            // bg-gray/25 backdrop-blur-xl
               className="pointer-events-none absolute inset-0 rounded-3xl bg-black/10 backdrop-blur-[2px]"
               aria-hidden="true"
             />
@@ -121,7 +120,7 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
             className="z-20 mb-3 inline-flex h-12 w-12 items-center justify-center text-white shadow-2xl shadow-black/25 transition text-7xl"
             aria-label="Scroll to next section"
           >
-            <HiOutlineArrowSmDown className="h-10 w-10" />
+            <HiOutlineArrowSmDown className="h-10 w-10 animate-bounce" />
           </button>
           {totalSlides > 1 && (
             <div className="flex items-center gap-2">

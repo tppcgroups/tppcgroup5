@@ -36,6 +36,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
   const pathname = usePathname() || "/";
 
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const navRef = useRef<HTMLDivElement>(null);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clearCloseTimeout = () => {
@@ -79,6 +80,24 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (isMobile || !openDropdown) return;
+
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (!navRef.current) return;
+      if (navRef.current.contains(event.target as Node)) return;
+      clearCloseTimeout();
+      setOpenDropdown(null);
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [isMobile, openDropdown]);
+
   const menuItems = useMemo<MenuLink[]>(() => {
     if (!isMobile) return NAV_LINKS;
     return NAV_LINKS.flatMap((link) =>
@@ -89,7 +108,10 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
   return (
     // This component now renders the links for either desktop or mobile
     // The parent (Header.tsx) decides WHEN to show it.
-    <div className="flex flex-col items-center space-y-4 py-4 md:flex-row md:flex-1 justify-evenly md:space-x-6 md:space-y-0 md:py-0">
+    <div
+      ref={navRef}
+      className="flex flex-col items-center space-y-4 py-4 md:flex-row md:flex-1 justify-evenly md:space-x-6 md:space-y-0 md:py-0"
+    >
       {menuItems.map((link) => {
         const isDropdownLink = !isMobile && "children" in link;
         const isActive = "href" in link ? pathname === link.href : false;
@@ -106,18 +128,16 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
             link.children.some((child) => pathname === child.href);
           const dropdownUnderline =
             dropdownActive
-              ? "after:w-full"
-              : "after:w-0 md:hover:after:w-full";
+              ? "after:w-full cursor-pointer"
+              : "after:w-0 md:hover:after:w-full cursor-pointer";
           const dropdownClasses = `group relative inline-flex items-center justify-center gap-2 py-[5px] text-center max-[925px]:text-[10px] max-[985px]:text-[12px] max-[1065px]:text-sm max-[1135px]:text-[16px] max-[1185px]:text-lg text-xl font-bold text-[#1f1a16] hover:text-[#1f1a16] ${underlineBase} ${dropdownUnderline} mx-auto md:mx-0`;
           const dropdownWrapperClasses = isMobile
-            ? "relative flex w-full flex-col items-center"
-            : "relative flex flex-col items-center md:w-auto md:items-start";
+            ? "relative flex w-full flex-col items-center cursor-pointer"
+            : "relative flex flex-col items-center md:w-auto md:items-start cursor-pointer";
           return (
             <div
               key={link.label}
-              className={dropdownWrapperClasses}
-              onMouseEnter={() => handleDropdownOpen(link.label)}
-              onMouseLeave={handleDropdownCloseWithDelay}
+              className={`${dropdownWrapperClasses} `}
             >
               <button
                 type="button"
@@ -128,8 +148,8 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
               >
                 {link.label}
                 <ChevronDown
-                  className={`h-6 w-6 font-bold text-[#1f1a16] transition-transform duration-300 group-hover:text-[#1f1a16] flex${
-                    dropdownActive ? "rotate-180 text-[#1f1a16]" : ""
+                  className={`h-6 w-6 font-bold text-[#1f1a16] transition-transform duration-300 group-hover:text-[#1f1a16]  flex ${
+                    dropdownActive ? "rotate-180" : ""
                   }`}
                 />
               </button>
@@ -137,7 +157,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                 className={`flex flex-col items-center md:items-stretch md:absolute md:left-1/2 md:-translate-x-1/2 md:top-full md:z-20 md:mt-2 md:min-w-[220px] md:rounded-lg md:border md:border-white/30 bg-white/70 md:bg-white/70 backdrop-blur-md md:shadow-lg transition-all duration-300 ease-out md:duration-200 transform origin-top overflow-hidden md:overflow-visible ${
                   openDropdown === link.label
                     ? "max-h-96 opacity-100 scale-100 md:translate-y-1 translate-y-0 pointer-events-auto"
-                    : "max-h-0 opacity-0 scale-95 md:-translate-y-2 pointer-events-none"
+                    : "max-h-0 opacity-0 scale-95 md:-translate-y-2 pointer-events-none group-hover:rotate-180"
                 }`}
               >
                 {link.children.map((child) => {
