@@ -21,7 +21,14 @@ const AccessibilityWidget: React.FC = () => {
     const [textScale, setTextScale] = useState(1);
     const [highContrast, setHighContrast] = useState(false);
     const [language, setLanguage] = useState<Language>("English");
-    const [highlightLinks, setHighlightLinks] = useState(false);
+
+    const highlightOptions = ["off", "links", "buttons", "headers"] as const;
+    const [highlightIndex, setHighlightIndex] = useState(0);
+    const nextHighlight = () =>
+        setHighlightIndex(prev => (prev + 1) % highlightOptions.length);
+    const prevHighlight = () =>
+        setHighlightIndex(prev => (prev === 0 ? highlightOptions.length - 1 : prev - 1));
+
     const [reduceMotion, setReduceMotion] = useState(false);
 
     const contrastModes = ["normal", "dark", "invert", "grayscale"];
@@ -82,7 +89,7 @@ const AccessibilityWidget: React.FC = () => {
 
             setTextScale(settings.textScale ?? 1);
             setHighContrast(settings.highContrast ?? false);
-            setHighlightLinks(settings.highlightLinks ?? false);
+            setHighlightIndex(settings.highlightLinks ?? false);
             setReduceMotion(settings.reduceMotion ?? false);
             setContrastIndex(settings.contrastIndex ?? 0);
             setLanguageIndex(settings.languageIndex ?? 0);
@@ -119,9 +126,18 @@ const AccessibilityWidget: React.FC = () => {
         html.style.setProperty("--text-scale", textScale.toString());
         html.classList.toggle("high-contrast", highContrast);
         html.classList.toggle("reduce-motion", reduceMotion);
-        html.classList.toggle("highlight-links", highlightLinks);
 
-    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex, cursorIndex]);
+        html.classList.remove("highlight-links", "highlight-buttons", "highlight-headers");
+
+        const currentHighlight = highlightOptions[highlightIndex];
+
+        if (currentHighlight === "links") html.classList.add("highlight-links");
+        if (currentHighlight === "buttons") html.classList.add("highlight-buttons");
+        if (currentHighlight === "headers") html.classList.add("highlight-headers");
+
+
+
+    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex, cursorIndex]);
 
 
 
@@ -130,7 +146,7 @@ const AccessibilityWidget: React.FC = () => {
             const settings = {
                 textScale,
                 highContrast,
-                highlightLinks,
+                highlightIndex,
                 reduceMotion,
                 contrastIndex,
                 languageIndex,
@@ -140,7 +156,7 @@ const AccessibilityWidget: React.FC = () => {
         }, 300);
 
         return () => clearTimeout(timeout);
-    }, [textScale, highContrast, highlightLinks, reduceMotion, contrastIndex, languageIndex, cursorIndex]);
+    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex, cursorIndex]);
 
 
     useEffect(() => {
@@ -327,19 +343,35 @@ const AccessibilityWidget: React.FC = () => {
                         </div>
 
 
-                        {/* HIGHLIGHT LINKS */}
+                        {/* HIGHLIGHTS SECTION */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                            <span className="font-medium text-gray-800">{t.highlightLinks}</span>
+                            <span className="font-medium text-gray-800">{t.highlight_off}</span>
 
-                            <div className="flex items-center justify-center mt-3">
-                                <input
-                                    type="checkbox"
-                                    checked={highlightLinks}
-                                    onChange={() => setHighlightLinks(!highlightLinks)}
-                                    className="w-5 h-5 accent-blue-600"
-                                />
+                            <div className="flex items-center gap-4 mt-3">
+
+                                {/* Prev Button */}
+                                <button
+                                    onClick={prevHighlight}
+                                    className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                                >
+                                    ←
+                                </button>
+
+                                {/* Display Current Highlight Mode */}
+                                <span className="text-sm font-medium text-gray-900 min-w-[120px] text-center">
+                                    {t[`highlight_${highlightOptions[highlightIndex]}`]}
+                                </span>
+
+                                {/* Next Button */}
+                                <button
+                                    onClick={nextHighlight}
+                                    className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                                >
+                                    →
+                                </button>
                             </div>
                         </div>
+
 
 
                         {/* REDUCE MOTION */}
@@ -389,7 +421,7 @@ const AccessibilityWidget: React.FC = () => {
                             // Reset state values
                             setTextScale(1);
                             setHighContrast(false);
-                            setHighlightLinks(false);
+                            setHighlightIndex(0);
                             setReduceMotion(false);
                             setContrastIndex(0);
                             setLanguageIndex(0);

@@ -210,9 +210,25 @@ html {
     color: black !important;
     padding: 2px 4px;
     border-radius: 4px;
-    text-decoration: underline;
     font-weight: bold;
 }
+
+.highlight-buttons button {
+    outline: 3px solid orange !important;
+    background-color: #fff3cd !important;
+    color: black !important;
+}
+
+.highlight-headers h1,
+.highlight-headers h2,
+.highlight-headers h3,
+.highlight-headers h4 {
+    background-color: lightblue !important;
+    color: black !important;
+    padding: 3px 6px;
+    border-radius: 4px;
+}
+
 
 
 .reduce-motion * {
