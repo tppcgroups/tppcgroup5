@@ -1,6 +1,8 @@
 "use client";
 import accessibilityLogo from "../accessibility.png";
 import { translations } from "./Translations";
+import { announce } from "./screenReader";
+
 
 
 import React, { useEffect, useState} from "react";
@@ -74,7 +76,7 @@ const AccessibilityWidget: React.FC = () => {
         );
     };
 
-
+    const [screenReaderMode, setScreenreaderMode] = useState(false);
 
 
 
@@ -135,7 +137,7 @@ const AccessibilityWidget: React.FC = () => {
         if (currentHighlight === "buttons") html.classList.add("highlight-buttons");
         if (currentHighlight === "headers") html.classList.add("highlight-headers");
 
-
+        html.classList.toggle("screen-reader-mode", screenReaderMode);
 
     }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex, cursorIndex]);
 
@@ -176,6 +178,14 @@ const AccessibilityWidget: React.FC = () => {
         html.classList.remove("cursor-small", "cursor-medium", "cursor-large");
         html.classList.add(`cursor-${cursorSizes[cursorIndex]}`);
     }, [cursorIndex]);
+
+    useEffect(() => {
+        if (screenReaderMode) {
+            announce("Screen reader mode enabled. Reading page.");
+            announce(document.title);
+        }
+    }, [screenReaderMode]);
+
 
 
     const cursorLabelKey: Record<typeof cursorSizes[number], keyof typeof t> = {

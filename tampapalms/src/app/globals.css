@@ -205,11 +205,7 @@ html {
 
 
 
-/* ----------------------------- */
-/*   TAN HIGHLIGHT STYLING       */
-/* ----------------------------- */
 
-/* Highlight LINKS */
 .highlight-links a {
     background-color: #d2b48c !important; /* tan */
     color: black !important;
@@ -218,7 +214,7 @@ html {
     font-weight: bold;
 }
 
-/* Highlight BUTTONS */
+
 .highlight-buttons button,
 .highlight-buttons a.button,
 .highlight-buttons input[type="submit"],
@@ -229,7 +225,7 @@ html {
     border-color: #d2b48c !important;
 }
 
-/* Highlight HEADERS */
+
 .highlight-headers h1,
 .highlight-headers h2,
 .highlight-headers h3,
@@ -252,7 +248,7 @@ html {
 }
 
 
-/* FALSE COLOR MODE — UT STYLE */
+
 .contrast-invert {
     filter:
             invert(1)
@@ -262,7 +258,7 @@ html {
             brightness(0.9) !important;
 }
 
-/* Images also get transformed */
+
 .contrast-invert img,
 .contrast-invert video {
     filter:
@@ -362,5 +358,6 @@ footer {
     cursor: url("/images/largecursor.webp") 0 0 / 48px 48px, auto;
     image-rendering: pixelated;
 }
+
 
 
