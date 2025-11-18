@@ -5,18 +5,37 @@ import React from "react";
 // Assuming this path for the Supabase server client (needed for logging)
 import { supabaseServer } from "@/lib/supabase/serverClient";
 import { EmailTemplate } from "@/app/components/email/EmailTemplate";
+import { PostgrestError } from "@supabase/supabase-js";
 
 // This function runs asynchronously to log the email event without blocking the main API response.
 const logEmailAction = (
   recipient: string,
   subject: string,
   success: boolean,
-  errorDetails?: any
+  errorDetails?: unknown
 ) => {
   const supabase = supabaseServer(); // Initialize client for server-side logging
 
   // Non-blocking async function to insert the log
   (async () => {
+    let errorMessage: string | null = null;
+    if (errorDetails) {
+      if (typeof errorDetails === "string") {
+        errorMessage = errorDetails;
+      } else if (errorDetails instanceof Error) {
+        errorMessage = errorDetails.message;
+      } else if (
+        typeof errorDetails === "object" &&
+        errorDetails !== null &&
+        "message" in errorDetails
+      ) {
+        // Handle generic objects like { message: "..." }
+        errorMessage = (errorDetails as { message: string }).message;
+      } else {
+        // Fallback for anything else (like an entire Nodemailer response object)
+        errorMessage = JSON.stringify(errorDetails);
+      }
+    }
     const logEntry = {
       timestamp: new Date().toISOString(),
       event_type: "EMAIL_SENT",
@@ -24,9 +43,7 @@ const logEmailAction = (
       metadata: {
         success: success,
         subject: subject,
-        error_message: success
-          ? null
-          : errorDetails?.message || JSON.stringify(errorDetails),
+        error_message: success ? null : errorMessage,
         service: "Nodemailer",
       },
     };

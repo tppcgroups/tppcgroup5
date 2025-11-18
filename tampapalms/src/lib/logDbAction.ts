@@ -12,11 +12,11 @@ import { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
 
 export async function logDbAction<T>(
     supabase: SupabaseClient,
-    queryPromise: Promise<{ data: T | null; error: any}>,
+    queryPromise: Promise<{ data: T | null; error: PostgrestError | null}>,
     eventType: 'GET' | 'POST' | 'DELETE' | 'PATCH',
     userIdentifier: string,
-    metadata: Record<string, any> = {},
-): Promise<{ data: T | null; error: any}> {
+    metadata: Record<string, unknown> = {},
+): Promise<{ data: T | null; error: PostgrestError | null}> {
     
     // Execute the main DB query
     const result = await queryPromise;
@@ -44,7 +44,7 @@ export async function logDbAction<T>(
         if (logError) {
           console.error("Failed to insert log entry:", logError.message);
         }
-      } catch (logCatchError: any) {
+      } catch (logCatchError) {
         console.error("Catch error during log insertion:", logCatchError);
       }
     })();
