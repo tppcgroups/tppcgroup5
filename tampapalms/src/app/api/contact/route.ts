@@ -41,8 +41,10 @@ function parseConsent(value: ContactPayload["consent"]): boolean {
 }
 
 function getEmailConfig() {
-  const from = process.env.EMAIL_FROM_ADDRESS || process.env.EMAIL_USER;
-  const internal = process.env.EMAIL_INTERNAL_NOTIFICATIONS;
+  const from = process.env.EMAIL_USER;
+  const internal = "jrsussner@gmail.com";
+  // What we will be using for internal
+  // const internal = "marketing@tampapalmscenter.com"
   if (!from || !internal) {
     throw new Error("Email env vars are not fully configured.");
   }
