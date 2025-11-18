@@ -14,7 +14,7 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
   recipientEmail = "there",
   buildingId = "your requested suite",
   marketingEmail = "marketing@tampapalmscenter.com",
-  subscribeUrl = "https://tampapalms.com/updates",
+  subscribeUrl = "https://tppcgroup5.vercel.app/pages/DeleteEmail",
   logoUrl,
 }) => {
   const headline = `You're on the alert list for ${buildingId}`;
@@ -307,7 +307,7 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
                 <br />
                 Prefer not to receive alerts?{" "}
                 <a
-                  href={`${subscribeUrl}?preference=unsubscribe`}
+                  href={subscribeUrl}
                   style={{
                     color: "#0f172a",
                     textDecoration: "none",
