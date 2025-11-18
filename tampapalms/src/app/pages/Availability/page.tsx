@@ -445,7 +445,7 @@ function AvailabilityContent() {
         }
       />
 
-      <section className="mx-auto max-w-6xl px-4 pb-20 my-4">
+      <section className="mx-auto max-w-6xl px-4 pb-4 my-4">
         {/* Category toggle pills. */}
         <div className="mb-8 flex flex-wrap items-center gap-3 text-sm">
           <div className="flex rounded-full border border-[#e1d9cf] bg-white p-1">
