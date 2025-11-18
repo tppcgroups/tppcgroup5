@@ -5,6 +5,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PiCheckCircleBold } from "react-icons/pi";
+import type { LucideIcon } from "lucide-react";
+import { DoorOpen, Maximize2, PencilRuler, VolumeX } from "lucide-react";
 import axios from "axios";
 import {useEffect, useRef, useState} from "react";
 import type {Building} from "@/app/components/availability/type"
@@ -20,26 +22,32 @@ const normalizeStatus = (
   return "occupied"; // Default to occupied/waitlisted for all other values
 };
 
-const featureTiles = [
+type FeatureTile = { heading: string; blurb: string; icon: LucideIcon };
+
+const featureTiles: FeatureTile[] = [
   {
     heading: "Ten-Foot Ceilings",
     blurb:
       "Open atmosphere that adds a sense of space and sophistication to every room.",
+    icon: Maximize2,
   },
   {
     heading: "Custom Wrought-Iron Entry Doors and Beautifully Landscaped Entries",
     blurb:
       "Custom craftsmanship and lush landscaping come together to create a warm, inviting, and memorable entrance.",
+    icon: DoorOpen,
   },
   {
     heading: "Elegant Architectural Design With Professional Appeal",
     blurb:
       "Sophisticated architecture combines elegance with a strong, professional presence.",
+    icon: PencilRuler,
   },
   {
     heading: "Sound Insulated Walls and Solid Core Doors",
     blurb:
       "Thick, insulated walls and solid core doors ensure a quiet, private, and comfortable environment.",
+    icon: VolumeX,
   },
 ];
 
@@ -252,24 +260,30 @@ export default function Features() {
         </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {featureTiles.map((feature) => (
-            <article
-              key={feature.heading}
-              className="group relative overflow-hidden rounded-3xl bg-white p-8 shadow-xl shadow-[#1f1a16]/10 ring-1 ring-transparent transition hover:ring-[#e1d9cf]"
-            >
-              <div
-                className="absolute -top-10 -right-10 h-32 w-32 rounded-full bg-gradient-to-br from-[#efe7dd]/70 via-[#fdf8f3] to-transparent blur-3xl transition group-hover:scale-110"
-                aria-hidden="true"
-              />
-              <div className="relative space-y-4 text-left">
-                <span className="block text-xs font-semibold uppercase tracking-[0.35em] text-[#a49382]">
-                  Feature
-                </span>
-                <h3 className="text-2xl font-semibold text-[#1f1a16]">{feature.heading}</h3>
-                <p className="text-sm leading-relaxed text-[#7a6754] md:text-base">{feature.blurb}</p>
-              </div>
-            </article>
-          ))}
+          {featureTiles.map((feature) => {
+            const Icon = feature.icon;
+            return (
+              <article
+                key={feature.heading}
+                className="group relative flex h-full flex-col gap-4 overflow-hidden rounded-3xl border border-[#c8b79f] bg-white p-6 shadow-lg shadow-black/5 transition hover:border-[#5a4b3c]"
+              >
+                <div className="relative flex h-full flex-col gap-3 text-left">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="inline-flex size-12 items-center justify-center rounded-2xl bg-[#ddd0bd] text-[#5a4b3c]">
+                      <Icon className="h-5 w-5" aria-hidden />
+                    </div>
+                    <span className="block text-right text-xs font-semibold uppercase tracking-[0.35em] text-[#7a6754]">
+                      Feature
+                    </span>
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-semibold text-[#1f1a16] md:text-xl">{feature.heading}</h3>
+                    <p className="text-sm leading-relaxed text-neutral-600 md:text-base">{feature.blurb}</p>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
 
