@@ -25,7 +25,7 @@ export async function DELETE(request: Request) {
     }
 
     if (userData) {
-        let userID = userData.user_id;
+        const userID = userData.user_id;
         // user exists delete user
         const { error: deleteUserError } = await supabase
             .from("users")
