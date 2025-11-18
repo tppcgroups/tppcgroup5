@@ -538,24 +538,20 @@ function AvailabilityContent() {
       </section>
 
       {/* Explore Spaces container */}
-      <div className="rounded-xl my-16 md:my-24 mx-8 bg-gray-50">
-        <div className="text-center my-16 md:my-24">
-          {/* The "eyebrow" text adds a touch of color and context */}
-          <p className="text-sm font-semibold uppercase tracking-wider">
-            Our Properties
-          </p>
-          <TitleCard title="Explore Spaces" />
+      <div className="mx-6 my-12 rounded-3xl bg-gray-50 px-6 py-12 md:mx-10 md:my-16 md:px-10 md:py-14">
+        <div className="mb-8 text-center md:mb-10">
+          <TitleCard title="Explore Spaces" eyebrow="Our Properties" align="center" />
         </div>
-        <div className="w-full flex md:flex-row flex-col justify-center gap-8">
+        <div className="w-full flex md:flex-row flex-col justify-center gap-6 md:gap-7">
           <SpacesCard
             title="Buildings/Suites"
-            imageUrl="/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-11-LargeHighDefinition.jpg"
+            imageUrl="/images/Bldg6-019.jpg"
             href="https://www.loopnet.com/Listing/17425-Bridge-Hill-Ct-Tampa-FL/31448652/"
             features={officeFeatures}
           />
           <SpacesCard
             title="Executive Suites"
-            imageUrl="/images/5331/5331-ExploreSpacesCardImage.jpg"
+            imageUrl="/images/Bldg5-017.jpg"
             href="https://www.loopnet.com/Listing/5331-Primrose-Lake-Cir-Tampa-FL/4151894/"
             features={executiveFeatures}
           />

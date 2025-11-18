@@ -27,9 +27,9 @@ export const SpacesCard: React.FC<SpacesCardProps> = ({
       target="_blank"
       rel="noopener noreferrer"
       aria-describedby={featureListId}
-      className="group relative flex h-full w-full flex-col overflow-hidden rounded-[32px] border border-[#e1d9cf] bg-white/95 shadow-xl shadow-[#1f1a16]/10 transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-[#d4c7b7] hover:shadow-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1f1a16]/40 md:max-w-none md:flex-1"
+      className="group relative flex h-full w-full flex-col overflow-hidden rounded-[28px] border border-[#c8b79f] bg-white shadow-lg shadow-black/5 transition-all duration-400 ease-out hover:-translate-y-1 hover:border-[#5a4b3c] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1f1a16]/40 md:max-w-none md:flex-1"
     >
-      <div className="relative h-[19.5rem] overflow-hidden md:h-[22rem]">
+      <div className="relative h-[19.5rem] overflow-hidden md:h-[22rem] ">
         <Image
           src={imageUrl}
           alt={`${title} exterior photograph`}
@@ -39,12 +39,16 @@ export const SpacesCard: React.FC<SpacesCardProps> = ({
         />
 
         <div
-          className="absolute inset-0 bg-gradient-to-t from-[#1f1a16]/70 via-[#1f1a16]/10 to-transparent opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+          className="absolute inset-0 bg-gradient-to-t from-[#1f1a16]/65 via-[#1f1a16]/10 to-transparent opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
           aria-hidden="true"
         />
 
+        <div className="absolute left-4 top-4 inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#4a4034] shadow-sm ring-1 ring-[#e1d9cf]">
+          {label}
+        </div>
+
         <div
-          className="absolute inset-x-0 bottom-0 hidden translate-y-6 flex-col gap-3 p-6 text-white opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 md:flex"
+          className="absolute inset-x-0 bottom-0 hidden translate-y-6 flex-col gap-3 bg-gradient-to-t from-black/15 via-black/5 to-transparent p-6 text-white opacity-0 backdrop-blur-[3px] transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 md:flex"
           aria-hidden="true"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
@@ -62,12 +66,14 @@ export const SpacesCard: React.FC<SpacesCardProps> = ({
         </div>
       </div>
 
-      <div className="flex flex-col gap-5 px-7 py-8 md:gap-6">
+      <div className="flex flex-col gap-5 px-7 py-6 md:gap-6 ">
         <div className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#a49382]">
             {label}
           </p>
-          <h3 className="text-[1.85rem] font-semibold text-[#1f1a16] md:text-[2rem]">{title}</h3>
+          <h3 className="text-[1.65rem] font-semibold text-[#1f1a16] md:text-[1.85rem]">
+            {title}
+          </h3>
         </div>
 
         <div id={featureListId} className="sr-only">
