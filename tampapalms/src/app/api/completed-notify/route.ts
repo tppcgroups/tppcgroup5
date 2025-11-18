@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabase/serverClient";
 import { PostgrestError } from "@supabase/supabase-js";
+import { Timestamp } from "next/dist/server/lib/cache-handlers/types";
 
 // Define the interface for the data received from the client
 interface CompletedNotifyPayload {
   notify_request_id: string; // The UUID generated when the request was saved
   user_email: string; // The email used to find the user_id
   buildingId: string; // The ID of the building/suite (space_id)
+  building_number: number;
+  suite_number: string;
+  title: string;
 }
 
 // Helper function for clearer error handling
@@ -63,7 +67,26 @@ export async function POST(request: Request) {
 
     const userId = userData.user_id;
 
+    // grab the created_at time stamp from notify request
+    let requestTimestamp: Timestamp | null = null;
+
+    const { data: requestData, error: fetchRequestError } = await supabase
+      .from("notify_requests")
+      .select("created_at")
+      .eq("notify_request_id", notify_request_id)
+      .single()
+
+    if (fetchRequestError) {
+      console.error(`Failed to fetch notify request (ID: ${notify_request_id}:`, fetchRequestError.message);
+    } else {
+      requestTimestamp = requestData.created_at;
+    }
+
     // --- 2. INSERT COMPLETED NOTIFY LOG ---
+
+    const delimiter: string = "-";
+    const index = buildingId.indexOf(delimiter);
+    const suite_num: string = buildingId.substring(index + 1);
 
     const { error: insertError } = await supabase
       .from("completed_notify")
@@ -71,7 +94,11 @@ export async function POST(request: Request) {
         {
           user_id: userId,
           notify_request_id: notify_request_id,
-          space_id: buildingId, // Maps buildingId to space_id in the database
+          space_id: buildingId,
+          building_number: parseInt(buildingId[0]),
+          suite_number: suite_num,
+          title: "Space Notify Request", 
+          created_at: requestTimestamp,// Maps buildingId to space_id in the database
           // notified_at field defaults to NOW() in the database schema
           // Other detailed fields (building_number, title, etc.) are left null
         },
