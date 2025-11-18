@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 import { renderConfirmationEmail, renderInternalNotificationEmail } from "@/lib/email/contactEmails";
 import { getSupabaseServiceRoleClient } from "@/lib/supabase/serviceRoleClient";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 type ContactPayload = {
   name?: string;
@@ -51,6 +52,59 @@ function getEmailConfig() {
   return { from, internal };
 }
 
+
+// Helper function to find or create a user by email
+async function findOrCreateUser(
+  supabase: SupabaseClient,
+  email: string
+): Promise<{ user_id: string | null; error: any}> {
+  const { data: userData, error: findError } = await supabase
+    .from("users")
+    .select("user_id")
+    .eq("email", email)
+    .maybeSingle();
+
+  if (findError) {
+    console.error("Supabase user search failed:", findError);
+    return { user_id: null, error: findError};
+  }
+
+  if (userData) {
+    // user found in db
+    return { user_id: userData.user_id, error: null};
+  }
+
+  // no user found, create new one
+  const { data: insertData, error: insertError } = await supabase
+    .from("users")
+    .insert({ email })
+    .select("user_id")
+    .single();
+
+  if (insertError) {
+    // could fail due to db bugs or race condition
+    console.warn("supabase user creation attempt failed. Trying search again:", insertError);
+
+    // retry: first checking if the user now exists for race conditions
+    const { data: retryData, error: retryError } = await supabase
+      .from("users")
+      .select("user_id")
+      .eq("email", email)
+      .single();
+
+    if (retryError) {
+      // error on retry
+      console.error("Supabase user creation retry failed:", retryError);
+      return { user_id: null, error: retryError };
+    }
+
+    // user found after retry
+    return { user_id: retryData.user_id, error: null};
+  }
+
+  // User successfully created
+  return { user_id: insertData.user_id, error: null };
+}
 export async function POST(req: Request) {
   let payload: ContactPayload;
 
@@ -89,11 +143,27 @@ export async function POST(req: Request) {
 
   const supabase = getSupabaseServiceRoleClient();
   let recordId: string | null = null;
+  let userId: string | null = null;
+
+  // find or create user
+  try {
+    const { user_id, error } = await findOrCreateUser(supabase, email);
+
+    if (error || !user_id) {
+      console.error("Failed to find or create user:", error);
+      return NextResponse.json({ error: "unable to process user data right now."}, {status: 500})
+    }
+    userId = user_id;
+  } catch (error) {
+    console.error("Contact API User processing error:", error);
+    return NextResponse.json({ error: "Unable to process user data right now."}, {status: 500})
+  }
 
   try {
     const { data, error } = await supabase
       .from("contact_messages")
       .insert({
+        user_id: userId,
         name,
         email,
         subject: subject || null,

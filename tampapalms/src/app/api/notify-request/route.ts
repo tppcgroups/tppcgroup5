@@ -14,6 +14,9 @@ interface NotifyRequestData {
 interface NotifyInsertData {
   user_id: string;
   space_id: string; // Using space_id to align with the database column (mapped from buildingId)
+  building_number: number;
+  suite_number: string;
+  title: string,
 }
 
 // Helper function for clearer error handling
@@ -27,7 +30,6 @@ const handleSupabaseError = (error: PostgrestError, operation: string) => {
 
 export async function GET() {
   // This GET handler is simplified to fetch all requests for demonstration
-  // In a real app, you would secure this or filter by user/admin role.
   const supabase = supabaseServer();
   const { data, error } = await supabase
     .from("notify_requests")
@@ -109,12 +111,19 @@ export async function POST(request: Request) {
         { status: 200 }
       );
     }
+    // logic to grab suite number
+    const delimiter: string = "-";
+    const index = buildingId.indexOf(delimiter);
+    const suite_num: string = buildingId.substring(index + 1);
 
     // --- 3. CREATE NEW NOTIFY REQUEST ---
 
     const notifyInsertData: NotifyInsertData = {
       user_id: userId,
       space_id: buildingId,
+      building_number: parseInt(buildingId[0]),
+      suite_number: suite_num,
+      title: "Space Notify Request"
     };
 
     const { data: newRequest, error: insertRequestError } = await supabase
