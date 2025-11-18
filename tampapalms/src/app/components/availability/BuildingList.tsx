@@ -1,5 +1,7 @@
+import { useEffect, useRef } from "react";
 import { statusMap } from "./statusMap";
 import type { Building, AvailabilityStatus } from "./type";
+import { deriveSuiteKey } from "@/lib/utils";
 
 type BuildingeListProps = {
   loading: boolean;
@@ -7,9 +9,33 @@ type BuildingeListProps = {
   activeBuildingId: string;
   normalizeStatus: (raw: string | null | undefined) => AvailabilityStatus;
   onSelectBuilding: (id: string) => void;
+  scrollTargetSuite?: {
+    buildingNumber: number;
+    suiteId: string;
+    timestamp: number;
+  } | null;
 };
 
-export function BuildingList({ loading, visibleBuildings, activeBuildingId, normalizeStatus, onSelectBuilding }: BuildingeListProps) {
+export function BuildingList({
+  loading,
+  visibleBuildings,
+  activeBuildingId,
+  normalizeStatus,
+  onSelectBuilding,
+  scrollTargetSuite,
+}: BuildingeListProps) {
+  const listRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!scrollTargetSuite || !listRef.current) return;
+    const { buildingNumber, suiteId } = scrollTargetSuite;
+    const selector = `[data-building-number="${buildingNumber}"][data-suite-number="${suiteId}"]`;
+    const target = listRef.current.querySelector<HTMLButtonElement>(selector);
+    if (target) {
+      target.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
+  }, [scrollTargetSuite]);
+
     return (
       <aside className="flex h-full w-full flex-col rounded-[32px] border border-[#e1d9cf] bg-white/95 p-6 shadow-xl shadow-[#1f1a16]/5">
         <div>
@@ -25,7 +51,10 @@ export function BuildingList({ loading, visibleBuildings, activeBuildingId, norm
             details.
           </p>
         </div>
-        <div className="mt-6 grid flex-1 content-start items-start gap-3 overflow-y-auto pr-1">
+        <div
+          ref={listRef}
+          className="mt-6 grid flex-1 content-start items-start gap-3 overflow-y-auto pr-1"
+        >
           {loading && <p>Loading buildings...</p>}
           {visibleBuildings.map((building) => {
             const isActive = activeBuildingId === building.building_id;
@@ -38,6 +67,11 @@ export function BuildingList({ loading, visibleBuildings, activeBuildingId, norm
                 key={building.building_id}
                 type="button"
                 onClick={() => onSelectBuilding(building.building_id)}
+                data-building-number={building.building_number}
+                data-suite-number={deriveSuiteKey(
+                  building.suite_number,
+                  building.building_id
+                )}
                 className={`flex w-full flex-col gap-2 rounded-2xl border px-5 py-5 text-left transition ${
                   isActive
                     ? "border-[#4a4034] bg-[#1f1a16] text-white shadow-lg shadow-[#1f1a16]/20"
