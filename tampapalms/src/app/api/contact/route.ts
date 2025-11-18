@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 import { renderConfirmationEmail, renderInternalNotificationEmail } from "@/lib/email/contactEmails";
 import { getSupabaseServiceRoleClient } from "@/lib/supabase/serviceRoleClient";
-import { SupabaseClient } from "@supabase/supabase-js";
+import { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
 
 type ContactPayload = {
   name?: string;
@@ -57,7 +57,7 @@ function getEmailConfig() {
 async function findOrCreateUser(
   supabase: SupabaseClient,
   email: string
-): Promise<{ user_id: string | null; error: any}> {
+): Promise<{ user_id: string | null; error: PostgrestError | null}> {
   const { data: userData, error: findError } = await supabase
     .from("users")
     .select("user_id")

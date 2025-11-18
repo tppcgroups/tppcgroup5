@@ -10,8 +10,7 @@ interface PopupComponentProps {
 
 const marketingEmailAddress =
   process.env.NEXT_PUBLIC_MARKETING_EMAIL ?? "marketing@tampapalms.com";
-const subscribeUrl =
-  process.env.NEXT_PUBLIC_SUBSCRIBE_URL ?? "https://tampapalms.com/updates";
+const subscribeUrl = "https://tppcgroup5.vercel.app/pages/DeleteEmail";
 const logoUrl = process.env.NEXT_PUBLIC_LOGO_URL;
 
 function NotifyPopUp({ onClose, buildingId }: PopupComponentProps) {
