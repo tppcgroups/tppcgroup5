@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabase/serverClient";
 import { PostgrestError } from "@supabase/supabase-js";
+import { logDbAction } from "@/lib/logDbAction";
 
 // Define the interface for the data received from the client
 interface NotifyRequestData {
@@ -28,12 +29,31 @@ const handleSupabaseError = (error: PostgrestError, operation: string) => {
   );
 };
 
+function getUserIdFromRequest(request: Request): string {
+    return 'unauthenticated_notify_user'; 
+};
+
+
 export async function GET() {
   // This GET handler is simplified to fetch all requests for demonstration
   const supabase = supabaseServer();
-  const { data, error } = await supabase
-    .from("notify_requests")
-    .select("*, users(email)");
+  const userId = 'system_request';
+
+  const queryPromise = (async () => {
+    const { data, error } = await supabase.from("notify_requests").select("*, users(email)");
+
+    return { data, error };
+  })();
+  const { data, error } = await logDbAction(
+    supabase, 
+    queryPromise,
+    'GET',
+    userId,
+    {
+      table: 'notify_requests',
+      operation: 'select_all_with_users'
+    }
+  );
 
   if (error) return handleSupabaseError(error, "fetch");
 
@@ -42,10 +62,11 @@ export async function GET() {
 
 export async function POST(request: Request) {
   const supabase = supabaseServer();
+  const requstBody = await request.json();
+  const { email, buildingId }: NotifyRequestData = requstBody;
+  const initialUserId = getUserIdFromRequest(request);
 
   try {
-    const { email, buildingId }: NotifyRequestData = await request.json();
-
     if (!email || !buildingId) {
       return NextResponse.json(
         { error: true, msg: "Email and building ID are required" },
@@ -55,14 +76,27 @@ export async function POST(request: Request) {
 
     let userId: string;
 
-    // --- 1. FIND OR CREATE USER ---
+    // FIND OR CREATE USER ---
 
-    // Check if user exists
-    const { data: userData, error: fetchUserError } = await supabase
-      .from("users")
-      .select("user_id")
-      .eq("email", email)
-      .single();
+    // Check if user exists, log it
+    const lookupQueryPromise = (async () => {
+      const { data, error } = await supabase
+        .from("users")
+        .select("user_id")
+        .eq("email", email)
+        .single();
+
+      return { data, error };
+    })();
+
+    // Execute query via logger
+    const { data: userData, error: fetchUserError } = await logDbAction(
+      supabase,
+      lookupQueryPromise,
+      "GET", // Logical GET operation on the users table
+      initialUserId,
+      { table: "users", operation: "lookup_by_email", email }
+    );
 
     if (fetchUserError && fetchUserError.code !== "PGRST116") {
       // PGRST116 is "No rows found"
@@ -74,26 +108,58 @@ export async function POST(request: Request) {
       userId = userData.user_id;
     } else {
       // User does not exist, create new user
-      const { data: newUser, error: createUserError } = await supabase
-        .from("users")
-        .insert([{ email }])
-        .select("user_id")
-        .single();
+
+      const createQueryPromise = (async () => {
+        const { data, error } = await supabase
+          .from("users")
+          .insert([{ email }])
+          .select("user_id")
+          .single();
+
+        return { data, error };
+      })();
+
+      // Execute creation via logger
+      const { data: newUser, error: createUserError } = await logDbAction(
+        supabase,
+        createQueryPromise,
+        "POST", // Logical POST operation on the users table
+        initialUserId,
+        { table: "users", operation: "create_new_user", email }
+      );
 
       if (createUserError) {
         return handleSupabaseError(createUserError, "user creation");
       }
-      userId = newUser.user_id;
+      userId = newUser!.user_id;
     }
 
     // --- 2. CHECK FOR EXISTING NOTIFY REQUEST ---
 
-    const { data: existingRequest, error: fetchRequestError } = await supabase
-      .from("notify_requests")
-      .select("notify_request_id")
-      .eq("user_id", userId)
-      .eq("space_id", buildingId)
-      .single();
+    const checkQueryPromise = (async () => {
+      const { data, error } = await supabase
+        .from("notify_requests")
+        .select("notify_request_id")
+        .eq("user_id", userId)
+        .eq("space_id", buildingId)
+        .single();
+
+      return { data, error };
+    })();
+
+    // Execute check via logger
+    const { data: existingRequest, error: fetchRequestError } =
+      await logDbAction(
+        supabase,
+        checkQueryPromise,
+        "GET", // Logical GET operation
+        userId,
+        {
+          table: "notify_requests",
+          operation: "check_existing",
+          space_id: buildingId,
+        }
+      );
 
     if (fetchRequestError && fetchRequestError.code !== "PGRST116") {
       return handleSupabaseError(fetchRequestError, "notify request check");
@@ -123,14 +189,31 @@ export async function POST(request: Request) {
       space_id: buildingId,
       building_number: parseInt(buildingId[0]),
       suite_number: suite_num,
-      title: "Space Notify Request"
+      title: "Space Notify Request",
     };
 
-    const { data: newRequest, error: insertRequestError } = await supabase
-      .from("notify_requests")
-      .insert([notifyInsertData])
-      .select("notify_request_id")
-      .single();
+    // Define query promise for insertion
+    const insertQueryPromise = (async () => {
+      const { data, error } = await supabase
+        .from("notify_requests")
+        .insert([notifyInsertData])
+        .select("notify_request_id")
+        .single();
+      return { data, error };
+    })();
+
+    // Execute insertion via logger
+    const { data: newRequest, error: insertRequestError } = await logDbAction(
+      supabase,
+      insertQueryPromise,
+      "POST", // Logical POST operation
+      userId,
+      {
+        table: "notify_requests",
+        operation: "create_new",
+        space_id: buildingId,
+      }
+    );
 
     if (insertRequestError) {
       return handleSupabaseError(
@@ -144,7 +227,7 @@ export async function POST(request: Request) {
       {
         success: true,
         msg: "Notification request saved successfully.",
-        notify_request_id: newRequest.notify_request_id,
+        notify_request_id: newRequest!.notify_request_id,
         email: email, // Send email back for logging
       },
       { status: 201 }

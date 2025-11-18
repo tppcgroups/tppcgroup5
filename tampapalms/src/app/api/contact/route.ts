@@ -161,19 +161,19 @@ export async function POST(req: Request) {
 
   try {
     const { data, error } = await supabase
-      .from("contact_messages")
+      .from("contact_us")
       .insert({
         user_id: userId,
-        name,
+        // name,
         email,
         subject: subject || null,
         message,
         phone_number: phoneNumber || null,
-        metadata: {
-          consent,
-          referer: req.headers.get("referer"),
-          userAgent: req.headers.get("user-agent"),
-        },
+        // metadata: {
+        //   consent,
+        //   referer: req.headers.get("referer"),
+        //   userAgent: req.headers.get("user-agent"),
+        // },
       })
       .select("contact_us_id")
       .single();

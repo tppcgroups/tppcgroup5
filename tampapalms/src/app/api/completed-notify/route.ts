@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabase/serverClient";
 import { PostgrestError } from "@supabase/supabase-js";
 import { Timestamp } from "next/dist/server/lib/cache-handlers/types";
+import { logDbAction } from "@/lib/logDbAction";
 
 // Define the interface for the data received from the client
 interface CompletedNotifyPayload {
@@ -88,21 +89,36 @@ export async function POST(request: Request) {
     const index = buildingId.indexOf(delimiter);
     const suite_num: string = buildingId.substring(index + 1);
 
-    const { error: insertError } = await supabase
-      .from("completed_notify")
-      .insert([
-        {
-          user_id: userId,
-          notify_request_id: notify_request_id,
-          space_id: buildingId,
-          building_number: parseInt(buildingId[0]),
-          suite_number: suite_num,
-          title: "Space Notify Request", 
-          created_at: requestTimestamp,// Maps buildingId to space_id in the database
-          // notified_at field defaults to NOW() in the database schema
-          // Other detailed fields (building_number, title, etc.) are left null
-        },
-      ]);
+    const insertData = {
+      user_id: userId,
+      notify_request_id: notify_request_id,
+      space_id: buildingId,
+      building_number: parseInt(buildingId[0]),
+      suite_number: suite_num,
+      title: "Space Notify Request",
+      created_at: requestTimestamp,
+    };
+
+    // define the query promise for logging
+    const queryPromise = (async () => {
+      const { data, error } = await supabase
+        .from("completed_notify")
+        .insert([insertData]);
+
+      return { data, error }
+    })();
+
+    const { error: insertError } = await logDbAction(
+      supabase,
+      queryPromise,
+      'POST',
+      userId,
+      {
+        table: 'completed_notify',
+        request_id: notify_request_id,
+        space_id: buildingId,
+      }
+    )
 
     if (insertError) {
       return handleSupabaseError(insertError, "completion log insertion");
