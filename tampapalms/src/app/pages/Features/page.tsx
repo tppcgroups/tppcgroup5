@@ -180,33 +180,6 @@ const AmenityCard = ({ column }: { column: (typeof amenityColumns)[number] }) =>
 };
 
 export default function Features() {
-  const [availableSuites, setAvailableSuites] = useState(0);
-  const [uniqueBuildings, setUniqueBuildings] = useState(0);
-  useEffect(()=>{
-    async function getBuildings() {
-      try {
-        const response = await axios.get("/api/buildings");
-        const rawBuildings = (response.data ?? []) as Building[];
-        const availableSpaces = rawBuildings.filter(
-          (b) => normalizeStatus(b.availability_status) === "available");
-        console.log(availableSpaces.length);
-        setAvailableSuites(availableSpaces.length)
-        const uniqueByNumber = Array.from(
-          new Map(
-              rawBuildings.map((b)=>{
-                const match = b.street_address?.match(/^\d+/);
-                const buildingNumber = match ? match[0] : b.street_address;
-                return [buildingNumber, b];
-              })
-          ).values()
-        );
-        setUniqueBuildings(uniqueByNumber.length);
-        } catch (error) {
-        console.error(error);
-      }
-    }
-    getBuildings();
-  },[])
   return (
     <main className="min-h-screen bg-[#f9f7f3] text-[#1f1a16] pb-20">
       <header className="relative -mx-4 overflow-hidden rounded-none shadow-[0_35px_90px_-70px_rgba(31,26,22,0.8)] sm:-mx-6">
@@ -327,6 +300,15 @@ export default function Features() {
             The same ownership and maintenance teams who welcome you on day one remain on campus every day,
             ensuring your suite performs the way it should.
           </p>
+          <div className="flex justify-center gap-6 ">
+            <Image
+                src="/images/Bldg5-Suite202-002.jpg"
+                alt="Lobby and seating area at Tampa Palms Professional Center"
+                width={500}
+                height={100}
+                className="rounded-3xl object-cover shadow-2xl"
+            />
+          </div>
         </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
