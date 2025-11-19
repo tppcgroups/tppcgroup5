@@ -41,7 +41,6 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen }) => {
           >
           <span
               onClick={handleLinkClick}
-
               onMouseOver={() => announce(link.label)}
             className={`relative font-bold text-xl py-2 text-gray-800 hover:text-black after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:w-0
               after:bg-gray-800 after:transition-all after:duration-500

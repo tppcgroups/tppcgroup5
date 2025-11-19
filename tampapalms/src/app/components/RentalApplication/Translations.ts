@@ -20,7 +20,8 @@ export const translations = {
         backgroundTheme: "Background Theme",
         theme_light: "Light",
         theme_dark: "Dark",
-        screenReader: "Screen Reader"
+        screenReader: "Screen Reader",
+        keyboardNavigation: "Keyboard Navigation"
     },
 
     Spanish: {
@@ -44,7 +45,8 @@ export const translations = {
         backgroundTheme: "Fondo Tema",
         theme_light: "Claro",
         theme_dark: "Oscuro",
-        screenReader: "Lector de Pantalla"
+        screenReader: "Lector de Pantalla",
+        keyboardNavigation: "Navegación por Teclado"
     },
 
     French: {
@@ -68,7 +70,8 @@ export const translations = {
         backgroundTheme: "Arrière-plan Thème",
         theme_light: "Clair",
         theme_dark: "Sombre",
-        screenReader: "Lecteur d’écran"
+        screenReader: "Lecteur d’écran",
+        keyboardNavigation: "Navigation au Clavier"
     },
 
     Swahili: {
@@ -92,7 +95,8 @@ export const translations = {
         backgroundTheme: "Mandharinyuma Mada",
         theme_light: "Mwanga",
         theme_dark: "Giza",
-        screenReader: "Msomaji wa Skrini"
+        screenReader: "Msomaji wa Skrini",
+        keyboardNavigation: "Uelekezaji wa Kibodi"
     }
 } as const;
 
