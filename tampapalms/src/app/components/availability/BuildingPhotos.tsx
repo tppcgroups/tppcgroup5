@@ -19,7 +19,7 @@ export function BuildingPhotos({images, activeImageIndex, onPrev, onNext, onSele
 
   // Variables and logic for thumbnail wrapping
   const imageIndices = [];
-  const numThumbnails = 4;
+  const numThumbnails = 4; // we'll show 4 on desktop but only 2 on small screens via responsive classes
   const totalImages = images.length;
 
   for (let i = 0; i < numThumbnails; i++) {
@@ -42,7 +42,7 @@ export function BuildingPhotos({images, activeImageIndex, onPrev, onNext, onSele
           </p>
         </div>
         {images.length > 1 && (
-          <div className="hidden text-xs font-medium uppercase tracking-[0.3em] text-[#c8b79f] sm:block">
+          <div className="text-xs font-medium uppercase tracking-[0.3em] text-[#c8b79f] text-nowrap">
             {activeImageIndex + 1} / {images.length}
           </div>
         )}
@@ -95,7 +95,10 @@ export function BuildingPhotos({images, activeImageIndex, onPrev, onNext, onSele
               key={images[index].src}
               type="button"
               onClick={() => onSelectImage(index)}
-              className={`relative flex h-24 items-center justify-center overflow-hidden rounded-2xl border transition ${
+              className={`relative ${
+                // hide thumbnails 3 and 4 on small screens, show from sm and up
+                i >= 2 ? "hidden sm:flex" : "flex"
+              } h-24 items-center justify-center overflow-hidden rounded-2xl border transition ${
                 i === 0
                   ? "border-[#4a4034] shadow-md shadow-[#1f1a16]/25"
                   : "border-[#e1d9cf] hover:border-[#d4c7b7]"

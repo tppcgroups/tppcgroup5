@@ -14,7 +14,7 @@ export default function HighlightedLocation() {
       <Link href={{
         pathname: "/pages/Availability",
         query: {spaceId: highlightedSpaceID}}} 
-        className="block flex-shrink-0">
+        className="hidden md:block flex-shrink-0">
         <div className="w-60 h-auto bg-gray/20 backdrop-blur-xl rounded-xl p-4 transition-all duration-300 hover:bg-black/10 hover:border-black/30">
           <div className="relative aspect-video overflow-hidden rounded-lg">
             <Image

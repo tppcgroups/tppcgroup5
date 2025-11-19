@@ -68,11 +68,8 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
       className="relative hidden h-[80dvh] overflow-hidden rounded-3xl mx-8 my-2 min-[900]:block"
       onMouseEnter={() => autoplayPlugin.current.stop()}
       onMouseLeave={() => autoplayPlugin.current.play()}
-  >
-      <ImageCarousel
-        imageUrls={imageUrls}
-        className="absolute inset-0 z-10"
-      />
+    >
+      <ImageCarousel imageUrls={imageUrls} className="absolute inset-0 z-10" />
       <div className="absolute inset-0 z-20 bg-gradient-to-r from-[#1f1a16]/35 via-[#1f1a16]/10 to-transparent" />
       {/* Title and Header */}
       <div className="relative z-30 flex h-full flex-col justify-between px-6 py-6">
@@ -91,8 +88,9 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
                 <span className="block text-white">Professional Center</span>
               </h1>
               <p className="text-base text-white">
-                Discover full-floor suites and executive offices designed to keep
-                teams connected, productive, and close to Tampa Palms amenities.
+                Discover full-floor suites and executive offices designed to
+                keep teams connected, productive, and close to Tampa Palms
+                amenities.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link
@@ -111,9 +109,9 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
             </div>
           </div>
 
-          {/* <HighlightedLocation /> */}
+          <HighlightedLocation />
         </div>
-        <div className="flex flex-col items-center justify-center pb-2 relative">
+        <div className="md:flex hidden flex-col items-center justify-center pb-2 relative">
           <button
             type="button"
             onClick={handleScrollDown}
@@ -131,7 +129,9 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
                   aria-label={`Go to slide ${index + 1}`}
                   onClick={() => api?.scrollTo(index)}
                   className={`h-2 w-12 rounded-full transition ${
-                    index === currentSlide ? "bg-white" : "bg-white/40 hover:bg-white/70"
+                    index === currentSlide
+                      ? "bg-white"
+                      : "bg-white/40 hover:bg-white/70"
                   }`}
                 />
               ))}

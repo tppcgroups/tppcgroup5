@@ -118,7 +118,10 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
 
         const underlineBase =
           "after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:bg-[#080706] after:transition-all after:duration-500";
-        const baseClasses = `relative font-bold max-[925px]:text-[10px] max-[985px]:text-[12px] max-[1065px]:text-sm max-[1135px]:text-[16px] max-[1185px]:text-lg text-xl py-2 text-[#080706] hover:text-[#080706] ${underlineBase} ${
+        const sizeClasses = isMobile
+          ? "text-lg"
+          : "max-[925px]:text-[10px] max-[985px]:text-[12px] max-[1065px]:text-sm max-[1135px]:text-[16px] max-[1185px]:text-lg text-xl";
+        const baseClasses = `relative font-bold ${sizeClasses} py-2 text-[#080706] hover:text-[#080706] ${underlineBase} ${
           isActive ? "after:w-full" : "after:w-0 hover:after:w-full"
         } ${isMobile ? "w-full text-center" : ""}`;
 
@@ -130,7 +133,10 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
             dropdownActive
               ? "after:w-full cursor-pointer"
               : "after:w-0 md:hover:after:w-full cursor-pointer";
-          const dropdownClasses = `group relative inline-flex items-center justify-center gap-2 py-[5px] text-center max-[925px]:text-[10px] max-[985px]:text-[12px] max-[1065px]:text-sm max-[1135px]:text-[16px] max-[1185px]:text-lg text-xl font-bold text-[#1f1a16] hover:text-[#1f1a16] ${underlineBase} ${dropdownUnderline} mx-auto md:mx-0`;
+          const dropdownSize = isMobile
+            ? "text-lg"
+            : "max-[390px]:text-lg max-[925px]:text-[10px] max-[985px]:text-[12px] max-[1065px]:text-sm max-[1135px]:text-[16px] max-[1185px]:text-lg text-xl";
+          const dropdownClasses = `group relative inline-flex items-center justify-center gap-2 py-[5px] text-center ${dropdownSize} font-bold text-[#1f1a16] hover:text-[#1f1a16] ${underlineBase} ${dropdownUnderline} mx-auto md:mx-0`;
           const dropdownWrapperClasses = isMobile
             ? "relative flex w-full flex-col items-center cursor-pointer"
             : "relative flex flex-col items-center md:w-auto md:items-start cursor-pointer";
@@ -167,7 +173,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                       <div className="flex items-center justify-center ">
                         <span
                           onClick={handleLinkClick}
-                          className={`relative inline-flex  py-2 text-xl font-bold text-[#1f1a16] hover:text-[#080706] ${underlineBase} ${
+                          className={`relative inline-flex py-2 ${isMobile ? 'text-lg' : 'text-xl'} font-bold text-[#1f1a16] hover:text-[#080706] ${underlineBase} ${
                             childActive ? "after:w-full" : "after:w-0 hover:after:w-full"
                           }`}
                         >

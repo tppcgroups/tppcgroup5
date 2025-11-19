@@ -446,15 +446,15 @@ function AvailabilityContent() {
       />
 
       <section className="mx-auto max-w-6xl px-4 pb-4 my-4">
-        {/* Category toggle pills. */}
-        <div className="mb-8 flex flex-wrap items-center gap-3 text-sm">
-          <div className="flex rounded-full border border-[#e1d9cf] bg-white p-1">
+        {/* Category toggle pills. On small screens allow horizontal scroll so pills don't overflow */}
+        <div className="mb-8 w-full text-sm">
+          <div className="flex items-center gap-3 overflow-x-auto rounded-full border border-[#e1d9cf] bg-white p-1 px-2">
             {buildingFilterOptions.map((option) => (
               <button
                 key={option.value}
                 type="button"
                 onClick={() => handleCategoryChange(option.value)}
-                className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] transition ${
+                className={`whitespace-nowrap rounded-full px-3 md:px-4 py-2 text-xs md:text-sm font-semibold uppercase tracking-[0.3em] transition ${
                   selectedCategory === option.value
                     ? "bg-[#4a4034] text-white shadow-md shadow-[#1f1a16]/20"
                     : "bg-transparent text-[#7a6754] hover:text-[#1f1a16]"
