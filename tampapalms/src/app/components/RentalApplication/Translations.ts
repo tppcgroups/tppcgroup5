@@ -21,7 +21,22 @@ export const translations = {
         theme_light: "Light",
         theme_dark: "Dark",
         screenReader: "Screen Reader",
-        keyboardNavigation: "Keyboard Navigation"
+        keyboardNavigation: "Keyboard Navigation",
+        shortcutsHeader: "Accessibility Options & Shortcuts",
+        shortcutsIntro: "Use these shortcuts anywhere on the site for quick adjustments.",
+        shortcutsPanel: "Toggle Accessibility Panel",
+        shortcutsNextLanguage: "Next Language",
+        shortcutsPrevLanguage: "Previous Language",
+        shortcutsIncreaseText: "Increase Text Size",
+        shortcutsDecreaseText: "Decrease Text Size",
+        shortcutsNextContrast: "Next Contrast Mode",
+        shortcutsPreviousContrast: "Previous Contrast Mode",
+        shortcutsNextTheme: "Next Theme",
+        shortcutsPrevTheme: "Previous Theme",
+        shortcutsNextHighlight: "Next Highlight Mode",
+        shortcutsPrevHighlight: "Previous Highlight Mode",
+        shortcutsToggleReduceMotion: "Toggle Reduce Motion",
+        shortcutsToggleScreenReader: "Toggle Screen Reader"
     },
 
     Spanish: {
@@ -46,7 +61,22 @@ export const translations = {
         theme_light: "Claro",
         theme_dark: "Oscuro",
         screenReader: "Lector de Pantalla",
-        keyboardNavigation: "Navegación por Teclado"
+        keyboardNavigation: "Navegación por Teclado",
+        shortcutsHeader: "Opciones y Atajos de Accesibilidad",
+        shortcutsIntro: "Utilice estos atajos en cualquier parte del sitio para ajustes rápidos.",
+        shortcutsPanel: "Alternar Panel de Accesibilidad",
+        shortcutsNextLanguage: "Próximo Idioma",
+        shortcutsPrevLanguage: "Idioma Anterior",
+        shortcutsIncreaseText: "Aumentar Tamaño del Texto",
+        shortcutsDecreaseText: "Disminuir Tamaño del Texto",
+        shortcutsNextContrast: "Próximo Modo de Contraste",
+        shortcutsPreviousContrast: "Modo de Contraste Anterior",
+        shortcutsNextTheme: "Próximo Tema",
+        shortcutsPrevTheme: "Tema Anterior",
+        shortcutsNextHighlight: "Próximo Modo de Resaltado",
+        shortcutsPrevHighlight: "Modo de Resaltado Anterior",
+        shortcutsToggleReduceMotion: "Alternar Reducir Movimiento",
+        shortcutsToggleScreenReader: "Alternar Lector de Pantalla"
     },
 
     French: {
@@ -71,7 +101,22 @@ export const translations = {
         theme_light: "Clair",
         theme_dark: "Sombre",
         screenReader: "Lecteur d’écran",
-        keyboardNavigation: "Navigation au Clavier"
+        keyboardNavigation: "Navigation au Clavier",
+        shortcutsHeader: "Options et Raccourcis d’Accessibilité",
+        shortcutsIntro: "Utilisez ces raccourcis n'importe où sur le site pour des ajustements rapides.",
+        shortcutsPanel: "Basculer le Panneau d’Accessibilité",
+        shortcutsNextLanguage: "Langue Suivante",
+        shortcutsPrevLanguage: "Langue Précédente",
+        shortcutsIncreaseText: "Augmenter la Taille du Texte",
+        shortcutsDecreaseText: "Diminuer la Taille du Texte",
+        shortcutsNextContrast: "Mode de Contraste Suivant",
+        shortcutsPreviousContrast: "Mode de Contraste Précédent",
+        shortcutsNextTheme: "Thème Suivant",
+        shortcutsPrevTheme: "Thème Précédent",
+        shortcutsNextHighlight: "Mode de Mise en Évidence Suivant",
+        shortcutsPrevHighlight: "Mode de Mise en Évidence Précédent",
+        shortcutsToggleReduceMotion: "Basculer Réduire Animations",
+        shortcutsToggleScreenReader: "Basculer Lecteur d’écran"
     },
 
     Swahili: {
@@ -96,7 +141,23 @@ export const translations = {
         theme_light: "Mwanga",
         theme_dark: "Giza",
         screenReader: "Msomaji wa Skrini",
-        keyboardNavigation: "Uelekezaji wa Kibodi"
+        keyboardNavigation: "Uelekezaji wa Kibodi",
+        shortcutsHeader: "Chaguo na Njia za Mkato za Ufikiaji",
+        shortcutsIntro: "Tumia njia hizi za mkato popote kwenye tovuti kwa marekebisho ya haraka.",
+        shortcutsPanel: "Geuza Paneli ya Ufikiaji",
+        shortcutsNextLanguage: "Lugha Ifuatayo",
+        shortcutsPrevLanguage: "Lugha Iliyopita",
+        shortcutsIncreaseText: "Ongeza Ukubwa wa Maandishi",
+        shortcutsDecreaseText: "Punguza Ukubwa wa Maandishi",
+        shortcutsNextContrast: "Hali ya Utofautishaji Ifuatayo",
+        shortcutsPreviousContrast: "Hali ya Utofautishaji Iliyopita",
+        shortcutsNextTheme: "Mada Ifuatayo",
+        shortcutsPrevTheme: "Mada Iliyopita",
+        shortcutsNextHighlight: "Hali ya Kuangazia Ifuatayo",
+        shortcutsPrevHighlight: "Hali ya Kuangazia Iliyopita",
+        shortcutsToggleReduceMotion: "Geuza Punguza Mwendo",
+        shortcutsToggleScreenReader: "Geuza Msomaji wa Skrini"
+
     }
 } as const;
 

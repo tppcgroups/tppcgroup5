@@ -580,7 +580,7 @@ const AccessibilityWidget: React.FC = () => {
                             className="w-full py-2 mt-4 rounded-lg text-white font-semibold"
                             style={{ backgroundColor: "rgb(18,25,43" }} // Reusing the same style as reset
                         >
-                            Keyboard Navigation
+                            {t.keyboardNavigation}
                         </button>
                     {/* RESET BUTTON */}
                     <button
@@ -633,7 +633,7 @@ const AccessibilityWidget: React.FC = () => {
                         >
                             <div className="flex items-center justify-between">
                                 <h2 id="options-panel-title" className="text-lg font-bold text-gray-800">
-                                    Accessibility Options & Shortcuts
+                                    {t.shortcutsHeader}
                                 </h2>
                                 <button
                                     onClick={() => setOptionsPanelOpen(false)}
@@ -645,11 +645,11 @@ const AccessibilityWidget: React.FC = () => {
                             </div>
 
                             <p className="text-sm text-gray-600">
-                                Use these shortcuts anywhere on the site for quick adjustments.
+                                {t.shortcutsIntro}
                             </p>
 
                             <div className="flex flex-col gap-2">
-                                <h3 className="font-semibold text-gray-800 mt-2">Keyboard Navigation</h3>
+                                <h3 className="font-semibold text-gray-800 mt-2">{t.keyboardNavigation}</h3>
 
                                 {/* List the Shortcuts */}
                                 <div className="grid grid-cols-2 gap-y-2 text-sm">
