@@ -20,6 +20,7 @@ export const translations = {
         backgroundTheme: "Background Theme",
         theme_light: "Light",
         theme_dark: "Dark",
+        screenReader: "Screen Reader"
     },
 
     Spanish: {
@@ -43,6 +44,7 @@ export const translations = {
         backgroundTheme: "Fondo Tema",
         theme_light: "Claro",
         theme_dark: "Oscuro",
+        screenReader: "Lector de Pantalla"
     },
 
     French: {
@@ -66,6 +68,7 @@ export const translations = {
         backgroundTheme: "Arrière-plan Thème",
         theme_light: "Clair",
         theme_dark: "Sombre",
+        screenReader: "Lecteur d’écran"
     },
 
     Swahili: {
@@ -89,6 +92,7 @@ export const translations = {
         backgroundTheme: "Mandharinyuma Mada",
         theme_light: "Mwanga",
         theme_dark: "Giza",
+        screenReader: "Msomaji wa Skrini"
     }
 } as const;
 

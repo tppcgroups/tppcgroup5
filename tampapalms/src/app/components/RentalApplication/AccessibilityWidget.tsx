@@ -3,6 +3,8 @@ import accessibilityLogo from "../accessibility.png";
 import { translations } from "./Translations";
 import { announce } from "./screenReader";
 
+import { setScreenReaderEnabled } from "@/app/components/RentalApplication/screenReader";
+
 
 
 import React, { useEffect, useState} from "react";
@@ -33,7 +35,7 @@ const AccessibilityWidget: React.FC = () => {
 
     const [reduceMotion, setReduceMotion] = useState(false);
 
-    const contrastModes = ["default", "dark", "invert", "grayscale"];
+    const contrastModes = ["default", "invert", "grayscale"];
     const [contrastIndex, setContrastIndex] = useState(0);
 
     const nextContrast = () => {
@@ -62,19 +64,6 @@ const AccessibilityWidget: React.FC = () => {
         );
     };
 
-    const cursorSizes = ["small", "medium", "large"] as const;
-    const [cursorIndex, setCursorIndex] = useState(0);
-    const cursorSize = cursorSizes[cursorIndex];
-
-    const nextCursor = () => {
-        setCursorIndex((prev) => (prev + 1) % cursorSizes.length);
-    };
-
-    const prevCursor = () => {
-        setCursorIndex((prev) =>
-            prev === 0 ? cursorSizes.length - 1 : prev - 1
-        );
-    };
 
     const [screenReaderMode, setScreenReaderMode] = useState(false);
 
@@ -104,8 +93,6 @@ const AccessibilityWidget: React.FC = () => {
             setReduceMotion(settings.reduceMotion ?? false);
             setContrastIndex(settings.contrastIndex ?? 0);
             setLanguageIndex(settings.languageIndex ?? 0);
-            setCursorIndex(settings.cursorSize ?? 0);
-            setCursorIndex(settings.cursorIndex ?? 0);
             setScreenReaderMode(settings.screenReader ?? false);
             setBackgroundThemeIndex(settings.backgroundTheme ?? 0);
 
@@ -115,40 +102,35 @@ const AccessibilityWidget: React.FC = () => {
         }
     }, []);
 
-    useEffect(() => {
-        const saved = localStorage.getItem("screenReaderMode");
-        if (saved === "true") {
-            setScreenReaderMode(true);
-            document.documentElement.classList.add("screen-reader-mode");
-        }
-    }, []);
+
 
     useEffect(() => {
-        localStorage.setItem("screenReaderMode", screenReaderMode.toString());
+        if (!screenReaderMode) return;
 
-        if (screenReaderMode) {
-            document.documentElement.classList.add("screen-reader-mode");
-            announce("Screen reader mode enabled. Reading page.");
+        const timeout = setTimeout(() => {
+            announce("VoiceOver is now activated");
             announce(document.title);
-        } else {
-            document.documentElement.classList.remove("screen-reader-mode");
-            window.speechSynthesis.cancel();
-        }
+        }, 600);
+
+        return () => clearTimeout(timeout);
     }, [screenReaderMode]);
+
+
+
+
+
+
 
 
 
     useEffect(() => {
         const html = document.documentElement;
 
-        html.classList.remove("contrast-dark", "contrast-invert", "contrast-grayscale");
+        html.classList.remove( "contrast-invert", "contrast-grayscale");
 
         const currentMode = contrastModes[contrastIndex];
 
-        if (currentMode === "dark") {
-            html.classList.add("contrast-dark");
-        }
-        else if (currentMode === "invert") {
+        if (currentMode === "invert") {
             html.classList.add("contrast-invert");
         }
         else if (currentMode === "grayscale") {
@@ -181,7 +163,7 @@ const AccessibilityWidget: React.FC = () => {
 
 
 
-    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex, cursorIndex]);
+    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex]);
 
     useEffect(() => {
         const html = document.documentElement;
@@ -209,14 +191,13 @@ const AccessibilityWidget: React.FC = () => {
                 reduceMotion,
                 contrastIndex,
                 languageIndex,
-                cursorIndex,
                 backgroundThemeIndex,
             };
             localStorage.setItem("accessibilitySettings", JSON.stringify(settings));
         }, 300);
 
         return () => clearTimeout(timeout);
-    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex, cursorIndex, backgroundThemeIndex]);
+    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex, backgroundThemeIndex]);
 
 
     useEffect(() => {
@@ -230,27 +211,12 @@ const AccessibilityWidget: React.FC = () => {
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, []);
 
-    useEffect(() => {
-        const html = document.documentElement;
-
-        html.classList.remove("cursor-small", "cursor-medium", "cursor-large");
-        html.classList.add(`cursor-${cursorSizes[cursorIndex]}`);
-    }, [cursorIndex]);
-
-    useEffect(() => {
-        if (screenReaderMode) {
-            announce("Screen reader mode enabled. Reading page.");
-            announce(document.title);
-        }
-    }, [screenReaderMode]);
 
 
 
-    const cursorLabelKey: Record<typeof cursorSizes[number], keyof typeof t> = {
-        small: "cursorSmall",
-        medium: "cursorMedium",
-        large: "cursorLarge",
-    };
+
+
+
 
     return (
         <>
@@ -484,49 +450,30 @@ const AccessibilityWidget: React.FC = () => {
                             />
                         </div>
 
-                        {/* SCREEN READER MODE */}
+                        {/* SCREEN READER */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                            <span className="font-medium text-gray-800">Screen Reader Mode</span>
+                            <span className="font-medium text-gray-800">{t.screenReader}</span>
 
                             <input
                                 type="checkbox"
                                 checked={screenReaderMode}
-                                onChange={() => setScreenReaderMode(!screenReaderMode)}
+                                onChange={() => {
+                                    const newValue = !screenReaderMode;
+                                    setScreenReaderMode(newValue);
+                                    setScreenReaderEnabled(newValue);
+
+                                    if (newValue) {
+                                        announce("VoiceOver is now activated");
+                                    } else {
+                                        announce("VoiceOver is now turned off");
+                                    }
+                                }}
                                 className="mt-3 w-5 h-5"
-                                aria-label="Toggle screen reader mode"
                             />
                         </div>
 
 
-                    </div>
 
-                    {/* CURSOR SIZE SELECTOR */}
-                    <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                        <span className="font-medium text-gray-800">{t.cursorSize}</span>
-
-                        <div className="flex items-center gap-4 mt-3">
-
-                            {/* Prev Button */}
-                            <button
-                                onClick={prevCursor}
-                                className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
-                            >
-                                ←
-                            </button>
-
-                            {/* Current size */}
-                            <span className="text-sm font-medium text-gray-900 min-w-[90px] text-center">
-                                {t[cursorLabelKey[cursorSizes[cursorIndex]]]}
-                            </span>
-
-                            {/* Next Button */}
-                            <button
-                                onClick={nextCursor}
-                                className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
-                            >
-                                →
-                            </button>
-                        </div>
                     </div>
                     {/* RESET BUTTON */}
                     <button
@@ -538,7 +485,6 @@ const AccessibilityWidget: React.FC = () => {
                             setReduceMotion(false);
                             setContrastIndex(0);
                             setLanguageIndex(0);
-                            setCursorIndex(0);
 
                             // Clear localStorage
                             localStorage.removeItem("accessibilitySettings");
