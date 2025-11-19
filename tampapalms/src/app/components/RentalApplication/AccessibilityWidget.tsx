@@ -655,43 +655,43 @@ const AccessibilityWidget: React.FC = () => {
                                 <div className="grid grid-cols-2 gap-y-2 text-sm">
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Ctrl + Shift + O</span>
-                                    <span>Toggle Accessibility Panel</span>
+                                    <span>{t.shortcutsPanel}</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + F</span>
-                                    <span>Next Language</span>
+                                    <span>{t.shortcutsNextLanguage}</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + P</span>
-                                    <span>Previous Language</span>
+                                    <span>{t.shortcutsPrevLanguage}</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift +</span>
-                                    <span>Increase Text Size</span>
+                                    <span>{t.shortcutsIncreaseText}</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift -</span>
-                                    <span>Decrease Text Size</span>
+                                    <span>{t.shortcutsDecreaseText}</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + C</span>
-                                    <span>Next Contrast Mode</span>
+                                    <span>{t.shortcutsNextContrast}</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + Z</span>
-                                    <span>Previous Contrast Mode</span>
+                                    <span>{t.shortcutsPrevContrast}</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + T</span>
-                                    <span>Next Theme Mode</span>
+                                    <span>{t.shortcutsNextTheme}</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + B</span>
-                                    <span>Previous Theme Mode</span>
+                                    <span>{t.shortcutsPrevTheme}</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + H</span>
-                                    <span>Next Highlight</span>
+                                    <span>{t.shortcutsNextHighlight}</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + L</span>
-                                    <span>Previous Highlight</span>
+                                    <span>{t.shortcutsPrevHighlight}</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + M</span>
-                                    <span>Toggle Reduce Motion</span>
+                                    <span>{t.shortcutsToggleReduceMotion}</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + V</span>
-                                    <span>Toggle Screen Reader</span>
+                                    <span>{t.shortcutsToggleScreenReader}</span>
                                 </div>
                             </div>
                         </div>
