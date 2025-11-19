@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
+import FadeIn from "@/app/components/animations/FadeIn";
 import {
   ArrowUpRight,
   Building2,
@@ -169,25 +170,26 @@ export default function HomeSections({
   };
 
   return (
-    <section className="mx-8 my-12  text-slate-900 md:space-y-20">
+    <section className="mx-8 my-12  text-[#1f1a16] md:space-y-20">
         
       {/* Overview */}
+      <FadeIn>
       <div className="overflow-hidden rounded-[32px] border border-neutral-200 bg-gradient-to-br from-[#faf8f5] via-white to-[#f0ebe3] shadow-[0_30px_80px_rgba(15,14,13,0.12)]">
         <div className="grid gap-10 p-8 md:p-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="space-y-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-600">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#7a6754]">
               Tampa Palms Professional Center
             </p>
-            <h2 className="text-3xl font-semibold leading-tight text-slate-900 md:text-4xl">
+            <h2 className="text-3xl font-semibold leading-tight text-[#1f1a16] md:text-4xl">
               Purpose-built offices for teams that want New Tampa convenience without compromise.
             </h2>
-            <p className="text-base text-slate-600 md:text-lg">
+            <p className="text-base text-[#7a6754] md:text-lg">
               Boutique hospitality meets enterprise infrastructure across secured suites, flexible floorplates, and
               curated amenity spaces that keep clients impressed and teams productive.
             </p>
-            <div className="flex flex-wrap gap-3 text-sm ttext-slate-600">
+            <div className="flex flex-wrap gap-3 text-sm ttext-[#7a6754] ">
               {["Flexible lease terms", "Plug-and-play IT", "On-site property team"].map((tag) => (
-                <span key={tag} className="rounded-full border border-slate-600 bg-white px-4 py-1.5">
+                <span key={tag} className="rounded-full border border-[#7a6754] bg-white px-4 py-1.5">
                   {tag}
                 </span>
               ))}
@@ -214,7 +216,7 @@ export default function HomeSections({
             {computedInsightStats.map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-3xl border border-neutral-100 bg-white/80 p-6 text-neutral-800 shadow-sm"
+                className="rounded-3xl border  bg-white/80 p-6 text-neutral-800 shadow-sm border-[#c8b79f]"
               >
                 <p className="text-3xl font-semibold text-[#1f1a16]">{stat.value}</p>
                 <p className="mt-1 text-sm uppercase tracking-wide text-neutral-500">{stat.label}</p>
@@ -224,8 +226,10 @@ export default function HomeSections({
           </div>
         </div>
       </div>
+      </FadeIn>
 
       {/* Highlights */}
+      <FadeIn delay={150}>
       <div className="space-y-6 rounded-[32px] border border-neutral-200 bg-gradient-to-br from-[#faf8f5] via-white to-[#f6f3ef] p-8 shadow-inner">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -245,7 +249,7 @@ export default function HomeSections({
               <Link
                 key={`${highlight.title}-${index}`}
                 href={highlight.href ?? "#"}
-                className="group relative flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-lg shadow-black/5 hover:border-[#c8b79f]"
+                className="group relative flex h-full flex-col gap-4 rounded-3xl border border-[#c8b79f] bg-white p-6 shadow-lg shadow-black/5 hover:border-[#5a4b3c]"
               >
                 <div className="inline-flex size-12 items-center justify-center rounded-2xl bg-[#ddd0bd] text-[#5a4b3c]">
                   <Icon className="h-5 w-5" aria-hidden />
@@ -262,19 +266,21 @@ export default function HomeSections({
           })}
         </div>
       </div>
+      </FadeIn>
 
       {/* Neighborhood */}
+      <FadeIn delay={250}>
       <div className="grid gap-8 lg:grid-cols-2">
         <div className="relative overflow-hidden rounded-[32px] border border-neutral-200">
           <Image
-            src={"/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinitionEdit.png"}
+            src={"/images/TPPC-Entry-002.jpg"}
             alt={neighborhood.title}
             fill
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 50vw"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
           <div className="absolute bottom-0 w-full space-y-2 p-8 text-white">
             <p className="text-sm uppercase tracking-[0.3em] text-[#f0d4a6]/90">Location</p>
             <h3 className="text-2xl font-semibold">{neighborhood.title}</h3>
@@ -311,11 +317,7 @@ export default function HomeSections({
           )}
         </div>
       </div>
-
-
-      {/* Testimonials */}
-      
-
+      </FadeIn>
     </section>
   );
 }

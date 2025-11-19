@@ -13,14 +13,14 @@ export function AvailabilityHero({ availableCount }: AvailabilityHeroProps) {
         <div className="grid gap-10 lg:grid-cols-[3fr_2fr]">
           {/* Intro headline + description */}
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#a49382]">
               Available Spaces
             </p>
             <div className="mt-6 space-y-4">
-              <h1 className="text-3xl font-semibold leading-tight text-slate-900 md:text-4xl">
+              <h1 className="text-3xl font-semibold leading-tight text-[#1f1a16] md:text-4xl">
                 Find the right suite for your team
               </h1>
-              <p className="text-sm text-slate-600 md:text-base">
+              <p className="text-sm text-[#7a6754] md:text-base">
                 Browse current availability across the Tampa Palms campus. Each listing includes imagery,
                 specs, and highlights so you can compare options before touring in person.
               </p>
@@ -29,7 +29,7 @@ export function AvailabilityHero({ availableCount }: AvailabilityHeroProps) {
             <div className="mt-8 flex flex-wrap gap-3 text-sm">
               <Link
                 href="/pages/Contact"
-                className="inline-flex items-center rounded-full border border-slate-300 px-6 py-3 font-semibold text-slate-900 transition hover:border-slate-400 hover:bg-slate-100"
+                className="inline-flex items-center rounded-full border border-[#d4c7b7] px-6 py-3 font-semibold text-[#1f1a16] transition hover:border-[#b6a895] hover:bg-[#f4ece1]"
               >
                 Talk with Our Team
               </Link>
@@ -47,7 +47,7 @@ export function AvailabilityHero({ availableCount }: AvailabilityHeroProps) {
               priority
             />
             <div
-              className="absolute inset-0 bg-gradient-to-tr from-slate-900/80 via-slate-900/20 to-transparent"
+              className="absolute inset-0 bg-gradient-to-tr from-[#1f1a16]/80 via-[#1f1a16]/20 to-transparent"
               aria-hidden="true"
             />
             {/* Overlay copy describing availability */}

@@ -11,6 +11,7 @@ import { BuildingDetails } from "@/app/components/availability/BuildingDetails";
 import BuildingPhotos from "@/app/components/availability/BuildingPhotos";
 import { useSearchParams } from "next/navigation";
 import { CampusGroundMap } from "@/app/components/availability/CampusGroundMap";
+import { deriveSuiteKey, normalizeSuiteToken } from "@/lib/utils";
 
 
 type AvailabilityStatus = "available" | "comingSoon" | "occupied";
@@ -82,6 +83,13 @@ function AvailabilityContent() {
   const detailSectionRef = useRef<HTMLDivElement | null>(null);
   const mapSectionRef = useRef<HTMLDivElement | null>(null);
   const [mapHeight, setMapHeight] = useState<number | null>(null);
+  const [availableBuildingNumbers, setAvailableBuildingNumbers] = useState<number[]>([6, 25]);
+  const [suiteAvailability, setSuiteAvailability] = useState<Record<number, string[]>>({});
+  const [scrollTargetSuite, setScrollTargetSuite] = useState<{
+    buildingNumber: number;
+    suiteId: string;
+    timestamp: number;
+  } | null>(null);
   const scrollToDetails = useCallback(() => {
     if (!detailSectionRef.current) return;
     const targetTop = detailSectionRef.current.getBoundingClientRect().top + window.scrollY;
@@ -93,6 +101,48 @@ function AvailabilityContent() {
 
   const searchParams = useSearchParams();
   const initialSpaceId = searchParams.get("spaceId");
+
+  const handleSuiteSelection = useCallback(
+    ({
+      buildingNumber,
+      suiteId,
+      suiteLabel,
+    }: {
+      buildingNumber: number;
+      suiteId: string;
+      suiteLabel: string;
+    }) => {
+      const normalizedTargetSuite = normalizeSuiteToken(suiteId);
+
+      const matchingBuilding = buildings.find(
+        (building) =>
+          building.building_number === buildingNumber &&
+          deriveSuiteKey(building.suite_number, building.building_id) ===
+            normalizedTargetSuite
+      );
+
+      if (!matchingBuilding) {
+        console.warn(
+          `No matching suite found for Building ${buildingNumber}, Suite ${suiteLabel}`
+        );
+        return;
+      }
+
+      if (matchingBuilding.category !== selectedCategory) {
+        setSelectedCategory(matchingBuilding.category);
+      }
+
+      setActiveBuildingId(matchingBuilding.building_id);
+      setScrollTargetSuite({
+        buildingNumber,
+        suiteId: normalizedTargetSuite,
+        timestamp: Date.now(),
+      });
+    },
+    [buildings, selectedCategory]
+  );
+
+
   // Add this helper function somewhere accessible if the direct building_id is wrong
   const createSpaceKey = (id: string) => {
     // This regex attempts to find '5-118' and map it to 'Bldg5-Suite118'
@@ -232,11 +282,45 @@ function AvailabilityContent() {
               : "Office",
           brochureHref: undefined,
         }));
+        const fixId = "5-101";
+        const fixIndex = normalizedBuildings.findIndex(item => item.building_id === fixId);
+        const [targetElement] = normalizedBuildings.splice(fixIndex, 1);
+
+        if (targetElement) {
+          normalizedBuildings.splice(1, 0, targetElement);
+        }
 
         // Sorting logic
         const availableSpaces = normalizedBuildings.filter(
           (b) => normalizeStatus(b.availability_status) === "available"
         );
+
+        const availabilityByBuilding: Record<number, Set<string>> = {};
+        availableSpaces.forEach((building) => {
+          const suiteKey = deriveSuiteKey(
+            building.suite_number,
+            building.building_id
+          );
+          if (!suiteKey) return;
+          if (!availabilityByBuilding[building.building_number]) {
+            availabilityByBuilding[building.building_number] = new Set();
+          }
+          availabilityByBuilding[building.building_number].add(suiteKey);
+        });
+
+        const availabilityRecord: Record<number, string[]> = {};
+        Object.entries(availabilityByBuilding).forEach(([key, value]) => {
+          availabilityRecord[Number(key)] = Array.from(value);
+        });
+        setSuiteAvailability(availabilityRecord);
+
+        setAvailableBuildingNumbers((prev) => {
+          const combined = [
+            ...prev,
+            ...availableSpaces.map((b: Building) => b.building_number),
+          ];
+          return Array.from(new Set(combined));
+        });
         const occupiedSpaces = normalizedBuildings.filter(
           (b) => normalizeStatus(b.availability_status) !== "available"
         );
@@ -350,7 +434,7 @@ function AvailabilityContent() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 text-slate-900">
+    <main className="min-h-screen bg-[#f9f7f3] text-[#1f1a16]">
       {/* Introduces the page and reports total availability. */}
       <AvailabilityHero
         availableCount={
@@ -361,19 +445,19 @@ function AvailabilityContent() {
         }
       />
 
-      <section className="mx-auto max-w-6xl px-4 pb-20">
-        {/* Category toggle pills. */}
-        <div className="mb-8 flex flex-wrap items-center gap-3 text-sm">
-          <div className="flex rounded-full border border-slate-200 bg-white p-1">
+      <section className="mx-auto max-w-6xl px-4 pb-4 my-4">
+        {/* Category toggle pills. On small screens allow horizontal scroll so pills don't overflow */}
+        <div className="mb-8 w-full text-sm">
+          <div className="flex items-center gap-3 overflow-x-auto rounded-full border border-[#e1d9cf] bg-white p-1 px-2">
             {buildingFilterOptions.map((option) => (
               <button
                 key={option.value}
                 type="button"
                 onClick={() => handleCategoryChange(option.value)}
-                className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] transition ${
+                className={`whitespace-nowrap rounded-full px-3 md:px-4 py-2 text-xs md:text-sm font-semibold uppercase tracking-[0.3em] transition ${
                   selectedCategory === option.value
-                    ? "bg-slate-900 text-white shadow-md shadow-slate-900/20"
-                    : "bg-transparent text-slate-600 hover:text-slate-900"
+                    ? "bg-[#4a4034] text-white shadow-md shadow-[#1f1a16]/20"
+                    : "bg-transparent text-[#7a6754] hover:text-[#1f1a16]"
                 }`}
               >
                 {option.label}
@@ -386,7 +470,11 @@ function AvailabilityContent() {
           {/* Ground map + suite list */}
           <div className="grid gap-8 lg:grid-cols-6">
             <div ref={mapSectionRef} className="lg:col-span-3">
-              <CampusGroundMap />
+              <CampusGroundMap
+                availableBuildings={availableBuildingNumbers}
+                onSuiteSelect={handleSuiteSelection}
+                suiteAvailability={suiteAvailability}
+              />
             </div>
             <div
               className="lg:col-span-3"
@@ -405,6 +493,7 @@ function AvailabilityContent() {
                 activeBuildingId={activeBuildingId}
                 normalizeStatus={normalizeStatus}
                 onSelectBuilding={handleBuildingSelect}
+                scrollTargetSuite={scrollTargetSuite}
               />
             </div>
           </div>
@@ -449,24 +538,20 @@ function AvailabilityContent() {
       </section>
 
       {/* Explore Spaces container */}
-      <div className="rounded-xl my-16 md:my-24 mx-8 bg-gray-50">
-        <div className="text-center my-16 md:my-24">
-          {/* The "eyebrow" text adds a touch of color and context */}
-          <p className="text-sm font-semibold  uppercase tracking-wider">
-            Our Properties
-          </p>
-          <TitleCard title="Explore Spaces" />
+      <div className="mx-6 my-12 rounded-3xl bg-gray-50 px-6 py-12 md:mx-10 md:my-16 md:px-10 md:py-14">
+        <div className="mb-8 text-center md:mb-10">
+          <TitleCard title="Explore Spaces" eyebrow="Our Properties" align="center" />
         </div>
-        <div className="w-full flex md:flex-row flex-col justify-center gap-8">
+        <div className="w-full flex md:flex-row flex-col justify-center gap-6 md:gap-7">
           <SpacesCard
             title="Buildings/Suites"
-            imageUrl="/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-11-LargeHighDefinition.jpg"
+            imageUrl="/images/Bldg6-019.jpg"
             href="https://www.loopnet.com/Listing/17425-Bridge-Hill-Ct-Tampa-FL/31448652/"
             features={officeFeatures}
           />
           <SpacesCard
             title="Executive Suites"
-            imageUrl="/images/5331/5331-ExploreSpacesCardImage.jpg"
+            imageUrl="/images/Bldg5-017.jpg"
             href="https://www.loopnet.com/Listing/5331-Primrose-Lake-Cir-Tampa-FL/4151894/"
             features={executiveFeatures}
           />

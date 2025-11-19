@@ -6,7 +6,7 @@ export default function InfoBlurb() {
   return (
     <div className="flex md:justify-center my-auto">
       {/* Glassmorphism container wrapping the embedded map. */}
-      <div className="w-full max-w-md overflow-hidden rounded-xl shadow-sm border border-white/50 bg-white/40 backdrop-blur">
+      <div className="w-full max-w-md overflow-hidden rounded-xl shadow-sm border border-white/50 bg-white/10 backdrop-blur">
         <iframe
           title="Tampa Palms Professional Center Map"
           src={mapSrc}
@@ -20,7 +20,7 @@ export default function InfoBlurb() {
             href="https://www.google.com/maps?q=17427+Bridge+Hill+Court,+Suite+C,+Tampa,+FL+33647"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline decoration-slate-500/50 hover:decoration-slate-600"
+            className="underline decoration-[#a49382]/50 hover:decoration-[#7a6754]"
           >
             Open in Google Maps
           </a>

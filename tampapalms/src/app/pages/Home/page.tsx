@@ -9,6 +9,7 @@ import React, {useEffect, useState} from "react"
 import HomeSections from "@/app/components/home/HeroSection/HomeSections"
 import axios from "axios"
 import type { Building } from "@/app/components/availability/type"
+import FadeIn from "@/app/components/animations/FadeIn"
 
 type BuildingApi = Partial<Building> & { offices_type?: unknown };
 
@@ -17,13 +18,13 @@ export default function Home(){
   const [flexibleSuites, setFlexibleSuites] = useState(0);
   const [buildingAvailable, setBuildingAvailable] = useState(0);
     const images = [
-      "/images/TPPC-Entry-002.jpg",
-      "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinitionEdit.png",
       "/images/Bldg5-003.jpg",
-      // "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-9-LargeHighDefinition.jpg",
       "/images/Bldg6-001.jpg",
+      "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinitionEdit.png",
+      // "/images/Bldg6-012.jpg",
+      "/images/Bldg6-007.jpg",
+      // "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-9-LargeHighDefinition.jpg",
       // "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Aerial-13-LargeHighDefinition.jpg",
-      "/images/TPPC-002.jpg",
     ];  
 
     useEffect(() => {
@@ -99,14 +100,19 @@ export default function Home(){
     }, []);
 
     return (
-      <div>
+      <div className="pb-20">
         {/* Mobile Home Component */}
-        <MobileHome imageUrls={images} />
+        <FadeIn delay={10}>
+          <MobileHome imageUrls={images} />
+        </FadeIn>
         {/* Desktop Home Component */}
-        <DesktopHome imageUrls={images} />
+        <FadeIn delay={50}>
+          <DesktopHome imageUrls={images} />
+        </FadeIn>
 
-        {/* Uncomment this to see HomeSection */}
-        <HomeSections totalSize={totalSize} flexibleSuites={flexibleSuites} buildingAvailable={buildingAvailable} />
+        <FadeIn delay={50}>
+          <HomeSections totalSize={totalSize} flexibleSuites={flexibleSuites} buildingAvailable={buildingAvailable} />
+        </FadeIn>
         
         <div></div>
         {/* <LocationInsights /> */}

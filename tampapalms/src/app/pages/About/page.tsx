@@ -1,11 +1,9 @@
 'use client'
 import axios from 'axios';
 import AboutInfo from "@/app/components/about/AboutInfo";
-import AboutImage from "@/app/components/about/AboutImage";
 import FAQTitle from "@/app/components/about/FAQTitle";
 import FAQMain from "@/app/components/about/FAQMain";
 import React, {useEffect, useState} from 'react';
-import { supabaseBrowser } from '@/lib/supabase/browserClient';
 
 interface FAQ {
   id: number,
@@ -30,20 +28,19 @@ export default function About()  {
     }
     fetchFAQS();
   }, [])
-    return (
-      <section className="bg-gray-50 py-16 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          {/* Left Side - Text */}
-          <AboutInfo />
-          {/* Right Side - Image */}
-          <AboutImage />
-        </div>
-        <hr className="mt-10 border border-slate-900"/>
+  return (
+    <section className="bg-gradient-to-b from-[#f7f4f1] to-[#ffffff]">
+      <AboutInfo />
+      <div className="mx-auto flex max-w-5xl flex-col gap-10 px-6 pb-16 pt-12 md:px-12">
+        <div className="h-px w-full bg-[#d4c7b7]/70" />
         <FAQTitle />
-        {loading && (<p className='text-xl text-center'>Loading FAQS...</p>)}
-        {faqs.map((faq, index) => {
-          return <FAQMain key={index} question={faq.question} answer={faq.answer} />
-        })}
-      </section>
-    );
+        {loading && (<p className="text-center text-lg text-[#4a4034]">Loading FAQs...</p>)}
+        <div className="grid gap-4">
+          {faqs.map((faq, index) => (
+            <FAQMain key={index} question={faq.question} answer={faq.answer} exec_only={faq.executive_suite_only} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }

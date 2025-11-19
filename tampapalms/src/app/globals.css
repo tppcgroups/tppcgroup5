@@ -87,71 +87,71 @@ header nav {
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --background: #f9f7f3;
+  --foreground: #1f1a16;
+  --card: #ffffff;
+  --card-foreground: #1f1a16;
+  --popover: #ffffff;
+  --popover-foreground: #1f1a16;
+  --primary: #4a4034;
+  --primary-foreground: #fdf8f3;
+  --secondary: #f0d4a6;
+  --secondary-foreground: #1f1a16;
+  --muted: #efe7dd;
+  --muted-foreground: #7a6754;
+  --accent: #7a6754;
+  --accent-foreground: #fffaf2;
+  --destructive: #b42318;
+  --border: #e1d9cf;
+  --input: #e7ded2;
+  --ring: #c8b79f;
+  --chart-1: #7a6754;
+  --chart-2: #4a4034;
+  --chart-3: #c19b6b;
+  --chart-4: #f0d4a6;
+  --chart-5: #1f1a16;
+  --sidebar: #f9f7f3;
+  --sidebar-foreground: #1f1a16;
+  --sidebar-primary: #4a4034;
+  --sidebar-primary-foreground: #fdf8f3;
+  --sidebar-accent: #7a6754;
+  --sidebar-accent-foreground: #fffaf2;
+  --sidebar-border: #e1d9cf;
+  --sidebar-ring: #c8b79f;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: #1f1a16;
+  --foreground: #fdf8f3;
+  --card: #2a241d;
+  --card-foreground: #fdf8f3;
+  --popover: #2a241d;
+  --popover-foreground: #fdf8f3;
+  --primary: #f0d4a6;
+  --primary-foreground: #1f1a16;
+  --secondary: #4a4034;
+  --secondary-foreground: #fdf8f3;
+  --muted: #3a3127;
+  --muted-foreground: #c8b79f;
+  --accent: #7a6754;
+  --accent-foreground: #fffaf2;
+  --destructive: #f87171;
+  --border: #3d342a;
+  --input: #453a2f;
+  --ring: #c19b6b;
+  --chart-1: #f0d4a6;
+  --chart-2: #c19b6b;
+  --chart-3: #7a6754;
+  --chart-4: #4a4034;
+  --chart-5: #fdf8f3;
+  --sidebar: #1f1a16;
+  --sidebar-foreground: #fdf8f3;
+  --sidebar-primary: #f0d4a6;
+  --sidebar-primary-foreground: #1f1a16;
+  --sidebar-accent: #7a6754;
+  --sidebar-accent-foreground: #fffaf2;
+  --sidebar-border: #3d342a;
+  --sidebar-ring: #c19b6b;
 }
 
 @layer base {
@@ -160,6 +160,7 @@ header nav {
   }
   body {
     @apply bg-background text-foreground;
+    @apply text-[#1f1a16]
   }
 }
 
@@ -183,4 +184,19 @@ header nav {
 .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
+}
+
+.fade-in-text {
+  animation: fadeInText 0.3s ease forwards;
+}
+
+@keyframes fadeInText {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

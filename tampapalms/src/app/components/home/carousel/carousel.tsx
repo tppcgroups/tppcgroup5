@@ -23,6 +23,7 @@ type CarouselProps = {
   orientation?: "horizontal" | "vertical"
   setApi?: (api: CarouselApi) => void
   scrollTargetId?: string
+  showScrollButton?: boolean
 }
 
 type CarouselContextProps = {
@@ -54,6 +55,7 @@ function Carousel({
   className,
   children,
   scrollTargetId = "home-sections",
+  showScrollButton = true,
   ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
   const [carouselRef, api] = useEmblaCarousel(
@@ -145,14 +147,16 @@ function Carousel({
         {...props}
       >
         {children}
-        <button
-          type="button"
-          aria-label="Scroll to next section"
-          onClick={handleScrollDown}
-          className="absolute left-1/2 bottom-5 z-30 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white shadow-lg backdrop-blur-md transition hover:bg-white/20"
-        >
-          <ChevronDown className="h-4 w-4" />
-        </button>
+        {showScrollButton && (
+          <button
+            type="button"
+            aria-label="Scroll to next section"
+            onClick={handleScrollDown}
+            className="absolute left-1/2 bottom-5 z-30 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border border-white/70 bg-white/95 text-[#1f1a16] shadow-2xl shadow-black/25 backdrop-blur-md transition hover:bg-white"
+          >
+            <ChevronDown className="h-5 w-5" />
+          </button>
+        )}
       </div>
     </CarouselContext.Provider>
   )
