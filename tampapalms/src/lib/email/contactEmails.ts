@@ -5,6 +5,7 @@ type ContactEmailPayload = {
   message: string;
   phoneNumber?: string;
   recordId?: string | null;
+  unsubscribeLink?: string;
 };
 
 function baseWrapper(content: string) {
@@ -19,6 +20,9 @@ function baseWrapper(content: string) {
 }
 
 export function renderConfirmationEmail(payload: ContactEmailPayload) {
+  const unsubscribeUrl =
+    payload.unsubscribeLink ||
+    "https://tppcgroup5.vercel.app/api/unsubscribe";
   const content = `
     <tr>
       <td>
@@ -50,7 +54,7 @@ export function renderConfirmationEmail(payload: ContactEmailPayload) {
         </p>
         <p style="margin:24px 0 0;font-size:13px;color:#7a6754;">
           Prefer not to receive future updates?
-          <a href="https://tppcgroup5.vercel.app/pages/DeleteEmail" style="color:#1f1a16;text-decoration:underline;">Unsubscribe here.</a>
+          <a href="${unsubscribeUrl}" style="color:#1f1a16;text-decoration:underline;">Unsubscribe here.</a>
         </p>
       </td>
     </tr>
@@ -59,6 +63,9 @@ export function renderConfirmationEmail(payload: ContactEmailPayload) {
 }
 
 export function renderInternalNotificationEmail(payload: ContactEmailPayload) {
+  const unsubscribeUrl =
+    payload.unsubscribeLink ||
+    "https://tppcgroup5.vercel.app/api/unsubscribe";
   const content = `
     <tr>
       <td>
@@ -83,7 +90,7 @@ export function renderInternalNotificationEmail(payload: ContactEmailPayload) {
         </div>
         <p style="margin:24px 0 0;font-size:13px;color:#7a6754;">
           Prefer not to receive future updates?
-          <a href="https://tppcgroup5.vercel.app/pages/DeleteEmail" style="color:#1f1a16;text-decoration:underline;">Unsubscribe here.</a>
+          <a href="${unsubscribeUrl}" style="color:#1f1a16;text-decoration:underline;">Unsubscribe here.</a>
         </p>
       </td>
     </tr>

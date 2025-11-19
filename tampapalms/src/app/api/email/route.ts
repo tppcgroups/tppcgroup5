@@ -5,6 +5,7 @@ import React from "react";
 // Assuming this path for the Supabase server client (needed for logging)
 import { supabaseServer } from "@/lib/supabase/serverClient";
 import { EmailTemplate } from "@/app/components/email/EmailTemplate";
+import { AvailabilityNotificationEmail } from "@/app/components/email/AvailabilityNotificationEmail";
 import { PostgrestError } from "@supabase/supabase-js";
 
 // This function runs asynchronously to log the email event without blocking the main API response.
@@ -87,6 +88,11 @@ export async function POST(request: Request) {
       marketingEmail,
       subscribeUrl,
       logoUrl,
+      template = "default",
+      buildingLabel,
+      streetAddress,
+      price,
+      unsubscribeToken,
     } = body;
 
     recipient = reqRecipient;
@@ -99,18 +105,53 @@ export async function POST(request: Request) {
       );
     }
 
+    const baseUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      process.env.SITE_URL ||
+      new URL(request.url).origin;
+
+    const unsubscribeLink = unsubscribeToken
+      ? `${baseUrl}/api/unsubscribe?token=${encodeURIComponent(
+          unsubscribeToken
+        )}`
+      : undefined;
+
+    const TemplateComponent =
+      template === "availability-notification"
+        ? AvailabilityNotificationEmail
+        : EmailTemplate;
+
+    const templateProps =
+      template === "availability-notification"
+        ? {
+            recipientEmail: recipient,
+            buildingId,
+            buildingLabel,
+            streetAddress,
+            price,
+            marketingEmail:
+              marketingEmail ||
+              process.env.MARKETING_EMAIL ||
+              process.env.EMAIL_USER,
+            subscribeUrl,
+            logoUrl: logoUrl || process.env.MARKETING_LOGO_URL,
+            unsubscribeLink,
+          }
+        : {
+            recipientEmail: recipient,
+            buildingId,
+            marketingEmail:
+              marketingEmail ||
+              process.env.MARKETING_EMAIL ||
+              process.env.EMAIL_USER,
+            subscribeUrl,
+            logoUrl: logoUrl || process.env.MARKETING_LOGO_URL,
+            unsubscribeLink,
+          };
+
     const { renderToString } = await import("react-dom/server");
     const htmlContent = renderToString(
-      React.createElement(EmailTemplate, {
-        recipientEmail: recipient,
-        buildingId,
-        marketingEmail:
-          marketingEmail ||
-          process.env.MARKETING_EMAIL ||
-          process.env.EMAIL_USER,
-        subscribeUrl,
-        logoUrl: logoUrl || process.env.MARKETING_LOGO_URL,
-      })
+      React.createElement(TemplateComponent, templateProps)
     );
 
     if (

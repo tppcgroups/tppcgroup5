@@ -229,6 +229,7 @@ export async function POST(request: Request) {
         msg: "Notification request saved successfully.",
         notify_request_id: newRequest!.notify_request_id,
         email: email, // Send email back for logging
+        unsubscribe_token: userId,
       },
       { status: 201 }
     );

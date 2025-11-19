@@ -8,6 +8,7 @@ type EmailTemplateProps = {
   marketingEmail?: string;
   subscribeUrl?: string;
   logoUrl?: string;
+  unsubscribeLink?: string;
 }
 
 export const EmailTemplate: React.FC<EmailTemplateProps> = ({
@@ -16,6 +17,7 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
   marketingEmail = "marketing@tampapalmscenter.com",
   subscribeUrl = "https://tppcgroup5.vercel.app/pages/DeleteEmail",
   logoUrl,
+  unsubscribeLink,
 }) => {
   const headline = `You're on the alert list for ${buildingId}`;
   const resolvedLogo =
@@ -306,16 +308,29 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
                 17427 Bridge Hill Ct STE C, Tampa, FL 33647
                 <br />
                 Prefer not to receive alerts?{" "}
-                <a
-                  href={subscribeUrl}
-                  style={{
-                    color: "#0f172a",
-                    textDecoration: "none",
-                    fontWeight: 600,
-                  }}
-                >
-                  Update your email preferences
-                </a>
+                {unsubscribeLink ? (
+                  <a
+                    href={unsubscribeLink}
+                    style={{
+                      color: "#0f172a",
+                      textDecoration: "none",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Unsubscribe instantly
+                  </a>
+                ) : (
+                  <a
+                    href={subscribeUrl}
+                    style={{
+                      color: "#0f172a",
+                      textDecoration: "none",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Update your email preferences
+                  </a>
+                )}
                 .
               </p>
             </td>

@@ -202,12 +202,18 @@ export async function POST(req: Request) {
 
   try {
     const { from, internal } = getEmailConfig();
+    const siteUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      process.env.SITE_URL ||
+      new URL(req.url).origin;
+    const unsubscribeLink = `${siteUrl}/api/unsubscribe?token=${userId}`;
     const confirmationHtml = renderConfirmationEmail({
       name,
       email,
       subject,
       message,
       phoneNumber,
+      unsubscribeLink,
     });
     const internalHtml = renderInternalNotificationEmail({
       name,
@@ -216,6 +222,7 @@ export async function POST(req: Request) {
       message,
       phoneNumber,
       recordId,
+      unsubscribeLink,
     });
 
     await Promise.all([
