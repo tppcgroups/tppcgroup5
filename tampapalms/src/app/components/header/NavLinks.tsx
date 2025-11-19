@@ -1,7 +1,7 @@
 // file: components/header/NavLinks.tsx
 
 "use client";
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -48,46 +48,33 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
   const pathname = usePathname() || "/";
 
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const navRef = useRef<HTMLDivElement>(null);
-  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const navRef = useRef<HTMLDivElement | null>(null);
 
-  const clearCloseTimeout = () => {
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
-  };
+  useEffect(() => {
+    setOpenDropdown(null);
+  }, [pathname]);
 
-  // Function to close the menu on mobile when a link is clicked
+  useEffect(() => {
+    if (isMobile || !openDropdown) return;
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isMobile, openDropdown]);
+
   const handleLinkClick = () => {
     setIsOpen(false);
-    clearCloseTimeout();
     setOpenDropdown(null);
   };
 
-  const handleDropdownToggle = (label: string) => {
-    if (isMobile) return;
-    clearCloseTimeout();
-    setOpenDropdown((prev) => (prev === label ? null : label));
-  };
-
-  const handleDropdownOpen = (label: string) => {
-    if (isMobile) return;
-    clearCloseTimeout();
-    setOpenDropdown(label);
-  };
-
-  const handleDropdownCloseWithDelay = () => {
-    if (isMobile) return;
-    clearCloseTimeout();
-    closeTimeoutRef.current = setTimeout(() => {
-      setOpenDropdown(null);
-      closeTimeoutRef.current = null;
-    }, 200);
-  };
-
   return (
-    <div className="flex flex-col md:flex-row md:flex-1 md:justify-evenly items-center md:space-x-4 space-y-4 md:space-y-0 py-4 md:py-0">
+    <div
+      ref={navRef}
+      className="flex flex-col md:flex-row md:flex-1 md:justify-evenly items-center md:space-x-4 space-y-4 md:space-y-0 py-4 md:py-0"
+    >
       {NAV_LINKS.map((link) => {
         // 1. Check if the link is a DropdownLink (has 'children')
         if ("children" in link) {
@@ -118,16 +105,15 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
 
           // --- Desktop Dropdown Link Logic ---
           return (
-            <div
-              key={link.label}
-              className="relative"
-              onMouseOver={() => handleDropdownOpen(link.label)}
-              onMouseLeave={handleDropdownCloseWithDelay}
-            >
+            <div key={link.label} className="relative inline-flex flex-col items-center">
               <button
                 onClick={() => {
-                  handleDropdownToggle(link.label);
-                  announce(link.label);
+                  if (openDropdown === link.label) {
+                    setOpenDropdown(null);
+                  } else {
+                    setOpenDropdown(link.label);
+                    announce(link.label);
+                  }
                 }}
                 style={NAV_LINK_FONT_STYLE(isMobile)}
                 className={`${BASE_LINK_CLASSES} py-2 inline-flex items-center justify-center gap-1 group ${
@@ -135,35 +121,34 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                 }`}
                 aria-expanded={openDropdown === link.label}
               >
-                <span>{link.label}</span>
+                <span className="cursor-pointer">{link.label}</span>
                 <ChevronDown
                   aria-hidden
-                  className={`h-4 w-4 sm:h-5 sm:w-5 text-[#1f1a16] transition-transform duration-500 group-hover:text-[#1f1a16] ${
+                  className={`h-4 w-4 sm:h-5 sm:w-5 text-[#1f1a16] transition-transform duration-300 group-hover:text-[#1f1a16] cursor-pointer ${
                     openDropdown === link.label ? "rotate-180" : ""
                   }`}
                 />
               </button>
 
-              {openDropdown === link.label && (
-                <div
-                  className="absolute top-full left-1/2 -translate-x-1/2 bg-white shadow-lg rounded-md z-10 w-48 mt-2 p-2 flex flex-col items-center space-y-2 text-center"
-                  onMouseOver={clearCloseTimeout}
-                >
-                  {link.children.map((childLink) => (
-                    <Link key={childLink.href} href={childLink.href} passHref>
-                      <span
-                        onClick={handleLinkClick}
-                        onMouseOver={() => announce(childLink.label)}
-                        className={`${BASE_LINK_CLASSES} ${DROPDOWN_LINK_SIZE_CLASSES} px-3 py-1.5 sm:py-2 ${
-                          pathname === childLink.href ? "after:w-full" : ""
-                        }`}
-                      >
-                        {childLink.label}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-              )}
+              <div
+                className={`absolute top-full left-1/2 -translate-x-1/2 bg-white shadow-lg rounded-md z-10 w-48 mt-2 p-3 flex flex-col items-center space-y-2 text-center transition-all duration-500 ease-out ${
+                  openDropdown === link.label ? "pointer-events-auto opacity-100 translate-y-0" : "pointer-events-none opacity-0 -translate-y-3"
+                }`}
+              >
+                {link.children.map((childLink) => (
+                  <Link key={childLink.href} href={childLink.href} passHref>
+                    <span
+                      onClick={handleLinkClick}
+                      onMouseOver={() => announce(childLink.label)}
+                      className={`${BASE_LINK_CLASSES} ${DROPDOWN_LINK_SIZE_CLASSES} px-3 py-1.5 sm:py-2 ${
+                        pathname === childLink.href ? "after:w-full" : ""
+                      }`}
+                    >
+                      {childLink.label}
+                    </span>
+                  </Link>
+                ))}
+              </div>
             </div>
           );
         } else {
