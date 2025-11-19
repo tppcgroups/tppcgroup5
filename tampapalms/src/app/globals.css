@@ -160,7 +160,8 @@ header nav {
   }
   body {
     @apply bg-background text-foreground;
-    @apply text-[#1f1a16]
+    @apply text-[#1f1a16];
+    font-family: "Miller Display", "Georgia", "Times New Roman", serif;
   }
 }
 
@@ -351,6 +352,5 @@ footer {
     cursor: url("/images/largecursor.webp") 0 0 / 48px 48px, auto;
     image-rendering: pixelated;
 }
-
 
 

@@ -15,7 +15,7 @@ export const Logo: React.FC<LogoProps>= ({className}) => {
         <Image
           src="/images/TampaPalmsLogo.png"
           alt="Tampa Palms Professional Center Logo"
-          width={190}
+          width={165}
           height={40}
           className={className || ""}
         />

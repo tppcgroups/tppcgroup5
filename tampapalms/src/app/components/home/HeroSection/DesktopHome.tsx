@@ -102,8 +102,12 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
         imageUrls={imageUrls}
         className="absolute inset-0 z-10"
       />
+      <div
+        className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-black/40 via-black/10 to-transparent"
+        aria-hidden="true"
+      />
 
-      <div className="relative z-30 flex h-full flex-col justify-between px-14 py-12">
+      <div className="relative z-30 flex h-full flex-col justify-between px-4 py-4">
         <div className="flex items-start justify-between gap-8">
           <div className="relative max-w-lg">
             <div

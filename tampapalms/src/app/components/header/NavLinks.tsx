@@ -2,7 +2,6 @@
 
 "use client";
 import { useEffect, useRef, useState } from "react";
-import type { CSSProperties } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {announce} from "@/app/components/RentalApplication/screenReader";
@@ -35,12 +34,7 @@ interface NavLinksProps {
 }
 
 const BASE_LINK_CLASSES =
-  "relative inline-block font-bold text-gray-800 hover:text-black text-center after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:w-0 after:bg-gray-800 after:transition-all after:duration-500 hover:after:w-full";
-const NAV_LINK_FONT_STYLE = (isMobile: boolean): CSSProperties => ({
-  fontSize: isMobile
-    ? "clamp(1rem, 1.25vw + 0.4rem, 1.4rem)"
-    : "clamp(0.85rem, 1vw + 0.35rem, 1.25rem)",
-});
+  "relative inline-block font-bold text-lg text-gray-800 hover:text-black text-center after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:w-0 after:bg-gray-800 after:transition-all after:duration-500 hover:after:w-full";
 const DROPDOWN_LINK_SIZE_CLASSES =
   "text-xs sm:text-sm md:text-base";
 
@@ -73,7 +67,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
   return (
     <div
       ref={navRef}
-      className="flex flex-col md:flex-row md:flex-1 md:justify-evenly items-center md:space-x-4 space-y-4 md:space-y-0 py-4 md:py-0"
+      className="flex flex-col md:flex-row md:flex-1 md:justify-end items-center md:space-x-10 space-y-6 md:space-y-0 py-4 md:py-0"
     >
       {NAV_LINKS.map((link) => {
         // 1. Check if the link is a DropdownLink (has 'children')
@@ -83,14 +77,13 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
             return (
               <div
                 key={link.label}
-                className="flex flex-col items-center space-y-4 w-full"
+                className="flex flex-col items-center space-y-5 w-full"
               >
                 {link.children.map((childLink) => (
                   <Link key={childLink.href} href={childLink.href} passHref>
                     <span
                       onClick={handleLinkClick}
                       onMouseOver={() => announce(childLink.label)}
-                      style={NAV_LINK_FONT_STYLE(isMobile)}
                       className={`${BASE_LINK_CLASSES} py-2 ${
                         pathname === childLink.href ? "after:w-full" : ""
                       }`}
@@ -115,7 +108,6 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                     announce(link.label);
                   }
                 }}
-                style={NAV_LINK_FONT_STYLE(isMobile)}
                 className={`${BASE_LINK_CLASSES} py-2 inline-flex items-center justify-center gap-1 group ${
                   openDropdown === link.label ? "after:w-full" : ""
                 }`}
@@ -158,7 +150,6 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
               <span
                 onClick={handleLinkClick}
                 onMouseOver={() => announce(link.label)}
-                style={NAV_LINK_FONT_STYLE(isMobile)}
                 className={`${BASE_LINK_CLASSES} py-2 ${
                   pathname === link.href ? "after:w-full" : ""
                 }`}
