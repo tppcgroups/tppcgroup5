@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabaseServer } from '@/lib/supabase/serverClient';
-import { logDbAction } from '@/lib/logDbAction';
+import { logDbAction } from '@/lib/logs/logDbAction';
 
 function getUserIdFromRequest(request: Request): string {
   return "anonymous_user";

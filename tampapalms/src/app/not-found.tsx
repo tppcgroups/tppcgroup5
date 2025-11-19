@@ -1,6 +1,38 @@
 import Link from "next/link";
+import { headers } from "next/headers";
+import { getSupabaseServiceRoleClient } from "@/lib/supabase/serviceRoleClient";
+import { logDbAction } from "@/lib/logs/logDbAction";
 
-export default function NotFound() {
+async function logNotFoundEvent() {
+  try {
+    const supabase = getSupabaseServiceRoleClient();
+    const headersList = await headers();
+    const path =
+      headersList.get("x-invoke-path") ??
+      headersList.get("referer") ??
+      headersList.get("x-matched-path") ??
+      "unknown";
+    const userAgent = headersList.get("user-agent") ?? "unknown";
+
+    await logDbAction(
+      supabase,
+      Promise.resolve({ data: null, error: null }),
+      "404_ERROR",
+      "anonymous_not_found",
+      {
+        table: "routing",
+        operation: "page_not_found",
+        path,
+        userAgent,
+      }
+    );
+  } catch (error) {
+    console.error("Failed to log 404 event:", error);
+  }
+}
+
+export default async function NotFound() {
+  await logNotFoundEvent();
   return (
     <section className="relative flex min-h-[70vh] items-center justify-center bg-[#f9f7f3] px-6 py-16 text-[#1f1a16]">
       <div className="absolute inset-0 bg-gradient-to-b from-[#fdf8f3] via-transparent to-[#f1ebe4]" />

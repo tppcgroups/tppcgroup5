@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { renderConfirmationEmail, renderInternalNotificationEmail } from "@/lib/email/contactEmails";
 import { getSupabaseServiceRoleClient } from "@/lib/supabase/serviceRoleClient";
 import { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
+import { logDbAction } from "@/lib/logs/logDbAction";
 
 type ContactPayload = {
   name?: string;
@@ -160,23 +161,34 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { data, error } = await supabase
-      .from("contact_us")
-      .insert({
-        user_id: userId,
-        // name,
+    const insertQueryPromise = (async () => {
+      const { data, error } = await supabase
+        .from("contact_us")
+        .insert({
+          user_id: userId,
+          email,
+          subject: subject || null,
+          message,
+          phone_number: phoneNumber || null,
+        })
+        .select("contact_us_id")
+        .single();
+
+      return { data, error };
+    })();
+
+    const { data, error } = await logDbAction(
+      supabase,
+      insertQueryPromise,
+      "CONTACT_FORM_SUBMISSION",
+      userId ?? "contact_form_user",
+      {
+        table: "contact_us",
+        operation: "contact_form_submission",
+        eventTypeOverride: "CONTACT_FORM_SUBMISSION",
         email,
-        subject: subject || null,
-        message,
-        phone_number: phoneNumber || null,
-        // metadata: {
-        //   consent,
-        //   referer: req.headers.get("referer"),
-        //   userAgent: req.headers.get("user-agent"),
-        // },
-      })
-      .select("contact_us_id")
-      .single();
+      }
+    );
 
     if (error) {
       console.error("Supabase insert failed:", error);

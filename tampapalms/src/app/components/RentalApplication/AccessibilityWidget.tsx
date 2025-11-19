@@ -7,7 +7,7 @@ import { setScreenReaderEnabled } from "@/app/components/RentalApplication/scree
 
 
 
-import React, { useEffect, useState} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 
@@ -19,6 +19,17 @@ type Language = "English" | "Spanish" | "French" | "Swahili";
 type AccessibilityWidget = {
     highContrast: boolean;
     largeText: boolean;
+};
+
+type AccessibilitySettingsSnapshot = {
+    textScale: number;
+    highContrast: boolean;
+    highlightIndex: number;
+    reduceMotion: boolean;
+    contrastIndex: number;
+    languageIndex: number;
+    backgroundThemeIndex: number;
+    screenReaderMode: boolean;
 };
 const AccessibilityWidget: React.FC = () => {
     const [open, setOpen] = useState(false);
@@ -80,6 +91,55 @@ const AccessibilityWidget: React.FC = () => {
     const prevBackgroundTheme = () => {
         setBackgroundThemeIndex((prev) => prev === 0 ? backgroundThemeModes.length - 1 : prev - 1);
     };
+
+    const logAccessibilityEvent = useCallback(
+        async (
+            eventType: "ACCESSIBILITY_ICON_CLICK" | "ACCESSIBILITY_SETTING_CHANGE",
+            metadata: Record<string, unknown> = {}
+        ) => {
+            try {
+                await fetch("/api/accessibility-events", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        eventType,
+                        metadata,
+                    }),
+                });
+            } catch (error) {
+                console.error("Failed to log accessibility event:", error);
+            }
+        },
+        []
+    );
+
+    const toggleWidgetVisibility = useCallback(
+        (trigger: "button" | "keyboard" | "shortcut" = "button") => {
+            setOpen((prev) => {
+                const next = !prev;
+                void logAccessibilityEvent("ACCESSIBILITY_ICON_CLICK", {
+                    trigger,
+                    opened: next,
+                });
+                return next;
+            });
+        },
+        [logAccessibilityEvent]
+    );
+
+    const previousSettingsRef = useRef<AccessibilitySettingsSnapshot>({
+        textScale,
+        highContrast,
+        highlightIndex,
+        reduceMotion,
+        contrastIndex,
+        languageIndex,
+        backgroundThemeIndex,
+        screenReaderMode,
+    });
+    const settingsLogInitializedRef = useRef(false);
 
 
 
@@ -202,6 +262,56 @@ const AccessibilityWidget: React.FC = () => {
         return () => clearTimeout(timeout);
     }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex, backgroundThemeIndex, screenReaderMode]);
 
+    useEffect(() => {
+        const currentSettings: AccessibilitySettingsSnapshot = {
+            textScale,
+            highContrast,
+            highlightIndex,
+            reduceMotion,
+            contrastIndex,
+            languageIndex,
+            backgroundThemeIndex,
+            screenReaderMode,
+        };
+
+        if (!settingsLogInitializedRef.current) {
+            previousSettingsRef.current = currentSettings;
+            settingsLogInitializedRef.current = true;
+            return;
+        }
+
+        const previousSettings = previousSettingsRef.current;
+        const changes: Partial<Record<keyof AccessibilitySettingsSnapshot, { previous: unknown; current: unknown }>> = {};
+
+        (Object.keys(currentSettings) as Array<keyof AccessibilitySettingsSnapshot>).forEach((key) => {
+            if (previousSettings[key] !== currentSettings[key]) {
+                changes[key] = {
+                    previous: previousSettings[key],
+                    current: currentSettings[key],
+                };
+            }
+        });
+
+        if (Object.keys(changes).length > 0) {
+            void logAccessibilityEvent("ACCESSIBILITY_SETTING_CHANGE", {
+                changes,
+                currentSettings,
+            });
+        }
+
+        previousSettingsRef.current = currentSettings;
+    }, [
+        textScale,
+        highContrast,
+        highlightIndex,
+        reduceMotion,
+        contrastIndex,
+        languageIndex,
+        backgroundThemeIndex,
+        screenReaderMode,
+        logAccessibilityEvent,
+    ]);
+
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -290,7 +400,7 @@ const AccessibilityWidget: React.FC = () => {
 
 
             else if (isCtrl && isShift && e.code === 'KeyO') {
-                setOpen(prev => !prev);
+                toggleWidgetVisibility("shortcut");
                 handled = true;
             }
 
@@ -310,8 +420,9 @@ const AccessibilityWidget: React.FC = () => {
             window.removeEventListener("keydown", handleGlobalKeyDown);
         };
     }, [
-        textScale, screenReaderMode, setScreenReaderMode, setOpen,
-        nextContrast, prevContrast, nextLanguage, prevLanguage, setTextScale
+        textScale, screenReaderMode, setScreenReaderMode,
+        nextContrast, prevContrast, nextLanguage, prevLanguage, setTextScale,
+        toggleWidgetVisibility
     ]);
 
 
@@ -321,13 +432,13 @@ const AccessibilityWidget: React.FC = () => {
     return (
         <>
             <button
-                onClick={() => setOpen(!open)}
+                onClick={() => toggleWidgetVisibility("button")}
                 aria-label="Accessibility options"
                 tabIndex = {0}
                 onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                         e.preventDefault();
-                        setOpen((prev) => !prev);
+                        toggleWidgetVisibility("keyboard");
                     }
                 }}
                 className="
