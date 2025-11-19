@@ -34,7 +34,7 @@ const Header = () => {
       {/* The dropdown container is now styled */}
       <div
         className={`min-[900px]:hidden mx-4 overflow-hidden rounded-xl transparent transition-all duration-500 ${
-          isOpen ? "max-h-96 opacity-100 p-4" : "max-h-0 opacity-0 p-0"
+          isOpen ? "max-h-[90vh] opacity-100 p-4" : "max-h-0 opacity-0 p-0"
         }`}
       >
         <NavLinks setIsOpen={setIsOpen} isMobile />

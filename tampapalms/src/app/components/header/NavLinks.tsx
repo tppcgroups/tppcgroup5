@@ -36,9 +36,11 @@ interface NavLinksProps {
 
 const BASE_LINK_CLASSES =
   "relative inline-block font-bold text-gray-800 hover:text-black text-center after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:w-0 after:bg-gray-800 after:transition-all after:duration-500 hover:after:w-full";
-const NAV_LINK_FONT_STYLE: CSSProperties = {
-  fontSize: "clamp(0.85rem, 1vw + 0.35rem, 1.25rem)",
-};
+const NAV_LINK_FONT_STYLE = (isMobile: boolean): CSSProperties => ({
+  fontSize: isMobile
+    ? "clamp(1rem, 1.25vw + 0.4rem, 1.4rem)"
+    : "clamp(0.85rem, 1vw + 0.35rem, 1.25rem)",
+});
 const DROPDOWN_LINK_SIZE_CLASSES =
   "text-xs sm:text-sm md:text-base";
 
@@ -89,7 +91,32 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
       {NAV_LINKS.map((link) => {
         // 1. Check if the link is a DropdownLink (has 'children')
         if ("children" in link) {
-          // --- Dropdown Link Logic ---
+          // On mobile, show dropdown children as regular links
+          if (isMobile) {
+            return (
+              <div
+                key={link.label}
+                className="flex flex-col items-center space-y-4 w-full"
+              >
+                {link.children.map((childLink) => (
+                  <Link key={childLink.href} href={childLink.href} passHref>
+                    <span
+                      onClick={handleLinkClick}
+                      onMouseOver={() => announce(childLink.label)}
+                      style={NAV_LINK_FONT_STYLE(isMobile)}
+                      className={`${BASE_LINK_CLASSES} py-2 ${
+                        pathname === childLink.href ? "after:w-full" : ""
+                      }`}
+                    >
+                      {childLink.label}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            );
+          }
+
+          // --- Desktop Dropdown Link Logic ---
           return (
             <div
               key={link.label}
@@ -98,18 +125,11 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
               onMouseLeave={handleDropdownCloseWithDelay}
             >
               <button
-                // Use handleDropdownToggle for mobile or desktop click/hover interaction
                 onClick={() => {
-                  if (isMobile) {
-                    setOpenDropdown((prev) =>
-                      prev === link.label ? null : link.label
-                    );
-                  } else {
-                    handleDropdownToggle(link.label);
-                  }
+                  handleDropdownToggle(link.label);
                   announce(link.label);
                 }}
-                style={NAV_LINK_FONT_STYLE}
+                style={NAV_LINK_FONT_STYLE(isMobile)}
                 className={`${BASE_LINK_CLASSES} py-2 inline-flex items-center justify-center gap-1 group ${
                   openDropdown === link.label ? "after:w-full" : ""
                 }`}
@@ -124,20 +144,15 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                 />
               </button>
 
-              {/* Dropdown Menu Content (Hidden on Mobile/Desktop toggle) */}
               {openDropdown === link.label && (
                 <div
-                  className={`absolute ${
-                    isMobile ? "static" : "top-full left-1/2 -translate-x-1/2"
-                  } 
-                    bg-white shadow-lg rounded-md z-10 w-48 mt-2 p-2 
-                    flex flex-col items-center space-y-2 text-center`}
+                  className="absolute top-full left-1/2 -translate-x-1/2 bg-white shadow-lg rounded-md z-10 w-48 mt-2 p-2 flex flex-col items-center space-y-2 text-center"
                   onMouseOver={clearCloseTimeout}
                 >
                   {link.children.map((childLink) => (
                     <Link key={childLink.href} href={childLink.href} passHref>
                       <span
-                        onClick={handleLinkClick} // Closes mobile menu and dropdown
+                        onClick={handleLinkClick}
                         onMouseOver={() => announce(childLink.label)}
                         className={`${BASE_LINK_CLASSES} ${DROPDOWN_LINK_SIZE_CLASSES} px-3 py-1.5 sm:py-2 ${
                           pathname === childLink.href ? "after:w-full" : ""
@@ -158,7 +173,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
               <span
                 onClick={handleLinkClick}
                 onMouseOver={() => announce(link.label)}
-                style={NAV_LINK_FONT_STYLE}
+                style={NAV_LINK_FONT_STYLE(isMobile)}
                 className={`${BASE_LINK_CLASSES} py-2 ${
                   pathname === link.href ? "after:w-full" : ""
                 }`}
