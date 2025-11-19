@@ -6,7 +6,6 @@ import { PiArrowCircleRightBold } from "react-icons/pi";
 interface SpacesCardProps {
   title: string;
   imageUrl: string;
-  href: string;
   features: string[];
   label?: string;
 }
@@ -14,7 +13,6 @@ interface SpacesCardProps {
 export const SpacesCard: React.FC<SpacesCardProps> = ({
   title,
   imageUrl,
-  href,
   features,
   label = "Commercial Real Estate",
 }) => {
@@ -22,10 +20,7 @@ export const SpacesCard: React.FC<SpacesCardProps> = ({
   const featureSummary = `${label}: ${features.join(", ")}`;
 
   return (
-    <Link
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+    <div
       aria-describedby={featureListId}
       className="group relative flex h-full w-full flex-col overflow-hidden rounded-[28px] border border-[#c8b79f] bg-white shadow-lg shadow-black/5 transition-all duration-400 ease-out hover:-translate-y-1 hover:border-[#5a4b3c] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1f1a16]/40 md:max-w-none md:flex-1"
     >
@@ -96,7 +91,7 @@ export const SpacesCard: React.FC<SpacesCardProps> = ({
             <PiArrowCircleRightBold aria-hidden="true" className="text-xl" />
         </span>
       </div>
-    </Link>
+    </div>
   );
 };
 
