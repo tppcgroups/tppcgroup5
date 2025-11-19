@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import AccessibilityWidget from "@/app/components/RentalApplication/AccessibilityWidget";
+import { ToastContainer } from "react-toastify";
 
 
 const geistSans = Geist({
@@ -33,7 +34,7 @@ export default function RootLayout({
       >
         <Header />
         {}
-            <main className="flex-grow">{children}</main>
+            <main className="flex-grow">{children} <ToastContainer position="bottom-center" autoClose={5000}/></main>
         <Footer />
         <AccessibilityWidget />
       </body>

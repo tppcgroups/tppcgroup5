@@ -142,11 +142,11 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
 
           <HighlightedLocation />
         </div>
-        <div className="md:flex hidden flex-col items-center justify-center pb-2 relative">
+        <div className="flex flex-col items-center justify-center pb-2 relative">
           <button
             type="button"
             onClick={handleScrollDown}
-            className="z-20 mb-3 inline-flex h-12 w-12 items-center justify-center text-white shadow-2xl shadow-black/25 transition text-7xl"
+            className="z-20 mb-3 inline-flex h-12 w-12 items-center justify-center text-white shadow-2xl shadow-black/25 transition text-7xl cursor-pointer"
             aria-label="Scroll to next section"
           >
             <HiOutlineArrowSmDown className="h-10 w-10 animate-bounce" />
