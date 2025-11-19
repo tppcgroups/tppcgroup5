@@ -130,7 +130,7 @@ export async function POST(request: Request) {
     }
 
     const mailOptions = {
-      from: process.env.SENDER_EMAIL,
+      from: process.env.EMAIL_USER,
       to: recipient,
       subject: subject,
       html: htmlContent,
