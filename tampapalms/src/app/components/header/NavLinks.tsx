@@ -2,9 +2,11 @@
 
 "use client";
 import { useState, useRef } from "react";
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {announce} from "@/app/components/RentalApplication/screenReader";
+import { ChevronDown } from "lucide-react";
 
 // The component is now simpler
 type LeafLink = { href: string; label: string };
@@ -31,6 +33,14 @@ interface NavLinksProps {
   setIsOpen: (isOpen: boolean) => void;
   isMobile?: boolean;
 }
+
+const BASE_LINK_CLASSES =
+  "relative inline-block font-bold text-gray-800 hover:text-black text-center after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:w-0 after:bg-gray-800 after:transition-all after:duration-500 hover:after:w-full";
+const NAV_LINK_FONT_STYLE: CSSProperties = {
+  fontSize: "clamp(0.85rem, 1vw + 0.35rem, 1.25rem)",
+};
+const DROPDOWN_LINK_SIZE_CLASSES =
+  "text-xs sm:text-sm md:text-base";
 
 const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
   const pathname = usePathname() || "/";
@@ -99,14 +109,19 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                   }
                   announce(link.label);
                 }}
-                className={`relative font-bold text-xl py-2 text-gray-800 hover:text-black after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:w-0
-                  after:bg-gray-800 after:transition-all after:duration-500
-                  hover:after:w-full ${
-                    openDropdown === link.label ? "after:w-full" : "after:w-0"
-                  }`}
+                style={NAV_LINK_FONT_STYLE}
+                className={`${BASE_LINK_CLASSES} py-2 inline-flex items-center justify-center gap-1 group ${
+                  openDropdown === link.label ? "after:w-full" : ""
+                }`}
                 aria-expanded={openDropdown === link.label}
               >
-                {link.label}
+                <span>{link.label}</span>
+                <ChevronDown
+                  aria-hidden
+                  className={`h-4 w-4 sm:h-5 sm:w-5 text-[#1f1a16] transition-transform duration-500 group-hover:text-[#1f1a16] ${
+                    openDropdown === link.label ? "rotate-180" : ""
+                  }`}
+                />
               </button>
 
               {/* Dropdown Menu Content (Hidden on Mobile/Desktop toggle) */}
@@ -116,7 +131,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                     isMobile ? "static" : "top-full left-1/2 -translate-x-1/2"
                   } 
                     bg-white shadow-lg rounded-md z-10 w-48 mt-2 p-2 
-                    flex flex-col space-y-2`}
+                    flex flex-col items-center space-y-2 text-center`}
                   onMouseOver={clearCloseTimeout}
                 >
                   {link.children.map((childLink) => (
@@ -124,12 +139,9 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                       <span
                         onClick={handleLinkClick} // Closes mobile menu and dropdown
                         onMouseOver={() => announce(childLink.label)}
-                        className={`block text-lg px-3 py-1 rounded-md transition-colors 
-                          ${
-                            pathname === childLink.href
-                              ? "bg-gray-100 text-black font-semibold"
-                              : "text-gray-700 hover:bg-gray-50 hover:text-black"
-                          }`}
+                        className={`${BASE_LINK_CLASSES} ${DROPDOWN_LINK_SIZE_CLASSES} px-3 py-1.5 sm:py-2 ${
+                          pathname === childLink.href ? "after:w-full" : ""
+                        }`}
                       >
                         {childLink.label}
                       </span>
@@ -146,13 +158,10 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
               <span
                 onClick={handleLinkClick}
                 onMouseOver={() => announce(link.label)}
-                className={`relative font-bold text-xl py-2 text-gray-800 hover:text-black after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:w-0
-                  after:bg-gray-800 after:transition-all after:duration-500
-                  hover:after:w-full ${
-                    pathname === link.href
-                      ? "after:w-full"
-                      : "after:w-0 hover:after:w-full"
-                  }`}
+                style={NAV_LINK_FONT_STYLE}
+                className={`${BASE_LINK_CLASSES} py-2 ${
+                  pathname === link.href ? "after:w-full" : ""
+                }`}
               >
                 {link.label}
               </span>
