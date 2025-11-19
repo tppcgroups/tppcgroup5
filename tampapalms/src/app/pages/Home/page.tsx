@@ -103,7 +103,9 @@ export default function Home(){
       <div className="pb-20">
         {/* Mobile Home Component */}
         <FadeIn delay={10}>
-          <MobileHome imageUrls={images} />
+          <div className="md:hidden">
+            <MobileHome imageUrls={images} />
+          </div>
         </FadeIn>
         {/* Desktop Home Component */}
         <FadeIn delay={50}>
@@ -111,9 +113,13 @@ export default function Home(){
         </FadeIn>
 
         <FadeIn delay={50}>
-          <HomeSections totalSize={totalSize} flexibleSuites={flexibleSuites} buildingAvailable={buildingAvailable} />
+          <HomeSections
+            totalSize={totalSize}
+            flexibleSuites={flexibleSuites}
+            buildingAvailable={buildingAvailable}
+          />
         </FadeIn>
-        
+
         <div></div>
         {/* <LocationInsights /> */}
       </div>

@@ -4,7 +4,7 @@ import * as React from "react"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
-import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react"
+import { ArrowLeft, ArrowRight } from "lucide-react"
 import { FaArrowRight,FaArrowLeft } from "react-icons/fa6";
 
 
@@ -22,8 +22,6 @@ type CarouselProps = {
   plugins?: CarouselPlugin
   orientation?: "horizontal" | "vertical"
   setApi?: (api: CarouselApi) => void
-  scrollTargetId?: string
-  showScrollButton?: boolean
 }
 
 type CarouselContextProps = {
@@ -54,8 +52,6 @@ function Carousel({
   plugins,
   className,
   children,
-  scrollTargetId = "home-sections",
-  showScrollButton = true,
   ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
   const [carouselRef, api] = useEmblaCarousel(
@@ -111,19 +107,6 @@ function Carousel({
     }
   }, [api, onSelect])
 
-  const handleScrollDown = React.useCallback(() => {
-    if (scrollTargetId) {
-      const target = document.getElementById(scrollTargetId)
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "start" })
-        return
-      }
-    }
-    if (typeof window !== "undefined") {
-      window.scrollBy({ top: window.innerHeight * 0.7, behavior: "smooth" })
-    }
-  }, [scrollTargetId])
-
   return (
     <CarouselContext.Provider
       value={{
@@ -147,16 +130,6 @@ function Carousel({
         {...props}
       >
         {children}
-        {showScrollButton && (
-          <button
-            type="button"
-            aria-label="Scroll to next section"
-            onClick={handleScrollDown}
-            className="absolute left-1/2 bottom-5 z-30 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border border-white/70 bg-white/95 text-[#1f1a16] shadow-2xl shadow-black/25 backdrop-blur-md transition hover:bg-white"
-          >
-            <ChevronDown className="h-5 w-5" />
-          </button>
-        )}
       </div>
     </CarouselContext.Provider>
   )

@@ -30,8 +30,9 @@ function NotifyPopUp({ onClose, buildingId }: PopupComponentProps) {
       return;
     }
 
-    let notifyRequestId = null;
+    let notifyRequestId: string | null = null;
     let success = false;
+    let unsubscribeToken: string | null = null;
 
     try {
       // --- 1. CREATE USER & NOTIFY REQUEST ---
@@ -46,6 +47,7 @@ function NotifyPopUp({ onClose, buildingId }: PopupComponentProps) {
         success = true;
         notifyRequestId = response.data.notify_request_id;
         toast.success(response.data.msg, { autoClose: 2000 });
+        unsubscribeToken = response.data.unsubscribe_token ?? null;
       } else if (response.data.warning) {
         // Warning handles 'already exists'
         toast.warning(response.data.msg, { autoClose: 2000 });
@@ -80,25 +82,13 @@ function NotifyPopUp({ onClose, buildingId }: PopupComponentProps) {
           marketingEmail: marketingEmailAddress,
           subscribeUrl,
           logoUrl,
+          unsubscribeToken,
         };
 
         // Assuming /api/email handles the email send logic
         await axios.post("/api/email", mailPayload);
 
-        // --- 3. LOG COMPLETION (This requires a new /api/completed-notify route or logic) ---
-        // Since you want to log completed_notify AFTER email send,
-        // you would ideally make a *third* API call here or in the /api/email route itself.
-        // For simplicity here, we'll assume a new dedicated endpoint.
-
-        // Placeholder for logging completion:
-        await axios.post("/api/completed-notify", {
-          notify_request_id: notifyRequestId,
-          user_email: emailInput, // or user_id if available on client
-          buildingId: buildingId,
-          // Note: If you don't have a /api/completed-notify route,
-          // this logic must be moved to the server side (e.g., inside /api/email)
-          // to ensure logging happens on the server after the sendMail call.
-        });
+        // Completed notify entries are now handled by the availability cron job once suites open.
       } catch (error) {
         // Note: The main request was saved, but the email failed.
         // The completed_notify record might also fail here.

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabase/serverClient";
 import { PostgrestError } from "@supabase/supabase-js";
-import { logDbAction } from "@/lib/logDbAction";
+import { logDbAction } from "@/lib/logs/logDbAction";
 
 // Define the interface for the data received from the client
 interface NotifyRequestData {
@@ -229,6 +229,7 @@ export async function POST(request: Request) {
         msg: "Notification request saved successfully.",
         notify_request_id: newRequest!.notify_request_id,
         email: email, // Send email back for logging
+        unsubscribe_token: userId,
       },
       { status: 201 }
     );

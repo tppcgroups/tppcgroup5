@@ -92,7 +92,7 @@ export function BuildingPhotos({images, activeImageIndex, onPrev, onNext, onSele
         <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {imageIndices.map((index, i) => (
             <button
-              key={images[index].src}
+              key={i}
               type="button"
               onClick={() => onSelectImage(index)}
               className={`relative ${

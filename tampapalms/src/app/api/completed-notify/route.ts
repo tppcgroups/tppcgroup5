@@ -1,138 +1,349 @@
 import { NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabase/serverClient";
-import { PostgrestError } from "@supabase/supabase-js";
-import { Timestamp } from "next/dist/server/lib/cache-handlers/types";
-import { logDbAction } from "@/lib/logDbAction";
+import { logDbAction } from "@/lib/logs/logDbAction";
 
-// Define the interface for the data received from the client
-interface CompletedNotifyPayload {
-  notify_request_id: string; // The UUID generated when the request was saved
-  user_email: string; // The email used to find the user_id
-  buildingId: string; // The ID of the building/suite (space_id)
-  building_number: number;
-  suite_number: string;
-  title: string;
-}
+const marketingEmailAddress =
+  process.env.MARKETING_EMAIL ||
+  process.env.NEXT_PUBLIC_MARKETING_EMAIL ||
+  process.env.EMAIL_USER ||
+  "marketing@tampapalms.com";
 
-// Helper function for clearer error handling
-const handleSupabaseError = (error: PostgrestError, operation: string) => {
-  console.error(`Supabase ${operation} error:`, error.message);
-  return NextResponse.json(
-    { error: true, msg: `Server error during ${operation}: ${error.message}` },
-    { status: 500 }
-  );
+const unsubscribeUrl =
+  process.env.NOTIFY_SUBSCRIBE_URL ||
+  process.env.NEXT_PUBLIC_NOTIFY_SUBSCRIBE_URL ||
+  "https://tppcgroup5.vercel.app/pages/DeleteEmail";
+
+const marketingLogoUrl =
+  process.env.MARKETING_LOGO_URL || process.env.NEXT_PUBLIC_LOGO_URL || "";
+
+type AvailableSpaceRow = {
+  building_id: string;
+  building_number: number | null;
+  suite_number: string | null;
+  availability_status: string | null;
+  street_address: string | null;
+  price: string | null;
 };
 
-export async function POST(request: Request) {
+type PendingNotifyRow = {
+  notify_request_id: string;
+  user_id: string;
+  space_id: string;
+  building_number: number | null;
+  suite_number: string | null;
+  title: string | null;
+  created_at: string | null;
+  users?: { email: string | null } | null;
+};
+
+const normalizeSpaceId = (value: string | null | undefined) =>
+  value ? value.trim().toLowerCase() : null;
+
+const isSpaceAvailable = (status: string | null | undefined) => {
+  if (!status) return false;
+  const normalized = status.trim().toLowerCase();
+  return normalized === "available" || normalized.includes("available");
+};
+
+const describeSpace = (space: AvailableSpaceRow, fallback?: PendingNotifyRow) => {
+  const buildingNum =
+    space.building_number ?? fallback?.building_number ?? undefined;
+  const suiteNum = space.suite_number ?? fallback?.suite_number ?? undefined;
+  const buildingLabel = buildingNum ? `Building ${buildingNum}` : "A suite";
+  return suiteNum ? `${buildingLabel} · Suite ${suiteNum}` : buildingLabel;
+};
+
+const sendAvailabilityEmail = async ({
+  origin,
+  recipient,
+  buildingId,
+  subject,
+  buildingLabel,
+  streetAddress,
+  price,
+  unsubscribeToken,
+}: {
+  origin: string;
+  recipient: string;
+  buildingId: string;
+  subject: string;
+  buildingLabel?: string;
+  streetAddress?: string | null;
+  price?: string | null;
+  unsubscribeToken?: string;
+}) => {
+  const emailEndpoint = new URL("/api/email", origin).toString();
+  const payload = {
+    recipient,
+    subject,
+    buildingId,
+    template: "availability-notification",
+    marketingEmail: marketingEmailAddress,
+    subscribeUrl: unsubscribeUrl,
+    logoUrl: marketingLogoUrl,
+    buildingLabel,
+    streetAddress,
+    price,
+    unsubscribeToken,
+  };
+
+  const response = await fetch(emailEndpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error(
+      `Failed to send availability email to ${recipient} for ${buildingId}:`,
+      errorText
+    );
+    return false;
+  }
+
+  return true;
+};
+
+async function processNotifications(request: Request) {
   const supabase = supabaseServer();
 
-  try {
-    const {
-      notify_request_id,
-      user_email,
-      buildingId,
-    }: CompletedNotifyPayload = await request.json();
-
-    if (!notify_request_id || !user_email || !buildingId) {
-      return NextResponse.json(
-        {
-          error: true,
-          msg: "Missing required fields (request ID, email, or building ID)",
-        },
-        { status: 400 }
-      );
-    }
-
-    // --- 1. GET USER ID FROM EMAIL ---
-
-    // We need the user_id for the completed_notify foreign key
-    const { data: userData, error: fetchUserError } = await supabase
-      .from("users")
-      .select("user_id")
-      .eq("email", user_email)
-      .single();
-
-    if (fetchUserError) {
-      // Note: If the error code is PGRST116 (No rows found), we can't log the completion.
-      if (fetchUserError.code === "PGRST116") {
-        console.warn(
-          `User not found for email: ${user_email}. Cannot log completion.`
-        );
-        return NextResponse.json(
-          { warning: true, msg: "User record not found, logging skipped." },
-          { status: 200 }
-        );
-      }
-      return handleSupabaseError(fetchUserError, "user lookup for completion");
-    }
-
-    const userId = userData.user_id;
-
-    // grab the created_at time stamp from notify request
-    let requestTimestamp: Timestamp | null = null;
-
-    const { data: requestData, error: fetchRequestError } = await supabase
+  const pendingQuery = (async () => {
+    const { data, error } = await supabase
       .from("notify_requests")
-      .select("created_at")
-      .eq("notify_request_id", notify_request_id)
-      .single()
+      .select(
+        "notify_request_id, user_id, space_id, building_number, suite_number, title, created_at"
+      )
+      .returns<PendingNotifyRow[]>();
 
-    if (fetchRequestError) {
-      console.error(`Failed to fetch notify request (ID: ${notify_request_id}:`, fetchRequestError.message);
-    } else {
-      requestTimestamp = requestData.created_at;
+    return { data: data ?? [], error };
+  })();
+
+  const { data: pendingRequests, error: pendingError } = await pendingQuery;
+
+  if (pendingError) {
+    throw new Error(`Failed to fetch notify requests: ${pendingError.message}`);
+  }
+
+  if (!pendingRequests || pendingRequests.length === 0) {
+    return NextResponse.json({
+      message: "No notify requests found.",
+      totalPending: 0,
+      processed: 0,
+    });
+  }
+
+  const userIds = Array.from(
+    new Set(
+      pendingRequests
+        .map((request) => request.user_id)
+        .filter((id): id is string => Boolean(id))
+    )
+  );
+
+  const userEmailMap = new Map<string, string | null>();
+
+  if (userIds.length > 0) {
+    const { data: userRows, error: userFetchError } = await supabase
+      .from("users")
+      .select("user_id, email")
+      .in("user_id", userIds)
+      .returns<Array<{ user_id: string; email: string | null }>>();
+
+    if (userFetchError) {
+      throw new Error(`Failed to fetch user emails: ${userFetchError.message}`);
     }
 
-    // --- 2. INSERT COMPLETED NOTIFY LOG ---
+    userRows?.forEach((row) => {
+      if (row.user_id) {
+        userEmailMap.set(row.user_id, row.email ?? null);
+      }
+    });
+  }
 
-    const delimiter: string = "-";
-    const index = buildingId.indexOf(delimiter);
-    const suite_num: string = buildingId.substring(index + 1);
+  const spacesQuery = (async () => {
+    const { data, error } = await supabase
+      .from("buildings")
+      .select(
+        "building_id, building_number, suite_number, availability_status, street_address, price"
+      )
+      .returns<AvailableSpaceRow[]>();
 
-    const insertData = {
-      user_id: userId,
-      notify_request_id: notify_request_id,
-      space_id: buildingId,
-      building_number: parseInt(buildingId[0]),
-      suite_number: suite_num,
-      title: "Space Notify Request",
-      created_at: requestTimestamp,
-    };
+    return { data: data ?? [], error };
+  })();
 
-    // define the query promise for logging
-    const queryPromise = (async () => {
+  const { data: spaces, error: spacesError } = await spacesQuery;
+  if (spacesError) {
+    throw new Error(`Failed to fetch building availability: ${spacesError.message}`);
+  }
+
+  const availableSpaceMap = new Map<string, AvailableSpaceRow>();
+  for (const space of spaces ?? []) {
+    const normalizedId = normalizeSpaceId(space.building_id);
+    if (!normalizedId) continue;
+    if (isSpaceAvailable(space.availability_status)) {
+      availableSpaceMap.set(normalizedId, space);
+    }
+  }
+
+  if (availableSpaceMap.size === 0) {
+    return NextResponse.json({
+      message: "No suites are currently marked as available.",
+      totalPending: pendingRequests.length,
+      processed: 0,
+    });
+  }
+
+  const origin = new URL(request.url).origin;
+
+  const summary = {
+    totalPending: pendingRequests.length,
+    eligible: 0,
+    processed: 0,
+    emailFailures: [] as Array<{ notify_request_id: string; email: string; reason: string }>,
+    skipped: [] as Array<{ notify_request_id: string; reason: string }>,
+  };
+
+  for (const requestRow of pendingRequests) {
+    const normalizedSpaceId = normalizeSpaceId(requestRow.space_id);
+    if (!normalizedSpaceId) {
+      summary.skipped.push({
+        notify_request_id: requestRow.notify_request_id,
+        reason: "Space ID missing or invalid",
+      });
+      continue;
+    }
+
+    const availableSpace = availableSpaceMap.get(normalizedSpaceId);
+    if (!availableSpace) {
+      continue;
+    }
+
+    summary.eligible += 1;
+
+    const recipient = userEmailMap.get(requestRow.user_id) ?? null;
+    if (!recipient) {
+      summary.skipped.push({
+        notify_request_id: requestRow.notify_request_id,
+        reason: "Missing user email",
+      });
+      continue;
+    }
+
+    const buildingLabel = describeSpace(availableSpace, requestRow);
+    const subject = `Good news! ${buildingLabel} is now available`;
+    const emailSent = await sendAvailabilityEmail({
+      origin,
+      recipient,
+      buildingId: requestRow.space_id,
+      subject,
+      buildingLabel,
+      streetAddress: availableSpace.street_address,
+      price: availableSpace.price,
+      unsubscribeToken: requestRow.user_id ?? undefined,
+    });
+
+    if (!emailSent) {
+      summary.emailFailures.push({
+        notify_request_id: requestRow.notify_request_id,
+        email: recipient,
+        reason: "Email service responded with an error",
+      });
+      continue;
+    }
+
+    const completionInsertPromise = (async () => {
       const { data, error } = await supabase
         .from("completed_notify")
-        .insert([insertData]);
-
-      return { data, error }
+        .insert([
+          {
+            user_id: requestRow.user_id,
+            notify_request_id: requestRow.notify_request_id,
+            space_id: requestRow.space_id,
+            building_number:
+              availableSpace.building_number ?? requestRow.building_number,
+            suite_number:
+              availableSpace.suite_number ?? requestRow.suite_number,
+            title: requestRow.title ?? "Space Notify Request",
+            created_at: requestRow.created_at,
+          },
+        ]);
+      return { data, error };
     })();
 
-    const { error: insertError } = await logDbAction(
+    const { error: completionInsertError } = await logDbAction(
       supabase,
-      queryPromise,
-      'POST',
-      userId,
+      completionInsertPromise,
+      "POST",
+      requestRow.user_id ?? "notify_user",
       {
-        table: 'completed_notify',
-        request_id: notify_request_id,
-        space_id: buildingId,
+        table: "completed_notify",
+        operation: "user_notified_of_availability",
+        request_id: requestRow.notify_request_id,
+        space_id: requestRow.space_id,
       }
-    )
+    );
 
-    if (insertError) {
-      return handleSupabaseError(insertError, "completion log insertion");
+    if (completionInsertError) {
+      summary.emailFailures.push({
+        notify_request_id: requestRow.notify_request_id,
+        email: recipient,
+        reason: `Failed to log completion: ${completionInsertError.message}`,
+      });
+      continue;
     }
 
-    return NextResponse.json(
-      { success: true, msg: "Notification completion logged successfully." },
-      { status: 201 }
+    const removeRequestPromise = (async () => {
+      const { data, error } = await supabase
+        .from("notify_requests")
+        .delete()
+        .eq("notify_request_id", requestRow.notify_request_id);
+      return { data, error };
+    })();
+
+    const { error: removalError } = await logDbAction(
+      supabase,
+      removeRequestPromise,
+      "DELETE",
+      requestRow.user_id ?? "notify_user",
+      {
+        table: "notify_requests",
+        operation: "cleanup_after_notification",
+        request_id: requestRow.notify_request_id,
+        space_id: requestRow.space_id,
+      }
     );
+
+    if (removalError) {
+      summary.emailFailures.push({
+        notify_request_id: requestRow.notify_request_id,
+        email: recipient,
+        reason: `Failed to remove pending request: ${removalError.message}`,
+      });
+      continue;
+    }
+
+    summary.processed += 1;
+  }
+
+  return NextResponse.json({
+    message: "Completed availability notification run.",
+    ...summary,
+  });
+}
+
+export async function POST(request: Request) {
+  try {
+    return await processNotifications(request);
   } catch (error) {
-    console.error("Post handler internal error:", error);
+    console.error("completed-notify cron failed:", error);
     return NextResponse.json(
-      { error: true, msg: "Internal Server Error" },
+      { error: "Internal Server Error" },
       { status: 500 }
     );
   }
+}
+
+export async function GET(request: Request) {
+  return POST(request);
 }

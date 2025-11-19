@@ -7,20 +7,47 @@ import { ImageCarousel } from "@/app/components/home/carousel/ImageCarousel";
 import HighlightedLocation from "./HighlightedLocation";
 import { HiOutlineArrowSmDown } from "react-icons/hi";
 
+
 import {
   Carousel,
   type CarouselApi,
 } from "@/app/components/home/carousel/carousel";
+
 import Autoplay from "embla-carousel-autoplay";
 
+
+function useHtmlReduceMotion() {
+    const [reduceMotion, setReduceMotion] = React.useState(false);
+
+    React.useEffect(() => {
+        if (typeof window === "undefined") return;
+
+        const html = document.documentElement;
+
+        const update = () => {
+            setReduceMotion(html.classList.contains("reduce-motion"));
+        };
+
+        // Run once on mount
+        update();
+
+        // Watch for class changes on <html>
+        const observer = new MutationObserver(update);
+        observer.observe(html, { attributes: true, attributeFilter: ["class"] });
+
+        return () => observer.disconnect();
+    }, []);
+
+    return reduceMotion;
+}
+
 interface DesktopHomeProps {
-  imageUrls: string[];
+    imageUrls: string[];
 }
 
 export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
-  const autoplayPlugin = React.useRef(
-    Autoplay({ delay: 3000, stopOnInteraction: false })
-  );
+
+  const reduceMotion = useHtmlReduceMotion();
   const [api, setApi] = React.useState<CarouselApi>();
   const [currentSlide, setCurrentSlide] = React.useState(0);
   const handleScrollDown = React.useCallback(() => {
@@ -33,6 +60,11 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
       window.scrollBy({ top: window.innerHeight * 0.7, behavior: "smooth" });
     }
   }, []);
+
+
+  const autoplayPlugin = React.useRef(
+      reduceMotion ? null : Autoplay({ delay: 3000, stopOnInteraction: false }),
+  );
 
   React.useEffect(() => {
     if (!api) {
@@ -61,18 +93,21 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
 
   return (
     <Carousel
-      plugins={[autoplayPlugin.current]}
+      plugins={reduceMotion ? [] : [autoplayPlugin.current!]}
       setApi={setApi}
       opts={{ align: "start", loop: true }}
-      showScrollButton={false}
-      className="relative hidden h-[80dvh] overflow-hidden rounded-3xl mx-8 my-2 min-[900]:block"
-      onMouseEnter={() => autoplayPlugin.current.stop()}
-      onMouseLeave={() => autoplayPlugin.current.play()}
-    >
-      <ImageCarousel imageUrls={imageUrls} className="absolute inset-0 z-10" />
-      <div className="absolute inset-0 z-20 bg-gradient-to-r from-[#1f1a16]/35 via-[#1f1a16]/10 to-transparent" />
-      {/* Title and Header */}
-      <div className="relative z-30 flex h-full flex-col justify-between px-6 py-6">
+      className="relative hidden h-[80dvh] overflow-hidden rounded-3xl mx-8 my-4 md:block"
+  >
+      <ImageCarousel
+        imageUrls={imageUrls}
+        className="absolute inset-0 z-10"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-black/40 via-black/10 to-transparent"
+        aria-hidden="true"
+      />
+
+      <div className="relative z-30 flex h-full flex-col justify-between px-4 py-4">
         <div className="flex items-start justify-between gap-8">
           <div className="relative max-w-lg">
             <div
@@ -111,11 +146,11 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
 
           <HighlightedLocation />
         </div>
-        <div className="md:flex hidden flex-col items-center justify-center pb-2 relative">
+        <div className="flex flex-col items-center justify-center pb-2 relative">
           <button
             type="button"
             onClick={handleScrollDown}
-            className="z-20 mb-3 inline-flex h-12 w-12 items-center justify-center text-white shadow-2xl shadow-black/25 transition text-7xl"
+            className="z-20 mb-3 inline-flex h-12 w-12 items-center justify-center text-white shadow-2xl shadow-black/25 transition text-7xl cursor-pointer"
             aria-label="Scroll to next section"
           >
             <HiOutlineArrowSmDown className="h-10 w-10 animate-bounce" />

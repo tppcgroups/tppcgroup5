@@ -6,8 +6,8 @@ import {
   PiPhoneBold,
 } from "react-icons/pi";
 
-const emergencyPhone = "(123) 456-7890";
-const emergencyTel = "tel:1234567890";
+const emergencyPhone = "813-876-7697";
+const emergencyTel = "tel:8138767697";
 
 type Step = {
   title: string;
