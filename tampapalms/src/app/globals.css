@@ -161,7 +161,6 @@ header nav {
   body {
     @apply bg-background text-foreground;
     @apply text-[#1f1a16];
-    font-family: "Miller Display", "Georgia", "Times New Roman", serif;
   }
 }
 

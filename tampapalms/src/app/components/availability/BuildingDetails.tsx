@@ -3,6 +3,7 @@ import { statusMap } from './statusMap';
 import { Building, AvailabilityStatus } from './type';
 import { useRouter } from 'next/navigation';
 import NotifyPopUp from './NotifyPopUp';
+import { PiArrowCircleRightBold } from "react-icons/pi";
 
 type BuildingProps = {
     activeBuilding: Building;
@@ -95,6 +96,7 @@ export function BuildingDetails({activeBuilding, normalizeStatus}: BuildingProps
           <a href={activeBuilding.loopnet_url}>
             <button className="inline-flex items-center justify-center rounded-full bg-[#1f1a16] px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-[#1f1a16]/20 transition hover:bg-[#3a3127] cursor-pointer">
               Loopnet
+              <PiArrowCircleRightBold aria-hidden="true" className="ml-2 text-xl" />
             </button>
           </a>
         )}
