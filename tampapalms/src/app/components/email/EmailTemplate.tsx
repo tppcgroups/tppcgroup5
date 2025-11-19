@@ -14,7 +14,7 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
   recipientEmail = "there",
   buildingId = "your requested suite",
   marketingEmail = "marketing@tampapalmscenter.com",
-  subscribeUrl = "https://tampapalms.com/updates",
+  subscribeUrl = "https://tppcgroup5.vercel.app/pages/DeleteEmail",
   logoUrl,
 }) => {
   const headline = `You're on the alert list for ${buildingId}`;
@@ -27,7 +27,7 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
       style={{
         margin: 0,
         padding: "24px",
-        backgroundColor: "#f4f5f7",
+        backgroundColor: "#f9f7f3",
         fontFamily: "'Inter', Arial, sans-serif",
       }}
     >
@@ -40,16 +40,16 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
           maxWidth: 640,
           margin: "0 auto",
           backgroundColor: "#ffffff",
-          borderRadius: 16,
+          borderRadius: 18,
           overflow: "hidden",
-          boxShadow: "0 15px 35px rgba(15,23,42,0.12)",
+          boxShadow: "0 20px 45px rgba(31,26,22,0.15)",
         }}
       >
         <tbody>
           <tr>
             <td
               style={{
-                background: "linear-gradient(135deg,#0f172a,#1e293b)",
+                backgroundColor: "#1f1a16",
                 padding: "32px 40px",
                 color: "#ffffff",
               }}
@@ -91,23 +91,23 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
                               </td>
                             ) : null}
                             <td>
-                              <p
-                                style={{
-                                  margin: 0,
-                                  fontSize: 13,
-                                  letterSpacing: 1.6,
-                                  textTransform: "uppercase",
-                                  color: "#ffffff",
-                                }}
-                              >
+                                <p
+                                  style={{
+                                    margin: 0,
+                                    fontSize: 12,
+                                    letterSpacing: 4,
+                                    textTransform: "uppercase",
+                                    color: "#f0d4a6",
+                                  }}
+                                >
                                 Tampa Palms Professional Center
                               </p>
                               <p
                                 style={{
                                   margin: "6px 0 0",
-                                  fontSize: 16,
+                                  fontSize: 15,
                                   fontWeight: 600,
-                                  color: "#ffffff",
+                                  color: "#f7efe3",
                                 }}
                               >
                                 Leasing & Marketing
@@ -121,9 +121,9 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
                       <h1
                         style={{
                           margin: 0,
-                          fontSize: 28,
+                          fontSize: 26,
                           fontWeight: 600,
-                          color: "#ffffff",
+                          color: "#f7efe3",
                         }}
                       >
                         Availability Request Received
@@ -136,7 +136,7 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
           </tr>
 
           <tr>
-            <td style={{ padding: "40px 40px 32px", color: "#0f172a" }}>
+            <td style={{ padding: "40px 40px 32px", color: "#1f1a16" }}>
               <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6 }}>
                 Hi {recipientEmail},
               </p>
@@ -146,7 +146,7 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
                   margin: "24px 0 12px",
                   fontSize: 22,
                   fontWeight: 600,
-                  color: "#0f172a",
+                  color: "#1f1a16",
                 }}
               >
                 {headline}
@@ -157,7 +157,7 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
                   margin: "0 0 16px",
                   fontSize: 16,
                   lineHeight: 1.7,
-                  color: "#475467",
+                  color: "#7a6754",
                 }}
               >
                 We received your “Notify me” request using{" "}
@@ -183,9 +183,9 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
                 style={{
                   margin: "28px 0",
                   padding: 24,
-                  border: "1px solid #e2e8f0",
+                  border: "1px solid #e1d9cf",
                   borderRadius: 16,
-                  backgroundColor: "#f8fafc",
+                  backgroundColor: "#fdf8f3",
                 }}
               >
                 <p
@@ -194,7 +194,7 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
                     fontSize: 15,
                     letterSpacing: 0.4,
                     textTransform: "uppercase",
-                    color: "#0f172a",
+                    color: "#7a6754",
                     fontWeight: 600,
                   }}
                 >
@@ -307,7 +307,7 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
                 <br />
                 Prefer not to receive alerts?{" "}
                 <a
-                  href={`${subscribeUrl}?preference=unsubscribe`}
+                  href={subscribeUrl}
                   style={{
                     color: "#0f172a",
                     textDecoration: "none",

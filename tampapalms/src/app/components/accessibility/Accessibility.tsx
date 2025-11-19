@@ -33,7 +33,7 @@ const Accessibility = () => {
             <p>This is where the accessibility content will be.</p>
             <button
               onClick={togglePopUp}
-              className="mt-4 px-4 py-2 bg-slate-500 text-white rounded hover:bg-slate-600 cursor-pointer"
+              className="mt-4 px-4 py-2 bg-[#a49382] text-white rounded hover:bg-[#7a6754] cursor-pointer"
             >
               Close
             </button>

@@ -1,25 +1,35 @@
+import Image from "next/image";
+
 export default function AboutInfo() {
-    return (
-      <div>
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">About Us</h2>
-        <p className="text-lg text-gray-700 mb-4">
-          <span className="font-semibold text-cirtRed">
-            Tampa Palms Professional Center
-          </span>{" "}
-          provides more than just office space — we create an environment where
-          businesses and professionals can thrive.
-        </p>
-        <p className="text-lg text-gray-700 mb-6">
-          From <strong>private executive suites</strong> to{" "}
-          <strong>entire office configurations</strong>, our center is designed
-          for flexibility, productivity, and growth.
-        </p>
-        <a
-          href="/pages/Features"
-          className="inline-block bg-cirtRed text-white px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition bg-gray-700"
-        >
-          Learn More →
-        </a>
+  return (
+    <section className="relative w-full overflow-hidden bg-[#f9f7f3]">
+      <div className="relative h-[340px] w-full sm:h-[420px]">
+        <Image
+          src="/images/Bldg5-008.jpg"
+          alt="Tampa Palms Professional Center aerial"
+          fill
+          className="object-cover object-[center_60%]"
+          priority
+          sizes="(max-width: 768px) 100vw, 1200px"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1f1a16]/85 via-[#1f1a16]/55 to-transparent" />
+        <div className="relative z-10 flex h-full flex-col justify-center gap-4 px-6 py-10 text-white sm:px-10 md:px-16">
+          <div className="max-w-5xl">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em]">
+              About Us
+            </span>
+            <div className="mt-4 space-y-3 max-w-2xl">
+              <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">
+                Tampa Palms Professional Center
+              </h1>
+              <p className="text-base text-white/80 sm:text-lg">
+                Modern workspaces, polished amenities, and easy access—so your team can focus on progress while
+                clients experience a welcoming, professional atmosphere.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-    );
+    </section>
+  );
 }

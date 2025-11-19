@@ -1,5 +1,7 @@
+import { useEffect, useRef } from "react";
 import { statusMap } from "./statusMap";
 import type { Building, AvailabilityStatus } from "./type";
+import { deriveSuiteKey } from "@/lib/utils";
 
 type BuildingeListProps = {
   loading: boolean;
@@ -7,25 +9,52 @@ type BuildingeListProps = {
   activeBuildingId: string;
   normalizeStatus: (raw: string | null | undefined) => AvailabilityStatus;
   onSelectBuilding: (id: string) => void;
+  scrollTargetSuite?: {
+    buildingNumber: number;
+    suiteId: string;
+    timestamp: number;
+  } | null;
 };
 
-export function BuildingList({ loading, visibleBuildings, activeBuildingId, normalizeStatus, onSelectBuilding }: BuildingeListProps) {
+export function BuildingList({
+  loading,
+  visibleBuildings,
+  activeBuildingId,
+  normalizeStatus,
+  onSelectBuilding,
+  scrollTargetSuite,
+}: BuildingeListProps) {
+  const listRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!scrollTargetSuite || !listRef.current) return;
+    const { buildingNumber, suiteId } = scrollTargetSuite;
+    const selector = `[data-building-number="${buildingNumber}"][data-suite-number="${suiteId}"]`;
+    const target = listRef.current.querySelector<HTMLButtonElement>(selector);
+    if (target) {
+      target.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
+  }, [scrollTargetSuite]);
+
     return (
-      <aside className="flex h-full w-full flex-col rounded-[32px] border border-slate-200 bg-white/95 p-6 shadow-xl shadow-slate-900/5">
+      <aside className="flex h-full w-full flex-col rounded-[32px] border border-[#e1d9cf] bg-white/95 p-6 shadow-xl shadow-[#1f1a16]/5">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#a49382]">
             Suites
           </p>
-          <p className="mt-2 text-sm text-slate-600">
+          <p className="mt-2 text-sm text-[#7a6754]">
             Select a suite to preview imagery and key details. The list updates as
             spaces become available across the campus.
           </p>
-          <p className="mt-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs font-medium text-slate-500">
+          <p className="mt-2 rounded-2xl border border-[#e1d9cf] bg-[#fdf8f3] px-4 py-3 text-xs font-medium text-[#a49382]">
             After choosing a suite, scroll down to explore the gallery and space
             details.
           </p>
         </div>
-        <div className="mt-6 grid flex-1 content-start items-start gap-3 overflow-y-auto pr-1">
+        <div
+          ref={listRef}
+          className="mt-6 grid flex-1 content-start items-start gap-3 overflow-y-auto pr-1"
+        >
           {loading && <p>Loading buildings...</p>}
           {visibleBuildings.map((building) => {
             const isActive = activeBuildingId === building.building_id;
@@ -38,10 +67,15 @@ export function BuildingList({ loading, visibleBuildings, activeBuildingId, norm
                 key={building.building_id}
                 type="button"
                 onClick={() => onSelectBuilding(building.building_id)}
+                data-building-number={building.building_number}
+                data-suite-number={deriveSuiteKey(
+                  building.suite_number,
+                  building.building_id
+                )}
                 className={`flex w-full flex-col gap-2 rounded-2xl border px-5 py-5 text-left transition ${
                   isActive
-                    ? "border-slate-900 bg-slate-900 text-white shadow-lg shadow-slate-900/20"
-                    : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
+                    ? "border-[#4a4034] bg-[#1f1a16] text-white shadow-lg shadow-[#1f1a16]/20"
+                    : "border-[#e1d9cf] bg-white hover:border-[#d4c7b7] hover:bg-[#fdf8f3]"
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -62,7 +96,7 @@ export function BuildingList({ loading, visibleBuildings, activeBuildingId, norm
                 </div>
                 <p
                   className={`text-xs ${
-                    isActive ? "text-white/70" : "text-slate-500"
+                    isActive ? "text-white/70" : "text-[#a49382]"
                   }`}
                 >
                   {building.street_address} •{" "}

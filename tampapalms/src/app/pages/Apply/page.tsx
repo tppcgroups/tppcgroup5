@@ -8,22 +8,22 @@ const heroImage =
 
 export default function Apply() {
     return (
-        <main className="min-h-screen bg-gray-50 text-slate-900">
+        <main className="min-h-screen bg-[#f9f7f3] text-[#1f1a16]">
             <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col">
                 {/* Header */}
                 <header className="px-4 pb-8 pt-12 text-center sm:px-6 md:pb-10 md:pt-16">
-                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#a49382]">
                         Rental Application
                     </p>
-                    <h1 className="mt-4 text-2xl font-semibold text-slate-900 sm:text-3xl md:text-4xl">
+                    <h1 className="mt-4 text-2xl font-semibold text-[#1f1a16] sm:text-3xl md:text-4xl">
                         Submit your application to secure the right workspace
                     </h1>
-                    <p className="mx-auto mt-4 max-w-xl text-sm text-slate-600 sm:text-base md:max-w-2xl">
+                    <p className="mx-auto mt-4 max-w-xl text-sm text-[#7a6754] sm:text-base md:max-w-2xl">
                         Share your team&apos;s requirements and timeline so we can prepare
                         tailored availability and keep the leasing process moving quickly.
                     </p>
                     <div
-                        className="mx-auto mt-6 h-0.5 w-16 bg-slate-400 sm:w-24"
+                        className="mx-auto mt-6 h-0.5 w-16 bg-[#c8b79f] sm:w-24"
                         aria-hidden="true"
                     />
                 </header>

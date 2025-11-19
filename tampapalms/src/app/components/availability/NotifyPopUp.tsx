@@ -1,7 +1,7 @@
-import React from 'react'
-import axios from 'axios';
-import UserNotify from '@/app/api/notify/route';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+// Removed unused import: import UserNotify from '@/app/api/notify/route';
 
 interface PopupComponentProps {
   onClose: () => void;
@@ -9,53 +9,113 @@ interface PopupComponentProps {
 }
 
 const marketingEmailAddress =
-  process.env.NEXT_PUBLIC_MARKETING_EMAIL ?? 'marketing@tampapalms.com';
-const subscribeUrl =
-  process.env.NEXT_PUBLIC_SUBSCRIBE_URL ?? 'https://tampapalms.com/updates';
+  process.env.NEXT_PUBLIC_MARKETING_EMAIL ?? "marketing@tampapalms.com";
+const subscribeUrl = "https://tppcgroup5.vercel.app/pages/DeleteEmail";
 const logoUrl = process.env.NEXT_PUBLIC_LOGO_URL;
 
-function NotifyPopUp({onClose, buildingId}: PopupComponentProps) {
-    const onSubmitHandler = async (e: React.FormEvent) => {
-      const emailInput = (
-        document.querySelector('input[name="email"]') as HTMLInputElement
-      ).value;
-        e.preventDefault();
-        try {
-            const uuid = crypto.randomUUID();
-            
-            const user: UserNotify = {
-                user_id: uuid,
-                email: emailInput,
-                building_id: buildingId,
-            }
-            const response = await axios.post('/api/notify', user);
-            if (response.data.success) {
-              toast.success(response.data.msg, { autoClose: 2000 });
-              // EMAIL SEND TEST
-              try {
-                const mail = {
-                  recipient: emailInput,
-                  subject: `You're on the list for suite ${buildingId}`,
-                  buildingId,
-                  marketingEmail: marketingEmailAddress,
-                  subscribeUrl,
-                  logoUrl,
-                };
+function NotifyPopUp({ onClose, buildingId }: PopupComponentProps) {
+  const [isLoading, setIsLoading] = useState(false);
 
-                await axios.post("/api/email", mail);
-              } catch (error) {
-                console.error("Error sending email:", error);
-              }
-            } else if (response.data.warning) {
-              toast.warning(response.data.msg, {autoClose: 2000});
-            } else if (response.data.error) {
-              toast.error(response.data.msg, {autoClose: 2000});
-            }
-        } catch (error) {
-            console.error("Error submitting notify request:", error);
-        }
-        onClose();
+  const onSubmitHandler = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const emailInput = (
+      document.querySelector("#notify-email") as HTMLInputElement
+    )?.value;
+
+    if (!emailInput) {
+      toast.error("Please enter a valid email address.", { autoClose: 2000 });
+      setIsLoading(false);
+      return;
     }
+
+    let notifyRequestId = null;
+    let success = false;
+
+    try {
+      // --- 1. CREATE USER & NOTIFY REQUEST ---
+      const requestPayload = {
+        email: emailInput,
+        buildingId: buildingId,
+      };
+
+      const response = await axios.post("/api/notify-request", requestPayload);
+
+      if (response.data.success) {
+        success = true;
+        notifyRequestId = response.data.notify_request_id;
+        toast.success(response.data.msg, { autoClose: 2000 });
+      } else if (response.data.warning) {
+        // Warning handles 'already exists'
+        toast.warning(response.data.msg, { autoClose: 2000 });
+        setIsLoading(false);
+        onClose();
+        return;
+      } else if (response.data.error) {
+        toast.error(response.data.msg || "Failed to save request.", {
+          autoClose: 2000,
+        });
+        setIsLoading(false);
+        onClose();
+        return;
+      }
+    } catch (error) {
+      console.error("Error submitting notify request:", error);
+      toast.error("An unexpected error occurred. Please try again.", {
+        autoClose: 2000,
+      });
+      setIsLoading(false);
+      onClose();
+      return;
+    }
+
+    // --- 2. SEND EMAIL & LOG COMPLETION (If Request was successful) ---
+    if (success && notifyRequestId) {
+      try {
+        const mailPayload = {
+          recipient: emailInput,
+          subject: `You're on the list for suite ${buildingId}`,
+          buildingId,
+          marketingEmail: marketingEmailAddress,
+          subscribeUrl,
+          logoUrl,
+        };
+
+        // Assuming /api/email handles the email send logic
+        await axios.post("/api/email", mailPayload);
+
+        // --- 3. LOG COMPLETION (This requires a new /api/completed-notify route or logic) ---
+        // Since you want to log completed_notify AFTER email send,
+        // you would ideally make a *third* API call here or in the /api/email route itself.
+        // For simplicity here, we'll assume a new dedicated endpoint.
+
+        // Placeholder for logging completion:
+        await axios.post("/api/completed-notify", {
+          notify_request_id: notifyRequestId,
+          user_email: emailInput, // or user_id if available on client
+          buildingId: buildingId,
+          // Note: If you don't have a /api/completed-notify route,
+          // this logic must be moved to the server side (e.g., inside /api/email)
+          // to ensure logging happens on the server after the sendMail call.
+        });
+      } catch (error) {
+        // Note: The main request was saved, but the email failed.
+        // The completed_notify record might also fail here.
+        console.warn(
+          "Notification request saved, but subsequent email send/completion log failed.",
+          error
+        );
+        toast.info(
+          "Your request was saved, but we had trouble sending the confirmation email.",
+          { autoClose: 4000 }
+        );
+      }
+    }
+
+    setIsLoading(false);
+    onClose();
+  };
 
   return (
     <div
@@ -72,24 +132,25 @@ function NotifyPopUp({onClose, buildingId}: PopupComponentProps) {
       />
 
       <div className="relative z-10 w-full max-w-lg px-6">
-        <div className="rounded-3xl bg-white/95 p-6 shadow-lg shadow-slate-900/10">
+        <div className="rounded-3xl bg-white/95 p-6 shadow-lg shadow-[#1f1a16]/10">
           <div className="flex items-start justify-between">
             <div>
               <h2
                 id="notify-title"
-                className="text-lg font-semibold text-slate-900"
+                className="text-lg font-semibold text-[#1f1a16]"
               >
                 Notify Me When Available
               </h2>
-              <p className="mt-1 text-sm text-slate-600">
-                Enter your email and we'll notify you when this suite becomes
-                available.
+              <p className="mt-1 text-sm text-[#7a6754]">
+                Enter your email and we&apos;ll notify you when this suite
+                becomes available.
               </p>
             </div>
             <button
               onClick={onClose}
               aria-label="Close notify dialog"
-              className="ml-4 inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 cursor-pointer"
+              className="ml-4 inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#e1d9cf] bg-white text-[#4a4034] hover:bg-[#fdf8f3] cursor-pointer"
+              disabled={isLoading}
             >
               ×
             </button>
@@ -107,23 +168,26 @@ function NotifyPopUp({onClose, buildingId}: PopupComponentProps) {
               type="email"
               name="email"
               placeholder="you@example.com"
-              className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400"
+              className="w-full rounded-lg border border-[#e1d9cf] bg-white px-4 py-3 text-sm text-[#1f1a16] shadow-sm placeholder:text-[#c8b79f] focus:outline-none focus:ring-2 focus:ring-[#b6a895]"
               required
+              disabled={isLoading}
             />
 
             <div className="flex items-center justify-end gap-3">
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-full px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 cursor-pointer"
+                className="rounded-full px-4 py-2 text-sm font-medium text-[#4a4034] hover:bg-[#f4ece1] cursor-pointer"
+                disabled={isLoading}
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="inline-flex items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 cursor-pointer"
+                className="inline-flex items-center justify-center rounded-full bg-[#1f1a16] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#3a3127] cursor-pointer disabled:opacity-50"
+                disabled={isLoading}
               >
-                Notify Me
+                {isLoading ? "Saving..." : "Notify Me"}
               </button>
             </div>
           </form>
@@ -133,4 +197,4 @@ function NotifyPopUp({onClose, buildingId}: PopupComponentProps) {
   );
 }
 
-export default NotifyPopUp
+export default NotifyPopUp;

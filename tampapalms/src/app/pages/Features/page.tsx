@@ -5,8 +5,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PiCheckCircleBold } from "react-icons/pi";
+import type { LucideIcon } from "lucide-react";
+import { DoorOpen, Maximize2, PencilRuler, VolumeX } from "lucide-react";
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import type {Building} from "@/app/components/availability/type"
 type AvailabilityStatus = "available" | "comingSoon" | "occupied";
 
@@ -20,26 +22,32 @@ const normalizeStatus = (
   return "occupied"; // Default to occupied/waitlisted for all other values
 };
 
-const featureTiles = [
+type FeatureTile = { heading: string; blurb: string; icon: LucideIcon };
+
+const featureTiles: FeatureTile[] = [
   {
     heading: "Ten-Foot Ceilings",
     blurb:
       "Open atmosphere that adds a sense of space and sophistication to every room.",
+    icon: Maximize2,
   },
   {
     heading: "Custom Wrought-Iron Entry Doors and Beautifully Landscaped Entries",
     blurb:
       "Custom craftsmanship and lush landscaping come together to create a warm, inviting, and memorable entrance.",
+    icon: DoorOpen,
   },
   {
     heading: "Elegant Architectural Design With Professional Appeal",
     blurb:
       "Sophisticated architecture combines elegance with a strong, professional presence.",
+    icon: PencilRuler,
   },
   {
     heading: "Sound Insulated Walls and Solid Core Doors",
     blurb:
       "Thick, insulated walls and solid core doors ensure a quiet, private, and comfortable environment.",
+    icon: VolumeX,
   },
 ];
 
@@ -47,16 +55,16 @@ const amenityColumns = [
   {
     title: "Buildings/Suites",
     description:
-      "Modern, suites in a prime location, combining convenience, comfort, and style.\n",
+      "Modern, suites in a prime location, combining convenience, comfort, and style.",
     items: [
-      "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
-      "Assigned mailboxes with USPS delivery directly to the building",
       "Two shared break rooms and eight private bathrooms",
       "Professional business address with private mailbox",
       "Fiber high speed optic internet",
       "24/7 access with access cards and keys",
+      "Assigned mailboxes with USPS delivery directly to the building",
       "On-site management and maintenance team for tenant support",
       "Peaceful, scenic surroundings near lakeside walkways",
+      "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
       "Located within a premier, multi-use business park for office, medical, and professional tenants",
       "Interior signage",
       "Ample on-site parking for tenants and visitors",
@@ -66,13 +74,13 @@ const amenityColumns = [
   {
     title: "Executive Suites",
     description:
-      "Flexible office spaces designed for professionals, startups, and businesses.",
+      "Flexible office spaces designed for professionals, startups, and growing businesses.",
     items: [
-      "Located within a premier, multi-use business park for office, medical, and professional tenants",
       "Fiber high speed optic internet",
       "Assigned mailboxes with USPS delivery directly to the building",
       "Professional business address with private mailbox",
       "Peaceful, scenic surroundings near lakeside walkways",
+      "Located within a premier, multi-use business park for office, medical, and professional tenants",
       "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
       "Ample on-site parking for tenants and visitors"
     ],
@@ -80,14 +88,14 @@ const amenityColumns = [
   {
     title: "S.O.A.R",
     description:
-        "Co-working spaces that offers private offices, shared workspaces, and meeting rooms.\n",
+        "Co-working spaces that offers private offices, shared workspaces, and meeting rooms.",
     items: [
       "On-site management and maintenance team for tenant support",
       "Fiber high speed optic internet",
-      "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
       "Interior signage",
       "Assigned mailboxes with USPS delivery directly to the building",
       "Ample on-site parking for tenants and visitors",
+      "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
       "Professional business address with private mailbox",
       "Four private bathrooms",
       "24/7 access with access cards",
@@ -118,165 +126,189 @@ const supportHighlights = [
   },
 ];
 
-export default function Features() {
-  const [openCards, setOpenCards] = useState<{ [key: string]: boolean }>({});
+const AmenityCard = ({ column }: { column: (typeof amenityColumns)[number] }) => {
+  const [expanded, setExpanded] = useState(false);
+  const listRef = useRef<HTMLUListElement | null>(null);
+  const collapsedHeight = 220;
+  const [maxHeight, setMaxHeight] = useState(collapsedHeight);
+  const [hasOverflow, setHasOverflow] = useState(false);
 
-  const toggleCard = (title: string) => {
-    setOpenCards((prev) => ({
-      ...prev,
-      [title]: !prev[title],
-    }));
-  };
-  function AmenityDropdown({ column, isOpen, toggle }: { column: typeof amenityColumns[0]; isOpen: boolean; toggle: () => void }) {
-    return (
-        <div className="cursor-pointer" onClick={toggle}>
-          <div className="px-6 py-4 bg-white rounded-3xl border border-slate-200/60 shadow-lg shadow-slate-900/10 transition-all duration-200">
-            <h3 className="text-2xl font-semibold text-slate-900">{column.title}</h3>
-            <p className="mt-2 text-sm text-slate-600">{column.description}</p>
+  useEffect(() => {
+    if (!listRef.current) return;
+    const fullHeight = listRef.current.scrollHeight;
+    setHasOverflow(fullHeight > collapsedHeight);
+    setMaxHeight(expanded ? fullHeight : collapsedHeight);
+  }, [expanded, column.items, collapsedHeight]);
 
-            <div className="mt-3 flex items-center justify-between text-sm font-semibold text-slate-900">
-              <span>View</span>
-              <span
-                  className={`inline-block transform transition-transform duration-200 ${
-                      isOpen ? "rotate-180" : "rotate-0"
-                  }`}
-              >
-            ▼
-          </span>
-            </div>
-
-            {isOpen && (
-                <ul className="mt-4 space-y-2 text-sm text-slate-600">
-                  {column.items.map((item) => (
-                      <li key={item} className="flex items-start gap-3">
-                        <PiCheckCircleBold className="mt-1 h-5 w-5 flex-shrink-0 text-slate-500" />
-                        <span>{item}</span>
-                      </li>
-                  ))}
-                </ul>
-            )}
-          </div>
-        </div>
-    );
-  }
   return (
-    <main className="min-h-screen bg-slate-100/70 text-slate-900">
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-white">
-        <div className="absolute inset-0">
-          <div className="absolute -left-40 top-0 h-[140%] w-[55%] bg-slate-200/60 blur-3xl" />
-          <div className="absolute inset-y-0 right-0 w-[35%] bg-gradient-to-l from-slate-200/70 via-white/60 to-transparent" />
-        </div>
+    <div className="rounded-3xl border border-[#e1d9cf]/60 bg-[#fdf8f3] p-8 shadow-lg shadow-[#1f1a16]/10 transition-all ease-in-out duration-200">
+      <h3 className="text-2xl font-semibold text-[#1f1a16]">{column.title}</h3>
+      <p className="mt-3 text-sm text-[#7a6754] md:text-base">
+        {column.description}
+      </p>
+      <div className="relative mt-6">
+        <ul
+          ref={listRef}
+          className="space-y-3 list-none overflow-hidden transition-[max-height] duration-500 ease-in-out"
+          style={{ maxHeight }}
+        >
+          {column.items.map((item) => (
+            <li
+              key={item}
+              className="flex items-start gap-3 text-sm text-[#7a6754] md:text-base"
+            >
+              <PiCheckCircleBold className="mt-1 h-5 w-5 flex-shrink-0 text-[#a49382]" />
+              <span className="leading-snug">{item}</span>
+            </li>
+          ))}
+        </ul>
+        {!expanded && hasOverflow && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#fdf8f3] to-transparent" />
+        )}
+      </div>
+      {hasOverflow && (
+        <button
+          type="button"
+          onClick={() => setExpanded((prev) => !prev)}
+          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#7a6754] hover:text-[#4a4034]"
+        >
+          {expanded ? "Show fewer amenities" : "View full list"}
+        </button>
+      )}
+    </div>
+  );
+};
 
-        <div className="relative mx-auto grid max-w-6xl gap-12 px-6 py-20 md:grid-cols-[1.2fr,0.8fr] md:px-10 lg:gap-16">
-          <div className="space-y-8">
-            <span className="inline-flex items-center gap-2 rounded-full bg-slate-900 text-white px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em]">
-              Features
-            </span>
-            <div className="space-y-5">
-              <h1 className="text-3xl font-semibold leading-tight text-slate-900 md:text-5xl">
-                Amenities that balance productivity, wellness, and growth
-              </h1>
-              <p className="text-base leading-relaxed text-slate-600 md:text-lg">
-                Tampa Palms Professional Center was designed as a campus—multiple buildings that work
-                together to support companies of every size. Explore the on-site advantages that keep our
-                tenants moving forward with ease.
-              </p>
-            </div>
-            <div className="flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:gap-4">
-              <Link
-                href="/pages/Availability"
-                className="inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-8 py-3 font-semibold text-white shadow-lg shadow-slate-900/20 transition hover:bg-slate-800 sm:w-auto"
-              >
-                View Availability
-              </Link>
-              <Link
-                href="/pages/Contact"
-                className="inline-flex w-full items-center justify-center rounded-full border border-slate-300 px-8 py-3 font-semibold text-slate-900 transition hover:border-slate-400 hover:bg-slate-100 sm:w-auto"
-              >
-                Schedule a Tour
-              </Link>
-            </div>
+export default function Features() {
+  const [availableSuites, setAvailableSuites] = useState(0);
+  const [uniqueBuildings, setUniqueBuildings] = useState(0);
+  useEffect(()=>{
+    async function getBuildings() {
+      try {
+        const response = await axios.get("/api/buildings");
+        const rawBuildings = (response.data ?? []) as Building[];
+        const availableSpaces = rawBuildings.filter(
+          (b) => normalizeStatus(b.availability_status) === "available");
+        console.log(availableSpaces.length);
+        setAvailableSuites(availableSpaces.length)
+        const uniqueByNumber = Array.from(
+          new Map(
+              rawBuildings.map((b)=>{
+                const match = b.street_address?.match(/^\d+/);
+                const buildingNumber = match ? match[0] : b.street_address;
+                return [buildingNumber, b];
+              })
+          ).values()
+        );
+        setUniqueBuildings(uniqueByNumber.length);
+        } catch (error) {
+        console.error(error);
+      }
+    }
+    getBuildings();
+  },[])
+  return (
+    <main className="min-h-screen bg-[#f9f7f3] text-[#1f1a16] pb-20">
+      <header className="relative -mx-4 overflow-hidden rounded-none shadow-[0_35px_90px_-70px_rgba(31,26,22,0.8)] sm:-mx-6">
+        <Image
+          src="/images/Bldg5-019.jpg"
+          alt="Lobby and seating area at Tampa Palms Professional Center"
+          fill
+          className="object-cover object-[center_70%]"
+          sizes="(max-width: 768px) 200vw, 1200px"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1f1a16]/90 via-[#1f1a16]/45 to-transparent" />
+        <div className="relative z-10 flex flex-col items-center gap-6 px-6 py-16 text-center text-white md:items-start md:px-14 md:py-20 md:text-left">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em]">
+            Features
+          </span>
+          <div className="space-y-4">
+            <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">
+              Amenities that balance productivity, wellness, and growth.
+            </h1>
+            <p className="max-w-3xl text-base text-white/85">
+              Tampa Palms Professional Center was designed as a campus—multiple buildings that work as one. Explore the
+              on-site advantages that keep operations effortless for teams of every size.
+            </p>
           </div>
-
-          <div className="relative">
-            <div className="overflow-hidden rounded-3xl shadow-2xl shadow-slate-900/15 ring-1 ring-slate-200/70">
-              <Image
-                src="/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-10-LargeHighDefinition.jpg"
-                alt="Lobby and seating area at Tampa Palms Professional Center"
-                width={1400}
-                height={933}
-                className="h-full w-full object-cover"
-                sizes="(min-width: 1024px) 560px, 90vw"
-                priority
-              />
-            </div>
-            <div className="absolute -bottom-6 left-1/2 w-[85%] -translate-x-1/2 rounded-2xl bg-white px-6 py-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-700 shadow-lg shadow-slate-900/10 ring-1 ring-slate-200">
-              Modern interiors throughout campus
-            </div>
+          <div className="flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:gap-4">
+            <Link
+              href="/pages/Availability"
+              className="inline-flex w-full items-center justify-center rounded-full bg-white/95 px-8 py-3 font-semibold text-[#1f1a16] shadow-lg shadow-black/20 transition hover:bg-white sm:w-auto"
+            >
+              View Availability
+            </Link>
+            <Link
+              href="/pages/Contact"
+              className="inline-flex w-full items-center justify-center rounded-full border border-white/60 px-8 py-3 font-semibold text-white transition hover:bg-white/10 sm:w-auto"
+            >
+              Schedule a Tour
+            </Link>
           </div>
         </div>
-      </section>
+      </header>
 
       {/* Feature Grid */}
       <section className="mx-auto max-w-6xl px-6 py-20 md:px-10">
         <div className="space-y-6 text-center md:space-y-8">
-          <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">What sets the campus apart</h2>
-          <p className="mx-auto max-w-3xl text-sm text-slate-600 md:text-base">
+          <h2 className="text-3xl font-semibold text-[#1f1a16] md:text-4xl">What sets the campus apart</h2>
+          <p className="mx-auto max-w-3xl text-sm text-[#7a6754] md:text-base">
             Each building is tuned for everyday use—welcoming clients, supporting focused work, and scaling with
             your team. Here are just a few ways Tampa Palms Professional Center stands out.
           </p>
         </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {featureTiles.map((feature) => (
-            <article
-              key={feature.heading}
-              className="group relative overflow-hidden rounded-3xl bg-white p-8 shadow-xl shadow-slate-900/10 ring-1 ring-transparent transition hover:-translate-y-1 hover:ring-slate-200"
-            >
-              <div
-                className="absolute -top-10 -right-10 h-32 w-32 rounded-full bg-gradient-to-br from-slate-200/70 via-slate-100 to-transparent blur-3xl transition group-hover:scale-110"
-                aria-hidden="true"
-              />
-              <div className="relative space-y-4 text-left">
-                <span className="block text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
-                  Feature
-                </span>
-                <h3 className="text-2xl font-semibold text-slate-900">{feature.heading}</h3>
-                <p className="text-sm leading-relaxed text-slate-600 md:text-base">{feature.blurb}</p>
-              </div>
-            </article>
-          ))}
+          {featureTiles.map((feature) => {
+            const Icon = feature.icon;
+            return (
+              <article
+                key={feature.heading}
+                className="group relative flex h-full flex-col gap-4 overflow-hidden rounded-3xl border border-[#c8b79f] bg-white p-6 shadow-lg shadow-black/5 transition hover:border-[#5a4b3c]"
+              >
+                <div className="relative flex h-full flex-col gap-3 text-left">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="inline-flex size-12 items-center justify-center rounded-2xl bg-[#ddd0bd] text-[#5a4b3c]">
+                      <Icon className="h-5 w-5" aria-hidden />
+                    </div>
+                    <span className="block text-right text-xs font-semibold uppercase tracking-[0.35em] text-[#7a6754]">
+                      Feature
+                    </span>
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-semibold text-[#1f1a16] md:text-xl">{feature.heading}</h3>
+                    <p className="text-sm leading-relaxed text-neutral-600 md:text-base">{feature.blurb}</p>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
 
       {/* Amenity Columns */}
       <section className="relative overflow-hidden bg-white py-20 md:py-24">
         <div className="absolute inset-0">
-          <div className="absolute left-1/2 top-0 h-64 w-[65%] -translate-x-1/2 bg-gradient-to-b from-slate-200/50 via-transparent to-transparent blur-3xl" />
+          <div className="absolute left-1/2 top-0 h-64 w-[65%] -translate-x-1/2 bg-gradient-to-b from-[#efe7dd]/50 via-transparent to-transparent blur-3xl" />
         </div>
         <div className="relative mx-auto max-w-6xl px-4 md:px-10">
           <div className="space-y-6 text-center md:space-y-8">
-      <span className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
-        Amenities & Setting
-      </span>
-            <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
+            <span className="text-xs font-semibold uppercase tracking-[0.35em] text-[#a49382]">
+              Amenities & Setting
+            </span>
+            <h2 className="text-3xl font-semibold text-[#1f1a16] md:text-4xl">
               Designed to elevate every workday experience
             </h2>
-            <p className="mx-auto max-w-3xl text-sm text-slate-600 md:text-base mb-8">
+            <p className="mx-auto max-w-3xl text-sm text-[#7a6754] md:text-base">
               From tailored interiors to surroundings that encourage balance, the campus blends convenience with
               comfort.
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
             {amenityColumns.map((column) => (
-                <AmenityDropdown
-                    key={column.title}
-                    column={column}
-                    isOpen={!!openCards[column.title]}
-                    toggle={() => toggleCard(column.title)}
-                />
+              <AmenityCard key={column.title} column={column} />
             ))}
           </div>
         </div>
@@ -285,13 +317,13 @@ export default function Features() {
       {/* Support Journey */}
       <section className="mx-auto max-w-6xl px-6 py-20 md:px-10">
         <div className="space-y-6 text-center md:space-y-8">
-          <span className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
+          <span className="text-xs font-semibold uppercase tracking-[0.35em] text-[#a49382]">
             Tenant Experience
           </span>
-          <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
+          <h2 className="text-3xl font-semibold text-[#1f1a16] md:text-4xl">
             Support that stays with you beyond move-in
           </h2>
-          <p className="mx-auto max-w-3xl text-sm text-slate-600 md:text-base">
+          <p className="mx-auto max-w-3xl text-sm text-[#7a6754] md:text-base">
             The same ownership and maintenance teams who welcome you on day one remain on campus every day,
             ensuring your suite performs the way it should.
           </p>
@@ -301,48 +333,15 @@ export default function Features() {
           {supportHighlights.map((support) => (
             <div
               key={support.step}
-              className="rounded-3xl bg-white p-8 shadow-xl shadow-slate-900/10 ring-1 ring-slate-200"
+              className="rounded-3xl bg-white p-8 shadow-xl shadow-[#1f1a16]/10 ring-1 ring-[#e1d9cf]"
             >
-              <div className="text-left text-xs font-semibold uppercase tracking-[0.4em] text-slate-400">
+              <div className="text-left text-xs font-semibold uppercase tracking-[0.4em] text-[#c8b79f]">
                 {support.step}
               </div>
-              <h3 className="mt-4 text-xl font-semibold text-slate-900">{support.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-slate-600 md:text-base">{support.copy}</p>
+              <h3 className="mt-4 text-xl font-semibold text-[#1f1a16]">{support.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-[#7a6754] md:text-base">{support.copy}</p>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="relative overflow-hidden pb-24">
-        <div className="absolute inset-x-0 bottom-0 top-10 bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.18),_transparent_70%)]" />
-        <div className="relative mx-auto max-w-5xl px-6 md:px-10">
-          <div className="rounded-3xl border border-slate-200 bg-white/90 px-8 py-12 text-center shadow-2xl shadow-slate-900/20 backdrop-blur md:px-16">
-            <span className="text-xs font-semibold uppercase tracking-[0.4em] text-slate-500">
-              Next Steps
-            </span>
-            <h2 className="mt-4 text-3xl font-semibold text-slate-900 md:text-4xl">
-              Let&apos;s plan your visit to Tampa Palms Professional Center
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-sm text-slate-600 md:text-base">
-              Reach out for current availability, arrange a tour, or connect with ownership directly to explore
-              how the campus can support your work.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 text-sm sm:flex-row sm:justify-center">
-              <Link
-                href="/pages/Contact"
-                className="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-3 font-semibold text-white shadow-lg shadow-slate-900/15 transition hover:bg-slate-800"
-              >
-                Connect With Us
-              </Link>
-              <Link
-                href="/pages/Availability"
-                className="inline-flex items-center justify-center rounded-full border border-slate-300 px-8 py-3 font-semibold text-slate-900 transition hover:border-slate-400 hover:bg-slate-100"
-              >
-                Explore Availability
-              </Link>
-            </div>
-          </div>
         </div>
       </section>
     </main>
