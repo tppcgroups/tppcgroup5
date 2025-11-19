@@ -5,12 +5,11 @@ import * as React from "react";
 import Link from "next/link";
 import { ImageCarousel } from "@/app/components/home/carousel/ImageCarousel";
 import HighlightedLocation from "./HighlightedLocation";
+import { HiOutlineArrowSmDown } from "react-icons/hi";
 
 
 import {
   Carousel,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi,
 } from "@/app/components/home/carousel/carousel";
 
@@ -51,6 +50,16 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
   const reduceMotion = useHtmlReduceMotion();
   const [api, setApi] = React.useState<CarouselApi>();
   const [currentSlide, setCurrentSlide] = React.useState(0);
+  const handleScrollDown = React.useCallback(() => {
+    const target = document.getElementById("home-sections");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    if (typeof window !== "undefined") {
+      window.scrollBy({ top: window.innerHeight * 0.7, behavior: "smooth" });
+    }
+  }, []);
 
 
   const autoplayPlugin = React.useRef(
@@ -98,31 +107,32 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
         <div className="flex items-start justify-between gap-8">
           <div className="relative max-w-lg">
             <div
-              className="pointer-events-none absolute inset-0 rounded-3xl bg-black/25 backdrop-blur-xl"
+              className="pointer-events-none absolute inset-0 rounded-3xl bg-black/10 backdrop-blur-[2px]"
               aria-hidden="true"
             />
-            <div className="relative space-y-5 p-5 text-white">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+            <div className="relative space-y-5 p-5 text-[#fdf8f3]">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#f0d4a6]">
                 Flexible workspace in New Tampa
               </p>
-              <h1 className="text-4xl font-semibold leading-snug">
+              <h1 className="text-4xl font-semibold leading-snug text-[#fdf8f3]">
                 Tampa Palms
                 <span className="block text-white">Professional Center</span>
               </h1>
-              <p className="text-base text-white/80">
-                Discover full-floor suites and executive offices designed to keep
-                teams connected, productive, and close to Tampa Palms amenities.
+              <p className="text-base text-white">
+                Discover full-floor suites and executive offices designed to
+                keep teams connected, productive, and close to Tampa Palms
+                amenities.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/pages/Availability"
-                  className="rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-neutral-900 shadow-sm transition hover:bg-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="rounded-full px-4 py-2.5 text-sm font-semibold text-[#1f1a16] bg-white/95 shadow-lg hover:bg-white "
                 >
                   View Availability
                 </Link>
                 <Link
                   href="/pages/Contact"
-                  className="rounded-full border border-white/70 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="rounded-full border border-322b23  px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-black/10 hover:white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f0d4a6]"
                 >
                   Schedule a Tour
                 </Link>
@@ -132,26 +142,27 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
 
           <HighlightedLocation />
         </div>
-
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <CarouselPrevious
-              className=" flex h-12 w-20 translate-y-0 items-center justify-center rounded-full border border-transparent bg-white/5 text-white transition hover:border-white hover:bg-white/10"
-              iconClassName="h-6 w-8"
-            />
-            <CarouselNext
-              className=" flex h-12 w-20 translate-y-0 items-center justify-center rounded-full border border-transparent bg-white/5 text-white transition hover:border-white hover:bg-white/10"
-              iconClassName="h-6 w-8"
-            />
-          </div>
-
+        <div className="md:flex hidden flex-col items-center justify-center pb-2 relative">
+          <button
+            type="button"
+            onClick={handleScrollDown}
+            className="z-20 mb-3 inline-flex h-12 w-12 items-center justify-center text-white shadow-2xl shadow-black/25 transition text-7xl"
+            aria-label="Scroll to next section"
+          >
+            <HiOutlineArrowSmDown className="h-10 w-10 animate-bounce" />
+          </button>
           {totalSlides > 1 && (
             <div className="flex items-center gap-2">
               {Array.from({ length: totalSlides }).map((_, index) => (
-                <span
+                <button
                   key={`desktop-hero-slide-${index}`}
-                  className={`h-1.5 w-10 rounded-full transition ${
-                    index === currentSlide ? "bg-white" : "bg-white/40"
+                  type="button"
+                  aria-label={`Go to slide ${index + 1}`}
+                  onClick={() => api?.scrollTo(index)}
+                  className={`h-2 w-12 rounded-full transition ${
+                    index === currentSlide
+                      ? "bg-white"
+                      : "bg-white/40 hover:bg-white/70"
                   }`}
                 />
               ))}

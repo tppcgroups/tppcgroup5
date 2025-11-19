@@ -1,250 +1,463 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, Suspense } from "react";
 import SpacesCard from "@/app/components/availability/explore_spaces/SpacesCard";
 import TitleCard from "@/app/components/TitleCard";
-import Spacer from "@/app/components/Spacer";
-
 import { AvailabilityHero } from "@/app/components/availability/AvailabilityHero";
-import { SuiteDetails } from "@/app/components/availability/SuiteDetails";
-import { SuiteGallery } from "@/app/components/availability/SuiteGallery";
-import { SuiteFloorPlan } from "@/app/components/availability/SuiteFloorPlan";
-import { SuiteList } from "@/app/components/availability/SuiteList";
-import type { Suite } from "@/app/components/availability/type";
+import { BuildingList } from "@/app/components/availability/BuildingList";
+import type { Building } from "@/app/components/availability/type";
+import axios from "axios";
+import { BuildingDetails } from "@/app/components/availability/BuildingDetails";
+import BuildingPhotos from "@/app/components/availability/BuildingPhotos";
+import { useSearchParams } from "next/navigation";
+import { CampusGroundMap } from "@/app/components/availability/CampusGroundMap";
+import { deriveSuiteKey, normalizeSuiteToken } from "@/lib/utils";
 
-// Suite catalog used to drive the availability page content.
-const suites: Suite[] = [
+
+type AvailabilityStatus = "available" | "comingSoon" | "occupied";
+
+// 1. Status Normalization
+const normalizeStatus = (
+  rawStatus: string | null | undefined
+): AvailabilityStatus => {
+  if (!rawStatus) return "occupied";
+  const status = rawStatus.toLowerCase().trim();
+  if (status === "available") return "available";
+  return "occupied"; // Default to occupied/waitlisted for all other values
+};
+
+const buildingFilterOptions: Array<{
+  label: string;
+  value: "Office" | "Exec" | "SOAR";
+}> = [
+  { label: "Buildings/Suites", value: "Office" },
+  { label: "Executive Suites", value: "Exec" },
+  { label: "SOAR", value: "SOAR" },
+];
+
+const defaultImages = [
   {
-    id: "ste-105",
-    label: "Suite 105",
-    building: "Primrose Lake Circle",
-    size: "354 SF",
-    status: "available",
-    type: "Executive Suite",
-    rate: "By Request",
-    description:
-      "Corner suite with floor-to-ceiling windows, reception area, four private offices, and a conference room ready for hybrid teams.",
-    features: [
-      "Fully wired for Frontier Smart Park/Fios",
-      "Dedicated break area with sink and cabinetry",
-      "Near main lobby and visitor parking",
-    ],
-    images: [
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-5-LargeHighDefinition.jpg",
-        alt: "Executive desk with natural light",
-      },
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-4-LargeHighDefinition.jpg",
-        alt: "Shared breakout seating",
-      },
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
-        alt: "Exterior of Primrose Lake Circle",
-      },
-    ],
-    category: "executive",
-    brochureHref: "/documents/tppc-suite-101.pdf",
+    src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-10-LargeHighDefinition.jpg",
+    alt: "Modern executive office interior",
   },
   {
-    id: "ste-107",
-    label: "Suite 107",
-    building: "Primrose Lake Circle",
-    size: "274 SF",
-    status: "available",
-    type: "Executive Suite",
-    rate: "By Request",
-    description:
-      "Corner suite with floor-to-ceiling windows, reception area, four private offices, and a conference room ready for hybrid teams.",
-    features: [
-      "Fully wired for Frontier Smart Park/Fios",
-      "Dedicated break area with sink and cabinetry",
-      "Near main lobby and visitor parking",
-    ],
-    images: [
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-11-LargeHighDefinition.jpg",
-        alt: "Executive desk with natural light",
-      },
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-4-LargeHighDefinition.jpg",
-        alt: "Shared breakout seating",
-      },
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
-        alt: "Exterior of Primrose Lake Circle",
-      },
-    ],
-    category: "executive",
-    brochureHref: "/documents/tppc-suite-101.pdf",
+    src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-5-LargeHighDefinition.jpg",
+    alt: "Executive desk with natural light",
   },
+  { src: "/images/TPPC-002.jpg", alt: "Entry Sign" },
   {
-    id: "ste-119",
-    label: "Suite 119",
-    building: "Primrose Lake Circle",
-    size: "323 SF",
-    status: "available",
-    type: "Executive Suite",
-    rate: "By Request",
-    description:
-      "Bright second-floor suite ideal for professional services. Includes a reception zone, two private offices, and generous storage.",
-    features: [
-      "Glass sidelights for natural light",
-      "Shared conference room access on floor",
-      "Steps from the elevator core",
-    ],
-    images: [
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-6-LargeHighDefinition.jpg",
-        alt: "Executive desk with natural light",
-      },
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-4-LargeHighDefinition.jpg",
-        alt: "Shared breakout seating",
-      },
-      {
-        src: "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Building-Photo-2-LargeHighDefinition.jpg",
-        alt: "Exterior of Primrose Lake Circle",
-      },
-    ],
-    category: "executive",
-    brochureHref: "/documents/tppc-suite-220.pdf",
-  },
-  {
-    id: "ste-101",
-    label: "Suite 101",
-    building: "Bridge Hill Court",
-    size: "1974 SF",
-    status: "occupied",
-    type: "Building/Suites",
-    rate: "Join Waitlist",
-    description:
-      "Functional flex office currently committed. Join the waitlist for the next availability in this configuration.",
-    features: [
-      "Private office with open work bay",
-      "Shared lounge & kitchenette access",
-      "Proximity to wellness trail and campus amenities",
-    ],
-    images: [
-      {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-14-LargeHighDefinition.jpg",
-        alt: "Indoor Office Picture",
-      },
-      {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-15-LargeHighDefinition.jpg",
-        alt: "Workstations inside Suite 305",
-      },
-      {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Interior-Photo-16-LargeHighDefinition.jpg",
-        alt: "Kitchenette inside suite",
-      },
-      {
-        src: "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-10-LargeHighDefinition.jpg",
-        alt: "Bridge Hill Court exterior angle",
-      },
-    ],
-    category: "buildings",
+    src: "/images/TPPC-Entry-002.jpg",
+    alt: "Overhead picture of campus entry",
   },
 ];
 
-const suiteFilterOptions: Array<{ label: string; value: "buildings" | "executive" }> = [
-  { label: "Buildings/Suites", value: "buildings" },
-  { label: "Executive Suites", value: "executive" },
+const officeFeatures = [
+  "Ideal for teams and businesses",
+  "Multiple office configurations",
+  "Entire suites available for lease",
 ];
 
-// Marketing blurbs featured near the bottom of the page.
-const campusHighlights = [
-  {
-    title: "Executive Offices",
-    description: "Private, move-in-ready suites for professionals seeking a polished home base.",
-  },
-  {
-    title: "Team Suites",
-    description: "Flexible layouts with space for collaboration, branding, and visitors.",
-  },
-  {
-    title: "Campus Amenities",
-    description: "Complimentary parking, fiber connectivity, and responsive on-site ownership.",
-  },
+const executiveFeatures = [
+  "Perfect for individual professionals",
+  "Single, private office spaces",
+  "Flexible agreements available",
 ];
 
-export default function AvailabilityPage() {
+
+
+function AvailabilityContent() {
   // UI state for the currently active suite, gallery image, and category filter.
-  const [activeSuiteId, setActiveSuiteId] = useState<Suite["id"]>(suites[0]?.id ?? "");
+  const [activeBuildingId, setActiveBuildingId] =
+    useState<Building["building_id"]>("");
+  const [buildings, setBuildings] = useState<Building[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState<"buildings" | "executive">("buildings");
+  const [selectedCategory, setSelectedCategory] = useState<
+    "Office" | "Exec" | "SOAR"
+  >("Office");
+  const [activeBuildingImages, setActiveBuildingImages] =
+    useState<Array<{ src: string; alt: string }>>(defaultImages);
+  const [globalImageMap, setGlobalImageMap] = useState<{
+    [key: string]: string[];
+  }>({});
+  const detailSectionRef = useRef<HTMLDivElement | null>(null);
+  const mapSectionRef = useRef<HTMLDivElement | null>(null);
+  const [mapHeight, setMapHeight] = useState<number | null>(null);
+  const [availableBuildingNumbers, setAvailableBuildingNumbers] = useState<number[]>([6, 25]);
+  const [suiteAvailability, setSuiteAvailability] = useState<Record<number, string[]>>({});
+  const [scrollTargetSuite, setScrollTargetSuite] = useState<{
+    buildingNumber: number;
+    suiteId: string;
+    timestamp: number;
+  } | null>(null);
+  const scrollToDetails = useCallback(() => {
+    if (!detailSectionRef.current) return;
+    const targetTop = detailSectionRef.current.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({
+      top: targetTop - 140,
+      behavior: "smooth",
+    });
+  }, []);
+
+  const searchParams = useSearchParams();
+  const initialSpaceId = searchParams.get("spaceId");
+
+  const handleSuiteSelection = useCallback(
+    ({
+      buildingNumber,
+      suiteId,
+      suiteLabel,
+    }: {
+      buildingNumber: number;
+      suiteId: string;
+      suiteLabel: string;
+    }) => {
+      const normalizedTargetSuite = normalizeSuiteToken(suiteId);
+
+      const matchingBuilding = buildings.find(
+        (building) =>
+          building.building_number === buildingNumber &&
+          deriveSuiteKey(building.suite_number, building.building_id) ===
+            normalizedTargetSuite
+      );
+
+      if (!matchingBuilding) {
+        console.warn(
+          `No matching suite found for Building ${buildingNumber}, Suite ${suiteLabel}`
+        );
+        return;
+      }
+
+      if (matchingBuilding.category !== selectedCategory) {
+        setSelectedCategory(matchingBuilding.category);
+      }
+
+      setActiveBuildingId(matchingBuilding.building_id);
+      setScrollTargetSuite({
+        buildingNumber,
+        suiteId: normalizedTargetSuite,
+        timestamp: Date.now(),
+      });
+    },
+    [buildings, selectedCategory]
+  );
+
+
+  // Add this helper function somewhere accessible if the direct building_id is wrong
+  const createSpaceKey = (id: string) => {
+    // This regex attempts to find '5-118' and map it to 'Bldg5-Suite118'
+    const match = id.match(/^(\d+-\w+)$/);
+    if (match) {
+      // Assuming the number before the dash is the building number, and the number after is the suite number
+      const parts = id.split("-");
+      if (parts.length === 2) {
+        // E.g., '5-118' becomes 'Bldg5-Suite118'
+        return `Bldg${parts[0]}-Suite${parts[1]}`;
+      }
+    }
+    return id; // Return the original ID if it doesn't match the pattern
+  };
+
+  // Helper to extract base building key from spaceId
+  const getBaseBuildingKey = (spaceId: string): string | null => {
+    // Matches 'BldgX', where X is a number, even if followed by a dash.
+    const match = spaceId.match(/^(Bldg\d+)/);
+    return match ? match[1] : null;
+  };
+
+  // Function to handle image resolution (moved outside of effects)
+  const updateActiveImages = useCallback((
+    activeBuilding: Building | undefined,
+    imageMap: { [key: string]: string[] }
+  ) => {
+    if (!activeBuilding) {
+      setActiveBuildingImages(defaultImages);
+      return;
+    }
+
+    const rawSpaceId = activeBuilding.building_id;
+
+
+    const specificSpacekey = createSpaceKey(rawSpaceId);
+    const baseBuildKey = getBaseBuildingKey(specificSpacekey);
+
+    const sharedSuiteKey = baseBuildKey ? `${baseBuildKey}-SS` : null;
+
+    let newImagePaths: string[] | undefined;
+    let usedKey = "";
+
+    // Priority 1: Specific Suite Images
+    if (imageMap[specificSpacekey]) {
+      newImagePaths = imageMap[specificSpacekey];
+      usedKey = specificSpacekey;
+    }
+
+    // Check for shared suite images
+    else if (sharedSuiteKey && imageMap[sharedSuiteKey]) {
+      newImagePaths = imageMap[sharedSuiteKey];
+      usedKey = sharedSuiteKey;
+    }
+
+    // Check for base building images
+    else if (baseBuildKey && imageMap[baseBuildKey]) {
+      newImagePaths = imageMap[baseBuildKey];
+      usedKey = baseBuildKey;
+    }
+
+    // Logic for always grabbing an exterior image
+    const exteriorPaths =
+      baseBuildKey && imageMap[baseBuildKey] ? imageMap[baseBuildKey] : [];
+
+    const finalImages: Array<{ src: string; alt: string }> = [];
+
+    console.log("Used image key:", usedKey);
+
+    if (exteriorPaths.length > 0) {
+      const exteriorImage = {
+        src: exteriorPaths[0], // Grab ONLY the first exterior image
+        alt: `${activeBuilding.street_address} exterior image`,
+      };
+      finalImages.push(exteriorImage);
+    }
+
+    if (newImagePaths && newImagePaths.length > 0) {
+      let startIndex = 0;
+      if (usedKey === baseBuildKey && finalImages.length > 0) {
+        startIndex = 1;
+      }
+      const interiorImages = newImagePaths.slice(startIndex).map((path) => ({
+        src: path,
+        alt: `${activeBuilding.street_address} interior image (${usedKey})`,
+      }));
+
+      finalImages.push(...interiorImages);
+      console.log("These are the final images for this suite", finalImages);
+      setActiveBuildingImages(interiorImages.length > 0 ? finalImages : defaultImages);
+      console.log("LOG 1: Setting new images for:", usedKey);
+    } else {
+      setActiveBuildingImages(defaultImages);
+      console.log(
+        "LOG 2: No specific images found for:",
+        specificSpacekey,
+        "Falling back to defaults. Checked keys:",
+        {
+          specific: specificSpacekey,
+          shared: sharedSuiteKey,
+          base: baseBuildKey,
+        }
+      );
+    }
+    setActiveImageIndex(0);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof ResizeObserver === "undefined") {
+      return;
+    }
+    if (!mapSectionRef.current) return;
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      setMapHeight(entry.contentRect.height);
+    });
+    observer.observe(mapSectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    async function fetchBuildings() {
+      try {
+        const response = await axios.get("/api/buildings");
+        const rawBuildings = (response.data ?? []) as Building[];
+        const normalizedBuildings: Building[] = rawBuildings.map((b) => ({
+          ...b,
+          images: defaultImages,
+          features:
+            b.office_type === "Exec" ? executiveFeatures : officeFeatures,
+          description: "Placeholder description for " + b.street_address,
+          category:
+            b.office_type === "Exec"
+              ? "Exec"
+              : b.office_type === "SOAR"
+              ? "SOAR"
+              : "Office",
+          brochureHref: undefined,
+        }));
+        const fixId = "5-101";
+        const fixIndex = normalizedBuildings.findIndex(item => item.building_id === fixId);
+        const [targetElement] = normalizedBuildings.splice(fixIndex, 1);
+
+        if (targetElement) {
+          normalizedBuildings.splice(1, 0, targetElement);
+        }
+
+        // Sorting logic
+        const availableSpaces = normalizedBuildings.filter(
+          (b) => normalizeStatus(b.availability_status) === "available"
+        );
+
+        const availabilityByBuilding: Record<number, Set<string>> = {};
+        availableSpaces.forEach((building) => {
+          const suiteKey = deriveSuiteKey(
+            building.suite_number,
+            building.building_id
+          );
+          if (!suiteKey) return;
+          if (!availabilityByBuilding[building.building_number]) {
+            availabilityByBuilding[building.building_number] = new Set();
+          }
+          availabilityByBuilding[building.building_number].add(suiteKey);
+        });
+
+        const availabilityRecord: Record<number, string[]> = {};
+        Object.entries(availabilityByBuilding).forEach(([key, value]) => {
+          availabilityRecord[Number(key)] = Array.from(value);
+        });
+        setSuiteAvailability(availabilityRecord);
+
+        setAvailableBuildingNumbers((prev) => {
+          const combined = [
+            ...prev,
+            ...availableSpaces.map((b: Building) => b.building_number),
+          ];
+          return Array.from(new Set(combined));
+        });
+        const occupiedSpaces = normalizedBuildings.filter(
+          (b) => normalizeStatus(b.availability_status) !== "available"
+        );
+        const finalBuildings = [...availableSpaces, ...occupiedSpaces];
+
+        setBuildings(finalBuildings);
+
+        // Fetch Image Map
+        const mapResponse = await axios.get("/api/image-map");
+        const fetchedImageMap = mapResponse.data;
+        setGlobalImageMap(fetchedImageMap); // Set map state
+
+        let targetId = finalBuildings[0]?.building_id ?? "";
+
+        if (initialSpaceId) {
+          targetId = initialSpaceId;
+        }
+
+        // Set initial active building and trigger image update immediately
+        let initialActiveBuilding: Building | undefined = undefined;
+
+        if (targetId) {
+          setActiveBuildingId(targetId);
+          initialActiveBuilding = finalBuildings.find(b => b.building_id === targetId);
+        }
+
+        if (initialActiveBuilding) {
+          updateActiveImages(initialActiveBuilding, fetchedImageMap);
+        } else if (finalBuildings.length > 0) {
+          updateActiveImages(finalBuildings[0], fetchedImageMap);
+        }
+      } catch (error) {
+        console.error("Error loading buildings:", error);
+        setGlobalImageMap({}); // Set empty map on error to prevent undefined issues
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    if (initialSpaceId !== null || buildings.length === 0) {
+      fetchBuildings();
+    }
+    
+  }, [initialSpaceId, buildings.length, updateActiveImages]); // Runs once on mount
 
   // Grab the suites that match the selected tab.
-  const filteredSuites = useMemo(
-    () => suites.filter((suite) => suite.category === selectedCategory),
-    [selectedCategory]
+  const filteredBuildings = useMemo(
+    () =>
+      buildings.filter((building) => building.category === selectedCategory),
+    [selectedCategory, buildings]
   );
 
   // Fall back to the full list if a category has no entries yet.
-  const visibleSuites = filteredSuites.length ? filteredSuites : suites;
+  const visibleBuildings = filteredBuildings.length
+    ? filteredBuildings
+    : buildings;
 
   // Resolve the full suite record backing the current selection.
-  const activeSuite = useMemo(
-    () => visibleSuites.find((suite) => suite.id === activeSuiteId) ?? visibleSuites[0],
-    [activeSuiteId, visibleSuites],
+  const activeBuilding = useMemo(
+    () =>
+      visibleBuildings.find(
+        (building) => building.building_id === activeBuildingId
+      ) ?? visibleBuildings[0],
+    [activeBuildingId, visibleBuildings]
   );
 
-  const images = activeSuite?.images ?? [];
+  // Image Update useEffect (Handles initial load and filter/category changes)
+  // NOTE: User clicks are now handled by handleBuildingSelect
+  useEffect(() => {
+    if (activeBuilding) {
+      // This runs if activeBuilding changes due to category filter change
+      updateActiveImages(activeBuilding, globalImageMap);
+    }
+    // Dependency array relies on activeBuilding and globalImageMap state
+  }, [activeBuilding, globalImageMap, updateActiveImages]);
 
   // Keep selections in sync when the visible suites set changes (e.g., new filter).
   useEffect(() => {
-    if (!visibleSuites.some((suite) => suite.id === activeSuiteId)) {
-      const fallback = visibleSuites[0]?.id ?? "";
-      setActiveSuiteId(fallback);
+    if (
+      !visibleBuildings.some(
+        (building) => building.building_id === activeBuildingId
+      )
+    ) {
+      const fallback = visibleBuildings[0]?.building_id ?? "";
+      setActiveBuildingId(fallback);
       setActiveImageIndex(0);
     }
-  }, [visibleSuites, activeSuiteId]);
+  }, [visibleBuildings, activeBuildingId]);
 
   // User interactions that update the active category or suite.
-  const handleCategoryChange = (category: "buildings" | "executive") => {
+  const handleCategoryChange = (category: "Office" | "Exec" | "SOAR") => {
     setSelectedCategory(category);
   };
 
-  const handleSuiteSelect = (id: string) => {
-    setActiveSuiteId(id);
+  // pCRITICAL FIX: Resolve building and update images synchronously on click
+  const handleBuildingSelect = (id: string) => {
+    setActiveBuildingId(id);
     setActiveImageIndex(0);
+
+    // 1. Find the selected building object using the most recent visible list
+    const selectedBuilding = visibleBuildings.find((b) => b.building_id === id);
+
+    // 2. Immediately call the image update logic with the resolved object
+    if (selectedBuilding) {
+      updateActiveImages(selectedBuilding, globalImageMap);
+    } else {
+      setActiveBuildingImages(defaultImages);
+    }
+
+    scrollToDetails();
   };
 
-  const officeFeatures = [
-    "Ideal for teams and businesses",
-    "Multiple office configurations",
-    "Entire suites available for lease",
-  ];
-
-  const executiveFeatures = [
-    "Perfect for individual professionals",
-    "Single, private office spaces",
-    "Flexible agreements available",
-  ];
-
   return (
-    <main className="min-h-screen bg-gray-50 text-slate-900">
+    <main className="min-h-screen bg-[#f9f7f3] text-[#1f1a16]">
       {/* Introduces the page and reports total availability. */}
       <AvailabilityHero
         availableCount={
-          suites.filter((suite) => suite.status === "available").length
+          buildings.filter(
+            (building) =>
+              building.availability_status?.trim().toLowerCase() === "available"
+          ).length
         }
       />
 
-      <section className="mx-auto max-w-6xl px-4 pb-20">
-        {/* Category toggle pills. */}
-        <div className="mb-8 flex flex-wrap items-center gap-3 text-sm">
-          <div className="flex rounded-full border border-slate-200 bg-white p-1">
-            {suiteFilterOptions.map((option) => (
+      <section className="mx-auto max-w-6xl px-4 pb-4 my-4">
+        {/* Category toggle pills. On small screens allow horizontal scroll so pills don't overflow */}
+        <div className="mb-8 w-full text-sm">
+          <div className="flex items-center gap-3 overflow-x-auto rounded-full border border-[#e1d9cf] bg-white p-1 px-2">
+            {buildingFilterOptions.map((option) => (
               <button
                 key={option.value}
                 type="button"
                 onClick={() => handleCategoryChange(option.value)}
-                className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] transition ${
+                className={`whitespace-nowrap rounded-full px-3 md:px-4 py-2 text-xs md:text-sm font-semibold uppercase tracking-[0.3em] transition ${
                   selectedCategory === option.value
-                    ? "bg-slate-900 text-white shadow-md shadow-slate-900/20"
-                    : "bg-transparent text-slate-600 hover:text-slate-900"
+                    ? "bg-[#4a4034] text-white shadow-md shadow-[#1f1a16]/20"
+                    : "bg-transparent text-[#7a6754] hover:text-[#1f1a16]"
                 }`}
               >
                 {option.label}
@@ -253,63 +466,92 @@ export default function AvailabilityPage() {
           </div>
         </div>
 
-        {/* Core layout: list + gallery + supporting details. */}
-        <div className="grid auto-rows-fr items-stretch gap-8 lg:grid-cols-3">
-          <div className="h-full">
-            <SuiteList
-              suites={visibleSuites}
-              activeSuiteId={activeSuite?.id ?? ""}
-              onSelectSuite={handleSuiteSelect}
-            />
+        <div className="flex flex-col gap-12">
+          {/* Ground map + suite list */}
+          <div className="grid gap-8 lg:grid-cols-6">
+            <div ref={mapSectionRef} className="lg:col-span-3">
+              <CampusGroundMap
+                availableBuildings={availableBuildingNumbers}
+                onSuiteSelect={handleSuiteSelection}
+                suiteAvailability={suiteAvailability}
+              />
+            </div>
+            <div
+              className="lg:col-span-3"
+              style={
+                mapHeight
+                  ? {
+                      minHeight: mapHeight,
+                      height: mapHeight,
+                    }
+                  : undefined
+              }
+            >
+              <BuildingList
+                loading={loading}
+                visibleBuildings={visibleBuildings}
+                activeBuildingId={activeBuildingId}
+                normalizeStatus={normalizeStatus}
+                onSelectBuilding={handleBuildingSelect}
+                scrollTargetSuite={scrollTargetSuite}
+              />
+            </div>
           </div>
-          <div className="h-full">
-            {activeSuite && <SuiteDetails suite={activeSuite} />}
-          </div>
-          <div className="h-full">
-            <SuiteGallery
-              images={images}
-              activeImageIndex={activeImageIndex}
-              onPrev={() => {
-                if (!images.length) return;
-                setActiveImageIndex(
-                  (prev) => (prev - 1 + images.length) % images.length
-                );
-              }}
-              onNext={() => {
-                if (!images.length) return;
-                setActiveImageIndex((prev) => (prev + 1) % images.length);
-              }}
-              onSelectImage={setActiveImageIndex}
-              suiteLabel={activeSuite?.label}
-            />
+
+          {/* Imagery + details */}
+          <div
+            ref={detailSectionRef}
+            className="grid gap-8 lg:grid-cols-5"
+          >
+            <div className="lg:col-span-3">
+              <BuildingPhotos
+                images={activeBuildingImages}
+                activeImageIndex={activeImageIndex}
+                onPrev={() => {
+                  if (!activeBuildingImages.length) return;
+                  setActiveImageIndex(
+                    (prev) =>
+                      (prev - 1 + activeBuildingImages.length) %
+                      activeBuildingImages.length
+                  );
+                }}
+                onNext={() => {
+                  if (!activeBuildingImages.length) return;
+                  setActiveImageIndex(
+                    (prev) => (prev + 1) % activeBuildingImages.length
+                  );
+                }}
+                onSelectImage={setActiveImageIndex}
+                suiteLabel={activeBuilding?.street_address}
+              />
+            </div>
+            <div className="lg:col-span-2">
+              {activeBuilding && (
+                <BuildingDetails
+                  activeBuilding={activeBuilding}
+                  normalizeStatus={normalizeStatus}
+                />
+              )}
+            </div>
           </div>
         </div>
-
-        {/* Detail panels for the selected suite. */}
-        {/* <div className="mt-12 w-full">
-          <SuiteFloorPlan />
-        </div> */}
       </section>
 
       {/* Explore Spaces container */}
-      <div className="rounded-xl my-16 md:my-24 mx-8 bg-gray-50">
-        <div className="text-center my-16 md:my-24">
-          {/* The "eyebrow" text adds a touch of color and context */}
-          <p className="text-sm font-semibold  uppercase tracking-wider">
-            Our Properties
-          </p>
-          <TitleCard title="Explore Spaces" />
+      <div className="mx-6 my-12 rounded-3xl bg-gray-50 px-6 py-12 md:mx-10 md:my-16 md:px-10 md:py-14">
+        <div className="mb-8 text-center md:mb-10">
+          <TitleCard title="Explore Spaces" eyebrow="Our Properties" align="center" />
         </div>
-        <div className="w-full flex md:flex-row flex-col justify-center gap-8">
+        <div className="w-full flex md:flex-row flex-col justify-center gap-6 md:gap-7">
           <SpacesCard
             title="Buildings/Suites"
-            imageUrl="/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-11-LargeHighDefinition.jpg"
+            imageUrl="/images/Bldg6-019.jpg"
             href="https://www.loopnet.com/Listing/17425-Bridge-Hill-Ct-Tampa-FL/31448652/"
             features={officeFeatures}
           />
           <SpacesCard
             title="Executive Suites"
-            imageUrl="/images/5331/5331-ExploreSpacesCardImage.jpg"
+            imageUrl="/images/Bldg5-017.jpg"
             href="https://www.loopnet.com/Listing/5331-Primrose-Lake-Cir-Tampa-FL/4151894/"
             features={executiveFeatures}
           />
@@ -317,4 +559,12 @@ export default function AvailabilityPage() {
       </div>
     </main>
   );
+}
+
+export default function AvailabilityPage() {
+    return (
+      <Suspense fallback={<div>Loading availability…</div>}>
+        <AvailabilityContent />
+      </Suspense>
+    );
 }

@@ -6,26 +6,71 @@ import { usePathname } from "next/navigation";
 import {announce} from "@/app/components/RentalApplication/screenReader";
 
 // The component is now simpler
+type LeafLink = { href: string; label: string };
+type DropdownLink = { label: string; children: LeafLink[] };
+type MenuLink = LeafLink | DropdownLink;
+
+const NAV_LINKS: MenuLink[] = [
+  { href: "/", label: "Home" },
+  { href: "/pages/Availability", label: "Availability" },
+  { href: "/pages/Features", label: "Features & Amenities" },
+  {
+    label: "Services",
+    children: [
+      { href: "/pages/Maintenance", label: "Maintenance" },
+      { href: "/pages/Apply", label: "Apply" },
+    ],
+  },
+  { href: "/pages/Testimonials", label: "Testimonials" },
+  { href: "/pages/About", label: "About" },
+  { href: "/pages/Contact", label: "Contact" },
+];
+
 interface NavLinksProps {
   setIsOpen: (isOpen: boolean) => void;
+  isMobile?: boolean;
 }
 
-const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen }) => {
+const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
   const pathname = usePathname() || "/";
 
-  const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/pages/Availability", label: "Availability" },
-    { href: "/pages/Features", label: "Features & Amenities" },
-    { href: "/pages/Maintenance", label: "Maintenance Request" },
-    { href: "/pages/Apply", label: "Rental Application" },
-    { href: "/pages/Contact", label: "Contact" },
-    { href: "/pages/About", label: "About" },
-  ];
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const navRef = useRef<HTMLDivElement>(null);
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearCloseTimeout = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
 
   // Function to close the menu on mobile when a link is clicked
   const handleLinkClick = () => {
     setIsOpen(false);
+    clearCloseTimeout();
+    setOpenDropdown(null);
+  };
+
+  const handleDropdownToggle = (label: string) => {
+    if (isMobile) return;
+    clearCloseTimeout();
+    setOpenDropdown((prev) => (prev === label ? null : label));
+  };
+
+  const handleDropdownOpen = (label: string) => {
+    if (isMobile) return;
+    clearCloseTimeout();
+    setOpenDropdown(label);
+  };
+
+  const handleDropdownCloseWithDelay = () => {
+    if (isMobile) return;
+    clearCloseTimeout();
+    closeTimeoutRef.current = setTimeout(() => {
+      setOpenDropdown(null);
+      closeTimeoutRef.current = null;
+    }, 200);
   };
 
 

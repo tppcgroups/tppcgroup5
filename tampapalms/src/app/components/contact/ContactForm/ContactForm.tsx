@@ -51,6 +51,7 @@ export default function ContactForm() {
       <div className="space-y-6">
         <TextField label="Name" name="name" placeholder="Jane Doe" />
         <TextField label="Email" type="email" name="email" placeholder="jane@example.com" />
+        <TextField label="Phone Number" type="tel" name="phone-number" placeholder="(123) 456-7890" />
         <TextField label="Subject" name="subject" placeholder="Inquiry" />
       </div>
 
@@ -59,7 +60,7 @@ export default function ContactForm() {
           <div className="relative">
             <div className="-mb-3 pl-3"><Badge>Your Message</Badge></div>
             <div className="rounded-2xl bg-white p-4 pt-6 shadow-inner border border-neutral-300
-                            focus-within:ring-2 focus-within:ring-slate-500 min-h-[300px] flex flex-col">
+                            focus-within:ring-2 focus-within:ring-[#7a6754] min-h-[300px] flex flex-col">
               <textarea
                 name="message"
                 placeholder="Tell us how we can help…"
@@ -75,7 +76,7 @@ export default function ContactForm() {
           <input id="consent" name="consent" type="checkbox" required className="mt-1" />
           <label htmlFor="consent">
             I consent to be contacted about my inquiry and agree to the{" "}
-            <a href="/privacy" className="underline decoration-slate-500/60 hover:decoration-slate-700">Privacy Policy</a>.
+            <a href="/privacy" className="underline decoration-[#a49382]/60 hover:decoration-[#4a4034]">Privacy Policy</a>.
           </label>
           {/* Hidden field serves as a spam trap for automated submissions. */}
           <input type="text" name="company" autoComplete="off" tabIndex={-1} aria-hidden="true" className="hidden" />
@@ -90,8 +91,8 @@ export default function ContactForm() {
             type="submit"
             disabled={disabled}
             className={`rounded-full px-6 py-3 text-base font-medium text-white shadow-md
-                        bg-gradient-to-b from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800
-                        focus:outline-none focus:ring-2 focus:ring-slate-500
+                        bg-gradient-to-b from-[#7a6754] to-[#5a4b3c] hover:from-[#5a4b3c] hover:to-[#3a3127]
+                        focus:outline-none focus:ring-2 focus:ring-[#7a6754]
                         ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
           >
             {disabled ? "Sending…" : "Submit"}

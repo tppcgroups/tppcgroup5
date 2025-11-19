@@ -34,3 +34,25 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Environment variables
+
+The contact form stores submissions in Supabase and sends confirmation emails through SMTP. Copy `.env.example` to `.env.local` inside `tampapalms/` and fill in:
+
+```
+SUPABASE_URL=...
+SUPABASE_SERVICE_ROLE_KEY=...
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+EMAIL_USER=your-smtp-username
+EMAIL_PASSWORD=app-password-or-smtp-secret
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+EMAIL_FROM_ADDRESS=no-reply@yourdomain.com
+EMAIL_INTERNAL_NOTIFICATIONS=team@yourdomain.com
+```
+
+- The public Supabase values are required for the routes that use `supabaseServer()`.
+- The service role key is only used inside `/api/contact` to insert into the `contact_us` table.
+- SMTP credentials power both the marketing email route and the contact confirmation/notification emails.
