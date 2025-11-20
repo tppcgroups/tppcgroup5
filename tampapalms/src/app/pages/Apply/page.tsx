@@ -90,25 +90,25 @@ export default function Apply() {
           {/* Right image column */}
           <div className="relative w-full pb-12 pt-6 md:flex-1 md:self-stretch md:pt-10">
             <div className="relative mx-auto flex h-64 w-full overflow-hidden rounded-2xl sm:h-72 md:h-full md:max-w-xl md:rounded-3xl">
-              {carouselImages.map((src, idx) => (
+              {/* {carouselImages.map((src, idx) => ( */}
                 <div
-                  key={src}
+                  // key={src}
                   className={`absolute inset-0 transition-opacity duration-700 ${
-                    idx === activeImage ? "opacity-100" : "opacity-0"
+                    "opacity-100"
                   }`}
                 >
                   <Image
-                    src={src}
+                    src="/images/Bldg6-012.jpg"
                     alt="Workspace imagery at Tampa Palms"
                     fill
                     className="object-cover object-center"
-                    priority={idx === 0}
+                    // priority={idx === 0}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" aria-hidden />
                 </div>
-              ))}
+              {/* ))} */}
               <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-2">
-                {carouselImages.map((_, idx) => (
+                {/* {carouselImages.map((_, idx) => (
                   <button
                     key={idx}
                     type="button"
@@ -118,7 +118,7 @@ export default function Apply() {
                     }`}
                     aria-label={`Show slide ${idx + 1}`}
                   />
-                ))}
+                ))} */}
               </div>
             </div>
           </div>
