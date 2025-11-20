@@ -327,6 +327,10 @@ const AccessibilityWidget: React.FC = () => {
 
 
     useEffect(() => {
+        if (!open) {
+            return;
+        }
+
         const handleGlobalKeyDown = (e: KeyboardEvent) => {
             if (!event) {
                 return;
@@ -336,7 +340,7 @@ const AccessibilityWidget: React.FC = () => {
             const isCtrl = e.ctrlKey || e.metaKey;
             let handled = false;
 
-
+            
             if (isShift && (e.code === 'Equal' || e.code === 'NumpadAdd')) {
                 setTextScale(prev => Math.min(1.6, prev + 0.1));
                 handled = true;
@@ -420,6 +424,7 @@ const AccessibilityWidget: React.FC = () => {
             window.removeEventListener("keydown", handleGlobalKeyDown);
         };
     }, [
+        open,
         textScale, screenReaderMode, setScreenReaderMode,
         nextContrast, prevContrast, nextLanguage, prevLanguage, setTextScale,
         toggleWidgetVisibility
@@ -688,8 +693,7 @@ const AccessibilityWidget: React.FC = () => {
                     {/* Navigation Button */}
                         <button
                             onClick={() => setOptionsPanelOpen(true)}
-                            className="w-full py-2 mt-4 rounded-lg text-white font-semibold"
-                            style={{ backgroundColor: "rgb(18,25,43" }} // Reusing the same style as reset
+                            className="w-full py-2 mt-4 rounded-lg font-semibold text-white border border-[#3d342a] bg-[#120f0c] hover:bg-[#1b1815]"
                         >
                             {t.keyboardNavigation}
                         </button>
@@ -711,8 +715,7 @@ const AccessibilityWidget: React.FC = () => {
                             // Clear localStorage
                             localStorage.removeItem("accessibilitySettings");
                         }}
-                        className="w-full py-2 mt-4 rounded-lg text-white font-semibold"
-                        style={{ backgroundColor: "rgb(18,25,43" }}
+                        className="w-full py-2 mt-4 rounded-lg font-semibold text-white border border-[#3d342a] bg-[#120f0c] hover:bg-[#1b1815]"
                     >
                         {t.reset || "Reset Settings"}
                     </button>
