@@ -327,6 +327,10 @@ const AccessibilityWidget: React.FC = () => {
 
 
     useEffect(() => {
+        if (!open) {
+            return;
+        }
+
         const handleGlobalKeyDown = (e: KeyboardEvent) => {
             if (!event) {
                 return;
@@ -336,7 +340,7 @@ const AccessibilityWidget: React.FC = () => {
             const isCtrl = e.ctrlKey || e.metaKey;
             let handled = false;
 
-
+            
             if (isShift && (e.code === 'Equal' || e.code === 'NumpadAdd')) {
                 setTextScale(prev => Math.min(1.6, prev + 0.1));
                 handled = true;
@@ -420,6 +424,7 @@ const AccessibilityWidget: React.FC = () => {
             window.removeEventListener("keydown", handleGlobalKeyDown);
         };
     }, [
+        open,
         textScale, screenReaderMode, setScreenReaderMode,
         nextContrast, prevContrast, nextLanguage, prevLanguage, setTextScale,
         toggleWidgetVisibility
