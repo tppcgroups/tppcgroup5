@@ -1,7 +1,7 @@
 {
   "project": {
     "name": "tampapalms",
-    "displayName": "Tampa Palms Professional Center",
+    "displayName": "Tampa Palms Professional",
     "description": "Next.js 15 App Router site for the Tampa Palms Professional Center leasing and marketing pages.",
     "framework": "nextjs",
     "appRouter": true,

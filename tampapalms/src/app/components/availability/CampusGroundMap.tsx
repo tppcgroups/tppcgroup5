@@ -458,7 +458,7 @@ export function CampusGroundMap({
     <section className="flex w-full flex-col overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-xl shadow-slate-900/5">
       <div className="border-b border-slate-100 px-6 py-6">
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
-          Campus Overview
+          Professional Park Overview
         </p>
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 mt-1">
           Select Green Buildings for Floor Plans
