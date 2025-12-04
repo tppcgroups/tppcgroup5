@@ -143,22 +143,22 @@ export default function HomeSections({
     {
       value: formattedTotalSize,
       label: "Rentable sq. ft.",
-      helper: "Across premier Tampa Palms office campus",
+      helper: "Well-kept property",
     },
     {
       value: flexibleSuites ? flexibleSuites.toLocaleString() : "0",
       label: "Flexible Suites",
-      helper: "Ready for 1-15 professionals",
+      helper: "Business-ready space",
     },
     {
       value: buildingAvailable ? buildingAvailable.toLocaleString() : "0",
       label: "Buildings",
-      helper: "AV-ready & reservable",
+      helper: "Maintained to standard",
     },
     {
       value: "24/7",
       label: "Secure access",
-      helper: "Key fob & on-site surveillance",
+      helper: "All-hours security",
     },
   ];
 
@@ -181,14 +181,14 @@ export default function HomeSections({
               Tampa Palms Professional Center
             </p>
             <h2 className="text-3xl font-semibold leading-tight text-[#1f1a16] md:text-4xl">
-              Purpose-built offices for teams that want New Tampa convenience without compromise.
+              A workspace structured for success.
+              {/* Convenient, practical office space for teams that need an efficient and professional place to work. */}
             </h2>
             <p className="text-base text-[#7a6754] md:text-lg">
-              Boutique hospitality meets enterprise infrastructure across secured suites, flexible floorplates, and
-              curated amenity spaces that keep clients impressed and teams productive.
+              Office space in New Tampa designed for teams that need a reliable, well-managed environment to stay productive and maintain a professional workflow.
             </p>
             <div className="flex flex-wrap gap-3 text-sm ttext-[#7a6754] ">
-              {["Flexible lease terms", "Plug-and-play IT", "On-site property team"].map((tag) => (
+              {["Secure offices", "Flexible floorplans", "On-site assistance"].map((tag) => (
                 <span key={tag} className="rounded-full border border-[#7a6754] bg-white px-4 py-1.5">
                   {tag}
                 </span>
