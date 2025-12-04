@@ -44,7 +44,7 @@ export function BuildingList({
           </p>
           <p className="mt-2 text-sm text-[#7a6754]">
             Select a suite to preview imagery and key details. The list updates as
-            spaces become available across the campus.
+            spaces become available across the professional park.
           </p>
           <p className="mt-2 rounded-2xl border border-[#e1d9cf] bg-[#fdf8f3] px-4 py-3 text-xs font-medium text-[#a49382]">
             After choosing a suite, scroll down to explore the gallery and space

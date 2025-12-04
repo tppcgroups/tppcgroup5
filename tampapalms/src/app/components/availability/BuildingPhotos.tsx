@@ -22,7 +22,7 @@ export function BuildingPhotos({images, activeImageIndex, onPrev, onNext, onSele
   const numThumbnails = 4; // we'll show 4 on desktop but only 2 on small screens via responsive classes
   const totalImages = images.length;
 
-  for (let i = 0; i < numThumbnails; i++) {
+  for (let i = 1; i <= numThumbnails; i++) {
     const index = (activeImageIndex + i) % totalImages;
     imageIndices.push(index);
   }
