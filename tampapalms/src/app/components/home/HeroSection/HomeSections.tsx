@@ -199,7 +199,7 @@ export default function HomeSections({
                 href="/pages/Contact"
                 className="inline-flex items-center gap-2 rounded-full bg-[#322b23] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#4a4034]"
               >
-                Schedule a tour
+                Contact Us
                 <ArrowUpRight className="h-4 w-4" aria-hidden />
               </Link>
               <Link
