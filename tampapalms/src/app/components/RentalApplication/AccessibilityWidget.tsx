@@ -1,6 +1,5 @@
 "use client";
 import accessibilityLogo from "../accessibility.png";
-import { translations } from "./Translations";
 import { announce } from "./screenReader";
 
 import { setScreenReaderEnabled } from "@/app/components/RentalApplication/screenReader";
@@ -10,9 +9,6 @@ import { setScreenReaderEnabled } from "@/app/components/RentalApplication/scree
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-
-
-type Language = "English" | "Spanish" | "French" | "Swahili";
 
 
 
@@ -27,15 +23,13 @@ type AccessibilitySettingsSnapshot = {
     highlightIndex: number;
     reduceMotion: boolean;
     contrastIndex: number;
-    languageIndex: number;
     backgroundThemeIndex: number;
-    screenReaderMode: boolean;
 };
+
 const AccessibilityWidget: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [textScale, setTextScale] = useState(1);
     const [highContrast, setHighContrast] = useState(false);
-    const [language, setLanguage] = useState<Language>("English");
 
     const highlightOptions = ["default", "links", "buttons", "headers"] as const;
     const [highlightIndex, setHighlightIndex] = useState(0);
@@ -58,26 +52,6 @@ const AccessibilityWidget: React.FC = () => {
             prev === 0 ? contrastModes.length - 1 : prev - 1
         );
     };
-
-
-    const languages: Language[] = ["English", "Spanish", "French", "Swahili"];
-
-
-    const [languageIndex, setLanguageIndex] = useState(0);
-    const t = translations[languages[languageIndex] as Language];
-
-    const nextLanguage = () => {
-        setLanguageIndex((prev) => (prev + 1) % languages.length);
-    };
-
-    const prevLanguage = () => {
-        setLanguageIndex((prev) =>
-            prev === 0 ? languages.length - 1 : prev - 1
-        );
-    };
-
-
-    const [screenReaderMode, setScreenReaderMode] = useState(false);
 
     const [optionsPanelOpen, setOptionsPanelOpen] = useState(false);
 
@@ -135,9 +109,7 @@ const AccessibilityWidget: React.FC = () => {
         highlightIndex,
         reduceMotion,
         contrastIndex,
-        languageIndex,
         backgroundThemeIndex,
-        screenReaderMode,
     });
     const settingsLogInitializedRef = useRef(false);
 
@@ -155,8 +127,6 @@ const AccessibilityWidget: React.FC = () => {
             setHighlightIndex(settings.highlightIndex ?? 0);
             setReduceMotion(settings.reduceMotion ?? false);
             setContrastIndex(settings.contrastIndex ?? 0);
-            setLanguageIndex(settings.languageIndex ?? 0);
-            setScreenReaderMode(settings.screenReaderMode ?? false);
             setBackgroundThemeIndex(settings.backgroundThemeIndex ?? 0);
 
 
@@ -164,19 +134,6 @@ const AccessibilityWidget: React.FC = () => {
             console.error("Failed to load saved settings", err);
         }
     }, []);
-
-
-
-    useEffect(() => {
-        if (!screenReaderMode) return;
-
-        const timeout = setTimeout(() => {
-            announce("VoiceOver is now activated");
-            announce(document.title);
-        }, 600);
-
-        return () => clearTimeout(timeout);
-    }, [screenReaderMode]);
 
 
 
@@ -194,8 +151,6 @@ const AccessibilityWidget: React.FC = () => {
             html.classList.add("contrast-grayscale");
         }
 
-        html.setAttribute("lang", languages[languageIndex]);
-
         html.style.setProperty("--text-scale", textScale.toString());
         html.classList.toggle("high-contrast", highContrast);
         html.classList.toggle("reduce-motion", reduceMotion);
@@ -207,8 +162,6 @@ const AccessibilityWidget: React.FC = () => {
         if (currentHighlight === "links") html.classList.add("highlight-links");
         if (currentHighlight === "buttons") html.classList.add("highlight-buttons");
         if (currentHighlight === "headers") html.classList.add("highlight-headers");
-
-        html.classList.toggle("screen-reader-mode", screenReaderMode);
 
         const currentBackgroundTheme: backgroundThemeMode = backgroundThemeModes[backgroundThemeIndex];
         document.documentElement.classList.toggle("dark", currentBackgroundTheme === "dark");
@@ -225,7 +178,7 @@ const AccessibilityWidget: React.FC = () => {
 
 
 
-    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex, backgroundThemeIndex, screenReaderMode]);
+    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, backgroundThemeIndex]);
 
     useEffect(() => {
         const html = document.documentElement;
@@ -252,15 +205,13 @@ const AccessibilityWidget: React.FC = () => {
                 highlightIndex,
                 reduceMotion,
                 contrastIndex,
-                languageIndex,
                 backgroundThemeIndex,
-                screenReaderMode
             };
             localStorage.setItem("accessibilitySettings", JSON.stringify(settings));
         }, 300);
 
         return () => clearTimeout(timeout);
-    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex, backgroundThemeIndex, screenReaderMode]);
+    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, backgroundThemeIndex]);
 
     useEffect(() => {
         const currentSettings: AccessibilitySettingsSnapshot = {
@@ -269,9 +220,7 @@ const AccessibilityWidget: React.FC = () => {
             highlightIndex,
             reduceMotion,
             contrastIndex,
-            languageIndex,
             backgroundThemeIndex,
-            screenReaderMode,
         };
 
         if (!settingsLogInitializedRef.current) {
@@ -306,9 +255,7 @@ const AccessibilityWidget: React.FC = () => {
         highlightIndex,
         reduceMotion,
         contrastIndex,
-        languageIndex,
         backgroundThemeIndex,
-        screenReaderMode,
         logAccessibilityEvent,
     ]);
 
@@ -360,14 +307,6 @@ const AccessibilityWidget: React.FC = () => {
             }
 
 
-            else if (isShift && e.code === 'KeyF') {
-                nextLanguage();
-                handled = true;
-            } else if (isShift && e.code === 'KeyP') {
-                prevLanguage();
-                handled = true;
-            }
-
             else if (isShift && e.code === 'KeyT') {
                 nextBackgroundTheme();
                 handled = true;
@@ -388,20 +327,6 @@ const AccessibilityWidget: React.FC = () => {
                 setReduceMotion(prev => !prev);
                 handled = true;
             }
-
-            else if (isShift && e.code === 'KeyV') {
-                const newValue = !screenReaderMode;
-                setScreenReaderMode(newValue);
-                setScreenReaderEnabled(newValue); // Update global state
-
-                if (newValue) {
-                    announce("VoiceOver is now activated");
-                } else {
-                    announce("VoiceOver is now turned off");
-                }
-                handled = true;
-            }
-
 
             else if (isCtrl && isShift && e.code === 'KeyO') {
                 toggleWidgetVisibility("shortcut");
@@ -425,9 +350,7 @@ const AccessibilityWidget: React.FC = () => {
         };
     }, [
         open,
-        textScale, screenReaderMode, setScreenReaderMode,
-        nextContrast, prevContrast, nextLanguage, prevLanguage, setTextScale,
-        toggleWidgetVisibility
+        textScale, nextContrast, prevContrast, setTextScale, toggleWidgetVisibility
     ]);
 
 
@@ -497,36 +420,6 @@ const AccessibilityWidget: React.FC = () => {
                         >
                             ×
                         </button>
-                    </div>
-
-                    {/* LANGUAGE SELECTOR  (SLIDER) */}
-                    <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-
-                        <span className="font-medium text-gray-800">{t.language}</span>
-
-
-                        <div className="flex items-center gap-4 mt-3">
-
-                            {/* PREV BUTTON */}
-                            <button
-                                onClick={prevLanguage}
-                                className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
-                            >
-                                ←
-                            </button>
-
-                            <span className="text-sm font-medium text-gray-900 min-w-[90px] text-center">
-                                {languages[languageIndex]}
-                            </span>
-
-                            {/* NEXT BUTTON */}
-                            <button
-                                onClick={nextLanguage}
-                                className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
-                            >
-                                →
-                            </button>
-                        </div>
                     </div>
 
 
@@ -665,27 +558,6 @@ const AccessibilityWidget: React.FC = () => {
                             />
                         </div>
 
-                        {/* SCREEN READER */}
-                        <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                            <span className="font-medium text-gray-800">{t.screenReader}</span>
-
-                            <input
-                                type="checkbox"
-                                checked={screenReaderMode}
-                                onChange={() => {
-                                    const newValue = !screenReaderMode;
-                                    setScreenReaderMode(newValue);
-                                    setScreenReaderEnabled(newValue);
-
-                                    if (newValue) {
-                                        announce("VoiceOver is now activated");
-                                    } else {
-                                        announce("VoiceOver is now turned off");
-                                    }
-                                }}
-                                className="mt-3 w-5 h-5"
-                            />
-                        </div>
 
 
 
@@ -706,8 +578,6 @@ const AccessibilityWidget: React.FC = () => {
                             setHighlightIndex(0);
                             setReduceMotion(false);
                             setContrastIndex(0);
-                            setLanguageIndex(0);
-                            setScreenReaderMode(false);
                             setScreenReaderEnabled(false);
                             announce("VoiceOver is now turned off");
                             setBackgroundThemeIndex(0);
