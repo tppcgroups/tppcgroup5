@@ -451,7 +451,7 @@ function AvailabilityContent() {
         }
       />
 
-      <section className="mx-auto max-w-6xl px-4 pb-4 my-4">
+      <section id="availability" className="mx-auto max-w-6xl px-4 pb-4 my-4">
         {/* Category toggle pills. On small screens allow horizontal scroll so pills don't overflow */}
         <div className="mb-8 text-sm flex justify-center">
           <div className="inline-flex max-w-full items-center gap-3 overflow-x-auto rounded-full border border-[#e1d9cf] bg-white p-1 px-2 sm:px-3">

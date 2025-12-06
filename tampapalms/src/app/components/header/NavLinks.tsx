@@ -24,7 +24,7 @@ const NAV_LINKS: MenuLink[] = [
     ],
   },
   { href: "/pages/Testimonials", label: "Testimonials" },
-  { href: "/pages/About", label: "About" },
+  { href: "/pages/FAQ", label: "FAQ" },
   { href: "/pages/Contact", label: "Contact" },
 ];
 
