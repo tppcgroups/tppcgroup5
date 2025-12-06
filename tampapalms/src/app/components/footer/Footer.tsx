@@ -15,6 +15,7 @@ const quickLinks: FooterLink[] = [
   { label: "Testimonials", href: "/pages/Testimonials" },
   { label: "About", href: "/pages/About" },
   { label: "Contact", href: "/pages/Contact" },
+  { label: "Unsubscribe", href: "/pages/DeleteEmail" },
 ];
 
 const visitingHours: VisitingHour[] = [

@@ -16,13 +16,15 @@ const NAV_LINKS: MenuLink[] = [
   { href: "/", label: "Home" },
   { href: "/pages/Availability", label: "Availability" },
   { href: "/pages/Features", label: "Features & Amenities" },
-  {
-    label: "Services",
-    children: [
-      { href: "/pages/Maintenance", label: "Maintenance" },
-      { href: "/pages/Apply", label: "Apply" },
-    ],
-  },
+  // {
+  //   label: "Services",
+  //   children: [
+  //     { href: "/pages/Maintenance", label: "Maintenance" },
+  //     { href: "/pages/Apply", label: "Apply" },
+  //   ],
+  // },
+  { href: "/pages/Maintenance", label: "Maintenance" },
+  { href: "/pages/Apply", label: "Apply" },
   { href: "/pages/Testimonials", label: "Testimonials" },
   { href: "/pages/FAQ", label: "FAQ" },
   { href: "/pages/Contact", label: "Contact" },
