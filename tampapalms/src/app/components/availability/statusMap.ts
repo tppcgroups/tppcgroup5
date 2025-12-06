@@ -4,7 +4,7 @@ import type { AvailabilityStatus } from "./type";
 export const statusMap: Record<AvailabilityStatus, { label: string; className: string }> = {
   available: { label: "Available", className: "bg-emerald-100 text-emerald-700" },
   comingSoon: { label: "Coming Soon", className: "bg-[#f4ece1] text-[#4a4034]" },
-  occupied: { label: "Waitlisted", className: "bg-[#f4ece1] text-[#7a6754]" },
+  occupied: { label: "Available Soon", className: "bg-[#f4ece1] text-[#7a6754]" },
 };
 
 export const normalizeAvailabilityStatus = (
