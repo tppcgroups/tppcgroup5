@@ -13,9 +13,10 @@ type BuildingGalleryProps = {
   onNext: () => void;
   onSelectImage: (index: number) => void;
   suiteLabel?: string;
+  isMobile: boolean;
 };
 
-export function BuildingPhotos({images, activeImageIndex, onPrev, onNext, onSelectImage, suiteLabel}: BuildingGalleryProps){
+export function BuildingPhotos({images, activeImageIndex, onPrev, onNext, onSelectImage, suiteLabel, isMobile}: BuildingGalleryProps){
 
   // Variables and logic for thumbnail wrapping
   const imageIndices = [];
@@ -88,8 +89,8 @@ export function BuildingPhotos({images, activeImageIndex, onPrev, onNext, onSele
         )}
       </div>
 
-      {images.length > 1 && (
-        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
+    {images.length > 1 && (
+        <div className="md:grid hidden mt-6 grid-cols-2 gap-4 sm:grid-cols-4">
           {imageIndices.map((index, i) => (
             <button
               key={i}

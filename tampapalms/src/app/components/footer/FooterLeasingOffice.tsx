@@ -4,7 +4,7 @@ import Link from "next/link";
 // Displays the leasing office address alongside the brand lockup.
 export function FooterLeasingOffice() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="space-y-2 border-white/10 text-sm text-white md:border-l md:pl-4">
         <p className="font-semibold uppercase tracking-[0.25em] text-[#f0d4a6]">
           Leasing Office

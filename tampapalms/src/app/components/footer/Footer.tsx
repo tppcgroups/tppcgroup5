@@ -19,8 +19,7 @@ const quickLinks: FooterLink[] = [
 ];
 
 const visitingHours: VisitingHour[] = [
-  { label: "Mon – Thu", value: "9:00 am – 5:00 pm" },
-  { label: "Fri", value: "9:00 am – 3:00 pm" },
+  { label: "Mon – Fri", value: "9:00 am – 5:00 pm" },
 ];
 
 export function Footer() {
@@ -42,8 +41,8 @@ export function Footer() {
 
       {/* Leasing Office Section */}
       <div className="relative">
-        <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 lg:px-16">
-          <div className="grid grid-cols-1 gap-12 text-center sm:grid-cols-2 lg:grid-cols-4 sm:text-left">
+        <div className="mx-auto max-w-6xl px-6 py-10 md:px-10 lg:px-16">
+          <div className="grid grid-cols-1 gap-8 text-center sm:grid-cols-2 lg:grid-cols-4 sm:text-left">
             <FooterLeasingOffice />
             <FooterQuickLinks links={quickLinks} />
             <FooterVisitingHours visitingHours={visitingHours} />

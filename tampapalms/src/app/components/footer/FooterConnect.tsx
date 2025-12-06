@@ -10,11 +10,11 @@ export function FooterConnect() {
       <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-[#f0d4a6]">
         Connect With Us
       </h3>
-      <div className="mt-6 flex w-full flex-col items-center gap-4 text-sm text-[#e7ded2] sm:items-start">
+      <div className="mt-4 flex w-full flex-col items-center gap-3 text-sm text-[#e7ded2] sm:items-start">
         {/* --- Phone Link --- */}
         <a
           href="tel:8138767697"
-          className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#fdf8f3]/15 bg-white/5 px-4 py-3 transition hover:border-[#fdf8f3]/40 sm:justify-start"
+          className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#fdf8f3]/15 bg-white/5 px-4 py-2.5 transition hover:border-[#fdf8f3]/40 sm:justify-start"
         >
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f0d4a6]/20 text-white">
             <PiPhoneBold aria-hidden="true" className="text-xl" />
@@ -33,7 +33,7 @@ export function FooterConnect() {
         {/* --- Email Link (with previous fix) --- */}
         <a
           href="mailto:marketing@tampapalmscenter.com"
-          className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#fdf8f3]/15 bg-white/5 px-4 py-3 transition hover:border-[#fdf8f3]/40 sm:justify-start"
+          className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#fdf8f3]/15 bg-white/5 px-4 py-2.5 transition hover:border-[#fdf8f3]/40 sm:justify-start"
         >
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f0d4a6]/20 text-white">
             <MdEmail aria-hidden="true" className="text-xl" />
@@ -57,7 +57,7 @@ export function FooterConnect() {
           href="https://maps.google.com/?q=17427+Bridge+Hill+Ct+STE+C,+Tampa,+FL+33647"
           target="_blank"
           rel="noreferrer"
-          className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#fdf8f3]/15 bg-white/5 px-4 py-3 transition hover:border-[#fdf8f3]/40 sm:justify-start"
+          className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#fdf8f3]/15 bg-white/5 px-4 py-2.5 transition hover:border-[#fdf8f3]/40 sm:justify-start"
         >
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f0d4a6]/20 text-white">
             <PiMapPinBold aria-hidden="true" className="text-xl" />
@@ -78,7 +78,7 @@ export function FooterConnect() {
             href="https://www.linkedin.com/company/soarco-working/"
             target="_blank"
             rel="noreferrer"
-            className="flex flex-1 items-center justify-center rounded-xl border border-[#fdf8f3]/15 bg-white/5 px-4 py-3 transition hover:border-[#fdf8f3]/40"
+            className="flex flex-1 items-center justify-center rounded-xl border border-[#fdf8f3]/15 bg-white/5 px-4 py-2.5 transition hover:border-[#fdf8f3]/40"
           >
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f0d4a6]/20 text-white">
               <FaLinkedinIn className="text-xl" />
