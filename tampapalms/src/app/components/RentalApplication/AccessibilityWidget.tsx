@@ -410,7 +410,7 @@ const AccessibilityWidget: React.FC = () => {
                         <h2
                             id="accessibility-panel-title"
                             className="text-lg font-semibold text-gray-800">
-                            {t.header}
+                            Header
                         </h2>
 
                         <button
@@ -430,7 +430,7 @@ const AccessibilityWidget: React.FC = () => {
 
                         {/* TEXT SIZE */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                            <span className="font-medium text-gray-800">{t.textSize}</span>
+                            <span className="font-medium text-gray-800">Text Size</span>
 
                             <div className="flex items-center gap-4 mt-3">
                                 <button
@@ -458,7 +458,7 @@ const AccessibilityWidget: React.FC = () => {
                         {/* HIGH CONTRAST */}
                         {/* CONTRAST MODE CAROUSEL */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                            <span className="font-medium text-gray-800">{t.contrastMode}</span>
+                            <span className="font-medium text-gray-800">Contrast Mode</span>
 
                             <div className="flex items-center gap-4 mt-3">
 
@@ -518,7 +518,7 @@ const AccessibilityWidget: React.FC = () => {
 
                         {/* HIGHLIGHTS SECTION */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                            <span className="font-medium text-gray-800">{t.highlights}</span>
+                            <span className="font-medium text-gray-800">Highlights</span>
 
                             <div className="flex items-center gap-4 mt-3">
 
@@ -532,8 +532,15 @@ const AccessibilityWidget: React.FC = () => {
 
                                 {/* Display Current Highlight Mode */}
                                 <span className="text-sm font-medium text-gray-900 min-w-[90px] text-center">
-                                    {t[`highlight_${highlightOptions[highlightIndex]}`]}
+                                    {{
+                                        default: "Default",
+                                        links: "Highlight Links",
+                                        buttons: "Highlight Buttons",
+                                        headers: "Highlight Headers"
+                                    }[highlightOptions[highlightIndex]]}
                                 </span>
+
+
 
                                 {/* Next Button */}
                                 <button
@@ -549,7 +556,7 @@ const AccessibilityWidget: React.FC = () => {
 
                         {/* REDUCE MOTION */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                            <span className="font-medium text-gray-800">{t.reduceMotion}</span>
+                            <span className="font-medium text-gray-800">Reduce Motion</span>
                             <input
                                 type="checkbox"
                                 checked={reduceMotion}
@@ -567,7 +574,7 @@ const AccessibilityWidget: React.FC = () => {
                             onClick={() => setOptionsPanelOpen(true)}
                             className="w-full py-2 mt-4 rounded-lg font-semibold text-white border border-[#3d342a] bg-[#120f0c] hover:bg-[#1b1815]"
                         >
-                            {t.keyboardNavigation}
+                            Keyboard Navigation
                         </button>
                     {/* RESET BUTTON */}
                     <button
@@ -587,12 +594,12 @@ const AccessibilityWidget: React.FC = () => {
                         }}
                         className="w-full py-2 mt-4 rounded-lg font-semibold text-white border border-[#3d342a] bg-[#120f0c] hover:bg-[#1b1815]"
                     >
-                        {t.reset || "Reset Settings"}
+                        Reset || Reset Settings
                     </button>
 
 
                     <div className="text-center text-xs text-gray-500 mt-2">
-                        {t.footer}
+                        Footer
                     </div>
 
                     {/* --- NEW CODE: OPTIONS DETAILS PANEL --- */}
@@ -617,7 +624,7 @@ const AccessibilityWidget: React.FC = () => {
                         >
                             <div className="flex items-center justify-between">
                                 <h2 id="options-panel-title" className="text-lg font-bold text-gray-800">
-                                    {t.shortcutsHeader}
+                                    Shortcuts Header
                                 </h2>
                                 <button
                                     onClick={() => setOptionsPanelOpen(false)}
@@ -629,53 +636,53 @@ const AccessibilityWidget: React.FC = () => {
                             </div>
 
                             <p className="text-sm text-gray-600">
-                                {t.shortcutsIntro}
+                                Shortcuts Intro
                             </p>
 
                             <div className="flex flex-col gap-2">
-                                <h3 className="font-semibold text-gray-800 mt-2">{t.keyboardNavigation}</h3>
+                                <h3 className="font-semibold text-gray-800 mt-2">Keyboard Navigation</h3>
 
                                 {/* List the Shortcuts */}
                                 <div className="grid grid-cols-2 gap-y-2 text-sm">
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Ctrl + Shift + O</span>
-                                    <span>{t.shortcutsPanel}</span>
+                                    <span>Shortcuts Panel</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + F</span>
-                                    <span>{t.shortcutsNextLanguage}</span>
+                                    <span>Shortcuts Next Language</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + P</span>
-                                    <span>{t.shortcutsPrevLanguage}</span>
+                                    <span>Shortcuts Previous Language</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift +</span>
-                                    <span>{t.shortcutsIncreaseText}</span>
+                                    <span>Shortcuts Increase Text</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift -</span>
-                                    <span>{t.shortcutsDecreaseText}</span>
+                                    <span>Shortcuts Decrease Text</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + C</span>
-                                    <span>{t.shortcutsNextContrast}</span>
+                                    <span>Shortcuts Next Contrast</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + Z</span>
-                                    <span>{t.shortcutsPrevContrast}</span>
+                                    <span>Shortcuts Previous Contrast</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + T</span>
-                                    <span>{t.shortcutsNextTheme}</span>
+                                    <span>Shortcuts Next Theme</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + B</span>
-                                    <span>{t.shortcutsPrevTheme}</span>
+                                    <span>Shortcuts Previous Theme</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + H</span>
-                                    <span>{t.shortcutsNextHighlight}</span>
+                                    <span>Shortcuts Next Highlight</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + L</span>
-                                    <span>{t.shortcutsPrevHighlight}</span>
+                                    <span>Shortcuts Previous Highlight</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + M</span>
-                                    <span>{t.shortcutsToggleReduceMotion}</span>
+                                    <span>Shortcuts Toggle Reduce Motion</span>
 
                                     <span className="font-mono bg-gray-100 p-1 rounded">Shift + V</span>
-                                    <span>{t.shortcutsToggleScreenReader}</span>
+                                    <span>Shortcuts Toggle Screen Reader</span>
                                 </div>
                             </div>
                         </div>
