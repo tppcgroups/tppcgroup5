@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
+import projectConfig from "../../../../../../config.json";
 import FadeIn from "@/app/components/animations/FadeIn";
 import {
   ArrowUpRight,
@@ -35,7 +36,7 @@ type Props = {
   buildingAvailable?: number;
 };
 
-const highlightIcons = [Sparkles, Building2, Users2, ShieldCheck];
+const highlightIcons = [ShieldCheck, Handshake, Users2];
 
 const amenityIconMap: Record<string, LucideIcon> = {
   conference: Users2,
@@ -56,75 +57,29 @@ const neighborhoodPerks = [
   "Prestigious Tampa Palms address",
 ];
 
-const experiencePillars: Array<{
-  title: string;
-  desc: string;
-  highlights: string[];
-  icon: LucideIcon;
-}> = [
-  {
-    title: "Arrival & Hospitality",
-    desc: "Hosted lobby experience, on-site ownership, and client-ready presentation every day.",
-    highlights: ["Staffed reception", "Brandable signage", "Curated refreshments"],
-    icon: Handshake,
-  },
-  {
-    title: "Infrastructure & IT",
-    desc: "Enterprise-ready connectivity with dedicated bandwidth options and rapid support.",
-    highlights: ["Redundant fiber", "Private VLAN capability", "On-call tech partner"],
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Security & Access",
-    desc: "Key-fob access, CCTV coverage, and after-hours protocols designed for executives.",
-    highlights: ["24/7 monitoring", "Visitor management", "Secure mail suite"],
-    icon: ShieldCheck,
-  },
-];
-
-const onboardingSteps = [
-  { title: "Tour & Vision Sync", detail: "Walk available suites, define tech + layout requirements.", meta: "Day 1" },
-  {
-    title: "Proposal & Customization",
-    detail: "Finalize square footage, furniture, and term flexibility.",
-    meta: "Within 48 hrs",
-  },
-  { title: "IT & Branding Prep", detail: "Provision network, signage, and access credentials.", meta: "1-2 weeks" },
-  { title: "Move-in Day", detail: "Concierge welcome with ready-to-work suites and support.", meta: "Your timeline" },
-];
-
-
 
 export default function HomeSections({
   highlights = [
     {
-      title: "Private Executive Suites",
-      desc: "Glass-front suites with natural light, signage, and enterprise-grade connectivity.",
+      title: "Consistent Quality Standards",
+      desc: "A secure, well-maintained Class-A environment built for professional teams.",
       href: "/pages/Features",
     },
     {
-      title: "Turnkey Full Floors",
-      desc: "Secure, customizable floors for growing teams that need a quick Tampa Palms landing spot.",
-      href: "/pages/Availability",
+      title: "Service Designed Around Your Workflow",
+      desc: "Responsive, high-quality support that keeps your organization focused on its core priorities.",
+      href: "/pages/Maintenance",
     },
     {
-      title: "Hospitality-Level Service",
-      desc: "On-site support, curated amenities, and all-inclusive operating costs.",
-      href: "/pages/Contact",
+      title: "Community-Driven Growth",
+      desc: "A professional environment where strong business relationships form and companies thrive.",
+      href: "/pages/Testimonials",
     },
-  ],
-  amenities = [
-    "Conference Rooms",
-    "24/7 Access",
-    "High-Speed Internet",
-    "Coffee & Lounge",
-    "Mail Handling",
-    "Free Parking",
   ],
   neighborhood = {
     title: "In the heart of Tampa Palms",
     blurb:
-      "Minutes from dining, retail, and major corridors. Easy access for clients and staff with a calm, professional vibe.",
+      "Minutes from dining, retail, and major corridors. Easy access for clients and staff with a calm, professional environment.",
     imageSrc: "/images/neighborhood.jpg",
     ctaHref: "/pages/Contact",
   },
@@ -139,26 +94,78 @@ export default function HomeSections({
     ? `${Math.round(totalSize / 1000).toLocaleString()}K+`
     : "0";
 
+  const configStats = projectConfig?.stats || {};
+
+  const flexibleSuitesValue =
+    typeof configStats.flexibleSuites === "number" && Number.isFinite(configStats.flexibleSuites)
+      ? configStats.flexibleSuites
+      : flexibleSuites ?? 0;
+  const flexibleSuitesLabel =
+    typeof configStats.flexibleSuitesLabel === "string" && configStats.flexibleSuitesLabel.trim()
+      ? configStats.flexibleSuitesLabel
+      : "Flexible Suites";
+  const flexibleSuitesHelper =
+    typeof configStats.flexibleSuitesHelper === "string" && configStats.flexibleSuitesHelper.trim()
+      ? configStats.flexibleSuitesHelper
+      : "Business-ready space";
+
+  const buildingAvailableValue =
+    typeof configStats.buildingAvailable === "number" && Number.isFinite(configStats.buildingAvailable)
+      ? configStats.buildingAvailable
+      : buildingAvailable ?? 0;
+  const buildingAvailableLabel =
+    typeof configStats.buildingAvailableLabel === "string" && configStats.buildingAvailableLabel.trim()
+      ? configStats.buildingAvailableLabel
+      : "Buildings";
+  const buildingAvailableHelper =
+    typeof configStats.buildingAvailableHelper === "string" && configStats.buildingAvailableHelper.trim()
+      ? configStats.buildingAvailableHelper
+      : "Maintained to standard";
+
+  const yearHistoryValue =
+    typeof configStats.yearHistoryValue === "string" && configStats.yearHistoryValue.trim()
+      ? configStats.yearHistoryValue
+      : "20+";
+  const yearHistoryLabel =
+    typeof configStats.yearHistoryLabel === "string" && configStats.yearHistoryLabel.trim()
+      ? configStats.yearHistoryLabel
+      : "Year History";
+
+  const yearHistoryHelper =
+    typeof configStats.yearHistoryHelper === "string" && configStats.yearHistoryHelper.trim()
+      ? configStats.yearHistoryHelper
+      : "Trusted expertise supporting professional tenants.";
+
+  const rentableSqFtLabel =
+    typeof configStats.rentableSqFtLabel === "string" && configStats.rentableSqFtLabel.trim()
+      ? configStats.rentableSqFtLabel
+      : "Rentable sq. ft.";
+  const rentableSqFtHelper =
+    typeof configStats.rentableSqFtHelper === "string" && configStats.rentableSqFtHelper.trim()
+      ? configStats.rentableSqFtHelper
+      : "Well-kept property";
+
+      // All the Computed Insights are on the Config.json
   const computedInsightStats = [
     {
       value: formattedTotalSize,
-      label: "Rentable sq. ft.",
-      helper: "Well-kept property",
+      label: rentableSqFtLabel,
+      helper: rentableSqFtHelper,
     },
     {
-      value: flexibleSuites ? flexibleSuites.toLocaleString() : "0",
-      label: "Flexible Suites",
-      helper: "Business-ready space",
+      value: flexibleSuitesValue ? flexibleSuitesValue.toLocaleString() : "0",
+      label: flexibleSuitesLabel,
+      helper: flexibleSuitesHelper,
     },
     {
-      value: buildingAvailable ? buildingAvailable.toLocaleString() : "0",
-      label: "Buildings",
-      helper: "Maintained to standard",
+      value: buildingAvailableValue ? buildingAvailableValue.toLocaleString() : "0",
+      label: buildingAvailableLabel,
+      helper: buildingAvailableHelper,
     },
     {
-      value: "24/7",
-      label: "Secure access",
-      helper: "All-hours security",
+      value: yearHistoryValue,
+      label: yearHistoryLabel,
+      helper: yearHistoryHelper,
     },
   ];
 
@@ -234,10 +241,10 @@ export default function HomeSections({
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#7a6754]">Why Tampa Palms</p>
-            <h3 className="text-2xl font-bold text-[#1f1a16] md:text-3xl">Designed around operators, not cubicles.</h3>
+            <h3 className="text-2xl font-bold text-[#1f1a16] md:text-3xl">Our Foundation, Your Future</h3>
           </div>
-          <Link href="/pages/Features" className="text-sm font-semibold text-[#4a4034] hover:underline">
-            Explore features
+          <Link href="/pages/FAQ" className="text-sm font-semibold text-[#4a4034] hover:underline">
+            Explore FAQ
           </Link>
         </div>
 
@@ -254,11 +261,11 @@ export default function HomeSections({
                 <div className="inline-flex size-12 items-center justify-center rounded-2xl bg-[#ddd0bd] text-[#5a4b3c]">
                   <Icon className="h-5 w-5" aria-hidden />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 ">
                   <p className="text-lg font-semibold text-[#1f1a16]">{highlight.title}</p>
                   <p className="text-sm text-neutral-600">{highlight.desc}</p>
                 </div>
-                <span className="mt-auto inline-flex items-center text-sm font-semibold text-[#675948]">
+                  <span className="mt-auto inline-flex items-center text-sm font-semibold text-[#675948]">
                   Learn more <ArrowUpRight className="ml-1 h-4 w-4" aria-hidden />
                 </span>
               </Link>
@@ -291,7 +298,7 @@ export default function HomeSections({
         <div className="flex flex-col justify-center gap-6 rounded-[32px] border border-neutral-200 bg-white p-8 shadow-xl">
           <div className="space-y-3">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#7a6754]">Neighborhood</p>
-            <h3 className="text-2xl font-bold text-[#1f1a16]">Where North Tampa lives, works, and meets.</h3>
+            <h3 className="text-2xl font-bold text-[#1f1a16]">Where New Tampa lives, works, and meets.</h3>
             <p className="text-neutral-600">
               Short drives to Moffitt, USF, I-75, and Bruce B. Downs keep clients close while providing a calm, upscale
               setting inside Tampa Palms.

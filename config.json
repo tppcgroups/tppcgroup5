@@ -163,6 +163,19 @@
     ],
     "logo": "/images/TampaPalmsLogo.png"
   },
+  "stats": {
+    "flexibleSuites": 180,
+    "buildingAvailable": 26,
+    "rentableSqFtLabel": "Rentable sq. ft.",
+    "rentableSqFtHelper": "Maintained to Class-A standards",
+    "flexibleSuitesLabel": "Professional Suites",
+    "flexibleSuitesHelper": "Business-ready spaces",
+    "buildingAvailableLabel": "Buildings",
+    "buildingAvailableHelper": "Maintained to standard",
+    "yearHistoryValue": "20+",
+    "yearHistoryLabel": "Years of Experience",
+    "yearHistoryHelper": "Trusted expertise "
+  },
   "features": {
     "accessibilityWidget": true,
     "toastNotifications": true
