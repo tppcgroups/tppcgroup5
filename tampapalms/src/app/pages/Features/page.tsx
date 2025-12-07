@@ -26,12 +26,6 @@ type FeatureTile = { heading: string; blurb: string; icon: LucideIcon };
 
 const featureTiles: FeatureTile[] = [
   {
-    heading: "Ten-Foot Ceilings",
-    blurb:
-      "Open atmosphere that adds a sense of space and sophistication to every room.",
-    icon: Maximize2,
-  },
-  {
     heading: "Custom Wrought-Iron Entry Doors and Beautifully Landscaped Entries",
     blurb:
       "Custom craftsmanship and lush landscaping come together to create a warm, inviting, and memorable entrance.",
@@ -42,6 +36,12 @@ const featureTiles: FeatureTile[] = [
     blurb:
       "Sophisticated architecture combines elegance with a strong, professional presence.",
     icon: PencilRuler,
+  },
+  {
+    heading: "Ten-Foot Ceilings",
+    blurb:
+      "Open atmosphere that adds a sense of space and sophistication to every room.",
+    icon: Maximize2,
   },
   {
     heading: "Sound Insulated Walls and Solid Core Doors",
@@ -56,6 +56,20 @@ const amenityColumns = [
     title: "Buildings/Suites",
     description:
       "Modern, suites in a prime location, combining convenience, comfort, and style.",
+    items: [
+      "Fiber high speed optic internet",
+      "Assigned mailboxes with USPS delivery directly to the building",
+      "Professional business address with private mailbox",
+      "Peaceful, scenic surroundings near lakeside walkways",
+      "Located within a premier, multi-use business park for office, medical, and professional tenants",
+      "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
+      "Ample on-site parking for tenants and visitors"
+    ],
+  },
+  {
+    title: "Executive Suites",
+    description:
+      "Flexible office spaces designed for professionals, startups, and growing businesses.",
     items: [
       "Two shared break rooms and eight private bathrooms",
       "Professional business address with private mailbox",
@@ -72,21 +86,7 @@ const amenityColumns = [
     ],
   },
   {
-    title: "Executive Suites",
-    description:
-      "Flexible office spaces designed for professionals, startups, and growing businesses.",
-    items: [
-      "Fiber high speed optic internet",
-      "Assigned mailboxes with USPS delivery directly to the building",
-      "Professional business address with private mailbox",
-      "Peaceful, scenic surroundings near lakeside walkways",
-      "Located within a premier, multi-use business park for office, medical, and professional tenants",
-      "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
-      "Ample on-site parking for tenants and visitors"
-    ],
-  },
-  {
-    title: "S.O.A.R",
+    title: "SOAR",
     description:
         "Co-working spaces that offers private offices, shared workspaces, and meeting rooms.",
     items: [
@@ -201,8 +201,8 @@ export default function Features() {
               Amenities that balance productivity, wellness, and growth.
             </h1>
             <p className="max-w-3xl text-base text-white/85">
-              Tampa Palms Professional Center was designed as a campus—multiple buildings that work as one. Explore the
-              on-site advantages that keep operations effortless for teams of every size.
+              Tampa Palms Professional Center was designed as multiple buildings that work as one. Explore the
+              on-site advantages that keep operations effortless for teams of every size. 
             </p>
           </div>
           <div className="flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:gap-4">
@@ -225,7 +225,7 @@ export default function Features() {
       {/* Feature Grid */}
       <section className="mx-auto max-w-6xl px-6 py-20 md:px-10">
         <div className="space-y-6 text-center md:space-y-8">
-          <h2 className="text-3xl font-semibold text-[#1f1a16] md:text-4xl">What sets the campus apart</h2>
+          <h2 className="text-3xl font-semibold text-[#1f1a16] md:text-4xl">What sets Tampa Palms Professional Center apart</h2>
           <p className="mx-auto max-w-3xl text-sm text-[#7a6754] md:text-base">
             Each building is tuned for everyday use—welcoming clients, supporting focused work, and scaling with
             your team. Here are just a few ways Tampa Palms Professional Center stands out.
@@ -274,8 +274,7 @@ export default function Features() {
               Designed to elevate every workday experience
             </h2>
             <p className="mx-auto max-w-3xl text-sm text-[#7a6754] md:text-base">
-              From tailored interiors to surroundings that encourage balance, the campus blends convenience with
-              comfort.
+              From thoughtful interiors to balanced spaces that blend convenience with comfort.
             </p>
           </div>
 
