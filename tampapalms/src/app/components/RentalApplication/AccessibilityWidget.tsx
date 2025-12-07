@@ -394,13 +394,13 @@ const AccessibilityWidget: React.FC = () => {
                     aria-modal="true"
                     aria-labelledby="accessibility-panel-title"
                     className="
+                        accessibility-panel
                         fixed bottom-20 right-5 z-[9999]
                         bg-white border border-gray-300 shadow-xl
                         rounded-2xl w-80 p-5
                         flex flex-col gap-4
-
-                        max-h-[80vh]     /* Prevents panel from going off-screen */
-                        overflow-y-auto  /* Enables scrolling */
+                        max-h-[80vh]
+                        overflow-y-auto
                         overscroll-contain
                     "
                 >
@@ -410,7 +410,7 @@ const AccessibilityWidget: React.FC = () => {
                         <h2
                             id="accessibility-panel-title"
                             className="text-lg font-semibold text-gray-800">
-                            Header
+                            Accessibility Options
                         </h2>
 
                         <button
@@ -594,12 +594,12 @@ const AccessibilityWidget: React.FC = () => {
                         }}
                         className="w-full py-2 mt-4 rounded-lg font-semibold text-white border border-[#3d342a] bg-[#120f0c] hover:bg-[#1b1815]"
                     >
-                        Reset || Reset Settings
+                        Reset Settings
                     </button>
 
 
                     <div className="text-center text-xs text-gray-500 mt-2">
-                        Footer
+                        Accessibility tools for the Tampa palms Professional Center website.
                     </div>
 
                     {/* --- NEW CODE: OPTIONS DETAILS PANEL --- */}
@@ -609,6 +609,7 @@ const AccessibilityWidget: React.FC = () => {
                             aria-modal="true"
                             aria-labelledby="options-panel-title"
                             className="
+                                accessibility-panel
                                 fixed bottom-20 right-[350px] z-[9999]
                                 bg-white border border-gray-300 shadow-2xl
                                 rounded-2xl w-96 p-5
@@ -624,7 +625,7 @@ const AccessibilityWidget: React.FC = () => {
                         >
                             <div className="flex items-center justify-between">
                                 <h2 id="options-panel-title" className="text-lg font-bold text-gray-800">
-                                    Shortcuts Header
+                                    Accessibility Options & Shortcuts
                                 </h2>
                                 <button
                                     onClick={() => setOptionsPanelOpen(false)}
@@ -636,7 +637,7 @@ const AccessibilityWidget: React.FC = () => {
                             </div>
 
                             <p className="text-sm text-gray-600">
-                                Shortcuts Intro
+                                Use these shortcuts anywhere on the site for quick adjustments.
                             </p>
 
                             <div className="flex flex-col gap-2">
