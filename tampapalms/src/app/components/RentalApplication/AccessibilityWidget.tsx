@@ -572,7 +572,14 @@ const AccessibilityWidget: React.FC = () => {
                     {/* Navigation Button */}
                         <button
                             onClick={() => setOptionsPanelOpen(true)}
-                            className="w-full py-2 mt-4 rounded-lg font-semibold text-white border border-[#3d342a] bg-[#120f0c] hover:bg-[#1b1815]"
+                            className="
+                                w-full py-2 mt-4 rounded-full font-semibold text-white
+                                bg-gradient-to-r from-[#1f1a16] via-[#3a3127] to-[#1f1a16]
+                                shadow-xl shadow-[#1f1a16]/25
+                                hover:from-[#3a3127] hover:via-[#5a4b3c] hover:to-[#3a3127]
+                                transition-all duration-300 ease-out
+                                focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1a16]
+                            "
                         >
                             Keyboard Navigation
                         </button>
@@ -592,7 +599,14 @@ const AccessibilityWidget: React.FC = () => {
                             // Clear localStorage
                             localStorage.removeItem("accessibilitySettings");
                         }}
-                        className="w-full py-2 mt-4 rounded-lg font-semibold text-white border border-[#3d342a] bg-[#120f0c] hover:bg-[#1b1815]"
+                        className="
+                            w-full py-2 mt-4 rounded-full font-semibold text-white
+                            bg-gradient-to-r from-[#1f1a16] via-[#3a3127] to-[#1f1a16]
+                            shadow-xl shadow-[#1f1a16]/25
+                            hover:from-[#3a3127] hover:via-[#5a4b3c] hover:to-[#3a3127]
+                            transition-all duration-300 ease-out
+                            focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1a16]
+                        "
                     >
                         Reset Settings
                     </button>

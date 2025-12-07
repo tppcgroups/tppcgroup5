@@ -121,8 +121,8 @@ header nav {
 }
 
 .dark {
-  --background: #1f1a16;
-  --foreground: #fdf8f3;
+  --background: #7a6754;
+  --foreground: #f5f2ec;
   --card: #2a241d;
   --card-foreground: #fdf8f3;
   --popover: #2a241d;
@@ -160,7 +160,7 @@ header nav {
   }
   body {
     @apply bg-background text-foreground;
-    @apply text-[#1f1a16];
+      @apply text-[#1f1a16];
   }
 }
 
@@ -265,16 +265,6 @@ html {
 
 
 
-.dark {
-    color: #d2b48c !important;
-}
-
-
-.dark * {
-    background-color: transparent !important;
-}
-
-
 .dark .bg-white,
 .dark [style*="background-color: white"],
 .dark [style*="background-color:#ffffff"],
@@ -283,15 +273,50 @@ html {
 }
 
 
-.dark h1,
-.dark h2,
-.dark h3,
-.dark h4,
-.dark p,
-.dark span,
-.dark li {
-    color: #d2b48c !important;
+/* Dark mode: carousel bars */
+.dark button.h-2 {
+    background-color: #f5f2ec !important;
 }
+
+.dark button.h-2:hover {
+    background-color: #f5f2ec !important;
+}
+
+/* Dark mode: remove arrow box */
+.dark button.z-20 {
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+/* Dark mode arrow icon color */
+.dark button.z-20 svg {
+    stroke: #f5f2ec !important;
+    fill: #f5f2ec !important;
+    color: #f5f2ec !important;
+}
+
+/* DARK MODE — Remove brown background behind Quick Links */
+.dark footer nav {
+    background: none !important;
+    box-shadow: none !important;
+}
+
+.dark footer nav * {
+    background: none !important;
+}
+
+.dark footer nav.parent,
+.dark footer nav[parent],
+.dark footer div:has(> nav) {
+    background: none !important;
+    box-shadow: none !important;
+}
+
+
+
+
 
 
 .dark button {
@@ -312,13 +337,44 @@ html {
 
 .dark header,
 .dark nav {
-    background-color: rgb(18,25,43) !important;
+    background: linear-gradient(
+            to bottom,
+            #1f1a16,
+            #2a241d,
+            #3a3127
+    ) !important;
+    color: #fdf8f3 !important;
 }
+
+.dark header,
+.dark header * {
+    color: #f5f2ec !important;
+    fill: #f5f2ec !important; /* ensures icons also match */
+}
+
+.dark header a {
+    color: #f5f2ec !important;
+}
+
+.dark header a * {
+    color: #f5f2ec !important;
+}
+
+.dark header a::after,
+.dark header a::before {
+    border-color: #f5f2ec !important;
+    background-color: #f5f2ec !important;
+}
+
+
+
 
 
 footer {
     background-color: rgb(18,25,43) !important;
+    color: #fdf8f3 !important; /* your tan/cream text color */
 }
+
 
 
 .contrast-grayscale {
