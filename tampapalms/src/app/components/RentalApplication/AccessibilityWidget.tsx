@@ -7,6 +7,7 @@ import { setScreenReaderEnabled } from "@/app/components/RentalApplication/scree
 
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { HiChevronUp } from "react-icons/hi";
 import Image from "next/image";
 
 
@@ -28,6 +29,7 @@ type AccessibilitySettingsSnapshot = {
 
 const AccessibilityWidget: React.FC = () => {
     const [open, setOpen] = useState(false);
+    const [showScrollTop, setShowScrollTop] = useState(false);
     const [textScale, setTextScale] = useState(1);
     const [highContrast, setHighContrast] = useState(false);
 
@@ -353,37 +355,64 @@ const AccessibilityWidget: React.FC = () => {
         textScale, nextContrast, prevContrast, setTextScale, toggleWidgetVisibility
     ]);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            setShowScrollTop(window.scrollY > 300);
+        };
+        handleScroll();
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
 
 
 
 
     return (
         <>
-            <button
-                onClick={() => toggleWidgetVisibility("button")}
-                aria-label="Accessibility options"
-                tabIndex = {0}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        toggleWidgetVisibility("keyboard");
-                    }
-                }}
-                className="
-                    fixed bottom-5 right-5 z-[9999]
-                    bg-white border border-gray-300 shadow-xl
-                    rounded-full w-14 h-14
-                    flex items-center justify-center
-                "
-            >
-                <Image
-                    src={accessibilityLogo}
-                    alt="Accessibility icon"
-                    width={32}
-                    height={32}
-                    className="object-contain"
-                />
-            </button>
+            <div className="fixed bottom-5 right-5 z-[9999] flex flex-col items-end gap-3">
+                <button
+                    onClick={() => toggleWidgetVisibility("button")}
+                    aria-label="Accessibility options"
+                    tabIndex = {0}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            toggleWidgetVisibility("keyboard");
+                        }
+                    }}
+                    className="
+                        bg-white border border-[#c8b79f] shadow-xl
+                        rounded-full w-12 h-12
+                        flex items-center justify-center
+                        hover:scale-[1.03] transition-transform
+                        cursor-pointer
+                    "
+                >
+                    <Image
+                        src={accessibilityLogo}
+                        alt="Accessibility icon"
+                        width={32}
+                        height={32}
+                        className="object-contain"
+                    />
+                </button>
+
+                <button
+                    aria-label="Back to top"
+                    onClick={scrollToTop}
+                    aria-hidden={!showScrollTop}
+                    className={`flex h-12 w-12 items-center justify-center rounded-full bg-[#1f1a16] text-white shadow-[0_10px_25px_-10px_rgba(0,0,0,0.35)] transition-all duration-200 ease-in-out hover:shadow-[0_18px_32px_-12px_rgba(0,0,0,0.4)] focus:outline-none focus:ring-4 focus:ring-black/10 cursor-pointer hover:scale-[1.03] transition-transform ${
+                        showScrollTop ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-2 pointer-events-none"
+                    }`}
+                >
+                    <HiChevronUp className="h-6 w-6" aria-hidden />
+                </button>
+            </div>
 
 
 
@@ -416,7 +445,7 @@ const AccessibilityWidget: React.FC = () => {
                         <button
                             onClick={() => setOpen(false)}
                             aria-label="Close accessibility panel"
-                            className="text-gray-600 hover:text-gray-900 text-xl"
+                            className="text-gray-600 hover:text-gray-900 text-xl cursor-pointer"
                         >
                             ×
                         </button>
