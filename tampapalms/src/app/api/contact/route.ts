@@ -12,6 +12,7 @@ type ContactPayload = {
   consent?: string | boolean | null;
   company?: string | null;
   ["phone-number"]?: string;
+  interest?: string | null;
 };
 
 const MAX_MESSAGE_LENGTH = 4000;
@@ -65,6 +66,7 @@ export async function POST(req: Request) {
   const phoneNumber = normalizeString(payload["phone-number"]);
   const company = normalizeString(payload.company);
   const consent = parseConsent(payload.consent);
+  const interest = normalizeString(payload.interest);
 
   if (company) {
     return NextResponse.json({ success: true });
@@ -101,6 +103,7 @@ export async function POST(req: Request) {
           consent,
           referer: req.headers.get("referer"),
           userAgent: req.headers.get("user-agent"),
+          interest: interest || null,
         },
       })
       .select("contact_us_id")
@@ -118,6 +121,8 @@ export async function POST(req: Request) {
 
   try {
     const { from, internal } = getEmailConfig();
+    const internalRecipient =
+      interest.toLowerCase() === "soar" ? "marketing@soarco-working.com" : internal;
     const confirmationHtml = renderConfirmationEmail({
       name,
       email,
@@ -132,6 +137,7 @@ export async function POST(req: Request) {
       message,
       phoneNumber,
       recordId,
+      interest,
     });
 
     await Promise.all([
@@ -143,7 +149,7 @@ export async function POST(req: Request) {
       }),
       transporter.sendMail({
         from,
-        to: internal,
+        to: internalRecipient,
         subject: recordId ? `New contact inquiry (#${recordId})` : "New contact inquiry",
         html: internalHtml,
       }),
