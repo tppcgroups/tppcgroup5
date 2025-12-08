@@ -431,9 +431,56 @@ html {
 .dark .rounded-xl,
 .dark .rounded-lg,
 .dark .rounded-md {
-    background-color: #2a241d !important;  /* same dark brown container */
-    border-color: #3d342a !important;       /* subtle border */
-    color: #f5f2ec !important;              /* smokey white text */
+    background-color: #2a241d !important;
+    border-color: #f5f2ec !important;
+    color: #f5f2ec !important;
+}
+.dark .bg-white\/95,
+.dark .bg-white {
+    background-color: #2a241d  !important;
+    color: #f5f2ec!important;
+    border-color: #7a6754 !important; /* Subtle light border */
+}
+.dark .hover\:bg-white:hover {
+    background-color: #f5f2ec  !important; /* A slightly darker brown for hover feedback */
+}
+
+/* Ensure the dark text color is overridden to white */
+.dark .text-\[\#1f1a16\] {
+    color: #f5f2ec !important;
+}
+
+/* Ensure dark color borders are also overridden to the new color */
+.dark .border-\[\#1f1a16\] {
+    border-color:  #f5f2ec  !important;
+}
+
+
+
+/* ============================================================
+  DARK MODE BUTTON OVERRIDE (Targeting White Background)
+  Forces Tan background (#7a6754) and White text in Dark Mode.
+  ============================================================
+*/
+.dark a.bg-white\/95.rounded-full {
+    /* Set Background to Tan */
+    background-color: #7a6754 !important;
+
+    /* Set Text Color to White */
+    color: #f5f2ec !important;
+
+    /* Set Border to Tan (Assumes border is inherited/implicit) */
+    border-color: #7a6754 !important;
+}
+
+/* Override the default dark text color if it persists */
+.dark a.text-\[\#1f1a16\] {
+    color: #f5f2ec !important;
+}
+
+/* Ensure hover state also uses the Tan background color */
+.dark a.hover\:bg-white:hover {
+    background-color: #7a6754 !important;
 }
 
 /* Remove default gradients or whites they may have */
@@ -595,6 +642,38 @@ html {
     color: #f5f2ec !important;
     -webkit-text-fill-color: #f5f2ec !important;
 }
+
+
+/* Home Page Feature Cards – Change background to #555 in dark mode */
+.dark a.group.rounded-3xl {
+    background-color: #555 !important;
+    border-color: #555 !important;
+}
+.dark a.group.rounded-3xl * {
+    color: #f5f2ec !important;
+}
+.dark a.group.rounded-3xl:hover {
+    border-color: #555 !important;
+}
+
+.dark .bg-\[\#1a383b\] {
+    background-color: #7a6754 !important;
+}
+
+.dark .border-\[\#1a383b\] {
+    border-color: #7a6754 !important;
+}
+
+.dark a.rounded-full.bg-\[\#1a383b\] {
+    background-color: #7a6754 !important;
+    border-color: #7a6754 !important;
+}
+.dark a.rounded-full.bg-\[\#1a383b\] {
+    background-color: #7a6754 !important;
+    border-color: #7a6754 !important;
+}
+
+
 
 
 
