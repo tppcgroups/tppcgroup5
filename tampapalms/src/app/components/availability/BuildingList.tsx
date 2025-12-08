@@ -37,7 +37,7 @@ export function BuildingList({
   }, [scrollTargetSuite]);
 
     return (
-      <aside className="flex h-full w-full flex-col rounded-[32px] border border-[#e1d9cf] bg-white/95 p-6 shadow-xl shadow-[#1f1a16]/5">
+      <aside className="flex h-full w-full flex-col rounded-[32px] border border-[#e1d9cf] bg-white/95 dark:bg-[#3f3f3f] p-6 shadow-xl shadow-[#1f1a16]/5">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#a49382]">
             Suites
@@ -75,10 +75,10 @@ export function BuildingList({
                 className={`flex w-full flex-col gap-2 rounded-2xl border px-5 py-5 text-left transition ${
                   isActive
                     ? "border-[#4a4034] bg-[#1f1a16] text-white shadow-lg shadow-[#1f1a16]/20"
-                    : "border-[#e1d9cf] bg-white hover:border-[#d4c7b7] hover:bg-[#fdf8f3]"
+                    : "border-[#e1d9cf] bg-white hover:border-[#d4c7b7] hover:bg-[#fdf8f3] dark:bg-[#ddd0bd] dark:border-[#b9a894]"
                 }`}
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between dark:bg-[#3f3f3f]">
                   <span className="text-base font-semibold">
                     {`Building ${building.building_number} ${
                       building.suite_number
@@ -88,7 +88,7 @@ export function BuildingList({
                   </span>
                   <span
                     className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                      isActive ? "bg-white/15 text-white" : status.className
+                      isActive ? "bg-white/15 text-white dark:bg-[#3f3f3f]" : status.className
                     }`}
                   >
                     {status.label}

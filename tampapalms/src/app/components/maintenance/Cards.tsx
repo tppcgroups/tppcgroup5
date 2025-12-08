@@ -64,14 +64,14 @@ const Card = () => {
                 className="absolute left-8 top-0 h-1.5 w-16 rounded-full bg-[#7a6754]"
                 aria-hidden="true"
               />
-              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f4ece1] text-3xl text-shadow-gray-800">
+              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f4ece1] text-3xl text-shadow-gray-800 dark:text-[#7a6754]">
                 <Icon aria-hidden="true" />
               </span>
               <div className="space-y-3">
                 <h3 className="text-xl font-semibold text-[#1f1a16]">
                   {step.title}
                 </h3>
-                <p className="text-base leading-relaxed text-[#7a6754]">
+                <p className="text-base leading-relaxed text-[#7a6754] dark:text-[#f5f2ec]">
                   {step.description}
                 </p>
               </div>
@@ -81,12 +81,12 @@ const Card = () => {
       </div>
 
       <div className="mt-14 rounded-2xl border border-red-200 bg-red-50/90 p-8 text-center shadow-lg shadow-red-200/40">
-        <div className="mx-auto flex max-w-xl flex-col gap-3 text-red-700">
+        <div className="mx-auto flex max-w-xl flex-col gap-3 text-red-700 dark:text-[#f5f2ec]">
           <div className="flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-[0.25em]">
             <PiPhoneBold aria-hidden="true" className="text-xl" />
             Emergency Support
           </div>
-          <p className="text-base text-red-800 md:text-lg">
+          <p className="text-base text-red-800 md:text-lg dark:text-[#f5f2ec]">
             If you experience smoke, sparking electricity, active leaks, or any
             other urgent safety issue, call immediately and choose option 5.
           </p>
