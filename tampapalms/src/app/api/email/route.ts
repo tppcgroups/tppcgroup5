@@ -4,9 +4,15 @@ import React from "react";
 
 // Assuming this path for the Supabase server client (needed for logging)
 import { supabaseServer } from "@/lib/supabase/serverClient";
+import config from "../../../../../config.json";
 import { EmailTemplate } from "@/app/components/email/EmailTemplate";
 import { AvailabilityNotificationEmail } from "@/app/components/email/AvailabilityNotificationEmail";
 import { PostgrestError } from "@supabase/supabase-js";
+
+const LOGGING_ENABLED =
+  typeof config?.features?.loggingEnabled === "boolean"
+    ? config.features.loggingEnabled
+    : true;
 
 // This function runs asynchronously to log the email event without blocking the main API response.
 const logEmailAction = (
@@ -15,6 +21,10 @@ const logEmailAction = (
   success: boolean,
   errorDetails?: unknown
 ) => {
+  if (!LOGGING_ENABLED) {
+    return;
+  }
+
   const supabase = supabaseServer(); // Initialize client for server-side logging
 
   // Non-blocking async function to insert the log

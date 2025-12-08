@@ -1,3 +1,5 @@
+import { HiOutlineArrowSmDown } from "react-icons/hi";
+
 // Hero banner for the contact page with background imagery and headline copy.
 export default function ContactHeader() {
   return (
@@ -23,6 +25,15 @@ export default function ContactHeader() {
               We’re here to help, reach out and we’ll get back to you quickly.
             </p>
           </div>
+        </div>
+        <div className="absolute inset-x-0 bottom-6 flex justify-center">
+          <a
+            href="#contact-details"
+            className="inline-flex h-10 w-10 items-center justify-center text-white"
+            aria-label="Scroll to contact details"
+          >
+            <HiOutlineArrowSmDown className="h-8 w-8 animate-bounce drop-shadow-lg" />
+          </a>
         </div>
       </div>
     </header>

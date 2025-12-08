@@ -88,6 +88,7 @@ function AvailabilityContent() {
   }>({});
   const detailSectionRef = useRef<HTMLDivElement | null>(null);
   const mapSectionRef = useRef<HTMLDivElement | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const [mapHeight, setMapHeight] = useState<number | null>(null);
   const [availableBuildingNumbers, setAvailableBuildingNumbers] = useState<number[]>([6, 25]);
   const [suiteAvailability, setSuiteAvailability] = useState<Record<number, string[]>>({});
@@ -267,6 +268,14 @@ function AvailabilityContent() {
     });
     observer.observe(mapSectionRef.current);
     return () => observer.disconnect();
+  }, []);
+
+  // Track viewport width to control mobile-specific rendering in the gallery.
+  useEffect(() => {
+    const updateIsMobile = () => setIsMobile(typeof window !== "undefined" && window.innerWidth < 768);
+    updateIsMobile();
+    window.addEventListener("resize", updateIsMobile);
+    return () => window.removeEventListener("resize", updateIsMobile);
   }, []);
 
   useEffect(() => {
@@ -454,7 +463,7 @@ function AvailabilityContent() {
       <section id="availability" className="mx-auto max-w-6xl px-4 pb-4 my-4">
         {/* Category toggle pills. On small screens allow horizontal scroll so pills don't overflow */}
         <div className="mb-8 text-sm flex justify-center">
-          <div className="inline-flex max-w-full items-center gap-3 overflow-x-auto rounded-full border border-[#e1d9cf] bg-white p-1 px-2 sm:px-3">
+          <div className="inline-flex max-w-full items-center gap-3 overflow-x-auto rounded-full border border-[#e1d9cf] bg-white p-1 px-2 sm:px-3 dark:border-[#3d342a] dark:bg-[#2a241d]">
             {buildingFilterOptions.map((option) => (
               <button
                 key={option.value}
@@ -462,8 +471,8 @@ function AvailabilityContent() {
                 onClick={() => handleCategoryChange(option.value)}
                 className={`flex-shrink-0 whitespace-nowrap rounded-full px-3 md:px-4 py-2 text-xs md:text-sm font-semibold uppercase tracking-[0.3em] transition ${
                   selectedCategory === option.value
-                    ? "bg-[#4a4034] text-white shadow-md shadow-[#1f1a16]/20"
-                    : "bg-transparent text-[#7a6754] hover:text-[#1f1a16]"
+                    ? "bg-[#4a4034] text-white shadow-md shadow-[#1f1a16]/20 dark:bg-[#f0d4a6] dark:text-[#1f1a16]"
+                    : "bg-[#eae0d3] text-[#7a6754] hover:text-[#1f1a16] dark:bg-[#4a4034] dark:text-[#fdf8f3] dark:hover:text-[#fdf8f3]"
                 }`}
               >
                 {option.label}
@@ -529,6 +538,7 @@ function AvailabilityContent() {
                 }}
                 onSelectImage={setActiveImageIndex}
                 suiteLabel={activeBuilding?.street_address}
+                isMobile={isMobile}
               />
             </div>
             <div className="lg:col-span-2">

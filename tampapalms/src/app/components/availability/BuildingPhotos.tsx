@@ -20,7 +20,7 @@ export function BuildingPhotos({images, activeImageIndex, onPrev, onNext, onSele
 
   // Variables and logic for thumbnail wrapping
   const imageIndices = [];
-  const numThumbnails = 4; // we'll show 4 on desktop but only 2 on small screens via responsive classes
+  const numThumbnails = isMobile ? 2 : 4; // mobile shows fewer thumbnails
   const totalImages = images.length;
 
   for (let i = 1; i <= numThumbnails; i++) {

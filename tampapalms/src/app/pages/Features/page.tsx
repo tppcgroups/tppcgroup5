@@ -77,9 +77,9 @@ export default function Features() {
   const supportHighlights: SupportHighlight[] = config.featuresPage.supportHighlights;
 
   return (
-    <main className="min-h-screen bg-white text-[#1f1a16]">
+    <main className="min-h-screen bg-white text-[#1f1a16] dark:bg-[#f5f2ec]">
       {/* Header */}
-      <header className="relative -mx-4 overflow-hidden rounded-none shadow-[0_35px_90px_-70px_rgba(31,26,22,0.8)] sm:-mx-6">
+      <header className="relative -mx-4 overflow-hidden rounded-none shadow-[0_35px_90px_-70px_rgba(31,26,22,0.8)] sm:-mx-6 dark:bg-[#f5f2ec]">
         <Image
           src="/images/Bldg5-019.jpg"
           alt="Lobby and seating area at Tampa Palms Professional Center"
@@ -88,8 +88,8 @@ export default function Features() {
           sizes="(max-width: 768px) 200vw, 1200px"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1f1a16]/90 via-[#1f1a16]/45 to-transparent" />
-        <div className="relative z-10 flex flex-col items-center gap-6 px-6 py-16 text-center text-white md:items-start md:px-14 md:py-20 md:text-left">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1f1a16]/90 via-[#1f1a16]/45 to-transparent dark:bg-[#f5f2ec]" />
+        <div className="relative z-10 flex flex-col items-center gap-6 px-6 py-16 text-center text-white md:items-start md:px-14 md:py-20 md:text-left dark:bg-[#7a6754]">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em]">
             Features
           </span>
@@ -158,7 +158,7 @@ export default function Features() {
       </section>
 
       {/* Amenities */}
-      <section className="relative overflow-hidden bg-[#f9f7f3] py-20 md:py-24">
+      <section className="relative overflow-hidden bg-[#f9f7f3] py-20 md:py-24 dark:bg-[#f5f2ec]">
         <div className="absolute inset-0">
           <div className="absolute left-1/2 top-0 h-64 w-[65%] -translate-x-1/2 bg-gradient-to-b from-[#efe7dd]/50 via-transparent to-transparent blur-3xl" />
         </div>
@@ -184,7 +184,7 @@ export default function Features() {
       </section>
 
       {/* Elevate your workstyle */}
-      <section className="mx-auto bg-white px-6 py-20 text-center md:px-10">
+      <section className="mx-auto bg-white px-6 py-20 text-center md:px-10 dark:bg-[#7a6754]">
         <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#a49382]">
           Elevate Your Workstyle
         </p>

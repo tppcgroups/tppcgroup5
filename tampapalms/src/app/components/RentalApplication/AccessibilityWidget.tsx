@@ -289,7 +289,7 @@ const AccessibilityWidget: React.FC = () => {
             const isCtrl = e.ctrlKey || e.metaKey;
             let handled = false;
 
-            
+
             if (isShift && (e.code === 'Equal' || e.code === 'NumpadAdd')) {
                 setTextScale(prev => Math.min(1.6, prev + 0.1));
                 handled = true;
@@ -425,12 +425,14 @@ const AccessibilityWidget: React.FC = () => {
                     className="
                         accessibility-panel
                         fixed bottom-20 right-5 z-[9999]
-                        bg-white border border-gray-300 shadow-xl
+                        bg-white shadow-xl
                         rounded-2xl w-80 p-5
                         flex flex-col gap-4
                         max-h-[80vh]
                         overflow-y-auto
                         overscroll-contain
+                        [&:not(.dark_*)]:border
+                        [&:not(.dark_*)]:border-gray-300
                     "
                 >
 
@@ -438,7 +440,7 @@ const AccessibilityWidget: React.FC = () => {
                     <div className="flex items-center justify-between">
                         <h2
                             id="accessibility-panel-title"
-                            className="text-lg font-semibold text-gray-800">
+                            className="text-lg font-semibold text-gray-800  dark:border-none">
                             Accessibility Options
                         </h2>
 
@@ -599,9 +601,9 @@ const AccessibilityWidget: React.FC = () => {
 
                     </div>
                     {/* Navigation Button */}
-                        <button
-                            onClick={() => setOptionsPanelOpen(true)}
-                            className="
+                    <button
+                        onClick={() => setOptionsPanelOpen(true)}
+                        className="
                                 w-full py-2 mt-4 rounded-full font-semibold text-white
                                 bg-gradient-to-r from-[#1f1a16] via-[#3a3127] to-[#1f1a16]
                                 shadow-xl shadow-[#1f1a16]/25
@@ -609,9 +611,9 @@ const AccessibilityWidget: React.FC = () => {
                                 transition-all duration-300 ease-out
                                 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1a16]
                             "
-                        >
-                            Keyboard Navigation
-                        </button>
+                    >
+                        Keyboard Navigation
+                    </button>
                     {/* RESET BUTTON */}
                     <button
                         onClick={() => {
@@ -641,96 +643,96 @@ const AccessibilityWidget: React.FC = () => {
                     </button>
 
 
-                    <div className="text-center text-xs text-gray-500 mt-2">
+                    <div className="text-center text-xs text-gray-500 mt-2 dark:bg-[#7a6754]">
                         Accessibility tools for the Tampa palms Professional Center website.
                     </div>
+                </div>
+            )}
 
-                    {/* --- NEW CODE: OPTIONS DETAILS PANEL --- */}
-                    {optionsPanelOpen && (
-                        <div
-                            role="dialog"
-                            aria-modal="true"
-                            aria-labelledby="options-panel-title"
-                            className="
-                                accessibility-panel
-                                fixed bottom-20 right-[350px] z-[9999]
-                                bg-white border border-gray-300 shadow-2xl
-                                rounded-2xl w-96 p-5
-                                flex flex-col gap-4 max-h-[80vh] overflow-y-auto
-                            "
-                            // Add Escape key listener to close the new panel
-                            tabIndex={-1}
-                            onKeyDown={(e) => {
-                                if (e.key === "Escape") {
-                                    setOptionsPanelOpen(false);
-                                }
-                            }}
+            {/* OPTIONS DETAILS PANEL */}
+            {optionsPanelOpen && (
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="options-panel-title"
+                    className="
+                        accessibility-panel-keyboard
+                        fixed bottom-20 right-[350px] z-[9999]
+                        bg-white border border-gray-300 shadow-2xl
+                        rounded-2xl w-96 p-5
+                        flex flex-col gap-4 max-h-[80vh] overflow-y-auto
+                        dark:bg-[#7a6754]
+                    "
+                    tabIndex={-1}
+                    onKeyDown={(e) => {
+                        if (e.key === "Escape") {
+                            setOptionsPanelOpen(false);
+                        }
+                    }}
+                >
+                    <div className="flex items-center justify-between  dark:bg-[#7a6754]">
+                        <h2 id="options-panel-title" className="text-lg font-bold #f5f2ec">
+                            Accessibility Options & Shortcuts
+                        </h2>
+                        <button
+                            onClick={() => setOptionsPanelOpen(false)}
+                            aria-label="Close options panel"
+                            className="#2a241d hover:#2a241d text-xl dark:bg-[#7a6754]"
                         >
-                            <div className="flex items-center justify-between">
-                                <h2 id="options-panel-title" className="text-lg font-bold text-gray-800">
-                                    Accessibility Options & Shortcuts
-                                </h2>
-                                <button
-                                    onClick={() => setOptionsPanelOpen(false)}
-                                    aria-label="Close options panel"
-                                    className="text-gray-600 hover:text-gray-900 text-xl"
-                                >
-                                    ×
-                                </button>
-                            </div>
+                            ×
+                        </button>
+                    </div>
 
-                            <p className="text-sm text-gray-600">
-                                Use these shortcuts anywhere on the site for quick adjustments.
-                            </p>
+                    <p className="text-sm #f5f2ec dark:bg-[#2a241d]">
+                        Use these shortcuts anywhere on the site for quick adjustments.
+                    </p>
 
-                            <div className="flex flex-col gap-2">
-                                <h3 className="font-semibold text-gray-800 mt-2">Keyboard Navigation</h3>
+                    <div className="flex flex-col gap-2 dark:bg-[#1f1a16]">
+                        <h3 className="font-semibold #f5f2ec mt-2 dark:bg-[#2a241d]">Keyboard Navigation</h3>
 
-                                {/* List the Shortcuts */}
-                                <div className="grid grid-cols-2 gap-y-2 text-sm">
+                        {/* List the Shortcuts */}
+                        <div className="grid grid-cols-2 gap-y-2 text-sm dark:bg-[#2a241d]">
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Ctrl + Shift + O</span>
-                                    <span>Shortcuts Panel</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Ctrl + Shift + O</span>
+                            <span>Shortcuts Panel</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + F</span>
-                                    <span>Shortcuts Next Language</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + F</span>
+                            <span>Shortcuts Next Language</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + P</span>
-                                    <span>Shortcuts Previous Language</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + P</span>
+                            <span>Shortcuts Previous Language</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift +</span>
-                                    <span>Shortcuts Increase Text</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift +</span>
+                            <span>Shortcuts Increase Text</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift -</span>
-                                    <span>Shortcuts Decrease Text</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift -</span>
+                            <span>Shortcuts Decrease Text</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + C</span>
-                                    <span>Shortcuts Next Contrast</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + C</span>
+                            <span>Shortcuts Next Contrast</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + Z</span>
-                                    <span>Shortcuts Previous Contrast</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + Z</span>
+                            <span>Shortcuts Previous Contrast</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + T</span>
-                                    <span>Shortcuts Next Theme</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + T</span>
+                            <span>Shortcuts Next Theme</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + B</span>
-                                    <span>Shortcuts Previous Theme</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + B</span>
+                            <span>Shortcuts Previous Theme</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + H</span>
-                                    <span>Shortcuts Next Highlight</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + H</span>
+                            <span>Shortcuts Next Highlight</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + L</span>
-                                    <span>Shortcuts Previous Highlight</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + L</span>
+                            <span>Shortcuts Previous Highlight</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + M</span>
-                                    <span>Shortcuts Toggle Reduce Motion</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + M</span>
+                            <span>Shortcuts Toggle Reduce Motion</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + V</span>
-                                    <span>Shortcuts Toggle Screen Reader</span>
-                                </div>
-                            </div>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + V</span>
+                            <span>Shortcuts Toggle Screen Reader</span>
                         </div>
-                    )}
+                    </div>
                 </div>
             )}
         </>

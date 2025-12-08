@@ -30,14 +30,16 @@ export function SuiteList({ suites, activeSuiteId, onSelectSuite }: SuiteListPro
               className={`flex w-full flex-col gap-2 rounded-2xl border px-5 py-5 text-left transition ${
                 isActive
                   ? "border-[#4a4034] bg-[#1f1a16] text-white shadow-lg shadow-[#1f1a16]/20"
-                  : "border-[#e1d9cf] bg-white hover:border-[#d4c7b7] hover:bg-[#fdf8f3]"
+                  : "border-[#e1d9cf] bg-white hover:border-[#d4c7b7] hover:bg-[#fdf8f3] dark:bg-[#ddd0bd] dark:border-[#b9a894] dark:text-[#1f1a16]"
               }`}
             >
               <div className="flex items-center justify-between">
                 <span className="text-base font-semibold">{suite.label}</span>
                 <span
                   className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                    isActive ? "bg-white/15 text-white" : status.className
+                    isActive
+                      ? "bg-white/15 text-white dark:bg-[#3f3f3f] dark:text-white"
+                      : status.className
                   }`}
                 >
                   {status.label}
