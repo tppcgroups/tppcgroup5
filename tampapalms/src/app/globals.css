@@ -402,7 +402,7 @@ html {
 }
 
 /* DARK MODE — Make all rounded containers match the dark homepage box */
-.dark .rounded-3xl,
+/* .dark .rounded-3xl,
 .dark .rounded-\[32px\],
 .dark .rounded-xl,
 .dark .rounded-lg,
@@ -410,7 +410,7 @@ html {
     background-color: #2a241d !important;
     border-color: #f5f2ec !important;
     color: #f5f2ec !important;
-}
+} */
 .dark * {
     border-width: 0 !important;
 }
