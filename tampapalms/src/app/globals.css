@@ -468,13 +468,18 @@ html {
 }
 
 /* Ensure inner text stays smokey white */
-.dark .rounded-3xl *,
+/* .dark .rounded-3xl *,
 .dark .rounded-\[32px\] *,
 .dark .rounded-xl *,
 .dark .rounded-lg *,
 .dark .rounded-md * {
     color: #f5f2ec !important;
-}
+} */
+
+/* .dark span.rounded-full.text-xs.font-semibold {
+    color: #4a4034 !important;
+    background-color: #fdf8f3 !important;
+} */
 
 /* ============================================================
    DARK MODE — Accessibility Panel (outer container)
@@ -648,10 +653,10 @@ html {
     border-color: #7a6754 !important;
 }
 
-.dark span.rounded-full.text-xs.font-semibold {
+/* .dark span.rounded-full.text-xs.font-semibold {
     background-color: #f5f2ec !important;
     color: #1f1a16 !important;
-}
+} */
 
 .dark .accessibility-panel .flex.items-center.justify-between {
     background-color: transparent !important;

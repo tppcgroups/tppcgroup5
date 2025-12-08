@@ -46,7 +46,7 @@ export function BuildingList({
             Select a suite to preview imagery and key details. The list updates as
             spaces become available across the professional park.
           </p>
-          <p className="mt-2 rounded-2xl border border-[#e1d9cf] bg-[#fdf8f3] px-4 py-3 text-xs font-medium text-[#a49382]">
+          <p className="mt-2 rounded-2xl border border-[#e1d9cf] bg-[#fdf8f3] px-4 py-3 text-xs font-medium text-[#a49382] dark:border-[#6a5a48] dark:bg-[#3f3f3f] dark:text-white">
             After choosing a suite, scroll down to explore the gallery and space
             details.
           </p>
@@ -75,7 +75,7 @@ export function BuildingList({
                 className={`flex w-full flex-col gap-2 rounded-2xl border px-5 py-5 text-left transition ${
                   isActive
                     ? "border-[#4a4034] bg-[#1f1a16] text-white shadow-lg shadow-[#1f1a16]/20"
-                    : "border-[#e1d9cf] bg-white hover:border-[#d4c7b7] hover:bg-[#fdf8f3] dark:bg-[#ddd0bd] dark:border-[#b9a894]"
+                    : "border-[#e1d9cf] bg-white hover:border-[#d4c7b7] hover:bg-[#fdf8f3] dark:bg-[#ddd0bd] dark:border-[#b9a894] dark:text-[#1f1a16]"
                 }`}
               >
                 <div className="flex items-center justify-between dark:bg-[#3f3f3f]">
@@ -85,14 +85,16 @@ export function BuildingList({
                         ? `- Suite ${building.suite_number}`
                         : ""
                     }`}
-                  </span>
-                  <span
-                    className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                      isActive ? "bg-white/15 text-white dark:bg-[#3f3f3f]" : status.className
-                    }`}
-                  >
-                    {status.label}
-                  </span>
+                </span>
+                <span
+                  className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
+                    isActive
+                      ? "bg-white/15 text-white dark:bg-[#3f3f3f] dark:text-white"
+                      : status.className
+                  }`}
+                >
+                  {status.label}
+                </span>
                 </div>
                 <p
                   className={`text-xs ${
