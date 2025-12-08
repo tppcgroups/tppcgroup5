@@ -367,6 +367,93 @@ html {
 }
 
 
+/* DARK MODE — change header underline pseudo-element color */
+.dark header span::after,
+.dark nav span::after,
+.dark header a::after,
+.dark nav a::after {
+    background-color: #f5f2ec !important;
+}
+
+/* DARK MODE — Set text color of main content grid to #777 */
+.dark .grid.gap-10 {
+    background-color: #2a241d !important;
+}
+
+/* DARK MODE — Text inside the main content section */
+.dark .grid.gap-10,
+.dark .grid.gap-10 * {
+    color: #f5f2ec !important;
+}
+
+
+.dark .grid.gap-10 p,
+.dark .grid.gap-10 span,
+.dark .grid.gap-10 li {
+    color: #f5f2ec !important;
+}
+
+/* DARK MODE — force stat boxes to tan */
+.dark .grid.gap-4.sm\:grid-cols-2 > div {
+    background-color: #777 !important;
+    background: #777 !important;
+    background-image: none !important;
+    border-color: #1f1a16 !important;
+    color: #1f1a16 !important;
+}
+
+/* DARK MODE — Change hero button background to #777 but keep text unchanged */
+.dark a.inline-flex.items-center.rounded-full {
+    background-color:  #555 !important;
+    border-color:  #555 !important;
+}
+
+.dark a.inline-flex.items-center.rounded-full:hover {
+    background-color:  #555 !important; /* lighter hover */
+    border-color:  #555 !important;
+}
+
+
+.dark body {
+    background-color: #7a6754 !important;
+}
+
+
+.dark main,
+.dark section,
+.dark div {
+    background-color: transparent !important;
+}
+
+/* DARK MODE — Make all rounded containers match the dark homepage box */
+.dark .rounded-3xl,
+.dark .rounded-\[32px\],
+.dark .rounded-xl,
+.dark .rounded-lg,
+.dark .rounded-md {
+    background-color: #2a241d !important;  /* same dark brown container */
+    border-color: #3d342a !important;       /* subtle border */
+    color: #f5f2ec !important;              /* smokey white text */
+}
+
+/* Remove default gradients or whites they may have */
+.dark .rounded-3xl,
+.dark .rounded-\[32px\],
+.dark .rounded-xl {
+    background-image: none !important;
+}
+
+/* Ensure inner text stays smokey white */
+.dark .rounded-3xl *,
+.dark .rounded-\[32px\] *,
+                      .dark .rounded-xl *,
+                      .dark .rounded-lg *,
+                      .dark .rounded-md * {
+                          color: #f5f2ec !important;
+                      }
+
+
+
 
 
 
