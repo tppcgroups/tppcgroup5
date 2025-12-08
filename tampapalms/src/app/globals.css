@@ -452,6 +452,149 @@ html {
                           color: #f5f2ec !important;
                       }
 
+/* ============================================================
+   DARK MODE — Accessibility Panel (outer container)
+   ============================================================ */
+.dark .accessibility-panel {
+    background-color: #7a6754 !important; /* REPLACES the grey */
+    border-color: #3d342a !important;
+    color: #f5f2ec !important;
+}
+
+/* ============================================================
+   DARK MODE — Inner Cards / Boxes inside the Panel
+   ============================================================ */
+.dark .accessibility-panel .option-box,
+.dark .accessibility-panel button,
+.dark .accessibility-panel div[role="group"],
+.dark .accessibility-panel .flex.items-center,
+.dark .accessibility-panel .flex.justify-between,
+.dark .accessibility-panel .flex.gap-2,
+.dark .accessibility-panel > div > div {
+    background-color: #2a241d !important; /* your correct inner color */
+    border-color: #3d342a !important;
+    color: #f5f2ec !important;
+}
+
+/* Remove unwanted gray backgrounds Tailwind may inject */
+.dark .accessibility-panel * {
+    background-image: none !important;
+}
+
+/* ============================================================
+   DARK MODE — Make ALL text inside Accessibility Panel and
+   Keyboard Navigation #f5f2ec
+   ============================================================ */
+.dark .accessibility-panel,
+.dark .accessibility-panel * {
+    color: #f5f2ec !important;
+    fill: #f5f2ec !important; /* icons */
+    -webkit-text-fill-color: #f5f2ec !important; /* Safari text fix */
+}
+
+/* Keyboard navigation button text should also be #f5f2ec */
+.dark button,
+.dark .keyboard-navigation,
+.dark .keyboard-navigation * {
+    color: #f5f2ec !important;
+    fill: #f5f2ec !important;
+    -webkit-text-fill-color: #f5f2ec !important;
+}
+
+/* ============================================================
+   DARK MODE — CONTACT FORM INPUT/TEXTAREA TEXT COLOR
+   ============================================================ */
+
+/* Text inside inputs + textareas when typing */
+.dark input,
+.dark textarea {
+    color: #f5f2ec !important;
+    -webkit-text-fill-color: #f5f2ec !important;  /* Fix for Safari */
+}
+
+/* Placeholder text */
+.dark input::placeholder,
+.dark textarea::placeholder {
+    color: rgba(245, 242, 236, 0.55) !important; /* softer smokey white */
+}
+
+/* Labels and text next to inputs */
+.dark label,
+.dark .contact-container label,
+.dark .contact-container span,
+.dark .contact-container p {
+    color: #f5f2ec !important;
+}
+
+/* ============================================================
+   DARK MODE — Contact Page Map Buttons
+   ============================================================ */
+
+.dark .contact-container a[href*="google"],
+.dark .contact-container a[href*="maps.apple"],
+.dark a[href*="google.com/maps"],
+.dark a[href*="maps.apple.com"] {
+    background-color: #7a6754 !important;
+    color: #f5f2ec !important;     /* keep text smokey white */
+    border-color: #6a5a48 !important;  /* optional subtle border */
+}
+
+/* Hover state */
+.dark .contact-container a[href*="google"]:hover,
+.dark .contact-container a[href*="maps.apple"]:hover,
+.dark a[href*="google.com/maps"]:hover,
+.dark a[href*="maps.apple.com"]:hover {
+    background-color: #6a5a48 !important;
+}
+
+/* ============================================================
+   DARK MODE — Remove background behind inline Google/Apple map links
+   ============================================================ */
+
+/* Remove brown/blur box behind map links in DARK MODE */
+.dark .rounded-xl.shadow-sm.border {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+
+/* FAQ Page Dark Mode Background */
+.dark .faq-section,
+.dark section.bg-gradient-to-b {
+    background: #7a6754 !important;
+}
+
+
+/* FAQ subsection background + text (Dark Mode) */
+.dark .faq-subsection,
+.dark .rounded-xl.bg-white\/40,
+.dark .bg-white\/40 {
+    background-color: #2a241d !important;
+    border-color: #3d342a !important;
+    color: #f5f2ec !important;
+}
+
+/* Ensure ALL nested text inside subsections is also #f5f2ec */
+.dark .faq-subsection *,
+.dark .rounded-xl.bg-white\/40 *,
+.dark .bg-white\/40 * {
+    color: #f5f2ec !important;
+    fill: #f5f2ec !important;  /* icons */
+    stroke: #f5f2ec !important; /* svg icons */
+}
+
+/* DARK MODE — overwrite FAQ section background */
+.dark section.relative.w-full.overflow-hidden {
+    background-color: #7a6754 !important;
+}
+/* Force all FAQ accordion text to #f5f2ec in dark mode */
+.dark [data-headlessui-state] p,
+.dark [data-headlessui-state] span,
+.dark [data-headlessui-state] div {
+    color: #f5f2ec !important;
+    -webkit-text-fill-color: #f5f2ec !important;
+}
 
 
 
