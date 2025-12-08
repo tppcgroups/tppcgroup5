@@ -176,6 +176,97 @@
     "yearHistoryLabel": "Years of Experience",
     "yearHistoryHelper": "Trusted expertise "
   },
+  "featuresPage": {
+    "featureTiles": [
+      {
+        "heading": "Custom Wrought-Iron Entry Doors and Beautifully Landscaped Entries",
+        "blurb": "Custom craftsmanship and lush landscaping come together to create a warm, inviting, and memorable entrance.",
+        "icon": "DoorOpen"
+      },
+      {
+        "heading": "Elegant Architectural Design With Professional Appeal",
+        "blurb": "Sophisticated architecture combines elegance with a strong, professional presence.",
+        "icon": "PencilRuler"
+      },
+      {
+        "heading": "Ten-Foot Ceilings",
+        "blurb": "Open atmosphere that adds a sense of space and sophistication to every room.",
+        "icon": "Maximize2"
+      },
+      {
+        "heading": "Sound Insulated Walls and Solid Core Doors",
+        "blurb": "Thick, insulated walls and solid core doors ensure a quiet, private, and comfortable environment.",
+        "icon": "VolumeX"
+      }
+    ],
+    "amenityColumns": [
+      {
+        "title": "Buildings/Suites",
+        "description": "Modern, suites in a prime location, combining convenience, comfort, and style.",
+        "items": [
+          "Fiber high speed optic internet",
+          "Assigned mailboxes with USPS delivery directly to the building",
+          "Professional business address with private mailbox",
+          "Peaceful, scenic surroundings near lakeside walkways",
+          "Located within a premier, multi-use business park for office, medical, and professional tenants",
+          "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
+          "Ample on-site parking for tenants and visitors"
+        ]
+      },
+      {
+        "title": "Executive Suites",
+        "description": "Flexible office spaces designed for professionals, startups, and growing businesses.",
+        "items": [
+          "Two shared break rooms and eight private bathrooms",
+          "Professional business address with private mailbox",
+          "Fiber high speed optic internet",
+          "24/7 access with access cards and keys",
+          "Assigned mailboxes with USPS delivery directly to the building",
+          "On-site management and maintenance team for tenant support",
+          "Peaceful, scenic surroundings near lakeside walkways",
+          "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
+          "Located within a premier, multi-use business park for office, medical, and professional tenants",
+          "Interior signage",
+          "Ample on-site parking for tenants and visitors",
+          "Conference room access with six complimentary hours per month"
+        ]
+      },
+      {
+        "title": "SOAR",
+        "description": "Co-working spaces that offers private offices, shared workspaces, and meeting rooms.",
+        "items": [
+          "On-site management and maintenance team for tenant support",
+          "Fiber high speed optic internet",
+          "Interior signage",
+          "Assigned mailboxes with USPS delivery directly to the building",
+          "Ample on-site parking for tenants and visitors",
+          "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
+          "Professional business address with private mailbox",
+          "Four private bathrooms",
+          "24/7 access with access cards",
+          "Peaceful, scenic surroundings near lakeside walkways",
+          "Located within a premier, multi-use business park for office, medical, and professional tenants"
+        ]
+      }
+    ],
+    "supportHighlights": [
+      {
+        "step": "01",
+        "title": "Guided onboarding",
+        "copy": "Our team can help with basic walk-throughs, getting you oriented, and general tech guidance to make your move-in smoother."
+      },
+      {
+        "step": "02",
+        "title": "Responsive service",
+        "copy": "Maintenance requests go to our local team, who keep you updated and aim to handle issues as smoothly as possible."
+      },
+      {
+        "step": "03",
+        "title": "Long-term partnership",
+        "copy": "We’re around for check-ins, basic space-planning help, and general updates so your suite fits your day-to-day needs."
+      }
+    ]
+  },
   "features": {
     "accessibilityWidget": true,
     "toastNotifications": true
