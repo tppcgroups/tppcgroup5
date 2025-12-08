@@ -6,6 +6,7 @@ type ContactEmailPayload = {
   phoneNumber?: string;
   recordId?: string | null;
   unsubscribeLink?: string;
+  interest?: string;
 };
 
 function baseWrapper(content: string) {
@@ -77,6 +78,11 @@ export function renderInternalNotificationEmail(payload: ContactEmailPayload) {
           ${
             payload.phoneNumber
               ? `<p style="margin:6px 0;font-size:15px;color:#1f1a16;"><strong>Phone:</strong> ${payload.phoneNumber}</p>`
+              : ""
+          }
+          ${
+            payload.interest
+              ? `<p style="margin:6px 0;font-size:15px;color:#1f1a16;"><strong>Interest:</strong> ${payload.interest}</p>`
               : ""
           }
           ${
