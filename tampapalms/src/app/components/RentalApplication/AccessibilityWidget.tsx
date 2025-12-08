@@ -7,6 +7,7 @@ import { setScreenReaderEnabled } from "@/app/components/RentalApplication/scree
 
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { HiChevronUp } from "react-icons/hi";
 import Image from "next/image";
 
 
@@ -28,6 +29,7 @@ type AccessibilitySettingsSnapshot = {
 
 const AccessibilityWidget: React.FC = () => {
     const [open, setOpen] = useState(false);
+    const [showScrollTop, setShowScrollTop] = useState(false);
     const [textScale, setTextScale] = useState(1);
     const [highContrast, setHighContrast] = useState(false);
 
@@ -353,37 +355,64 @@ const AccessibilityWidget: React.FC = () => {
         textScale, nextContrast, prevContrast, setTextScale, toggleWidgetVisibility
     ]);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            setShowScrollTop(window.scrollY > 300);
+        };
+        handleScroll();
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
 
 
 
 
     return (
         <>
-            <button
-                onClick={() => toggleWidgetVisibility("button")}
-                aria-label="Accessibility options"
-                tabIndex = {0}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        toggleWidgetVisibility("keyboard");
-                    }
-                }}
-                className="
-                    fixed bottom-5 right-5 z-[9999]
-                    bg-white border border-gray-300 shadow-xl
-                    rounded-full w-14 h-14
-                    flex items-center justify-center
-                "
-            >
-                <Image
-                    src={accessibilityLogo}
-                    alt="Accessibility icon"
-                    width={32}
-                    height={32}
-                    className="object-contain"
-                />
-            </button>
+            <div className="fixed bottom-5 right-5 z-[9999] flex flex-col items-end gap-3">
+                <button
+                    onClick={() => toggleWidgetVisibility("button")}
+                    aria-label="Accessibility options"
+                    tabIndex = {0}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            toggleWidgetVisibility("keyboard");
+                        }
+                    }}
+                    className="
+                        bg-white border border-[#c8b79f] shadow-xl
+                        rounded-full w-12 h-12
+                        flex items-center justify-center
+                        hover:scale-[1.03] transition-transform
+                        cursor-pointer
+                    "
+                >
+                    <Image
+                        src={accessibilityLogo}
+                        alt="Accessibility icon"
+                        width={32}
+                        height={32}
+                        className="object-contain"
+                    />
+                </button>
+
+                <button
+                    aria-label="Back to top"
+                    onClick={scrollToTop}
+                    aria-hidden={!showScrollTop}
+                    className={`flex h-12 w-12 items-center justify-center rounded-full bg-[#1f1a16] text-white shadow-[0_10px_25px_-10px_rgba(0,0,0,0.35)] transition-all duration-200 ease-in-out hover:shadow-[0_18px_32px_-12px_rgba(0,0,0,0.4)] focus:outline-none focus:ring-4 focus:ring-black/10 cursor-pointer hover:scale-[1.03] transition-transform ${
+                        showScrollTop ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-2 pointer-events-none"
+                    }`}
+                >
+                    <HiChevronUp className="h-6 w-6" aria-hidden />
+                </button>
+            </div>
 
 
 
@@ -394,13 +423,13 @@ const AccessibilityWidget: React.FC = () => {
                     aria-modal="true"
                     aria-labelledby="accessibility-panel-title"
                     className="
+                        accessibility-panel
                         fixed bottom-20 right-5 z-[9999]
                         bg-white border border-gray-300 shadow-xl
                         rounded-2xl w-80 p-5
                         flex flex-col gap-4
-
-                        max-h-[80vh]     /* Prevents panel from going off-screen */
-                        overflow-y-auto  /* Enables scrolling */
+                        max-h-[80vh]
+                        overflow-y-auto
                         overscroll-contain
                     "
                 >
@@ -410,13 +439,13 @@ const AccessibilityWidget: React.FC = () => {
                         <h2
                             id="accessibility-panel-title"
                             className="text-lg font-semibold text-gray-800">
-                            Header
+                            Accessibility Options
                         </h2>
 
                         <button
                             onClick={() => setOpen(false)}
                             aria-label="Close accessibility panel"
-                            className="text-gray-600 hover:text-gray-900 text-xl"
+                            className="text-gray-600 hover:text-gray-900 text-xl cursor-pointer"
                         >
                             ×
                         </button>
@@ -572,7 +601,14 @@ const AccessibilityWidget: React.FC = () => {
                     {/* Navigation Button */}
                         <button
                             onClick={() => setOptionsPanelOpen(true)}
-                            className="w-full py-2 mt-4 rounded-lg font-semibold text-white border border-[#3d342a] bg-[#120f0c] hover:bg-[#1b1815]"
+                            className="
+                                w-full py-2 mt-4 rounded-full font-semibold text-white
+                                bg-gradient-to-r from-[#1f1a16] via-[#3a3127] to-[#1f1a16]
+                                shadow-xl shadow-[#1f1a16]/25
+                                hover:from-[#3a3127] hover:via-[#5a4b3c] hover:to-[#3a3127]
+                                transition-all duration-300 ease-out
+                                focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1a16]
+                            "
                         >
                             Keyboard Navigation
                         </button>
@@ -592,14 +628,21 @@ const AccessibilityWidget: React.FC = () => {
                             // Clear localStorage
                             localStorage.removeItem("accessibilitySettings");
                         }}
-                        className="w-full py-2 mt-4 rounded-lg font-semibold text-white border border-[#3d342a] bg-[#120f0c] hover:bg-[#1b1815]"
+                        className="
+                            w-full py-2 mt-4 rounded-full font-semibold text-white
+                            bg-gradient-to-r from-[#1f1a16] via-[#3a3127] to-[#1f1a16]
+                            shadow-xl shadow-[#1f1a16]/25
+                            hover:from-[#3a3127] hover:via-[#5a4b3c] hover:to-[#3a3127]
+                            transition-all duration-300 ease-out
+                            focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1a16]
+                        "
                     >
-                        Reset || Reset Settings
+                        Reset Settings
                     </button>
 
 
                     <div className="text-center text-xs text-gray-500 mt-2">
-                        Footer
+                        Accessibility tools for the Tampa palms Professional Center website.
                     </div>
 
                     {/* --- NEW CODE: OPTIONS DETAILS PANEL --- */}
@@ -609,6 +652,7 @@ const AccessibilityWidget: React.FC = () => {
                             aria-modal="true"
                             aria-labelledby="options-panel-title"
                             className="
+                                accessibility-panel
                                 fixed bottom-20 right-[350px] z-[9999]
                                 bg-white border border-gray-300 shadow-2xl
                                 rounded-2xl w-96 p-5
@@ -624,7 +668,7 @@ const AccessibilityWidget: React.FC = () => {
                         >
                             <div className="flex items-center justify-between">
                                 <h2 id="options-panel-title" className="text-lg font-bold text-gray-800">
-                                    Shortcuts Header
+                                    Accessibility Options & Shortcuts
                                 </h2>
                                 <button
                                     onClick={() => setOptionsPanelOpen(false)}
@@ -636,7 +680,7 @@ const AccessibilityWidget: React.FC = () => {
                             </div>
 
                             <p className="text-sm text-gray-600">
-                                Shortcuts Intro
+                                Use these shortcuts anywhere on the site for quick adjustments.
                             </p>
 
                             <div className="flex flex-col gap-2">
