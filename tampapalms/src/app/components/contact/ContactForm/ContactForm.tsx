@@ -70,6 +70,9 @@ export default function ContactForm() {
                 <option value="Private office">Private office</option>
                 <option value="Executive suites">Executive suites</option>
                 <option value="SOAR">SOAR</option>
+                <option value="SOAR">Meeting Room Rental</option>
+                <option value="SOAR">Schedule a Tour</option>
+                <option value="SOAR">Contact Leasing Team</option>
               </select>
               <span
                 aria-hidden="true"

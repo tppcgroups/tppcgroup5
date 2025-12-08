@@ -218,6 +218,9 @@ export async function POST(req: Request) {
       process.env.SITE_URL ||
       new URL(req.url).origin;
     const unsubscribeLink = `${siteUrl}/api/unsubscribe?token=${userId}`;
+    if ((interest || "").toLowerCase() === "soar") {
+      console.log("Contact form interest set to SOAR; routing to SOAR marketing.");
+    }
     const internalRecipient =
       (interest || "").toLowerCase() === "soar" ? "marketing@soarco-working.com" : internal;
     const confirmationHtml = renderConfirmationEmail({
