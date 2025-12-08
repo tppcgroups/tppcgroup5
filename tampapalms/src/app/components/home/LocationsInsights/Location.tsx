@@ -29,7 +29,7 @@ const DEFAULT_DETAILS: Detail[] = [
   {
     icon: MapPin,
     label: "Address",
-    value: "17427 Bridge Hill Court, Suite C,Tampa, FL 33647",
+    value: "17427 Bridge Hill Court, Suite C, Tampa, FL 33647",
   },
   {
     icon: Clock3,

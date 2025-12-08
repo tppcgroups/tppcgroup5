@@ -53,6 +53,34 @@ export default function ContactForm() {
         <TextField label="Email" type="email" name="email" placeholder="jane@example.com" />
         <TextField label="Phone Number" type="tel" name="phone-number" placeholder="(123) 456-7890" />
         <TextField label="Subject" name="subject" placeholder="Inquiry" />
+        <label className="block">
+          <div className="relative">
+            <div className="rounded-2xl bg-white p-4 pt-7 shadow-inner border border-neutral-300 focus-within:ring-2 focus-within:ring-[#7a6754] relative">
+              <span className="pointer-events-none absolute -top-3 left-4">
+                <Badge>Interest</Badge>
+              </span>
+              <select
+                name="interest"
+                className="w-full bg-transparent text-[15px] !text-[#1f1a16] outline-none appearance-none leading-6 py-1 pr-9"
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select an option
+                </option>
+                <option value="Private office">Private office</option>
+                <option value="Executive suites">Executive suites</option>
+                <option value="SOAR">SOAR</option>
+              </select>
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 text-xs bg-white px-1 rounded"
+              >
+                ▼
+              </span>
+              <div className="mt-3 border-t border-dashed border-neutral-300" />
+            </div>
+          </div>
+        </label>
       </div>
 
       <div className="flex flex-col gap-6">
@@ -60,11 +88,11 @@ export default function ContactForm() {
           <div className="relative">
             <div className="-mb-3 pl-3"><Badge>Your Message</Badge></div>
             <div className="rounded-2xl bg-white p-4 pt-6 shadow-inner border border-neutral-300
-                            focus-within:ring-2 focus-within:ring-[#7a6754] min-h-[300px] flex flex-col">
+                            focus-within:ring-2 focus-within:ring-[#7a6754] min-h-[500px] flex flex-col">
               <textarea
                 name="message"
                 placeholder="Tell us how we can help…"
-                className="min-h-[220px] grow w-full resize-vertical bg-transparent outline-none text-[15px] !text-black placeholder:text-neutral-500"
+                className="min-h-[340px] grow w-full resize-vertical bg-transparent outline-none text-[15px] !text-black placeholder:text-neutral-500"
                 required
               />
               <div className="mt-3 border-t border-dashed border-neutral-300" />
