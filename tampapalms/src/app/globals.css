@@ -279,6 +279,11 @@ html {
     color: #f5f2ec !important;
 }
 
+.accessibility-panel,
+.accessibility-panel * {
+    font-size: 16px !important;
+}
+
 /* DARK MODE — Remove brown background behind Quick Links */
 .dark footer nav {
     background: none !important;
@@ -406,6 +411,10 @@ html {
     border-color: #f5f2ec !important;
     color: #f5f2ec !important;
 }
+.dark * {
+    border-width: 0 !important;
+}
+
 .dark .bg-white\/95,
 .dark .bg-white {
     background-color: #2a241d  !important;
@@ -644,6 +653,51 @@ html {
     color: #1f1a16 !important;
 }
 
+.dark .accessibility-panel .flex.items-center.justify-between {
+    background-color: transparent !important;
+}
+/* ============================================================
+   DARK MODE — Remove brown borders from accessibility panels
+   ============================================================ */
+
+/* Remove border from main accessibility panel in dark mode */
+.dark .accessibility-panel {
+    border: none !important;
+}
+
+/* Remove borders from all inner boxes in dark mode */
+.dark .accessibility-panel .flex.flex-col.items-center.p-3 {
+    border: none !important;
+}
+
+/* Remove borders from rounded elements inside accessibility panel */
+.dark .accessibility-panel .rounded-xl,
+.dark .accessibility-panel .rounded-2xl {
+    border: none !important;
+}
+
+/* Target specific grid items that have borders */
+.dark .accessibility-panel .grid > div {
+    border: none !important;
+}
+.dark .accessibility-panel {
+    border: none !important;
+}
+
+.dark .accessibility-panel > div > div > div {
+    border: none !important;
+}
+/* DARK MODE — Remove header brown border */
+.dark header.sticky {
+    border-bottom: none !important;
+}
+
+.dark header {
+    border: none !important;
+    border-bottom: none !important;
+}
+
+
 footer {
     background-color: rgb(18,25,43) !important;
     color: #fdf8f3 !important; /* your tan/cream text color */
@@ -673,5 +727,239 @@ footer {
     line-height: 1.2 !important;
 }
 
+/* Fix: Prevent accessibility panel from scaling with text size */
+.accessibility-panel,
+.accessibility-panel *,
+.accessibility-panel *::before,
+.accessibility-panel *::after {
+    /* Reset font size to fixed pixels */
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+}
+
+.accessibility-panel-keyboard,
+.accessibility-panel-keyboard *,
+.accessibility-panel-keyboard *::before,
+.accessibility-panel-keyboard *::after {
+    /* Reset font size to fixed pixels */
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+}
+
+/* Force fixed width and height for MAIN panel only */
+.accessibility-panel:not(.accessibility-panel-keyboard) {
+    width: 280px !important;
+    max-width: 280px !important;
+    min-width: 280px !important;
+    /* Override the root font-size scaling by setting a local base */
+    font-size: 14px !important;
+}
+
+/* Keyboard navigation panel keeps its own width */
+.accessibility-panel-keyboard {
+    width: 320px !important;
+    max-width: 320px !important;
+    min-width: 320px !important;
+    font-size: 13px !important;
+}
+
+/* Override any inherited scaling */
+.accessibility-panel,
+.accessibility-panel-keyboard {
+    transform: scale(1) !important;
+}
+
+/* Fix all spacing to use pixels instead of rem */
+.accessibility-panel,
+.accessibility-panel-keyboard {
+    padding: 16px !important;
+    gap: 12px !important;
+}
+
+.accessibility-panel .grid,
+.accessibility-panel-keyboard .grid {
+    gap: 16px !important;
+}
+
+.accessibility-panel .flex,
+.accessibility-panel-keyboard .flex {
+    gap: 16px !important;
+}
+
+.accessibility-panel > div,
+.accessibility-panel-keyboard > div {
+    gap: 16px !important;
+}
+
+/* Fix padding for inner elements */
+.accessibility-panel .p-3,
+.accessibility-panel-keyboard .p-3 {
+    padding: 12px !important;
+}
+
+.accessibility-panel .p-5,
+.accessibility-panel-keyboard .p-5 {
+    padding: 20px !important;
+}
+
+.accessibility-panel .py-2,
+.accessibility-panel-keyboard .py-2 {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+.accessibility-panel .px-3,
+.accessibility-panel-keyboard .px-3 {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+}
+
+.accessibility-panel .py-1,
+.accessibility-panel-keyboard .py-1 {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+
+.accessibility-panel .p-1,
+.accessibility-panel-keyboard .p-1 {
+    padding: 4px !important;
+}
+
+/* Fix margins */
+.accessibility-panel .mt-2,
+.accessibility-panel-keyboard .mt-2 {
+    margin-top: 8px !important;
+}
+
+.accessibility-panel .mt-3,
+.accessibility-panel-keyboard .mt-3 {
+    margin-top: 12px !important;
+}
+
+.accessibility-panel .mt-4,
+.accessibility-panel-keyboard .mt-4 {
+    margin-top: 16px !important;
+}
+
+/* Fix button sizing */
+.accessibility-panel button,
+.accessibility-panel-keyboard button {
+    font-size: 16px !important;
+    padding: 8px 12px !important;
+    min-width: auto !important;
+    height: auto !important;
+}
+
+/* Fix width constraints */
+.accessibility-panel .min-w-\[90px\],
+.accessibility-panel-keyboard .min-w-\[90px\] {
+    min-width: 90px !important;
+}
+
+.accessibility-panel .w-5,
+.accessibility-panel-keyboard .w-5 {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.accessibility-panel .h-5,
+.accessibility-panel-keyboard .h-5 {
+    height: 20px !important;
+}
+
+/* Specific size overrides for different elements */
+.accessibility-panel h2,
+.accessibility-panel-keyboard h2 {
+    font-size: 16px !important;
+}
+
+.accessibility-panel h3,
+.accessibility-panel-keyboard h3 {
+    font-size: 14px !important;
+}
+
+.accessibility-panel span,
+.accessibility-panel-keyboard span {
+    font-size: 13px !important;
+}
+
+.accessibility-panel .text-sm,
+.accessibility-panel-keyboard .text-sm {
+    font-size: 12px !important;
+}
+
+.accessibility-panel .text-lg,
+.accessibility-panel-keyboard .text-lg {
+    font-size: 16px !important;
+}
+
+.accessibility-panel .text-xl,
+.accessibility-panel-keyboard .text-xl {
+    font-size: 18px !important;
+}
+
+.accessibility-panel .text-xs,
+.accessibility-panel-keyboard .text-xs {
+    font-size: 11px !important;
+}
+
+.accessibility-panel .font-medium,
+.accessibility-panel-keyboard .font-medium {
+    font-size: 14px !important;
+}
+
+.accessibility-panel .font-semibold,
+.accessibility-panel-keyboard .font-semibold {
+    font-size: 14px !important;
+}
+
+.accessibility-panel .font-mono,
+.accessibility-panel-keyboard .font-mono {
+    font-size: 12px !important;
+}
+
+/* Fix rounded corners to pixel values */
+.accessibility-panel .rounded-xl,
+.accessibility-panel-keyboard .rounded-xl {
+    border-radius: 12px !important;
+}
+
+.accessibility-panel .rounded-2xl,
+.accessibility-panel-keyboard .rounded-2xl {
+    border-radius: 16px !important;
+}
+
+.accessibility-panel .rounded-full,
+.accessibility-panel-keyboard .rounded-full {
+    border-radius: 9999px !important;
+}
+
+.accessibility-panel .rounded,
+.accessibility-panel-keyboard .rounded {
+    border-radius: 4px !important;
+}
+
+/* Fix gap spacing for keyboard panel grid */
+.accessibility-panel-keyboard .gap-y-2 {
+    row-gap: 8px !important;
+}
+
+.accessibility-panel-keyboard .gap-2 {
+    gap: 8px !important;
+}
+
+.accessibility-panel-keyboard .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+/* Dark mode - keyboard panel close button background */
+.dark .accessibility-panel-keyboard button[aria-label="Close options panel"] {
+    background-color: #2a241d !important;
+}
+
+/* Dark mode - main accessibility panel close button background */
+.dark .accessibility-panel button[aria-label="Close accessibility panel"] {
+    background-color: #7a6754 !important;
+}
 
 

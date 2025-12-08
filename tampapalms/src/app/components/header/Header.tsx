@@ -10,7 +10,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/70 border-b border-white/30 shadow-[0_6px_30px_rgba(15,23,42,0.12)] backdrop-blur-xl supports-[backdrop-filter]:bg-white/40">
+    <header className="sticky top-0 z-50 w-full bg-white/70 border-b border-white/30 shadow-[0_6px_30px_rgba(15,23,42,0.12)] backdrop-blur-xl supports-[backdrop-filter]:bg-white/40 dark:!border-0">
       <div className="w-full flex items-center justify-between px-4 lg:px-6">
         <Logo className="object-contain h-auto" />
 
