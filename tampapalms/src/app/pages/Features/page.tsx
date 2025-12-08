@@ -273,14 +273,16 @@ export default function Features() {
                     </li>
                   </ul>
 
-                  <a
-                    href="https://www.google.com/maps/dir/?api=1&destination=17425+Bridge+Hill+Ct,+Tampa,+FL+33647"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-8 inline-flex items-center justify-center w-full md:w-auto rounded-full bg-[#a49382] px-35 py-4 text-lg font-semibold text-white shadow-lg hover:bg-[#8b7a66] transition-colors"
+                  <div className="flex justify-center md:justify-start">
+                    <a
+                      href="https://www.google.com/maps/dir/?api=1&destination=17425+Bridge+Hill+Ct,+Tampa,+FL+33647"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-8 inline-flex items-center justify-center w-full text-center md:w-auto rounded-full bg-[#a49382] px-35 py-4 text-lg font-semibold text-white shadow-lg hover:bg-[#8b7a66] transition-colors"
                     >
-                    Get Directions
-                  </a>
+                      Get Directions
+                    </a>
+                  </div>
                 </div>
 
                 {/* Right Map Side */}
