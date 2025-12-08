@@ -269,6 +269,7 @@
   },
   "features": {
     "accessibilityWidget": true,
-    "toastNotifications": true
+    "toastNotifications": true,
+    "loggingEnabled": false
   }
 }

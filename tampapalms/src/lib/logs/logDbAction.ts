@@ -1,4 +1,5 @@
 import { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
+import config from "../../../../config.json";
 
 const EVENT_TYPES = [
   "CONTACT_FORM_SUBMISSION",
@@ -75,6 +76,11 @@ const deriveEventType = (
   }
 };
 
+const LOGGING_ENABLED =
+  typeof config?.features?.loggingEnabled === "boolean"
+    ? config.features.loggingEnabled
+    : true;
+
 /**
  * Executes a database query and logs the action to the logs table
  * @param supabase The Supabase client instance (serverClient)
@@ -92,6 +98,10 @@ export async function logDbAction<T>(
     userIdentifier: string,
     metadata: LogMetadata = {},
 ): Promise<{ data: T | null; error: PostgrestError | null}> {
+
+    if (!LOGGING_ENABLED) {
+      return queryPromise;
+    }
     
     // Execute the main DB query
     const result = await queryPromise;
