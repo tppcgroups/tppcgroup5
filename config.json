@@ -158,18 +158,18 @@
     "assets": {
       "heroCarousel": [
         "/images/Bldg5-003.jpg",
-        "/images/Bldg6-001.jpg",
-        "/images/Bldg5-005.jpg"
+        "/images/Bldg5-003.jpg",
+        "/images/Bldg5-003.jpg",
       ],
       "logo": "/images/TampaPalmsLogo.png"
     },
     "stats": {
       "rentableSqFtLabel": "Rentable sq. ft.",
       "rentableSqFtHelper": "Maintained to Class-A standards",
-      "flexibleSuites": 180,
+      "flexibleSuites": 200,
       "flexibleSuitesLabel": "Professional Suites",
       "flexibleSuitesHelper": "Business-ready spaces",
-      "buildingAvailable": 26,
+      "buildingAvailable": 30,
       "buildingAvailableLabel": "Buildings",
       "buildingAvailableHelper": "Maintained to standard",
       "yearHistoryValue": "20+",
