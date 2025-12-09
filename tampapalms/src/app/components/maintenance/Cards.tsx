@@ -1,4 +1,4 @@
-import projectConfig from "../../../../../config.json";
+import projectConfig from "../../../../../config.json" assert { type: "json" };
 import type { IconType } from "react-icons";
 import { ArrowUpRight } from "lucide-react";
 import { PiNotebook, PiWrench, PiCheckCircle, PiPhoneBold } from "react-icons/pi";

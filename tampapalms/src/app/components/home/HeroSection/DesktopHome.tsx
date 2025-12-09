@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ImageCarousel } from "@/app/components/home/carousel/ImageCarousel";
 import HighlightedLocation from "./HighlightedLocation";
 import { HiOutlineArrowSmDown } from "react-icons/hi";
+import { getFontSize } from "@/lib/theme/typography";
 
 
 import {
@@ -116,14 +117,23 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
               aria-hidden="true"
             />
             <div className="relative space-y-5 p-5 text-[#fdf8f3]">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#f0d4a6]">
+              <p
+                className="font-semibold uppercase tracking-[0.35em] text-[#f0d4a6]"
+                style={{ fontSize: getFontSize("small") }}
+              >
                 Flexible workspace in New Tampa
               </p>
-              <h1 className="text-4xl font-semibold leading-snug text-[#fdf8f3]">
+              <h1
+                className="font-semibold leading-snug text-[#fdf8f3]"
+                style={{ fontSize: getFontSize("h1") }}
+              >
                 Tampa Palms
                 <span className="block text-white">Professional Center</span>
               </h1>
-              <p className="text-base text-white">
+              <p
+                className="text-white"
+                style={{ fontSize: getFontSize("body") }}
+              >
                 Featuring Class A office suites designed to meet the needs of today&apos;s businesses. With customizable spaces, scenic surroundings, and attentive on-site management.
               </p>
               <div className="flex flex-wrap gap-3">

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
-import projectConfig from "../../../../../../config.json";
+import projectConfig from "../../../../../../config.json" assert { type: "json" };
 import FadeIn from "@/app/components/animations/FadeIn";
 import {
   ArrowUpRight,
@@ -187,7 +187,7 @@ export default function HomeSections({
         
       {/* Overview */}
       <FadeIn>
-      <div className="overflow-hidden rounded-[32px] border border-neutral-200 bg-gradient-to-br from-[#faf8f5] via-white to-[#f0ebe3] shadow-[0_30px_80px_rgba(15,14,13,0.12)]">
+      <div className="overflow-hidden rounded-[32px] border border-neutral-200 bg-gradient-to-br from-[#faf8f5] via-white to-[#f0ebe3] shadow-[0_30px_80px_rgba(15,14,13,0.12)] dark:shadow-[0_30px_80px_rgba(0,0,0,0.6)] dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-700 dark:border-neutral-700">
         <div className="grid gap-10 p-8 md:p-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="space-y-6">
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#7a6754]">
@@ -243,7 +243,7 @@ export default function HomeSections({
 
       {/* Highlights */}
       <FadeIn delay={150}>
-      <div className="space-y-6 rounded-[32px] border border-neutral-200 bg-gradient-to-br from-[#faf8f5] via-white to-[#f6f3ef] p-8 shadow-inner">
+      <div className="space-y-6 rounded-[32px] border border-neutral-200 bg-gradient-to-br from-[#faf8f5] via-white to-[#f6f3ef] p-8 shadow-inner dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-700 dark:border-neutral-700">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#7a6754]">Why Tampa Palms</p>

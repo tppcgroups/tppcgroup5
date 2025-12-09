@@ -252,30 +252,22 @@ export default function Features() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
                 {/* Left Text Side */}
                 <div>
-                  <h3 className="text-2xl font-semibold text-black mb-6">Prime Location</h3>
+                  <h3 className="text-2xl font-semibold text-black mb-6">
+                    {config.featuresPage.primeLocation.title}
+                  </h3>
 
                   <ul className="space-y-3 text-lg text-black">
-                    <li className="flex items-start gap-3">
-                      <PiCheckCircleBold className="mt-1 h-5 w-5 flex-shrink-0 text-[#a49382]" />
-                      Located right off I-75 and Bruce B. Downs, one of the busiest corridors in Tampa Bay.
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <PiCheckCircleBold className="mt-1 h-5 w-5 flex-shrink-0 text-[#a49382]" />
-                      Only a couple minutes from the interstate.
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <PiCheckCircleBold className="mt-1 h-5 w-5 flex-shrink-0 text-[#a49382]" />
-                      Less than ten minutes from I-4 and I-275.
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <PiCheckCircleBold className="mt-1 h-5 w-5 flex-shrink-0 text-[#a49382]" />
-                      Easy access to the entire region.
-                    </li>
+                    {config.featuresPage.primeLocation.listItems.map((item, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <PiCheckCircleBold className="mt-1 h-5 w-5 flex-shrink-0 text-[#a49382]" />
+                        {item}
+                      </li>
+                    ))}
                   </ul>
 
                   <div className="flex justify-center md:justify-start">
                     <a
-                      href="https://www.google.com/maps/dir/?api=1&destination=17425+Bridge+Hill+Ct,+Tampa,+FL+33647"
+                      href={config.featuresPage.primeLocation.directionsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="mt-8 inline-flex items-center justify-center w-full text-center md:w-auto rounded-full bg-[#a49382] px-35 py-4 text-lg font-semibold text-white shadow-lg hover:bg-[#8b7a66] transition-colors"
