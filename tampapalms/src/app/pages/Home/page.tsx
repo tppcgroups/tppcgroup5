@@ -10,6 +10,7 @@ import HomeSections from "@/app/components/home/HeroSection/HomeSections"
 import axios from "axios"
 import type { Building } from "@/app/components/availability/type"
 import FadeIn from "@/app/components/animations/FadeIn"
+import projectConfig from "../../../../../config.json" assert { type: "json" };
 
 type BuildingApi = Partial<Building> & { offices_type?: unknown };
 
@@ -17,14 +18,15 @@ export default function Home(){
   const [totalSize, setTotalSize] = useState(0);
   const [flexibleSuites, setFlexibleSuites] = useState(0);
   const [buildingAvailable, setBuildingAvailable] = useState(0);
-    const images = [
-      "/images/Bldg5-003.jpg",
-      "/images/Bldg6-001.jpg",
-      "/images/Bldg5-005.jpg",
-      // "/images/Bldg6-012.jpg",,
-      // "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Building-Photo-9-LargeHighDefinition.jpg",
-      // "/images/17425/17425-Bridge-Hill-Ct-Tampa-FL-Aerial-13-LargeHighDefinition.jpg",
-    ];  
+    const images =
+      Array.isArray(projectConfig?.homePage?.assets?.heroCarousel) &&
+      projectConfig.homePage.assets.heroCarousel.length > 0
+        ? projectConfig.homePage.assets.heroCarousel
+        : [
+            "/images/Bldg5-003.jpg",
+            "/images/Bldg6-001.jpg",
+            "/images/Bldg5-005.jpg",
+          ];
 
     useEffect(() => {
       async function fetchBuildingStats() {

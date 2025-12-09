@@ -1,8 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
+import projectConfig from "../../../../../config.json" assert { type: "json" };
 
 // Displays the leasing office address alongside the brand lockup.
 export function FooterLeasingOffice() {
+  const logoSrc =
+    projectConfig?.homePage?.assets?.logo ||
+    projectConfig?.branding?.logo ||
+    "/images/TampaPalmsLogo.png";
+
   return (
     <div className="space-y-4">
       <div className="space-y-2 border-white/10 text-sm text-white md:border-l md:pl-4">
@@ -14,7 +20,7 @@ export function FooterLeasingOffice() {
 
         <Link href="/pages/Home" className="inline-flex items-center">
           <Image
-            src="/images/TampaPalmsLogo.png"
+            src={logoSrc}
             alt="Tampa Palms Professional Center Logo"
             width={195}
             height={70}

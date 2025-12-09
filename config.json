@@ -154,16 +154,15 @@
       "NEXT_PUBLIC_NOTIFY_SUBSCRIBE_URL": "https://tppcgroup5.vercel.app/pages/DeleteEmail"
     }
   },
-  "assets": {
-    "heroCarousel": [
-      "/images/Bldg5-003.jpg",
-      "/images/Bldg6-001.jpg",
-      "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinitionEdit.png",
-      "/images/Bldg6-007.jpg"
-    ],
-    "logo": "/images/TampaPalmsLogo.png"
-  },
-    "homePage": {
+  "homePage": {
+    "assets": {
+      "heroCarousel": [
+        "/images/Bldg5-003.jpg",
+        "/images/Bldg6-001.jpg",
+        "/images/Bldg5-005.jpg"
+      ],
+      "logo": "/images/TampaPalmsLogo.png"
+    },
     "stats": {
       "rentableSqFtLabel": "Rentable sq. ft.",
       "rentableSqFtHelper": "Maintained to Class-A standards",
@@ -195,7 +194,6 @@
       }
     ]
   },
-  
   "featuresPage": {
     "featureTiles": [
       {
