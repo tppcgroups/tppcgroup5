@@ -12,7 +12,12 @@ const defaults: Record<TypographyKeys, string> = {
   button: "15px",
 };
 
-const typography = { ...defaults, ...(config as any)?.typography };
+type ConfigShape = {
+  typography?: Partial<Record<TypographyKeys, string>>;
+};
+
+const cfg = config as unknown as ConfigShape;
+const typography = { ...defaults, ...(cfg.typography ?? {}) };
 
 export const getFontSize = (key: TypographyKeys): string => {
   const value = typography[key];
