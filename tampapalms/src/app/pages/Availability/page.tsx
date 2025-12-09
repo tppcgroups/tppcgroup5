@@ -484,7 +484,7 @@ function AvailabilityContent() {
         <div className="flex flex-col gap-12">
           {/* Ground map + suite list */}
           <div className="grid gap-8 lg:grid-cols-6">
-            <div ref={mapSectionRef} className="lg:col-span-3">
+            <div ref={mapSectionRef} className="lg:col-span-3 order-2 lg:order-1">
               <CampusGroundMap
                 availableBuildings={availableBuildingNumbers}
                 onSuiteSelect={handleSuiteSelection}
@@ -492,7 +492,7 @@ function AvailabilityContent() {
               />
             </div>
             <div
-              className="lg:col-span-3"
+              className="lg:col-span-3 order-1 lg:order-2"
               style={
                 mapHeight
                   ? {
