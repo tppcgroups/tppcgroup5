@@ -30,6 +30,7 @@ export type Building = {
   space_use: string,
   price: string,
   availability_status: string | null,
+  available_date?: string | null,
   owned_leased: string,
   offices_count: number,
   bathrooms_count: string,
