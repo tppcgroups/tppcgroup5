@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {announce} from "@/app/components/RentalApplication/screenReader";
 import { ChevronDown } from "lucide-react";
+import { getFontSize } from "@/lib/theme/typography";
 
 // The component is now simpler
 type LeafLink = { href: string; label: string };
@@ -70,9 +71,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
     ? "flex flex-col items-center space-y-6 py-4"
     : "flex flex-col md:flex-row md:flex-1 md:justify-end items-center md:space-x-6 lg:space-x-10 space-y-6 md:space-y-0 py-4 md:py-0";
 
-  const linkSizeClasses = isMobile
-    ? "text-sm sm:text-lg md:text-xl"
-    : "text-sm sm:text-base md:text-[17px] lg:text-lg max-[1230px]:text-[15px]";
+  const linkStyle = { fontSize: getFontSize("nav") };
 
   return (
     <div
@@ -94,9 +93,10 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                     <span
                       onClick={handleLinkClick}
                       onMouseOver={() => announce(childLink.label)}
-                      className={`${BASE_LINK_CLASSES} ${linkSizeClasses} py-2 ${
+                      className={`${BASE_LINK_CLASSES} py-2 ${
                         pathname === childLink.href ? "after:w-full" : ""
                       }`}
+                      style={linkStyle}
                     >
                       {childLink.label}
                     </span>
@@ -121,6 +121,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                 className={`${BASE_LINK_CLASSES} ${linkSizeClasses} py-2 inline-flex items-center justify-center gap-1 group ${
                   openDropdown === link.label ? "after:w-full" : ""
                 }`}
+                style={linkStyle}
                 aria-expanded={openDropdown === link.label}
               >
                 <span className="cursor-pointer">{link.label}</span>
@@ -142,9 +143,10 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                     <span
                       onClick={handleLinkClick}
                       onMouseOver={() => announce(childLink.label)}
-                      className={`${BASE_LINK_CLASSES} ${DROPDOWN_LINK_SIZE_CLASSES} ${linkSizeClasses} px-3 py-1.5 sm:py-2 ${
+                      className={`${BASE_LINK_CLASSES} ${DROPDOWN_LINK_SIZE_CLASSES} px-3 py-1.5 sm:py-2 ${
                         pathname === childLink.href ? "after:w-full" : ""
                       }`}
+                      style={linkStyle}
                     >
                       {childLink.label}
                     </span>
@@ -160,9 +162,10 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
               <span
                 onClick={handleLinkClick}
                 onMouseOver={() => announce(link.label)}
-                className={`${BASE_LINK_CLASSES} ${linkSizeClasses} py-2 w-full ${
+                className={`${BASE_LINK_CLASSES} py-2 w-full ${
                   pathname === link.href ? "after:w-full" : ""
                 }`}
+                style={linkStyle}
               >
                 {link.label}
               </span>

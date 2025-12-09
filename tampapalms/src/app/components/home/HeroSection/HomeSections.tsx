@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
-import projectConfig from "../../../../../../config.json";
+import projectConfig from "../../../../../../config.json" assert { type: "json" };
 import FadeIn from "@/app/components/animations/FadeIn";
 import {
   ArrowUpRight,

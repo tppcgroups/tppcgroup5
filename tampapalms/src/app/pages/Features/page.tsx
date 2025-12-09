@@ -6,7 +6,7 @@ import { PiCheckCircleBold } from "react-icons/pi";
 import type { LucideIcon } from "lucide-react";
 import { DoorOpen, Maximize2, PencilRuler, VolumeX } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import config from "../../../../../config.json";
+import config from "../../../../../config.json" assert { type: "json" };
 import InfoBlurb from "../../components/contact/InfoBlurb";
 
 type FeatureTile = { heading: string; blurb: string; icon: string };

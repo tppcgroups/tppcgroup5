@@ -4,7 +4,7 @@ import React from "react";
 
 // Assuming this path for the Supabase server client (needed for logging)
 import { supabaseServer } from "@/lib/supabase/serverClient";
-import config from "../../../../../config.json";
+import config from "../../../../../config.json" assert { type: "json" };
 import { EmailTemplate } from "@/app/components/email/EmailTemplate";
 import { AvailabilityNotificationEmail } from "@/app/components/email/AvailabilityNotificationEmail";
 import { PostgrestError } from "@supabase/supabase-js";

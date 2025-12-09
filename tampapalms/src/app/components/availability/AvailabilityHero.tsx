@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getFontSize } from "@/lib/theme/typography";
 
 // AvailabilityHero renders the introductory banner for the availability page with CTAs and total suite count.
 type AvailabilityHeroProps = {
@@ -30,15 +31,24 @@ export function AvailabilityHero({ availableCount }: AvailabilityHeroProps) {
           </div>
           <div className="grid w-full gap-8 lg:grid-cols-[1fr_auto] lg:items-end lg:justify-items-stretch">
             <div className="space-y-5 text-center md:text-left lg:justify-self-start">
-              <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">
+              <h1
+                className="font-semibold leading-tight"
+                style={{ fontSize: getFontSize("h1") }}
+              >
                 Find the right suite for your team
               </h1>
-              <p className="mx-auto max-w-3xl text-base text-white/80 md:mx-0">
+              <p
+                className="mx-auto max-w-3xl text-white/80 md:mx-0"
+                style={{ fontSize: getFontSize("body") }}
+              >
                 Browse current availability across the Tampa Palms campus. Each
                 listing includes imagery, specs, and highlights so you can
                 compare options before touring in person.
               </p>
-              <div className="flex flex-col items-center gap-3 text-sm sm:flex-row sm:items-center sm:justify-start">
+              <div
+                className="flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:justify-start"
+                style={{ fontSize: getFontSize("button") }}
+              >
                 <Link
                   href="/pages/Contact"
                   className="inline-flex items-center justify-center rounded-full bg-white/90 px-6 py-3 font-semibold text-[#1f1a16] shadow-lg shadow-black/10 transition hover:bg-white"

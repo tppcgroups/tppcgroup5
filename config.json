@@ -308,5 +308,14 @@
   },
   "features": {
     "loggingEnabled": true
+  },
+  "typography": {
+    "h1": "36px",
+    "h2": "30px",
+    "h3": "24px",
+    "body": "16px",
+    "small": "14px",
+    "nav": "16px",
+    "button": "15px"
   }
 }
