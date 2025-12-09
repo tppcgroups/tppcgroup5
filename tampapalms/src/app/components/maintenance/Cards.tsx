@@ -1,10 +1,6 @@
 import type { IconType } from "react-icons";
-import {
-  PiNotebook,
-  PiWrench,
-  PiCheckCircle,
-  PiPhoneBold,
-} from "react-icons/pi";
+import { ArrowUpRight } from "lucide-react";
+import { PiNotebook, PiWrench, PiCheckCircle, PiPhoneBold } from "react-icons/pi";
 
 const emergencyPhone = "813-876-7697";
 const emergencyTel = "tel:8138767697";
@@ -53,29 +49,23 @@ const Card = () => {
       </header>
 
       <div className="mt-12 grid gap-6 md:grid-cols-3">
-        {steps.map((step) => {
+        {steps.map((step, index) => {
           const Icon = step.icon;
           return (
-            <article
-              key={step.title}
-              className="relative flex h-full flex-col gap-5 rounded-2xl bg-white/95 p-8 shadow-lg shadow-[#1f1a16]/5 ring-1 ring-black/5 transition  hover:shadow-xl"
+            <div
+              key={`${step.title}-${index}`}
+              className="group relative flex h-full flex-col gap-4 rounded-3xl border border-[#c8b79f] bg-white p-6 shadow-lg shadow-black/5 hover:border-[#5a4b3c]"
             >
-              <span
-                className="absolute left-8 top-0 h-1.5 w-16 rounded-full bg-[#7a6754]"
-                aria-hidden="true"
-              />
-              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f4ece1] text-3xl text-shadow-gray-800 dark:text-[#7a6754]">
-                <Icon aria-hidden="true" />
+              <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-[#ddd0bd] text-[#5a4b3c]">
+                <Icon className="h-5 w-5" aria-hidden />
               </span>
-              <div className="space-y-3">
-                <h3 className="text-xl font-semibold text-[#1f1a16]">
+              <div className="space-y-2 ">
+                <p className="text-lg font-semibold text-[#1f1a16]">
                   {step.title}
-                </h3>
-                <p className="text-base leading-relaxed text-[#7a6754] dark:text-[#f5f2ec]">
-                  {step.description}
                 </p>
+                <p className="text-sm text-neutral-600">{step.description}</p>
               </div>
-            </article>
+            </div>
           );
         })}
       </div>

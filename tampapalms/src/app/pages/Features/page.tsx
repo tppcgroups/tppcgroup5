@@ -113,7 +113,7 @@ export default function Features() {
               href="/pages/Contact"
               className="inline-flex w-full items-center justify-center rounded-full border border-white/60 px-8 py-3 font-semibold text-white transition hover:bg-white/10 sm:w-auto"
             >
-              Schedule a Tour
+              Contact Us
             </Link>
           </div>
         </div>
