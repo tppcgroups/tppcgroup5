@@ -123,7 +123,7 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
                 <span className="block text-white">Professional Center</span>
               </h1>
               <p className="text-base text-white">
-                Featuring Class A office suites designed to meet the needs of today's businesses. With customizable spaces, scenic surroundings, and attentive on-site management.
+                Featuring Class A office suites designed to meet the needs of today&apos;s businesses. With customizable spaces, scenic surroundings, and attentive on-site management.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link
