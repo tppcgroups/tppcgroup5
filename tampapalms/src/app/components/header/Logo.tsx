@@ -12,7 +12,7 @@ interface LogoProps {
 export const Logo: React.FC<LogoProps>= ({className}) => {
   const logoSrc =
     projectConfig?.homePage?.assets?.logo ||
-    projectConfig?.assets?.logo ||
+    projectConfig?.branding?.logo ||
     "/images/TampaPalmsLogo.png";
 
   return (

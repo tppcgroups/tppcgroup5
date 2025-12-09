@@ -6,7 +6,7 @@ import projectConfig from "../../../../../config.json" assert { type: "json" };
 export function FooterLeasingOffice() {
   const logoSrc =
     projectConfig?.homePage?.assets?.logo ||
-    projectConfig?.assets?.logo ||
+    projectConfig?.branding?.logo ||
     "/images/TampaPalmsLogo.png";
 
   return (
