@@ -163,19 +163,39 @@
     ],
     "logo": "/images/TampaPalmsLogo.png"
   },
-  "stats": {
-    "flexibleSuites": 180,
-    "buildingAvailable": 26,
-    "rentableSqFtLabel": "Rentable sq. ft.",
-    "rentableSqFtHelper": "Maintained to Class-A standards",
-    "flexibleSuitesLabel": "Professional Suites",
-    "flexibleSuitesHelper": "Business-ready spaces",
-    "buildingAvailableLabel": "Buildings",
-    "buildingAvailableHelper": "Maintained to standard",
-    "yearHistoryValue": "20+",
-    "yearHistoryLabel": "Years of Experience",
-    "yearHistoryHelper": "Trusted expertise "
+    "homePage": {
+    "stats": {
+      "rentableSqFtLabel": "Rentable sq. ft.",
+      "rentableSqFtHelper": "Maintained to Class-A standards",
+      "flexibleSuites": 180,
+      "flexibleSuitesLabel": "Professional Suites",
+      "flexibleSuitesHelper": "Business-ready spaces",
+      "buildingAvailable": 26,
+      "buildingAvailableLabel": "Buildings",
+      "buildingAvailableHelper": "Maintained to standard",
+      "yearHistoryValue": "20+",
+      "yearHistoryLabel": "Years of Experience",
+      "yearHistoryHelper": "Trusted expertise "
+    },
+    "cards": [
+      {
+        "title": "Consistent Quality Standards",
+        "desc": "A secure, well-maintained Class-A environment built for professional teams.",
+        "href": "/pages/Features"
+      },
+      {
+        "title": "Service Designed Around Your Workflow",
+        "desc": "Responsive, high-quality support that keeps your organization focused on its core priorities.",
+        "href": "/pages/Maintenance"
+      },
+      {
+        "title": "Community-Driven Growth",
+        "desc": "A professional environment where strong business relationships form and companies thrive.",
+        "href": "/pages/Testimonials"
+      }
+    ]
   },
+  
   "featuresPage": {
     "featureTiles": [
       {

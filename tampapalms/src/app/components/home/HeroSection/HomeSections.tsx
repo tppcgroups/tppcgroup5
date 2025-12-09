@@ -89,60 +89,66 @@ export default function HomeSections({
   buildingAvailable = 0,
 }: Props) {
   const galleryImages = gallery.length ? gallery.slice(0, 4) : [];
+  const homeSectionCardsConfig = projectConfig?.homePage?.cards as Highlight[] | undefined;
+  const highlightCards = homeSectionCardsConfig?.length ? homeSectionCardsConfig : highlights;
 
   const formattedTotalSize = totalSize
     ? `${Math.round(totalSize / 1000).toLocaleString()}K+`
     : "0";
 
-  const configStats = projectConfig?.stats || {};
+  // Pull homepage metrics from config.json to keep copy centralized
+  const homeStatsConfig = projectConfig?.homePage?.stats || {};
 
   const flexibleSuitesValue =
-    typeof configStats.flexibleSuites === "number" && Number.isFinite(configStats.flexibleSuites)
-      ? configStats.flexibleSuites
+    typeof homeStatsConfig.flexibleSuites === "number" && Number.isFinite(homeStatsConfig.flexibleSuites)
+      ? homeStatsConfig.flexibleSuites
       : flexibleSuites ?? 0;
   const flexibleSuitesLabel =
-    typeof configStats.flexibleSuitesLabel === "string" && configStats.flexibleSuitesLabel.trim()
-      ? configStats.flexibleSuitesLabel
+    typeof homeStatsConfig.flexibleSuitesLabel === "string" && homeStatsConfig.flexibleSuitesLabel.trim()
+      ? homeStatsConfig.flexibleSuitesLabel
       : "Flexible Suites";
   const flexibleSuitesHelper =
-    typeof configStats.flexibleSuitesHelper === "string" && configStats.flexibleSuitesHelper.trim()
-      ? configStats.flexibleSuitesHelper
+    typeof homeStatsConfig.flexibleSuitesHelper === "string" && homeStatsConfig.flexibleSuitesHelper.trim()
+      ? homeStatsConfig.flexibleSuitesHelper
       : "Business-ready space";
 
   const buildingAvailableValue =
-    typeof configStats.buildingAvailable === "number" && Number.isFinite(configStats.buildingAvailable)
-      ? configStats.buildingAvailable
+    typeof homeStatsConfig.buildingAvailable === "number" &&
+    Number.isFinite(homeStatsConfig.buildingAvailable)
+      ? homeStatsConfig.buildingAvailable
       : buildingAvailable ?? 0;
   const buildingAvailableLabel =
-    typeof configStats.buildingAvailableLabel === "string" && configStats.buildingAvailableLabel.trim()
-      ? configStats.buildingAvailableLabel
+    typeof homeStatsConfig.buildingAvailableLabel === "string" &&
+    homeStatsConfig.buildingAvailableLabel.trim()
+      ? homeStatsConfig.buildingAvailableLabel
       : "Buildings";
   const buildingAvailableHelper =
-    typeof configStats.buildingAvailableHelper === "string" && configStats.buildingAvailableHelper.trim()
-      ? configStats.buildingAvailableHelper
+    typeof homeStatsConfig.buildingAvailableHelper === "string" &&
+    homeStatsConfig.buildingAvailableHelper.trim()
+      ? homeStatsConfig.buildingAvailableHelper
       : "Maintained to standard";
 
   const yearHistoryValue =
-    typeof configStats.yearHistoryValue === "string" && configStats.yearHistoryValue.trim()
-      ? configStats.yearHistoryValue
+    typeof homeStatsConfig.yearHistoryValue === "string" && homeStatsConfig.yearHistoryValue.trim()
+      ? homeStatsConfig.yearHistoryValue
       : "20+";
   const yearHistoryLabel =
-    typeof configStats.yearHistoryLabel === "string" && configStats.yearHistoryLabel.trim()
-      ? configStats.yearHistoryLabel
+    typeof homeStatsConfig.yearHistoryLabel === "string" && homeStatsConfig.yearHistoryLabel.trim()
+      ? homeStatsConfig.yearHistoryLabel
       : "Year History";
 
   const yearHistoryHelper =
-    typeof configStats.yearHistoryHelper === "string" && configStats.yearHistoryHelper.trim()
-      ? configStats.yearHistoryHelper
+    typeof homeStatsConfig.yearHistoryHelper === "string" && homeStatsConfig.yearHistoryHelper.trim()
+      ? homeStatsConfig.yearHistoryHelper
       : "Trusted expertise supporting professional tenants.";
 
   const rentableSqFtLabel =
-    typeof configStats.rentableSqFtLabel === "string" && configStats.rentableSqFtLabel.trim()
-      ? configStats.rentableSqFtLabel
+    typeof homeStatsConfig.rentableSqFtLabel === "string" && homeStatsConfig.rentableSqFtLabel.trim()
+      ? homeStatsConfig.rentableSqFtLabel
       : "Rentable sq. ft.";
   const rentableSqFtHelper =
-    typeof configStats.rentableSqFtHelper === "string" && configStats.rentableSqFtHelper.trim()
-      ? configStats.rentableSqFtHelper
+    typeof homeStatsConfig.rentableSqFtHelper === "string" && homeStatsConfig.rentableSqFtHelper.trim()
+      ? homeStatsConfig.rentableSqFtHelper
       : "Well-kept property";
 
       // All the Computed Insights are on the Config.json
@@ -249,7 +255,7 @@ export default function HomeSections({
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
-          {highlights.map((highlight, index) => {
+          {highlightCards.map((highlight, index) => {
             const Icon = highlightIcons[index % highlightIcons.length];
 
             return (
