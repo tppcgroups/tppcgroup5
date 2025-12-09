@@ -24,7 +24,7 @@ const NAV_LINKS: MenuLink[] = [
   //   ],
   // },
   { href: "/pages/Maintenance", label: "Maintenance" },
-  { href: "/pages/Apply", label: "Apply" },
+  { href: "/pages/Apply", label: "Apply Now" },
   { href: "/pages/Testimonials", label: "Testimonials" },
   { href: "/pages/FAQ", label: "FAQ" },
   { href: "/pages/Contact", label: "Contact" },
