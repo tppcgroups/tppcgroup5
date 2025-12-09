@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
 
-import { renderConfirmationEmail, renderInternalNotificationEmail } from "@/lib/email/contactEmails";
+import { renderConfirmationEmail, renderInternalNotificationEmail, renderOwnerNotificationEmail } from "@/lib/email/contactEmails";
 import { getSupabaseServiceRoleClient } from "@/lib/supabase/serviceRoleClient";
 import { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
 import { logDbAction } from "@/lib/logs/logDbAction";
@@ -14,6 +14,7 @@ type ContactPayload = {
   consent?: string | boolean | null;
   company?: string | null;
   ["phone-number"]?: string;
+  interest?: string | null;
 };
 
 const MAX_MESSAGE_LENGTH = 4000;
@@ -122,6 +123,7 @@ export async function POST(req: Request) {
   const phoneNumber = normalizeString(payload["phone-number"]);
   const company = normalizeString(payload.company);
   const consent = parseConsent(payload.consent);
+  const interest = normalizeString(payload.interest);
 
   if (company) {
     return NextResponse.json({ success: true });
@@ -132,7 +134,7 @@ export async function POST(req: Request) {
   if (!email || !emailPattern.test(email)) {
     return NextResponse.json({ error: "Please enter a valid email address." }, { status: 400 });
   }
-  if (!message || message.length < 10) {
+  if (!message || message.length < 3) {
     return NextResponse.json({ error: "Please provide more detail in your message." }, { status: 400 });
   }
   if (message.length > MAX_MESSAGE_LENGTH) {
@@ -187,6 +189,15 @@ export async function POST(req: Request) {
         operation: "contact_form_submission",
         eventTypeOverride: "CONTACT_FORM_SUBMISSION",
         email,
+        subject: subject || null,
+        message,
+        phone_number: phoneNumber || null,
+        metadata: {
+          consent,
+          referer: req.headers.get("referer"),
+          userAgent: req.headers.get("user-agent"),
+          interest: interest || null,
+        },
       }
     );
 
@@ -207,6 +218,13 @@ export async function POST(req: Request) {
       process.env.SITE_URL ||
       new URL(req.url).origin;
     const unsubscribeLink = `${siteUrl}/api/unsubscribe?token=${userId}`;
+    if ((interest || "").toLowerCase() === "soar") {
+      console.log("Contact form interest set to SOAR; routing to SOAR marketing.");
+    }
+    const isSoar = (interest || "").toLowerCase() === "soar";
+    const internalRecipient = isSoar
+      ? "marketing@soarco-working.com"
+      : "marketing@tampapalmscenter.com";
     const confirmationHtml = renderConfirmationEmail({
       name,
       email,
@@ -214,6 +232,7 @@ export async function POST(req: Request) {
       message,
       phoneNumber,
       unsubscribeLink,
+      interest,
     });
     const internalHtml = renderInternalNotificationEmail({
       name,
@@ -223,6 +242,16 @@ export async function POST(req: Request) {
       phoneNumber,
       recordId,
       unsubscribeLink,
+      interest,
+    });
+    const ownerHtml = renderOwnerNotificationEmail({
+      name,
+      email,
+      subject,
+      message,
+      phoneNumber,
+      recordId,
+      interest,
     });
 
     await Promise.all([
@@ -234,9 +263,9 @@ export async function POST(req: Request) {
       }),
       transporter.sendMail({
         from,
-        to: internal,
+        to: internalRecipient,
         subject: recordId ? `New contact inquiry (#${recordId})` : "New contact inquiry",
-        html: internalHtml,
+        html: ownerHtml,
       }),
     ]);
   } catch (error) {

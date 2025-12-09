@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { HiStar, HiChevronDown } from "react-icons/hi";
+import { HiChevronDown } from "react-icons/hi";
 
 type Testimonial = {
   id?: number;
@@ -10,14 +10,6 @@ type Testimonial = {
   person_name?: string | null;
   company?: string | null;
 };
-
-const StarRating = () => (
-  <div className="flex items-center gap-1 text-amber-400" aria-hidden="true">
-    {Array.from({ length: 5 }).map((_, index) => (
-      <HiStar key={index} className="h-5 w-5" />
-    ))}
-  </div>
-);
 
 const TestimonialsPage = () => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
@@ -53,7 +45,7 @@ const TestimonialsPage = () => {
     }));
   };
 
-  const getExcerpt = (text: string, length = 220) => {
+  const getExcerpt = (text: string, length = 800) => {
     if (text.length <= length) return text;
     return `${text.slice(0, length).trim()}…`;
   };
@@ -77,11 +69,10 @@ const TestimonialsPage = () => {
             </span>
             <div className="space-y-4">
               <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">
-                Minimal words, meaningful proof.
+                Authentic Tenants, Authentic Stories
               </h1>
               <p className="max-w-2xl text-base text-white/80">
-                Leaders across healthcare, advisory, and technology trust Tampa Palms for polished spaces,
-                attentive service, and a calm campus energy that lets their work speak louder.
+                We offer more than professional workspace; we provide support that helps your business operate, grow, and thrive.
               </p>
             </div>
           </div>
@@ -96,7 +87,7 @@ const TestimonialsPage = () => {
               Insights from the tenants and partners who help make Tampa Palms a thriving professional community.
             </p>
             <p className="mt-3 text-sm text-[#7a6754]">
-              Collected from healthcare, legal, advisory, and growth-stage teams throughout the campus.
+              Collected from healthcare, legal, advisory, and growth-stage teams across the community.
             </p>
           </div>
           <div className="space-y-5">
@@ -120,42 +111,49 @@ const TestimonialsPage = () => {
 
                   const key = testimonial.id?.toString() ?? name;
                   const isExpanded = expanded[key];
+                  const excerpt = getExcerpt(description);
+                  const isTruncated = excerpt !== description;
 
                   return (
                     <figure
                       key={key}
-                      className="rounded-[28px] border border-[#e1d9cf] bg-white p-6 shadow-[0_25px_45px_-35px_rgba(31,26,22,0.5)]"
+                      className="relative overflow-hidden rounded-[28px] border border-[#e1d9cf] bg-white/95 p-7 shadow-[0_25px_45px_-35px_rgba(31,26,22,0.5)]"
                     >
-                    <div className="flex items-center justify-between gap-4">
-                      <StarRating />
-                      <span className="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-[#a49382]">
-                        Verified tenant
-                      </span>
-                    </div>
-                      <blockquote className="mt-4 text-lg font-medium leading-relaxed text-[#1f1a16]">
+                      <div className="absolute inset-x-6 top-0 h-[3px] rounded-full " />
+                      <div className="flex flex-wrap items-start justify-between gap-3 pt-1">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f3ede5] text-base font-semibold text-[#4a4034]">
+                            {name.charAt(0)}
+                          </div>
+                          <div>
+                            <p className="text-sm font-semibold text-[#1f1a16]">{name}</p>
+                            {testimonial.company && <p className="text-xs text-[#7a6754]">{testimonial.company}</p>}
+                          </div>
+                        </div>
+                        <span className="rounded-full bg-[#f3ede5] px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-[#7a6754]">
+                          Verified tenant
+                        </span>
+                      </div>
+                      <blockquote className="mt-4 border-l-4 border-[#7a6754] pl-4 text-lg leading-relaxed text-[#1f1a16]">
                         <span
                           key={`${key}-${isExpanded ? "open" : "closed"}`}
                           className={`inline-block w-full transition-all duration-300 ${
                             isExpanded ? "fade-in-text" : "opacity-100"
                           }`}
                         >
-                          “{isExpanded ? description : getExcerpt(description)}”
+                          “{isExpanded || !isTruncated ? description : excerpt}”
                         </span>
                       </blockquote>
-                    {description.length > 220 && (
-                      <button
-                        type="button"
-                        onClick={() => toggleExpanded(key)}
-                        className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[#7a6754] transition hover:text-[#4a4034]"
-                      >
-                        {isExpanded ? "Show less" : "Read full story"}
-                        <HiChevronDown className={`h-4 w-4 transition ${isExpanded ? "rotate-180" : ""}`} />
-                      </button>
-                    )}
-                      <figcaption className="mt-5 text-sm text-[#7a6754]">
-                        <p className="font-semibold text-[#1f1a16]">{name}</p>
-                        {testimonial.company && <p>{testimonial.company}</p>}
-                      </figcaption>
+                      {isTruncated && (
+                        <button
+                          type="button"
+                          onClick={() => toggleExpanded(key)}
+                          className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#7a6754] transition hover:text-[#4a4034]"
+                        >
+                          {isExpanded ? "Show less" : "Read full story"}
+                          <HiChevronDown className={`h-4 w-4 transition ${isExpanded ? "rotate-180" : ""}`} />
+                        </button>
+                      )}
                     </figure>
                   );
                 })}

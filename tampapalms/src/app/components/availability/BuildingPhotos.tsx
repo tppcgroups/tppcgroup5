@@ -13,16 +13,17 @@ type BuildingGalleryProps = {
   onNext: () => void;
   onSelectImage: (index: number) => void;
   suiteLabel?: string;
+  isMobile: boolean;
 };
 
-export function BuildingPhotos({images, activeImageIndex, onPrev, onNext, onSelectImage, suiteLabel}: BuildingGalleryProps){
+export function BuildingPhotos({images, activeImageIndex, onPrev, onNext, onSelectImage, suiteLabel, isMobile}: BuildingGalleryProps){
 
   // Variables and logic for thumbnail wrapping
   const imageIndices = [];
-  const numThumbnails = 4; // we'll show 4 on desktop but only 2 on small screens via responsive classes
+  const numThumbnails = isMobile ? 2 : 4; // mobile shows fewer thumbnails
   const totalImages = images.length;
 
-  for (let i = 0; i < numThumbnails; i++) {
+  for (let i = 1; i <= numThumbnails; i++) {
     const index = (activeImageIndex + i) % totalImages;
     imageIndices.push(index);
   }
@@ -88,8 +89,8 @@ export function BuildingPhotos({images, activeImageIndex, onPrev, onNext, onSele
         )}
       </div>
 
-      {images.length > 1 && (
-        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
+    {images.length > 1 && (
+        <div className="md:grid hidden mt-6 grid-cols-2 gap-4 sm:grid-cols-4">
           {imageIndices.map((index, i) => (
             <button
               key={i}

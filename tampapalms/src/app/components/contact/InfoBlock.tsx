@@ -1,15 +1,17 @@
 // Primary contact methods with quick links to call, email, and visit.
 export default function InfoBlock() {
-  const googleDir =
-    "https://www.google.com/maps/dir/?api=1&destination=17427+Bridge+Hill+Court,+Suite+C,+Tampa,+FL+33647";
-  const appleDir =
-    "https://maps.apple.com/?daddr=17427+Bridge+Hill+Court,+Suite+C,+Tampa,+FL+33647";
+  const locationName = "Tampa Palms Professional Center";
+  const locationCoords = "28.1285165,-82.3810778";
+  const encodedAddress = "17427+Bridge+Hill+Ct+STE+C,+Tampa,+FL+33647";
+  const googleDir = `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`;
+  const appleDir = `https://maps.apple.com/?q=${encodedAddress}&daddr=${encodedAddress}`;
 
   return (
     <div className="space-y-6 text-lg">
       <div>
         <p className="font-semibold">Phone</p>
         <a
+          href="tel:+18138767697"
           className=" decoration-neutral-400 hover:decoration-[#4a4034] "
         >
           813-876-7697

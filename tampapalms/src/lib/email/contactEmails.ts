@@ -6,6 +6,7 @@ type ContactEmailPayload = {
   phoneNumber?: string;
   recordId?: string | null;
   unsubscribeLink?: string;
+  interest?: string;
 };
 
 function baseWrapper(content: string) {
@@ -40,6 +41,11 @@ export function renderConfirmationEmail(payload: ContactEmailPayload) {
           <p style="margin:0;font-size:15px;color:#1f1a16;"><strong>Subject:</strong> ${
             payload.subject || "General Inquiry"
           }</p>
+          ${
+            payload.interest
+              ? `<p style="margin:8px 0 0;font-size:15px;color:#1f1a16;"><strong>Interest:</strong> ${payload.interest}</p>`
+              : ""
+          }
           ${
             payload.phoneNumber
               ? `<p style="margin:8px 0 0;font-size:15px;color:#1f1a16;"><strong>Phone:</strong> ${payload.phoneNumber}</p>`
@@ -80,6 +86,11 @@ export function renderInternalNotificationEmail(payload: ContactEmailPayload) {
               : ""
           }
           ${
+            payload.interest
+              ? `<p style="margin:6px 0;font-size:15px;color:#1f1a16;"><strong>Interest:</strong> ${payload.interest}</p>`
+              : ""
+          }
+          ${
             payload.recordId
               ? `<p style="margin:6px 0;font-size:15px;color:#1f1a16;"><strong>Record ID:</strong> ${payload.recordId}</p>`
               : ""
@@ -91,6 +102,50 @@ export function renderInternalNotificationEmail(payload: ContactEmailPayload) {
         <p style="margin:24px 0 0;font-size:13px;color:#7a6754;">
           Prefer not to receive future updates?
           <a href="${unsubscribeUrl}" style="color:#1f1a16;text-decoration:underline;">Unsubscribe here.</a>
+        </p>
+      </td>
+    </tr>
+  `;
+  return baseWrapper(content);
+}
+
+// Owner/marketing notification with highlighted inquiry details.
+export function renderOwnerNotificationEmail(payload: ContactEmailPayload) {
+  const unsubscribeUrl =
+    payload.unsubscribeLink ||
+    "https://tppcgroup5.vercel.app/api/unsubscribe";
+  const content = `
+    <tr>
+      <td>
+        <p style="text-transform:uppercase;letter-spacing:0.35em;font-size:12px;color:#7a6754;margin:0;">New Contact Inquiry</p>
+        <h1 style="font-size:24px;margin:12px 0 0;color:#1f1a16;">${payload.subject || "General Inquiry"}</h1>
+        <div style="margin:20px 0 0;padding:18px;border:1px solid #e1d9cf;border-radius:16px;background-color:#fdf8f3;">
+          <p style="margin:6px 0;font-size:15px;color:#1f1a16;"><strong>Name:</strong> ${payload.name}</p>
+          <p style="margin:6px 0;font-size:15px;color:#1f1a16;"><strong>Email:</strong> ${payload.email}</p>
+          ${
+            payload.phoneNumber
+              ? `<p style="margin:6px 0;font-size:15px;color:#1f1a16;"><strong>Phone:</strong> ${payload.phoneNumber}</p>`
+              : ""
+          }
+          ${
+            payload.interest
+              ? `<p style="margin:6px 0;font-size:15px;color:#1f1a16;"><strong>Interest:</strong> ${payload.interest}</p>`
+              : ""
+          }
+          ${
+            payload.recordId
+              ? `<p style="margin:6px 0;font-size:15px;color:#1f1a16;"><strong>Record ID:</strong> ${payload.recordId}</p>`
+              : ""
+          }
+          <p style="margin:12px 0 0;font-size:15px;color:#1f1a16;white-space:pre-line;">
+            <strong>Message:</strong> ${payload.message}
+          </p>
+        </div>
+        <p style="margin:20px 0 0;font-size:13px;color:#7a6754;">
+          Reply directly to the sender above, or view the inquiry in the admin tools.
+        </p>
+        <p style="margin:18px 0 0;font-size:12px;color:#a49382;">
+          <a href="${unsubscribeUrl}" style="color:#1f1a16;text-decoration:underline;">Unsubscribe</a>
         </p>
       </td>
     </tr>

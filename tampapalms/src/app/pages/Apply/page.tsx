@@ -27,7 +27,7 @@ export default function Apply() {
   return (
     <main className="min-h-screen bg-[#f9f7f3] text-[#1f1a16]">
       <section className="bg-[#f9f7f3] px-4 sm:px-6">
-        <header className="relative -mx-4 overflow-hidden rounded-none shadow-[0_35px_90px_-70px_rgba(31,26,22,0.8)] sm:-mx-6">
+        <header className="relative -mx-4 overflow-hidden rounded-none shadow-[0_35px_90px_-70px_rgba(31,26,22,0.8)] sm:-mx-6 bg-[#1f1a16]/5 dark:bg-transparent">
           <Image
             src={heroImage}
             alt="Apply for workspace at Tampa Palms"
@@ -49,7 +49,7 @@ export default function Apply() {
                 Submit essentials and we’ll verify availability, outline costs, and guide you to move-in without slowing momentum.
               </p>
             </div>
-            <div className="flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:gap-4">
+              <div className="flex w-full flex-row items-center gap-8 pb-0 pt-6 md:max-w-lg md:gap-10 md:justify-start">
               <Link
                 href="https://tampapalmsprofessionalcenter.managebuilding.com/Resident/rental-application/new/apply"
                 className="inline-flex w-full items-center justify-center rounded-full bg-white/95 px-8 py-3 font-semibold text-[#1f1a16] shadow-lg shadow-black/20 transition hover:bg-white sm:w-auto"
@@ -76,18 +76,27 @@ export default function Apply() {
           <p className="mx-auto mt-4 max-w-2xl text-sm text-[#7a6754] sm:text-base">
             Share your team&apos;s requirements and timeline so we can prepare tailored availability and keep the leasing process moving quickly.
           </p>
-          <div className="mx-auto mt-6 h-0.5 w-16 bg-[#c8b79f] sm:w-24" aria-hidden="true" />
+          <div className="mx-auto mt-6 h-0.5 w-16 bg-[#c8b79f] sm:w-24 dark:bg-[#f5f2ec]" aria-hidden="true" />
         </header>
 
         <div className="flex flex-1 flex-col-reverse gap-12 px-4 sm:px-6 md:flex-row md:items-stretch md:gap-16 md:px-10">
           {/* Left info column */}
-          <div className="flex w-full flex-col items-center gap-8 pb-12 pt-6 md:w-1/2 md:max-w-lg md:items-start md:justify-start md:pt-10 md:gap-10">
-            <ApplicationTitle />
-            <Perks />
-            <ApplicationLink />
-          </div>
+            <div className="flex w-full flex-col items-center pb-12 pt-6 md:w-1/2 md:max-w-lg md:pt-10">
+                <div className="w-full max-w-md mx-auto space-y-8">
+                    <div className="text-center">
+                        <ApplicationTitle />
+                    </div>
 
-          {/* Right image column */}
+                    <Perks />
+
+                    <div className="flex justify-center">
+                        <ApplicationLink />
+                    </div>
+                </div>
+            </div>
+
+
+            {/* Right image column */}
           <div className="relative w-full pb-12 pt-6 md:flex-1 md:self-stretch md:pt-10">
             <div className="relative mx-auto flex h-64 w-full overflow-hidden rounded-2xl sm:h-72 md:h-full md:max-w-xl md:rounded-3xl">
               {/* {carouselImages.map((src, idx) => ( */}

@@ -1,6 +1,5 @@
 "use client";
 import accessibilityLogo from "../accessibility.png";
-import { translations } from "./Translations";
 import { announce } from "./screenReader";
 
 import { setScreenReaderEnabled } from "@/app/components/RentalApplication/screenReader";
@@ -8,11 +7,9 @@ import { setScreenReaderEnabled } from "@/app/components/RentalApplication/scree
 
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { HiChevronUp } from "react-icons/hi";
 import Image from "next/image";
 
-
-
-type Language = "English" | "Spanish" | "French" | "Swahili";
 
 
 
@@ -27,15 +24,14 @@ type AccessibilitySettingsSnapshot = {
     highlightIndex: number;
     reduceMotion: boolean;
     contrastIndex: number;
-    languageIndex: number;
     backgroundThemeIndex: number;
-    screenReaderMode: boolean;
 };
+
 const AccessibilityWidget: React.FC = () => {
     const [open, setOpen] = useState(false);
+    const [showScrollTop, setShowScrollTop] = useState(false);
     const [textScale, setTextScale] = useState(1);
     const [highContrast, setHighContrast] = useState(false);
-    const [language, setLanguage] = useState<Language>("English");
 
     const highlightOptions = ["default", "links", "buttons", "headers"] as const;
     const [highlightIndex, setHighlightIndex] = useState(0);
@@ -58,26 +54,6 @@ const AccessibilityWidget: React.FC = () => {
             prev === 0 ? contrastModes.length - 1 : prev - 1
         );
     };
-
-
-    const languages: Language[] = ["English", "Spanish", "French", "Swahili"];
-
-
-    const [languageIndex, setLanguageIndex] = useState(0);
-    const t = translations[languages[languageIndex] as Language];
-
-    const nextLanguage = () => {
-        setLanguageIndex((prev) => (prev + 1) % languages.length);
-    };
-
-    const prevLanguage = () => {
-        setLanguageIndex((prev) =>
-            prev === 0 ? languages.length - 1 : prev - 1
-        );
-    };
-
-
-    const [screenReaderMode, setScreenReaderMode] = useState(false);
 
     const [optionsPanelOpen, setOptionsPanelOpen] = useState(false);
 
@@ -135,9 +111,7 @@ const AccessibilityWidget: React.FC = () => {
         highlightIndex,
         reduceMotion,
         contrastIndex,
-        languageIndex,
         backgroundThemeIndex,
-        screenReaderMode,
     });
     const settingsLogInitializedRef = useRef(false);
 
@@ -155,8 +129,6 @@ const AccessibilityWidget: React.FC = () => {
             setHighlightIndex(settings.highlightIndex ?? 0);
             setReduceMotion(settings.reduceMotion ?? false);
             setContrastIndex(settings.contrastIndex ?? 0);
-            setLanguageIndex(settings.languageIndex ?? 0);
-            setScreenReaderMode(settings.screenReaderMode ?? false);
             setBackgroundThemeIndex(settings.backgroundThemeIndex ?? 0);
 
 
@@ -164,19 +136,6 @@ const AccessibilityWidget: React.FC = () => {
             console.error("Failed to load saved settings", err);
         }
     }, []);
-
-
-
-    useEffect(() => {
-        if (!screenReaderMode) return;
-
-        const timeout = setTimeout(() => {
-            announce("VoiceOver is now activated");
-            announce(document.title);
-        }, 600);
-
-        return () => clearTimeout(timeout);
-    }, [screenReaderMode]);
 
 
 
@@ -194,8 +153,6 @@ const AccessibilityWidget: React.FC = () => {
             html.classList.add("contrast-grayscale");
         }
 
-        html.setAttribute("lang", languages[languageIndex]);
-
         html.style.setProperty("--text-scale", textScale.toString());
         html.classList.toggle("high-contrast", highContrast);
         html.classList.toggle("reduce-motion", reduceMotion);
@@ -207,8 +164,6 @@ const AccessibilityWidget: React.FC = () => {
         if (currentHighlight === "links") html.classList.add("highlight-links");
         if (currentHighlight === "buttons") html.classList.add("highlight-buttons");
         if (currentHighlight === "headers") html.classList.add("highlight-headers");
-
-        html.classList.toggle("screen-reader-mode", screenReaderMode);
 
         const currentBackgroundTheme: backgroundThemeMode = backgroundThemeModes[backgroundThemeIndex];
         document.documentElement.classList.toggle("dark", currentBackgroundTheme === "dark");
@@ -225,7 +180,7 @@ const AccessibilityWidget: React.FC = () => {
 
 
 
-    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex, backgroundThemeIndex, screenReaderMode]);
+    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, backgroundThemeIndex]);
 
     useEffect(() => {
         const html = document.documentElement;
@@ -252,15 +207,13 @@ const AccessibilityWidget: React.FC = () => {
                 highlightIndex,
                 reduceMotion,
                 contrastIndex,
-                languageIndex,
                 backgroundThemeIndex,
-                screenReaderMode
             };
             localStorage.setItem("accessibilitySettings", JSON.stringify(settings));
         }, 300);
 
         return () => clearTimeout(timeout);
-    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, languageIndex, backgroundThemeIndex, screenReaderMode]);
+    }, [textScale, highContrast, highlightIndex, reduceMotion, contrastIndex, backgroundThemeIndex]);
 
     useEffect(() => {
         const currentSettings: AccessibilitySettingsSnapshot = {
@@ -269,9 +222,7 @@ const AccessibilityWidget: React.FC = () => {
             highlightIndex,
             reduceMotion,
             contrastIndex,
-            languageIndex,
             backgroundThemeIndex,
-            screenReaderMode,
         };
 
         if (!settingsLogInitializedRef.current) {
@@ -306,9 +257,7 @@ const AccessibilityWidget: React.FC = () => {
         highlightIndex,
         reduceMotion,
         contrastIndex,
-        languageIndex,
         backgroundThemeIndex,
-        screenReaderMode,
         logAccessibilityEvent,
     ]);
 
@@ -340,7 +289,7 @@ const AccessibilityWidget: React.FC = () => {
             const isCtrl = e.ctrlKey || e.metaKey;
             let handled = false;
 
-            
+
             if (isShift && (e.code === 'Equal' || e.code === 'NumpadAdd')) {
                 setTextScale(prev => Math.min(1.6, prev + 0.1));
                 handled = true;
@@ -359,14 +308,6 @@ const AccessibilityWidget: React.FC = () => {
                 handled = true;
             }
 
-
-            else if (isShift && e.code === 'KeyF') {
-                nextLanguage();
-                handled = true;
-            } else if (isShift && e.code === 'KeyP') {
-                prevLanguage();
-                handled = true;
-            }
 
             else if (isShift && e.code === 'KeyT') {
                 nextBackgroundTheme();
@@ -388,20 +329,6 @@ const AccessibilityWidget: React.FC = () => {
                 setReduceMotion(prev => !prev);
                 handled = true;
             }
-
-            else if (isShift && e.code === 'KeyV') {
-                const newValue = !screenReaderMode;
-                setScreenReaderMode(newValue);
-                setScreenReaderEnabled(newValue); // Update global state
-
-                if (newValue) {
-                    announce("VoiceOver is now activated");
-                } else {
-                    announce("VoiceOver is now turned off");
-                }
-                handled = true;
-            }
-
 
             else if (isCtrl && isShift && e.code === 'KeyO') {
                 toggleWidgetVisibility("shortcut");
@@ -425,10 +352,21 @@ const AccessibilityWidget: React.FC = () => {
         };
     }, [
         open,
-        textScale, screenReaderMode, setScreenReaderMode,
-        nextContrast, prevContrast, nextLanguage, prevLanguage, setTextScale,
-        toggleWidgetVisibility
+        textScale, nextContrast, prevContrast, setTextScale, toggleWidgetVisibility
     ]);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setShowScrollTop(window.scrollY > 300);
+        };
+        handleScroll();
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
 
 
 
@@ -436,31 +374,45 @@ const AccessibilityWidget: React.FC = () => {
 
     return (
         <>
-            <button
-                onClick={() => toggleWidgetVisibility("button")}
-                aria-label="Accessibility options"
-                tabIndex = {0}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        toggleWidgetVisibility("keyboard");
-                    }
-                }}
-                className="
-                    fixed bottom-5 right-5 z-[9999]
-                    bg-white border border-gray-300 shadow-xl
-                    rounded-full w-14 h-14
-                    flex items-center justify-center
-                "
-            >
-                <Image
-                    src={accessibilityLogo}
-                    alt="Accessibility icon"
-                    width={32}
-                    height={32}
-                    className="object-contain"
-                />
-            </button>
+            <div className="fixed bottom-5 right-5 z-[9999] flex flex-col items-end gap-3">
+                <button
+                    onClick={() => toggleWidgetVisibility("button")}
+                    aria-label="Accessibility options"
+                    tabIndex = {0}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            toggleWidgetVisibility("keyboard");
+                        }
+                    }}
+                    className="
+                        bg-white border border-[#c8b79f] shadow-xl
+                        rounded-full w-12 h-12
+                        flex items-center justify-center
+                        hover:scale-[1.03] transition-transform
+                        cursor-pointer
+                    "
+                >
+                    <Image
+                        src={accessibilityLogo}
+                        alt="Accessibility icon"
+                        width={32}
+                        height={32}
+                        className="object-contain"
+                    />
+                </button>
+
+                <button
+                    aria-label="Back to top"
+                    onClick={scrollToTop}
+                    aria-hidden={!showScrollTop}
+                    className={`flex h-12 w-12 items-center justify-center rounded-full bg-[#1f1a16] text-white shadow-[0_10px_25px_-10px_rgba(0,0,0,0.35)] transition-all duration-200 ease-in-out hover:shadow-[0_18px_32px_-12px_rgba(0,0,0,0.4)] focus:outline-none focus:ring-4 focus:ring-black/10 cursor-pointer hover:scale-[1.03] transition-transform ${
+                        showScrollTop ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-2 pointer-events-none"
+                    }`}
+                >
+                    <HiChevronUp className="h-6 w-6" aria-hidden />
+                </button>
+            </div>
 
 
 
@@ -471,14 +423,16 @@ const AccessibilityWidget: React.FC = () => {
                     aria-modal="true"
                     aria-labelledby="accessibility-panel-title"
                     className="
+                        accessibility-panel
                         fixed bottom-20 right-5 z-[9999]
-                        bg-white border border-gray-300 shadow-xl
+                        bg-white shadow-xl
                         rounded-2xl w-80 p-5
                         flex flex-col gap-4
-
-                        max-h-[80vh]     /* Prevents panel from going off-screen */
-                        overflow-y-auto  /* Enables scrolling */
+                        max-h-[80vh]
+                        overflow-y-auto
                         overscroll-contain
+                        [&:not(.dark_*)]:border
+                        [&:not(.dark_*)]:border-gray-300
                     "
                 >
 
@@ -486,47 +440,17 @@ const AccessibilityWidget: React.FC = () => {
                     <div className="flex items-center justify-between">
                         <h2
                             id="accessibility-panel-title"
-                            className="text-lg font-semibold text-gray-800">
-                            {t.header}
+                            className="text-lg font-semibold text-gray-800  dark:border-none">
+                            Accessibility Options
                         </h2>
 
                         <button
                             onClick={() => setOpen(false)}
                             aria-label="Close accessibility panel"
-                            className="text-gray-600 hover:text-gray-900 text-xl"
+                            className="text-gray-600 hover:text-gray-900 text-xl cursor-pointer"
                         >
                             ×
                         </button>
-                    </div>
-
-                    {/* LANGUAGE SELECTOR  (SLIDER) */}
-                    <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-
-                        <span className="font-medium text-gray-800">{t.language}</span>
-
-
-                        <div className="flex items-center gap-4 mt-3">
-
-                            {/* PREV BUTTON */}
-                            <button
-                                onClick={prevLanguage}
-                                className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
-                            >
-                                ←
-                            </button>
-
-                            <span className="text-sm font-medium text-gray-900 min-w-[90px] text-center">
-                                {languages[languageIndex]}
-                            </span>
-
-                            {/* NEXT BUTTON */}
-                            <button
-                                onClick={nextLanguage}
-                                className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
-                            >
-                                →
-                            </button>
-                        </div>
                     </div>
 
 
@@ -537,7 +461,7 @@ const AccessibilityWidget: React.FC = () => {
 
                         {/* TEXT SIZE */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                            <span className="font-medium text-gray-800">{t.textSize}</span>
+                            <span className="font-medium text-gray-800">Text Size</span>
 
                             <div className="flex items-center gap-4 mt-3">
                                 <button
@@ -565,7 +489,7 @@ const AccessibilityWidget: React.FC = () => {
                         {/* HIGH CONTRAST */}
                         {/* CONTRAST MODE CAROUSEL */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                            <span className="font-medium text-gray-800">{t.contrastMode}</span>
+                            <span className="font-medium text-gray-800">Contrast Mode</span>
 
                             <div className="flex items-center gap-4 mt-3">
 
@@ -625,7 +549,7 @@ const AccessibilityWidget: React.FC = () => {
 
                         {/* HIGHLIGHTS SECTION */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                            <span className="font-medium text-gray-800">{t.highlights}</span>
+                            <span className="font-medium text-gray-800">Highlights</span>
 
                             <div className="flex items-center gap-4 mt-3">
 
@@ -639,8 +563,15 @@ const AccessibilityWidget: React.FC = () => {
 
                                 {/* Display Current Highlight Mode */}
                                 <span className="text-sm font-medium text-gray-900 min-w-[90px] text-center">
-                                    {t[`highlight_${highlightOptions[highlightIndex]}`]}
+                                    {{
+                                        default: "Default",
+                                        links: "Highlight Links",
+                                        buttons: "Highlight Buttons",
+                                        headers: "Highlight Headers"
+                                    }[highlightOptions[highlightIndex]]}
                                 </span>
+
+
 
                                 {/* Next Button */}
                                 <button
@@ -656,7 +587,7 @@ const AccessibilityWidget: React.FC = () => {
 
                         {/* REDUCE MOTION */}
                         <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                            <span className="font-medium text-gray-800">{t.reduceMotion}</span>
+                            <span className="font-medium text-gray-800">Reduce Motion</span>
                             <input
                                 type="checkbox"
                                 checked={reduceMotion}
@@ -665,38 +596,24 @@ const AccessibilityWidget: React.FC = () => {
                             />
                         </div>
 
-                        {/* SCREEN READER */}
-                        <div className="flex flex-col items-center p-3 border rounded-xl bg-gray-50 col-span-2">
-                            <span className="font-medium text-gray-800">{t.screenReader}</span>
-
-                            <input
-                                type="checkbox"
-                                checked={screenReaderMode}
-                                onChange={() => {
-                                    const newValue = !screenReaderMode;
-                                    setScreenReaderMode(newValue);
-                                    setScreenReaderEnabled(newValue);
-
-                                    if (newValue) {
-                                        announce("VoiceOver is now activated");
-                                    } else {
-                                        announce("VoiceOver is now turned off");
-                                    }
-                                }}
-                                className="mt-3 w-5 h-5"
-                            />
-                        </div>
 
 
 
                     </div>
                     {/* Navigation Button */}
-                        <button
-                            onClick={() => setOptionsPanelOpen(true)}
-                            className="w-full py-2 mt-4 rounded-lg font-semibold text-white border border-[#3d342a] bg-[#120f0c] hover:bg-[#1b1815]"
-                        >
-                            {t.keyboardNavigation}
-                        </button>
+                    <button
+                        onClick={() => setOptionsPanelOpen(true)}
+                        className="
+                                w-full py-2 mt-4 rounded-full font-semibold text-white
+                                bg-gradient-to-r from-[#1f1a16] via-[#3a3127] to-[#1f1a16]
+                                shadow-xl shadow-[#1f1a16]/25
+                                hover:from-[#3a3127] hover:via-[#5a4b3c] hover:to-[#3a3127]
+                                transition-all duration-300 ease-out
+                                focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1a16]
+                            "
+                    >
+                        Keyboard Navigation
+                    </button>
                     {/* RESET BUTTON */}
                     <button
                         onClick={() => {
@@ -706,8 +623,6 @@ const AccessibilityWidget: React.FC = () => {
                             setHighlightIndex(0);
                             setReduceMotion(false);
                             setContrastIndex(0);
-                            setLanguageIndex(0);
-                            setScreenReaderMode(false);
                             setScreenReaderEnabled(false);
                             announce("VoiceOver is now turned off");
                             setBackgroundThemeIndex(0);
@@ -715,101 +630,109 @@ const AccessibilityWidget: React.FC = () => {
                             // Clear localStorage
                             localStorage.removeItem("accessibilitySettings");
                         }}
-                        className="w-full py-2 mt-4 rounded-lg font-semibold text-white border border-[#3d342a] bg-[#120f0c] hover:bg-[#1b1815]"
+                        className="
+                            w-full py-2 mt-4 rounded-full font-semibold text-white
+                            bg-gradient-to-r from-[#1f1a16] via-[#3a3127] to-[#1f1a16]
+                            shadow-xl shadow-[#1f1a16]/25
+                            hover:from-[#3a3127] hover:via-[#5a4b3c] hover:to-[#3a3127]
+                            transition-all duration-300 ease-out
+                            focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1a16]
+                        "
                     >
-                        {t.reset || "Reset Settings"}
+                        Reset Settings
                     </button>
 
 
-                    <div className="text-center text-xs text-gray-500 mt-2">
-                        {t.footer}
+                    <div className="text-center text-xs text-gray-500 mt-2 dark:bg-[#7a6754]">
+                        Accessibility tools for the Tampa palms Professional Center website.
+                    </div>
+                </div>
+            )}
+
+            {/* OPTIONS DETAILS PANEL */}
+            {optionsPanelOpen && (
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="options-panel-title"
+                    className="
+                        accessibility-panel-keyboard
+                        fixed bottom-20 right-[350px] z-[9999]
+                        bg-white border border-gray-300 shadow-2xl
+                        rounded-2xl w-96 p-5
+                        flex flex-col gap-4 max-h-[80vh] overflow-y-auto
+                        dark:bg-[#7a6754]
+                    "
+                    tabIndex={-1}
+                    onKeyDown={(e) => {
+                        if (e.key === "Escape") {
+                            setOptionsPanelOpen(false);
+                        }
+                    }}
+                >
+                    <div className="flex items-center justify-between  dark:bg-[#7a6754]">
+                        <h2 id="options-panel-title" className="text-lg font-bold #f5f2ec">
+                            Accessibility Options & Shortcuts
+                        </h2>
+                        <button
+                            onClick={() => setOptionsPanelOpen(false)}
+                            aria-label="Close options panel"
+                            className="#2a241d hover:#2a241d text-xl dark:bg-[#7a6754]"
+                        >
+                            ×
+                        </button>
                     </div>
 
-                    {/* --- NEW CODE: OPTIONS DETAILS PANEL --- */}
-                    {optionsPanelOpen && (
-                        <div
-                            role="dialog"
-                            aria-modal="true"
-                            aria-labelledby="options-panel-title"
-                            className="
-                                fixed bottom-20 right-[350px] z-[9999]
-                                bg-white border border-gray-300 shadow-2xl
-                                rounded-2xl w-96 p-5
-                                flex flex-col gap-4 max-h-[80vh] overflow-y-auto
-                            "
-                            // Add Escape key listener to close the new panel
-                            tabIndex={-1}
-                            onKeyDown={(e) => {
-                                if (e.key === "Escape") {
-                                    setOptionsPanelOpen(false);
-                                }
-                            }}
-                        >
-                            <div className="flex items-center justify-between">
-                                <h2 id="options-panel-title" className="text-lg font-bold text-gray-800">
-                                    {t.shortcutsHeader}
-                                </h2>
-                                <button
-                                    onClick={() => setOptionsPanelOpen(false)}
-                                    aria-label="Close options panel"
-                                    className="text-gray-600 hover:text-gray-900 text-xl"
-                                >
-                                    ×
-                                </button>
-                            </div>
+                    <p className="text-sm #f5f2ec dark:bg-[#2a241d]">
+                        Use these shortcuts anywhere on the site for quick adjustments.
+                    </p>
 
-                            <p className="text-sm text-gray-600">
-                                {t.shortcutsIntro}
-                            </p>
+                    <div className="flex flex-col gap-2 dark:bg-[#1f1a16]">
+                        <h3 className="font-semibold #f5f2ec mt-2 dark:bg-[#2a241d]">Keyboard Navigation</h3>
 
-                            <div className="flex flex-col gap-2">
-                                <h3 className="font-semibold text-gray-800 mt-2">{t.keyboardNavigation}</h3>
+                        {/* List the Shortcuts */}
+                        <div className="grid grid-cols-2 gap-y-2 text-sm dark:bg-[#2a241d]">
 
-                                {/* List the Shortcuts */}
-                                <div className="grid grid-cols-2 gap-y-2 text-sm">
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Ctrl + Shift + O</span>
+                            <span>Shortcuts Panel</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Ctrl + Shift + O</span>
-                                    <span>{t.shortcutsPanel}</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + F</span>
+                            <span>Shortcuts Next Language</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + F</span>
-                                    <span>{t.shortcutsNextLanguage}</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + P</span>
+                            <span>Shortcuts Previous Language</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + P</span>
-                                    <span>{t.shortcutsPrevLanguage}</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift +</span>
+                            <span>Shortcuts Increase Text</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift +</span>
-                                    <span>{t.shortcutsIncreaseText}</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift -</span>
+                            <span>Shortcuts Decrease Text</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift -</span>
-                                    <span>{t.shortcutsDecreaseText}</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + C</span>
+                            <span>Shortcuts Next Contrast</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + C</span>
-                                    <span>{t.shortcutsNextContrast}</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + Z</span>
+                            <span>Shortcuts Previous Contrast</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + Z</span>
-                                    <span>{t.shortcutsPrevContrast}</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + T</span>
+                            <span>Shortcuts Next Theme</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + T</span>
-                                    <span>{t.shortcutsNextTheme}</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + B</span>
+                            <span>Shortcuts Previous Theme</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + B</span>
-                                    <span>{t.shortcutsPrevTheme}</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + H</span>
+                            <span>Shortcuts Next Highlight</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + H</span>
-                                    <span>{t.shortcutsNextHighlight}</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + L</span>
+                            <span>Shortcuts Previous Highlight</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + L</span>
-                                    <span>{t.shortcutsPrevHighlight}</span>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + M</span>
+                            <span>Shortcuts Toggle Reduce Motion</span>
 
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + M</span>
-                                    <span>{t.shortcutsToggleReduceMotion}</span>
-
-                                    <span className="font-mono bg-gray-100 p-1 rounded">Shift + V</span>
-                                    <span>{t.shortcutsToggleScreenReader}</span>
-                                </div>
-                            </div>
+                            <span className="font-mono bg-gray-100 p-1 rounded dark:bg-[#2a241d]">Shift + V</span>
+                            <span>Shortcuts Toggle Screen Reader</span>
                         </div>
-                    )}
+                    </div>
                 </div>
             )}
         </>

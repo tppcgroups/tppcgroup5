@@ -8,76 +8,67 @@ type AvailabilityHeroProps = {
 
 export function AvailabilityHero({ availableCount }: AvailabilityHeroProps) {
   return (
-    <section className="bg-white py-16">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="grid gap-10 lg:grid-cols-[3fr_2fr]">
-          {/* Intro headline + description */}
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#a49382]">
-              Available Spaces
-            </p>
-            <div className="mt-6 space-y-4">
-              <h1 className="text-3xl font-semibold leading-tight text-[#1f1a16] md:text-4xl">
+    <section className="bg-[#f9f7f3] px-4 sm:px-6">
+      <header className="relative -mx-4 overflow-hidden rounded-none shadow-[0_35px_90px_-70px_rgba(31,26,22,0.8)] sm:-mx-6">
+        <Image
+          src="/images/TPPC-Entry-004.jpg"
+          alt="Tampa Palms Professional Center entry"
+          fill
+          className="object-cover object-[center_60%]"
+          sizes="(max-width: 768px) 100vw, 1400px"
+          priority
+        />
+        <div
+          className="pointer-events-none absolute inset-y-0 left-0 w-full max-w-4xl bg-gradient-to-r from-[#1f1a16]/90 via-[#1f1a16]/45 to-transparent"
+          aria-hidden="true"
+        />
+        <div className="relative z-10 flex flex-col items-center gap-8 px-6 py-16 text-center text-white md:items-start md:px-14 md:py-20 md:text-left">
+          <div className="w-full">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white self-center md:self-start">
+              Availability
+            </span>
+          </div>
+          <div className="grid gap-8 lg:grid-cols-[3fr_2fr] lg:items-end">
+            <div className="space-y-5 text-center md:text-left">
+              <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">
                 Find the right suite for your team
               </h1>
-              <p className="text-sm text-[#7a6754] md:text-base">
-                Browse current availability across the Tampa Palms campus. Each listing includes imagery,
-                specs, and highlights so you can compare options before touring in person.
+              <p className="mx-auto max-w-3xl text-base text-white/80 md:mx-0">
+                Browse current availability across the Tampa Palms campus. Each
+                listing includes imagery, specs, and highlights so you can
+                compare options before touring in person.
               </p>
-            </div>
-            {/* Primary calls-to-action */}
-            <div className="mt-8 flex flex-wrap gap-3 text-sm">
-              <Link
-                href="/pages/Contact"
-                className="inline-flex items-center rounded-full border border-[#d4c7b7] px-6 py-3 font-semibold text-[#1f1a16] transition hover:border-[#b6a895] hover:bg-[#f4ece1]"
-              >
-                Talk with Our Team
-              </Link>
-            </div>
-          </div>
-
-          {/* Hero imagery with overlay */}
-          <div className="relative min-h-[260px] overflow-hidden rounded-3xl">
-            <Image
-              src="/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Interior-Photo-10-LargeHighDefinition.jpg"
-              alt="Modern executive office interior"
-              width={1000}
-              height={800}
-              className="h-full w-full object-cover"
-              priority
-            />
-            <div
-              className="absolute inset-0 bg-gradient-to-tr from-[#1f1a16]/80 via-[#1f1a16]/20 to-transparent"
-              aria-hidden="true"
-            />
-            {/* Overlay copy describing availability */}
-            <div className="absolute inset-0 flex flex-col justify-between p-6 text-white">
-              <div className="space-y-2">
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
-                  Available Now
-                </p>
-                <h2 className="text-2xl font-semibold">Suites ready for move-in</h2>
-                <p className="text-sm text-white/80 max-w-sm">
-                  Preview the spaces that are currently open. Tap a suite below to explore photos,
-                  specifications, and highlights.
-                </p>
+              <div className="flex flex-col items-center gap-3 text-sm sm:flex-row sm:items-center sm:justify-start">
+                <Link
+                  href="/pages/Contact"
+                  className="inline-flex items-center justify-center rounded-full bg-white/90 px-6 py-3 font-semibold text-[#1f1a16] shadow-lg shadow-black/10 transition hover:bg-white"
+                >
+                  Talk with Our Team
+                </Link>
+                <Link
+                  href="#availability"
+                  className="inline-flex items-center justify-center rounded-full border border-white/70 px-6 py-3 font-semibold text-white transition hover:bg-white/10"
+                >
+                  View spaces below
+                </Link>
               </div>
-              {/* Available suite count badge */}
-              <div className="flex items-center justify-center">
-                <div className="rounded-2xl border border-white/40 bg-white/10 px-6 py-4 text-center shadow-sm backdrop-blur">
-                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
-                    Available Spaces
-                  </p>
-                  <p className="mt-2 text-3xl font-semibold text-white">{availableCount}</p>
-                  <p className="mt-1 text-xs text-white/70">
-                    Ready for tours and applications today
-                  </p>
-                </div>
+            </div>
+            <div className="justify-self-center lg:justify-self-end">
+              <div className="rounded-2xl border border-white/30 bg-white/10 px-6 py-5 text-center shadow-lg backdrop-blur">
+                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
+                  Available Spaces
+                </p>
+                <p className="mt-2 text-3xl font-semibold text-white">
+                  {availableCount}
+                </p>
+                <p className="mt-1 text-xs text-white/70">
+                  Ready for tours and applications today
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </header>
     </section>
   );
 }

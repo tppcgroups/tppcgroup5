@@ -11,8 +11,41 @@ type BuildingProps = {
 }
 
 export function BuildingDetails({activeBuilding, normalizeStatus}: BuildingProps) {
-  const statusClass = statusMap[normalizeStatus(activeBuilding.availability_status)].className;
-  const statusLabel = statusMap[normalizeStatus(activeBuilding.availability_status)].label;
+  const normalizedStatus = normalizeStatus(activeBuilding.availability_status);
+  const statusClass = statusMap[normalizedStatus].className;
+  const statusLabel = statusMap[normalizedStatus].label;
+
+  const availableDateDisplay = (() => {
+    if (!activeBuilding.available_date) return null;
+    const raw = String(activeBuilding.available_date).trim();
+
+    // Prefer manual parsing to avoid timezone shifting "YYYY-MM-DD" dates.
+    const match = raw.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (match) {
+      const [_, y, m, d] = match;
+      const localDate = new Date(
+        Number(y),
+        Number(m) - 1,
+        Number(d)
+      );
+      return localDate.toLocaleDateString(undefined, {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
+    }
+
+    // Fallback to native parsing if format is unexpected.
+    const parsed = new Date(raw);
+    if (Number.isNaN(parsed.getTime())) {
+      return raw;
+    }
+    return parsed.toLocaleDateString(undefined, {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  })();
 
   const [isOpen, setIsOpen] = useState(false);
   
@@ -68,12 +101,17 @@ export function BuildingDetails({activeBuilding, normalizeStatus}: BuildingProps
           </div>
           <div className="flex items-center justify-between rounded-2xl border border-[#f4ece1] bg-[#fdf8f3] px-4 py-3">
             <dt className="font-semibold text-[#1f1a16]">Status</dt>
-            <dd>
+            <dd className="flex items-center gap-2 text-xs font-semibold text-[#4a4034]">
               <span
-                className={`rounded-full px-3 py-1 text-xs font-semibold ${statusClass}`}
+                className={`rounded-full px-3 py-1 ${statusClass}`}
               >
                 {statusLabel}
               </span>
+              {normalizedStatus === "comingSoon" && availableDateDisplay && (
+                <span className="rounded-full border border-[#e1d9cf] bg-white px-3 py-1 text-[11px] font-semibold text-[#7a6754]">
+                  Available {availableDateDisplay}
+                </span>
+              )}
             </dd>
           </div>
         </dl>

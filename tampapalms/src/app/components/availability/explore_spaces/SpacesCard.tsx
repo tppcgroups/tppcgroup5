@@ -1,23 +1,20 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { PiArrowCircleRightBold } from "react-icons/pi";
 
 interface SpacesCardProps {
   title: string;
   imageUrl: string;
   features: string[];
-  label?: string;
 }
 
 export const SpacesCard: React.FC<SpacesCardProps> = ({
   title,
   imageUrl,
   features,
-  label = "Commercial Real Estate",
 }) => {
   const featureListId = React.useId();
-  const featureSummary = `${label}: ${features.join(", ")}`;
+  const featureSummary = features.join(", ");
 
   return (
     <div
@@ -37,23 +34,14 @@ export const SpacesCard: React.FC<SpacesCardProps> = ({
           className="absolute inset-0 bg-gradient-to-t from-[#1f1a16]/65 via-[#1f1a16]/10 to-transparent opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
           aria-hidden="true"
         />
-
-        <div className="absolute left-4 top-4 inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#4a4034] shadow-sm ring-1 ring-[#e1d9cf]">
-          {label}
-        </div>
-
         <div
           className="absolute inset-x-0 bottom-0 hidden translate-y-6 flex-col gap-3 bg-gradient-to-t from-black/15 via-black/5 to-transparent p-6 text-white opacity-0 backdrop-blur-[3px] transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 md:flex"
           aria-hidden="true"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
-            {label}
-          </p>
-          <h3 className="text-2xl font-semibold">{title}</h3>
-          <ul className="grid gap-2 text-sm text-white/90">
+          <ul className="grid gap-3 text-base font-medium text-white/95 md:text-lg">
             {features.map((feature) => (
               <li key={feature} className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-white/80" aria-hidden="true" />
+                <span className="h-2 w-2 rounded-full bg-white/80" aria-hidden="true" />
                 {feature}
               </li>
             ))}
@@ -63,9 +51,6 @@ export const SpacesCard: React.FC<SpacesCardProps> = ({
 
       <div className="flex flex-col gap-5 px-7 py-6 md:gap-6 ">
         <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#a49382]">
-            {label}
-          </p>
           <h3 className="text-[1.65rem] font-semibold text-[#1f1a16] md:text-[1.85rem]">
             {title}
           </h3>
@@ -85,11 +70,6 @@ export const SpacesCard: React.FC<SpacesCardProps> = ({
             ))}
           </ul>
         </div>
-
-        <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#1f1a16] md:text-[1.05rem]">
-          View Details
-            <PiArrowCircleRightBold aria-hidden="true" className="text-xl" />
-        </span>
       </div>
     </div>
   );

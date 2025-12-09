@@ -11,18 +11,41 @@ type Perk = {
 
 const perks: Perk[] = [
   {
-    title: "Great Location",
-    details: ["Great Lunch and Dining Locations", "Close Proximity to Downtown Tampa", "Professional Environment"],
+    title: "Location Advantages",
+    details: [
+        "Heart of Tampa",
+        "Near major neighborhoods",
+        "Easy commute",
+        "Free parking",
+        "Lakeside views",
+        "Nature surroundings",
+        "Strong business community",
+        "Nearby dining options"
+    ],
     icon: PiMapPin,
   },
   {
-    title: "Onsite Support",
-    details: ["On-site Maintenance Team", "On-site Management Team", "Professional Reception and Mail Handling"],
+    title: "Dedicated On-Site Service",
+    details: [
+        "On-site maintenance",
+        "On-site management",
+        "Reception and mail handling",
+        "Quick support response",
+        "Visitor check-in assistance",
+        "Clean common areas"
+    ],
     icon: PiHeadphones,
   },
   {
-    title: "Secure Office Space",
-    details: ["Video Surveillance", "Private, Lockable Office Suites", "Monitored Security"],
+    title: "Office Safety & Security",
+    details: [
+        "24/7 video surveillance",
+        "Lockable private suites",
+        "Monitored security",
+        "Controlled access",
+        "Secure package area",
+        "Well-lit parking"
+    ],
     icon: PiShieldCheck,
   },
 ];

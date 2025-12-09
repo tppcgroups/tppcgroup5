@@ -63,7 +63,7 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
 
 
   const autoplayPlugin = React.useRef(
-      reduceMotion ? null : Autoplay({ delay: 3000, stopOnInteraction: false }),
+      reduceMotion ? null : Autoplay({ delay: 7000, stopOnInteraction: false }),
   );
 
   React.useEffect(() => {
@@ -123,9 +123,7 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
                 <span className="block text-white">Professional Center</span>
               </h1>
               <p className="text-base text-white">
-                Discover full-floor suites and executive offices designed to
-                keep teams connected, productive, and close to Tampa Palms
-                amenities.
+                Featuring Class A office suites designed to meet the needs of today&apos;s businesses. With customizable spaces, scenic surroundings, and attentive on-site management.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link
@@ -138,7 +136,7 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
                   href="/pages/Contact"
                   className="rounded-full border border-322b23  px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-black/10 hover:white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f0d4a6]"
                 >
-                  Schedule a Tour
+                  Contact Us
                 </Link>
               </div>
             </div>
@@ -147,14 +145,6 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
           <HighlightedLocation />
         </div>
         <div className="flex flex-col items-center justify-center pb-2 relative">
-          <button
-            type="button"
-            onClick={handleScrollDown}
-            className="z-20 mb-3 inline-flex h-12 w-12 items-center justify-center text-white shadow-2xl shadow-black/25 transition text-7xl cursor-pointer"
-            aria-label="Scroll to next section"
-          >
-            <HiOutlineArrowSmDown className="h-10 w-10 animate-bounce" />
-          </button>
           {totalSlides > 1 && (
             <div className="flex items-center gap-2">
               {Array.from({ length: totalSlides }).map((_, index) => (
@@ -172,6 +162,14 @@ export const DesktopHome: React.FC<DesktopHomeProps> = ({ imageUrls }) => {
               ))}
             </div>
           )}
+            <button
+            type="button"
+            onClick={handleScrollDown}
+            className="z-20 mb-3 inline-flex h-12 w-12 items-center justify-center text-white shadow-2xl shadow-black/25 transition text-7xl cursor-pointer pt-10"
+            aria-label="Scroll to next section"
+          >
+            <HiOutlineArrowSmDown className="h-10 w-10 animate-bounce" />
+          </button>
         </div>
       </div>
     </Carousel>

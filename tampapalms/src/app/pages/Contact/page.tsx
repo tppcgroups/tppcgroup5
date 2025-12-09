@@ -10,7 +10,7 @@ export default function Page() {
       {/* Hero banner introducing the contact team. */}
       <ContactHeader />
 
-      <section className="-mt-16 md:-mt-24 relative z-10">
+      <section id="contact-details" className="relative z-10 pt-12 md:pt-16">
         <div className="mx-auto max-w-6xl px-4">
           {/* Contact info cards with a backdrop blur treatment. */}
           <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-12 items-start

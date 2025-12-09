@@ -18,7 +18,7 @@ export default function Hero({}: MaintenanceHeroProps = {}) {
           sizes="(max-width: 768px) 100vw, 1200px"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1f1a16]/85 via-[#1f1a16]/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1f1a16]/85 via-[#1f1a16]/55 to-transparent" />
         <div className="relative z-10 flex flex-col items-center gap-6 px-6 py-16 text-center text-white md:items-start md:px-14 md:py-20 md:text-left">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white">
             Maintenance support
@@ -28,7 +28,8 @@ export default function Hero({}: MaintenanceHeroProps = {}) {
               Maintenance Services
             </h1>
             <p className="max-w-xl text-base text-white/80">
-              All maintenance requests go through our trusted partner portal, where every work order is timestamped, tracked, and assigned to the right technician for faster, more transparent service.            </p>
+              For all other maintenance requests, please use our online portal to submit your request. This ensures proper tracking and faster response times.
+            </p>
           </div>
           <div className="flex flex-col gap-3 text-sm sm:flex-row">
             <Link
@@ -38,10 +39,12 @@ export default function Hero({}: MaintenanceHeroProps = {}) {
               Access Maintenance Portal
             </Link>
             <Link
-              href="/pages/Contact"
+              href="/images/Maintenance-Guidelines/Maintenance_request_instructions.pdf"
+              target="_blank"
+              rel="noreferrer"
               className="inline-flex items-center justify-center rounded-full border border-white/70 px-6 py-3 font-semibold text-white transition hover:bg-white/10"
             >
-              Contact Us
+              View Guidelines
             </Link>
           </div>
         </div>

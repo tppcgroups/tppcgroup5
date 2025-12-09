@@ -1,0 +1,312 @@
+{
+  "project": {
+    "name": "tampapalms",
+    "displayName": "Tampa Palms Professional",
+    "description": "Next.js 15 App Router site for the Tampa Palms Professional Center leasing and marketing pages.",
+    "framework": "nextjs",
+    "appRouter": true,
+    "language": "typescript",
+    "packageManager": "npm",
+    "usesTurbopack": true,
+    "sourceDir": "src",
+    "publicDir": "public",
+    "buildDir": ".next"
+  },
+  "branding": {
+    "siteTitle": "Tampa Palms Professional Center - TPPC",
+    "metaDescription": "Website for TPPC",
+    "logo": "/images/TampaPalmsLogo.png",
+    "favicon": "/favicon.ico"
+  },
+  "contact": {
+    "office": {
+      "street": "17427 Bridge Hill Ct STE C",
+      "city": "Tampa",
+      "state": "FL",
+      "zip": "33647",
+      "mapUrl": "https://maps.google.com/?q=17427+Bridge+Hill+Ct+STE+C,+Tampa,+FL+33647"
+    },
+    "phone": {
+      "primary": "(813) 876-7697",
+      "tel": "8138767697",
+      "emergency": "813-876-7697"
+    },
+    "email": {
+      "marketing": "marketing@tampapalmscenter.com",
+      "marketingFallback": "marketing@tampapalms.com"
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/soarco-working/",
+      "facebook": "https://www.facebook.com/TampaPalmsProfessionalCenter",
+      "instagram": "https://www.instagram.com/tampapalmsprofessionalcenter/"
+    },
+    "visitingHours": [
+      { "label": "Mon – Thu", "value": "9:00 am – 5:00 pm" },
+      { "label": "Fri", "value": "9:00 am – 3:00 pm" }
+    ]
+  },
+  "navigation": {
+    "headerLinks": [
+      { "label": "Home", "href": "/" },
+      { "label": "Availability", "href": "/pages/Availability" },
+      { "label": "Features & Amenities", "href": "/pages/Features" },
+      {
+        "label": "Services",
+        "children": [
+          { "label": "Maintenance", "href": "/pages/Maintenance" },
+          { "label": "Apply", "href": "/pages/Apply" }
+        ]
+      },
+      { "label": "Testimonials", "href": "/pages/Testimonials" },
+      { "label": "About", "href": "/pages/About" },
+      { "label": "Contact", "href": "/pages/Contact" }
+    ],
+    "footerQuickLinks": [
+      { "label": "Home", "href": "/pages/Home" },
+      { "label": "Availability", "href": "/pages/Availability" },
+      { "label": "Features & Amenities", "href": "/pages/Features" },
+      { "label": "Maintenance Request", "href": "/pages/Maintenance" },
+      { "label": "Rental Application", "href": "/pages/Apply" },
+      { "label": "Testimonials", "href": "/pages/Testimonials" },
+      { "label": "About", "href": "/pages/About" },
+      { "label": "Contact", "href": "/pages/Contact" }
+    ]
+  },
+  "api": {
+    "routes": [
+      { "path": "/api/buildings", "method": "GET", "purpose": "Supabase read of buildings inventory and availability." },
+      { "path": "/api/contact", "method": "POST", "purpose": "Contact form submission, Supabase insert, and nodemailer confirmations." },
+      { "path": "/api/notify-request", "method": "POST", "purpose": "Create notify_requests rows when users ask for suite availability alerts." },
+      { "path": "/api/completed-notify", "method": "GET", "purpose": "Cron-triggered availability notifier; sends emails and marks notify requests complete." },
+      { "path": "/api/email", "method": "POST", "purpose": "Reusable transactional/marketing email sender for availability and marketing templates." },
+      { "path": "/api/testimonials", "method": "GET", "purpose": "Fetch testimonials from Supabase." },
+      { "path": "/api/faqs", "method": "GET", "purpose": "Fetch FAQs from Supabase." },
+      { "path": "/api/users", "method": "GET", "purpose": "Administrative listing of users table entries." },
+      { "path": "/api/unsubscribe", "method": "GET", "purpose": "Unsubscribe token handler used in email links." },
+      { "path": "/api/accessibility-events", "method": "POST", "purpose": "Log accessibility events." },
+      { "path": "/api/image-map", "method": "POST", "purpose": "Transform relative image paths to absolute URLs." }
+    ],
+    "cron": {
+      "vercel": [
+        {
+          "path": "/api/completed-notify",
+          "schedule": "*/15 * * * *",
+          "purpose": "Poll notify_requests and email users when suites become available."
+        }
+      ]
+    }
+  },
+  "integrations": {
+    "supabase": {
+      "urlKey": "NEXT_PUBLIC_SUPABASE_URL",
+      "anonKey": "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+      "serviceRoleKey": "SUPABASE_SERVICE_ROLE_KEY",
+      "tables": [
+        "buildings",
+        "users",
+        "contact_us",
+        "notify_requests",
+        "completed_notify",
+        "faqs",
+        "testimonials"
+      ]
+    },
+    "email": {
+      "transport": "nodemailer",
+      "smtpKeys": {
+        "host": "SMTP_HOST",
+        "port": "SMTP_PORT",
+        "secure": "SMTP_SECURE",
+        "user": "EMAIL_USER",
+        "pass": "EMAIL_PASSWORD"
+      },
+      "fromAddressKey": "EMAIL_FROM_ADDRESS",
+      "internalNotificationKey": "EMAIL_INTERNAL_NOTIFICATIONS",
+      "siteUrlKeys": ["NEXT_PUBLIC_SITE_URL", "SITE_URL"]
+    },
+    "marketing": {
+      "publicEmailKey": "NEXT_PUBLIC_MARKETING_EMAIL",
+      "backendEmailKey": "MARKETING_EMAIL",
+      "logoUrlKeys": ["MARKETING_LOGO_URL", "NEXT_PUBLIC_LOGO_URL"],
+      "subscribeUrlKeys": ["NOTIFY_SUBSCRIBE_URL", "NEXT_PUBLIC_NOTIFY_SUBSCRIBE_URL"]
+    }
+  },
+  "env": {
+    "required": {
+      "SUPABASE_URL": "",
+      "SUPABASE_SERVICE_ROLE_KEY": "",
+      "NEXT_PUBLIC_SUPABASE_URL": "",
+      "NEXT_PUBLIC_SUPABASE_ANON_KEY": "",
+      "EMAIL_USER": "",
+      "EMAIL_PASSWORD": "",
+      "SMTP_HOST": "smtp.gmail.com",
+      "SMTP_PORT": "587",
+      "SMTP_SECURE": "false",
+      "EMAIL_FROM_ADDRESS": "",
+      "EMAIL_INTERNAL_NOTIFICATIONS": "marketing@tampapalmscenter.com",
+      "NEXT_PUBLIC_SITE_URL": "http://localhost:3000",
+      "SITE_URL": "",
+      "MARKETING_EMAIL": "marketing@tampapalms.com",
+      "NEXT_PUBLIC_MARKETING_EMAIL": "marketing@tampapalms.com",
+      "MARKETING_LOGO_URL": "",
+      "NEXT_PUBLIC_LOGO_URL": "",
+      "NOTIFY_SUBSCRIBE_URL": "https://tppcgroup5.vercel.app/pages/DeleteEmail",
+      "NEXT_PUBLIC_NOTIFY_SUBSCRIBE_URL": "https://tppcgroup5.vercel.app/pages/DeleteEmail"
+    }
+  },
+  "assets": {
+    "heroCarousel": [
+      "/images/Bldg5-003.jpg",
+      "/images/Bldg6-001.jpg",
+      "/images/5331/5331-Primrose-Lake-Cir-Tampa-FL-Aerial-1-LargeHighDefinitionEdit.png",
+      "/images/Bldg6-007.jpg"
+    ],
+    "logo": "/images/TampaPalmsLogo.png"
+  },
+    "homePage": {
+    "stats": {
+      "rentableSqFtLabel": "Rentable sq. ft.",
+      "rentableSqFtHelper": "Maintained to Class-A standards",
+      "flexibleSuites": 180,
+      "flexibleSuitesLabel": "Professional Suites",
+      "flexibleSuitesHelper": "Business-ready spaces",
+      "buildingAvailable": 26,
+      "buildingAvailableLabel": "Buildings",
+      "buildingAvailableHelper": "Maintained to standard",
+      "yearHistoryValue": "20+",
+      "yearHistoryLabel": "Years of Experience",
+      "yearHistoryHelper": "Trusted expertise "
+    },
+    "cards": [
+      {
+        "title": "Consistent Quality Standards",
+        "desc": "A secure, well-maintained Class-A environment built for professional teams.",
+        "href": "/pages/Features"
+      },
+      {
+        "title": "Service Designed Around Your Workflow",
+        "desc": "Responsive, high-quality support that keeps your organization focused on its core priorities.",
+        "href": "/pages/Maintenance"
+      },
+      {
+        "title": "Community-Driven Growth",
+        "desc": "A professional environment where strong business relationships form and companies thrive.",
+        "href": "/pages/Testimonials"
+      }
+    ]
+  },
+  
+  "featuresPage": {
+    "featureTiles": [
+      {
+        "heading": "Custom Wrought-Iron Entry Doors and Beautifully Landscaped Entries",
+        "blurb": "Custom craftsmanship and lush landscaping come together to create a warm, inviting, and memorable entrance.",
+        "icon": "DoorOpen"
+      },
+      {
+        "heading": "Elegant Architectural Design With Professional Appeal",
+        "blurb": "Sophisticated architecture combines elegance with a strong, professional presence.",
+        "icon": "PencilRuler"
+      },
+      {
+        "heading": "Ten-Foot Ceilings",
+        "blurb": "Open atmosphere that adds a sense of space and sophistication to every room.",
+        "icon": "Maximize2"
+      },
+      {
+        "heading": "Sound Insulated Walls and Solid Core Doors",
+        "blurb": "Thick, insulated walls and solid core doors ensure a quiet, private, and comfortable environment.",
+        "icon": "VolumeX"
+      }
+    ],
+    "amenityColumns": [
+      {
+        "title": "Buildings/Suites",
+        "description": "Modern, suites in a prime location, combining convenience, comfort, and style.",
+        "items": [
+          "Fiber high speed optic internet",
+          "Assigned mailboxes with USPS delivery directly to the building",
+          "Professional business address with private mailbox",
+          "Peaceful, scenic surroundings near lakeside walkways",
+          "Located within a premier, multi-use business park for office, medical, and professional tenants",
+          "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
+          "Ample on-site parking for tenants and visitors"
+        ]
+      },
+      {
+        "title": "Executive Suites",
+        "description": "Flexible office spaces designed for professionals, startups, and growing businesses.",
+        "items": [
+          "Two shared break rooms and eight private bathrooms",
+          "Professional business address with private mailbox",
+          "Fiber high speed optic internet",
+          "24/7 access with access cards and keys",
+          "Assigned mailboxes with USPS delivery directly to the building",
+          "On-site management and maintenance team for tenant support",
+          "Peaceful, scenic surroundings near lakeside walkways",
+          "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
+          "Located within a premier, multi-use business park for office, medical, and professional tenants",
+          "Interior signage",
+          "Ample on-site parking for tenants and visitors",
+          "Conference room access with six complimentary hours per month"
+        ]
+      },
+      {
+        "title": "SOAR",
+        "description": "Co-working spaces that offers private offices, shared workspaces, and meeting rooms.",
+        "items": [
+          "On-site management and maintenance team for tenant support",
+          "Fiber high speed optic internet",
+          "Interior signage",
+          "Assigned mailboxes with USPS delivery directly to the building",
+          "Ample on-site parking for tenants and visitors",
+          "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
+          "Professional business address with private mailbox",
+          "Four private bathrooms",
+          "24/7 access with access cards",
+          "Peaceful, scenic surroundings near lakeside walkways",
+          "Located within a premier, multi-use business park for office, medical, and professional tenants"
+        ]
+      }
+    ],
+    "supportHighlights": [
+      {
+        "step": "01",
+        "title": "Guided onboarding",
+        "copy": "Our team can help with basic walk-throughs, getting you oriented, and general tech guidance to make your move-in smoother."
+      },
+      {
+        "step": "02",
+        "title": "Responsive service",
+        "copy": "Maintenance requests go to our local team, who keep you updated and aim to handle issues as smoothly as possible."
+      },
+      {
+        "step": "03",
+        "title": "Long-term partnership",
+        "copy": "We’re around for check-ins, basic space-planning help, and general updates so your suite fits your day-to-day needs."
+      }
+    ]
+  },
+  "maintenancePage": {
+    "cards": [
+      {
+        "title": "Submit Request",
+        "description": "Log into the partner portal anytime to open a new work order and share supporting photos or notes.",
+        "icon": "notebook"
+      },
+      {
+        "title": "Handled by Experts",
+        "description": "Our maintenance partner assigns the right technician, coordinates scheduling, and keeps you informed.",
+        "icon": "wrench"
+      },
+      {
+        "title": "Stay Updated",
+        "description": "Track progress, receive notifications, and close out the request once the job is completed to your satisfaction.",
+        "icon": "check"
+      }
+    ]
+  },
+  "features": {
+    "loggingEnabled": true
+  }
+}

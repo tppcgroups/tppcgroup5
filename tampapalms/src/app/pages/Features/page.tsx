@@ -1,5 +1,3 @@
-// file: src/app/pages/Features/page.tsx
-
 "use client";
 
 import Image from "next/image";
@@ -7,126 +5,22 @@ import Link from "next/link";
 import { PiCheckCircleBold } from "react-icons/pi";
 import type { LucideIcon } from "lucide-react";
 import { DoorOpen, Maximize2, PencilRuler, VolumeX } from "lucide-react";
-import axios from "axios";
-import {useEffect, useRef, useState} from "react";
-import type {Building} from "@/app/components/availability/type"
-type AvailabilityStatus = "available" | "comingSoon" | "occupied";
+import { useEffect, useRef, useState } from "react";
+import config from "../../../../../config.json";
+import InfoBlurb from "../../components/contact/InfoBlurb";
 
+type FeatureTile = { heading: string; blurb: string; icon: string };
+type AmenityColumn = { title: string; description: string; items: string[] };
+type SupportHighlight = { step: string; title: string; copy: string };
 
-const normalizeStatus = (
-    rawStatus: string | null | undefined
-): AvailabilityStatus => {
-  if (!rawStatus) return "occupied";
-  const status = rawStatus.toLowerCase().trim();
-  if (status === "available") return "available";
-  return "occupied"; // Default to occupied/waitlisted for all other values
+const iconMap: Record<string, LucideIcon> = {
+  DoorOpen,
+  PencilRuler,
+  Maximize2,
+  VolumeX,
 };
 
-type FeatureTile = { heading: string; blurb: string; icon: LucideIcon };
-
-const featureTiles: FeatureTile[] = [
-  {
-    heading: "Custom Wrought-Iron Entry Doors and Beautifully Landscaped Entries",
-    blurb:
-      "Custom craftsmanship and lush landscaping come together to create a warm, inviting, and memorable entrance.",
-    icon: DoorOpen,
-  },
-  {
-    heading: "Elegant Architectural Design With Professional Appeal",
-    blurb:
-      "Sophisticated architecture combines elegance with a strong, professional presence.",
-    icon: PencilRuler,
-  },
-  {
-    heading: "Ten-Foot Ceilings",
-    blurb:
-      "Open atmosphere that adds a sense of space and sophistication to every room.",
-    icon: Maximize2,
-  },
-  {
-    heading: "Sound Insulated Walls and Solid Core Doors",
-    blurb:
-      "Thick, insulated walls and solid core doors ensure a quiet, private, and comfortable environment.",
-    icon: VolumeX,
-  },
-];
-
-const amenityColumns = [
-  {
-    title: "Buildings/Suites",
-    description:
-      "Modern, suites in a prime location, combining convenience, comfort, and style.",
-    items: [
-      "Fiber high speed optic internet",
-      "Assigned mailboxes with USPS delivery directly to the building",
-      "Professional business address with private mailbox",
-      "Peaceful, scenic surroundings near lakeside walkways",
-      "Located within a premier, multi-use business park for office, medical, and professional tenants",
-      "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
-      "Ample on-site parking for tenants and visitors"
-    ],
-  },
-  {
-    title: "Executive Suites",
-    description:
-      "Flexible office spaces designed for professionals, startups, and growing businesses.",
-    items: [
-      "Two shared break rooms and eight private bathrooms",
-      "Professional business address with private mailbox",
-      "Fiber high speed optic internet",
-      "24/7 access with access cards and keys",
-      "Assigned mailboxes with USPS delivery directly to the building",
-      "On-site management and maintenance team for tenant support",
-      "Peaceful, scenic surroundings near lakeside walkways",
-      "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
-      "Located within a premier, multi-use business park for office, medical, and professional tenants",
-      "Interior signage",
-      "Ample on-site parking for tenants and visitors",
-      "Conference room access with six complimentary hours per month"
-    ],
-  },
-  {
-    title: "SOAR",
-    description:
-        "Co-working spaces that offers private offices, shared workspaces, and meeting rooms.",
-    items: [
-      "On-site management and maintenance team for tenant support",
-      "Fiber high speed optic internet",
-      "Interior signage",
-      "Assigned mailboxes with USPS delivery directly to the building",
-      "Ample on-site parking for tenants and visitors",
-      "Convenient access to top-rated schools, restaurants, parks, and the Tampa Palms Country Club featuring an Arthur Hills–designed golf course",
-      "Professional business address with private mailbox",
-      "Four private bathrooms",
-      "24/7 access with access cards",
-      "Peaceful, scenic surroundings near lakeside walkways",
-      "Located within a premier, multi-use business park for office, medical, and professional tenants"
-    ],
-  },
-];
-
-const supportHighlights = [
-  {
-    step: "01",
-    title: "Guided onboarding",
-    copy:
-      "Our team coordinates walk-throughs, vendor introductions, and technology setup so your suite is ready the moment you arrive.",
-  },
-  {
-    step: "02",
-    title: "Responsive service",
-    copy:
-      "Maintenance requests route through our on-campus staff with real-time updates and priority-level tracking for quick resolutions.",
-  },
-  {
-    step: "03",
-    title: "Long-term partnership",
-    copy:
-      "Regular check-ins, space-planning guidance, and proactive upgrades keep your suite aligned with evolving operational needs.",
-  },
-];
-
-const AmenityCard = ({ column }: { column: (typeof amenityColumns)[number] }) => {
+const AmenityCard = ({ column }: { column: AmenityColumn }) => {
   const [expanded, setExpanded] = useState(false);
   const listRef = useRef<HTMLUListElement | null>(null);
   const collapsedHeight = 220;
@@ -141,11 +35,9 @@ const AmenityCard = ({ column }: { column: (typeof amenityColumns)[number] }) =>
   }, [expanded, column.items, collapsedHeight]);
 
   return (
-    <div className="rounded-3xl border border-[#e1d9cf]/60 bg-[#fdf8f3] p-8 shadow-lg shadow-[#1f1a16]/10 transition-all ease-in-out duration-200">
+    <div className="rounded-3xl border border-[#e1d9cf]/60 bg-white p-8 shadow-lg shadow-[#1f1a16]/10 transition-all ease-in-out duration-200">
       <h3 className="text-2xl font-semibold text-[#1f1a16]">{column.title}</h3>
-      <p className="mt-3 text-sm text-[#7a6754] md:text-base">
-        {column.description}
-      </p>
+      <p className="mt-3 text-sm text-[#7a6754] md:text-base">{column.description}</p>
       <div className="relative mt-6">
         <ul
           ref={listRef}
@@ -180,9 +72,14 @@ const AmenityCard = ({ column }: { column: (typeof amenityColumns)[number] }) =>
 };
 
 export default function Features() {
+  const featureTiles: FeatureTile[] = config.featuresPage.featureTiles;
+  const amenityColumns: AmenityColumn[] = config.featuresPage.amenityColumns;
+  const supportHighlights: SupportHighlight[] = config.featuresPage.supportHighlights;
+
   return (
-    <main className="min-h-screen bg-[#f9f7f3] text-[#1f1a16] pb-20">
-      <header className="relative -mx-4 overflow-hidden rounded-none shadow-[0_35px_90px_-70px_rgba(31,26,22,0.8)] sm:-mx-6">
+    <main className="min-h-screen bg-white text-[#1f1a16] dark:bg-[#f5f2ec]">
+      {/* Header */}
+      <header className="relative -mx-4 overflow-hidden rounded-none shadow-[0_35px_90px_-70px_rgba(31,26,22,0.8)] sm:-mx-6 dark:bg-[#f5f2ec]">
         <Image
           src="/images/Bldg5-019.jpg"
           alt="Lobby and seating area at Tampa Palms Professional Center"
@@ -191,8 +88,8 @@ export default function Features() {
           sizes="(max-width: 768px) 200vw, 1200px"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1f1a16]/90 via-[#1f1a16]/45 to-transparent" />
-        <div className="relative z-10 flex flex-col items-center gap-6 px-6 py-16 text-center text-white md:items-start md:px-14 md:py-20 md:text-left">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1f1a16]/90 via-[#1f1a16]/45 to-transparent dark:bg-[#f5f2ec]" />
+        <div className="relative z-10 flex flex-col items-center gap-6 px-6 py-16 text-center text-white md:items-start md:px-14 md:py-20 md:text-left dark:bg-[#7a6754]">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em]">
             Features
           </span>
@@ -216,13 +113,13 @@ export default function Features() {
               href="/pages/Contact"
               className="inline-flex w-full items-center justify-center rounded-full border border-white/60 px-8 py-3 font-semibold text-white transition hover:bg-white/10 sm:w-auto"
             >
-              Schedule a Tour
+              Contact Us
             </Link>
           </div>
         </div>
       </header>
 
-      {/* Feature Grid */}
+      {/* Feature Tiles */}
       <section className="mx-auto max-w-6xl px-6 py-20 md:px-10">
         <div className="space-y-6 text-center md:space-y-8">
           <h2 className="text-3xl font-semibold text-[#1f1a16] md:text-4xl">What sets Tampa Palms Professional Center apart</h2>
@@ -234,7 +131,7 @@ export default function Features() {
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           {featureTiles.map((feature) => {
-            const Icon = feature.icon;
+            const Icon = iconMap[feature.icon];
             return (
               <article
                 key={feature.heading}
@@ -260,8 +157,8 @@ export default function Features() {
         </div>
       </section>
 
-      {/* Amenity Columns */}
-      <section className="relative overflow-hidden bg-white py-20 md:py-24">
+      {/* Amenities */}
+      <section className="relative overflow-hidden bg-[#f9f7f3] py-20 md:py-24 dark:bg-[#f5f2ec]">
         <div className="absolute inset-0">
           <div className="absolute left-1/2 top-0 h-64 w-[65%] -translate-x-1/2 bg-gradient-to-b from-[#efe7dd]/50 via-transparent to-transparent blur-3xl" />
         </div>
@@ -286,8 +183,122 @@ export default function Features() {
         </div>
       </section>
 
-      {/* Support Journey */}
-      <section className="mx-auto max-w-6xl px-6 py-20 md:px-10">
+      {/* Elevate your workstyle */}
+      <section className="mx-auto bg-white px-6 py-20 text-center md:px-10 dark:bg-[#7a6754]">
+        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#a49382]">
+          Elevate Your Workstyle
+        </p>
+        <h2 className="text-3xl font-semibold text-[#1f1a16] md:text-4xl">
+          Amenities Tailored to you 
+        </h2>
+        
+        <div className="mt-8 text-center flex flex-col  sm:flex-row sm:justify-center ">
+          <p className="max-w-3xl text-sm text-[#7a6754] md:text-base">
+          Tampa Palms Professional Center is a 140,000 square foot mixed use business complex along scenic Primrose Lake. 
+          The property offers office, medical, retail, and hospitality spaces built to support businesses of all sizes. 
+          Each of the 26 buildings features elegant entrances, high ceilings, and well kept landscaping, with convenient access to nearby coworking areas for flexible work options.
+          </p>
+        </div>
+        
+        <div className="flex justify-center pt-1">
+          <Image
+            src="/images/Bldg5-Suite202-007.jpg"
+            alt="Office space at Tampa Palms Professional Center"
+            width={600}
+            height={300}
+            className="rounded-3xl object-cover shadow-2xl mt-8"
+          />
+        </div>
+
+        <div className="mt-8 text-center flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <p className="max-w-3xl text-sm text-[#7a6754] md:text-base">
+          Tenants can adjust their office space as their needs change, making growth simple and convenient. 
+          Located in the vibrant Tampa Palms neighborhood, the center is close to parks, schools, restaurants, 
+          and the Tampa Palms Country Club with its Arthur Hills designed golf course.
+          </p>
+        </div>
+      </section>
+
+
+      {/* Convenient Access Section */}
+      <section className="relative py-20 pt-5 bg-[#f9f7f3] md:py-24">
+        <div className="mx-auto max-w-6xl px-6 md:px-10">
+          <div className="space-y-6 text-center md:space-y-8">
+            <span className="text-xs font-semibold uppercase tracking-[0.35em] text-[#a49382]">
+              Access Made Easy
+            </span>
+            <h2 className="text-3xl font-semibold text-[#1f1a16] md:text-4xl">
+              Convenient Access
+            </h2>
+            <p className="mx-auto max-w-3xl text-sm text-[#7a6754] md:text-base">
+              Prime location with easy regional connectivity, perfect for teams and clients alike.
+            </p>
+          </div>
+
+          {/* Blurry Grey Card */}
+          <div className="relative mt-12"> 
+            
+            {/* Background image */}
+            <div className="absolute inset-0 rounded-3xl overflow-hidden">
+              <img
+                src="/images/bldg6-006.jpg"
+                alt="Tampa Palms area map"
+                className="h-full w-full object-cover brightness-8-"
+              />
+            </div>
+
+            {/* Actual card */}
+            <div className="relative z-10 rounded-3xl border border-white/20 bg-[#f9f7f3]/40 backdrop-blur-sm p-15 shadow-xl">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+                {/* Left Text Side */}
+                <div>
+                  <h3 className="text-2xl font-semibold text-black mb-6">Prime Location</h3>
+
+                  <ul className="space-y-3 text-lg text-black">
+                    <li className="flex items-start gap-3">
+                      <PiCheckCircleBold className="mt-1 h-5 w-5 flex-shrink-0 text-[#a49382]" />
+                      Located right off I-75 and Bruce B. Downs, one of the busiest corridors in Tampa Bay.
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <PiCheckCircleBold className="mt-1 h-5 w-5 flex-shrink-0 text-[#a49382]" />
+                      Only a couple minutes from the interstate.
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <PiCheckCircleBold className="mt-1 h-5 w-5 flex-shrink-0 text-[#a49382]" />
+                      Less than ten minutes from I-4 and I-275.
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <PiCheckCircleBold className="mt-1 h-5 w-5 flex-shrink-0 text-[#a49382]" />
+                      Easy access to the entire region.
+                    </li>
+                  </ul>
+
+                  <div className="flex justify-center md:justify-start">
+                    <a
+                      href="https://www.google.com/maps/dir/?api=1&destination=17425+Bridge+Hill+Ct,+Tampa,+FL+33647"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-8 inline-flex items-center justify-center w-full text-center md:w-auto rounded-full bg-[#a49382] px-35 py-4 text-lg font-semibold text-white shadow-lg hover:bg-[#8b7a66] transition-colors"
+                    >
+                      Get Directions
+                    </a>
+                  </div>
+                </div>
+
+                {/* Right Map Side */}
+                <div>
+                  <InfoBlurb />
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      {/* Support Highlights */}
+      <section className="mx-auto px-6 py-20 md:px-10 pb-35">
         <div className="space-y-6 text-center md:space-y-8">
           <span className="text-xs font-semibold uppercase tracking-[0.35em] text-[#a49382]">
             Tenant Experience
@@ -296,10 +307,11 @@ export default function Features() {
             Support that stays with you beyond move-in
           </h2>
           <p className="mx-auto max-w-3xl text-sm text-[#7a6754] md:text-base">
-            The same ownership and maintenance teams who welcome you on day one remain on campus every day,
+            The same ownership and maintenance teams who welcome you on day one stay part of the process,
             ensuring your suite performs the way it should.
           </p>
-          <div className="flex justify-center gap-6 ">
+        </div>
+        <div className="flex justify-center gap-6 pt-8">
             <Image
                 src="/images/Bldg5-Suite202-002.jpg"
                 alt="Lobby and seating area at Tampa Palms Professional Center"
@@ -307,10 +319,8 @@ export default function Features() {
                 height={100}
                 className="rounded-3xl object-cover shadow-2xl"
             />
-          </div>
         </div>
-
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-12 grid gap-6 md:grid-cols-3 max-w-6xl mx-auto">
           {supportHighlights.map((support) => (
             <div
               key={support.step}

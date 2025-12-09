@@ -16,7 +16,7 @@ export default function AboutInfo() {
         <div className="relative z-10 flex h-full flex-col justify-center gap-4 px-6 py-10 text-white sm:px-10 md:px-16">
           <div className="max-w-5xl">
             <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em]">
-              About Us
+              Frequently Asked Questions
             </span>
             <div className="mt-4 space-y-3 max-w-2xl">
               <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">

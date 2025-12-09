@@ -1,180 +1,178 @@
 @import "tailwindcss";
 /* @import "tw-animate-css"; */
 
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
 }
 /* show a hamburger inside the existing nav on small screens only */
 header nav {
-  position: relative; /* needed for absolute-positioned pseudo-element */
+    position: relative; /* needed for absolute-positioned pseudo-element */
 }
 
 /* small screens: show hamburger */
 @media (max-width: 767px) {
-  header nav::before {
-    content: "";
-    position: absolute;
-    right: 1rem;                 /* position on the right inside the nav */
-    top: 50%;
-    transform: translateY(-50%);
-    width: 22px;
-    height: 16px;
-    display: inline-block;
-    cursor: pointer;
-    /* three horizontal bars using layered linear-gradients */
-    background-image:
-      linear-gradient(#111 0 2px, transparent 2px 100%),
-      linear-gradient(#111 0 2px, transparent 2px 100%),
-      linear-gradient(#111 0 2px, transparent 2px 100%);
-    background-size: 100% 2px;
-    background-position: 0 0, 0 6px, 0 12px;
-    background-repeat: no-repeat;
-    z-index: 50;
-  }
+    header nav::before {
+        content: "";
+        position: absolute;
+        right: 1rem;                 /* position on the right inside the nav */
+        top: 50%;
+        transform: translateY(-50%);
+        width: 22px;
+        height: 16px;
+        display: inline-block;
+        cursor: pointer;
+        /* three horizontal bars using layered linear-gradients */
+        background-image:
+                linear-gradient(#111 0 2px, transparent 2px 100%),
+                linear-gradient(#111 0 2px, transparent 2px 100%),
+                linear-gradient(#111 0 2px, transparent 2px 100%);
+        background-size: 100% 2px;
+        background-position: 0 0, 0 6px, 0 12px;
+        background-repeat: no-repeat;
+        z-index: 50;
+    }
 
-  /* optionally hide any visible navigation text if you want the icon-only view;
-     only enable if your nav links are already hidden via 'hidden md:flex' */
-  /* header nav .your-nav-links-selector { display: none; } */
+    /* optionally hide any visible navigation text if you want the icon-only view;
+       only enable if your nav links are already hidden via 'hidden md:flex' */
+    /* header nav .your-nav-links-selector { display: none; } */
 }
-
 
 /* hide the hamburger on medium+ screens */
 @media (min-width: 768px) {
-  header nav::before {
-    display: none;
+    header nav::before {
+        display: none;
 
-  }
+    }
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: #f9f7f3;
-  --foreground: #1f1a16;
-  --card: #ffffff;
-  --card-foreground: #1f1a16;
-  --popover: #ffffff;
-  --popover-foreground: #1f1a16;
-  --primary: #4a4034;
-  --primary-foreground: #fdf8f3;
-  --secondary: #f0d4a6;
-  --secondary-foreground: #1f1a16;
-  --muted: #efe7dd;
-  --muted-foreground: #7a6754;
-  --accent: #7a6754;
-  --accent-foreground: #fffaf2;
-  --destructive: #b42318;
-  --border: #e1d9cf;
-  --input: #e7ded2;
-  --ring: #c8b79f;
-  --chart-1: #7a6754;
-  --chart-2: #4a4034;
-  --chart-3: #c19b6b;
-  --chart-4: #f0d4a6;
-  --chart-5: #1f1a16;
-  --sidebar: #f9f7f3;
-  --sidebar-foreground: #1f1a16;
-  --sidebar-primary: #4a4034;
-  --sidebar-primary-foreground: #fdf8f3;
-  --sidebar-accent: #7a6754;
-  --sidebar-accent-foreground: #fffaf2;
-  --sidebar-border: #e1d9cf;
-  --sidebar-ring: #c8b79f;
+    --radius: 0.625rem;
+    --background: #f9f7f3;
+    --foreground: #1f1a16;
+    --card: #ffffff;
+    --card-foreground: #1f1a16;
+    --popover: #ffffff;
+    --popover-foreground: #1f1a16;
+    --primary: #4a4034;
+    --primary-foreground: #fdf8f3;
+    --secondary: #f0d4a6;
+    --secondary-foreground: #1f1a16;
+    --muted: #efe7dd;
+    --muted-foreground: #7a6754;
+    --accent: #7a6754;
+    --accent-foreground: #fffaf2;
+    --destructive: #b42318;
+    --border: #e1d9cf;
+    --input: #e7ded2;
+    --ring: #c8b79f;
+    --chart-1: #7a6754;
+    --chart-2: #4a4034;
+    --chart-3: #c19b6b;
+    --chart-4: #f0d4a6;
+    --chart-5: #1f1a16;
+    --sidebar: #f9f7f3;
+    --sidebar-foreground: #1f1a16;
+    --sidebar-primary: #4a4034;
+    --sidebar-primary-foreground: #fdf8f3;
+    --sidebar-accent: #7a6754;
+    --sidebar-accent-foreground: #fffaf2;
+    --sidebar-border: #e1d9cf;
+    --sidebar-ring: #c8b79f;
 }
 
 .dark {
-  --background: #1f1a16;
-  --foreground: #fdf8f3;
-  --card: #2a241d;
-  --card-foreground: #fdf8f3;
-  --popover: #2a241d;
-  --popover-foreground: #fdf8f3;
-  --primary: #f0d4a6;
-  --primary-foreground: #1f1a16;
-  --secondary: #4a4034;
-  --secondary-foreground: #fdf8f3;
-  --muted: #3a3127;
-  --muted-foreground: #c8b79f;
-  --accent: #7a6754;
-  --accent-foreground: #fffaf2;
-  --destructive: #f87171;
-  --border: #3d342a;
-  --input: #453a2f;
-  --ring: #c19b6b;
-  --chart-1: #f0d4a6;
-  --chart-2: #c19b6b;
-  --chart-3: #7a6754;
-  --chart-4: #4a4034;
-  --chart-5: #fdf8f3;
-  --sidebar: #1f1a16;
-  --sidebar-foreground: #fdf8f3;
-  --sidebar-primary: #f0d4a6;
-  --sidebar-primary-foreground: #1f1a16;
-  --sidebar-accent: #7a6754;
-  --sidebar-accent-foreground: #fffaf2;
-  --sidebar-border: #3d342a;
-  --sidebar-ring: #c19b6b;
+    --background: #7a6754;
+    --foreground: #f5f2ec;
+    --card: #2a241d;
+    --card-foreground: #fdf8f3;
+    --popover: #2a241d;
+    --popover-foreground: #fdf8f3;
+    --primary: #f0d4a6;
+    --primary-foreground: #1f1a16;
+    --secondary: #4a4034;
+    --secondary-foreground: #fdf8f3;
+    --muted: #3a3127;
+    --muted-foreground: #c8b79f;
+    --accent: #7a6754;
+    --accent-foreground: #fffaf2;
+    --destructive: #f87171;
+    --border: #3d342a;
+    --input: #453a2f;
+    --ring: #c19b6b;
+    --chart-1: #f0d4a6;
+    --chart-2: #c19b6b;
+    --chart-3: #7a6754;
+    --chart-4: #4a4034;
+    --chart-5: #fdf8f3;
+    --sidebar: #1f1a16;
+    --sidebar-foreground: #fdf8f3;
+    --sidebar-primary: #f0d4a6;
+    --sidebar-primary-foreground: #1f1a16;
+    --sidebar-accent: #7a6754;
+    --sidebar-accent-foreground: #fffaf2;
+    --sidebar-border: #3d342a;
+    --sidebar-ring: #c19b6b;
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-    @apply text-[#1f1a16];
-  }
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background text-foreground;
+        @apply text-[#1f1a16];
+    }
 }
 
-.full-height-carousel .embla__container, 
+.full-height-carousel .embla__container,
 .full-height-carousel .embla__slide {
-  height: 100%;
+    height: 100%;
 }
 
 .rotate-90 {
-  transform: rotate(90deg);
+    transform: rotate(90deg);
 }
 
 .white-image {
-  filter: brightness(0) invert(1);
+    filter: brightness(0) invert(1);
 }
 
 :root {
@@ -195,10 +193,6 @@ html {
     text-decoration: underline !important;
 }
 
-
-
-
-
 .highlight-links a {
     background-color: #d2b48c !important; /* tan */
     color: black !important;
@@ -206,7 +200,6 @@ html {
     border-radius: 4px;
     font-weight: bold;
 }
-
 
 .highlight-buttons button,
 .highlight-buttons a.button,
@@ -217,7 +210,6 @@ html {
     color: black !important;
     border-color: #d2b48c !important;
 }
-
 
 .highlight-headers h1,
 .highlight-headers h2,
@@ -231,16 +223,11 @@ html {
     border-radius: 4px;
 }
 
-
-
-
 .reduce-motion * {
     animation: none !important;
     transition: none !important;
     scroll-behavior: auto !important;
 }
-
-
 
 .contrast-invert {
     filter:
@@ -250,7 +237,6 @@ html {
             contrast(1.2)
             brightness(0.9) !important;
 }
-
 
 .contrast-invert img,
 .contrast-invert video {
@@ -262,19 +248,6 @@ html {
             brightness(0.9) !important;
 }
 
-
-
-
-.dark {
-    color: #d2b48c !important;
-}
-
-
-.dark * {
-    background-color: transparent !important;
-}
-
-
 .dark .bg-white,
 .dark [style*="background-color: white"],
 .dark [style*="background-color:#ffffff"],
@@ -282,24 +255,57 @@ html {
     background-color: #444 !important;
 }
 
-
-.dark h1,
-.dark h2,
-.dark h3,
-.dark h4,
-.dark p,
-.dark span,
-.dark li {
-    color: #d2b48c !important;
+/* Dark mode: carousel bars */
+.dark button.h-2 {
+    background-color: #f5f2ec !important;
 }
 
+.dark button.h-2:hover {
+    background-color: #f5f2ec !important;
+}
+
+/* Dark mode: remove arrow box */
+.dark button.z-20 {
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+/* Dark mode arrow icon color */
+.dark button.z-20 svg {
+    stroke: #f5f2ec !important;
+    fill: #f5f2ec !important;
+    color: #f5f2ec !important;
+}
+
+.accessibility-panel,
+.accessibility-panel * {
+    font-size: 16px !important;
+}
+
+/* DARK MODE — Remove brown background behind Quick Links */
+.dark footer nav {
+    background: none !important;
+    box-shadow: none !important;
+}
+
+.dark footer nav * {
+    background: none !important;
+}
+
+.dark footer nav.parent,
+.dark footer nav[parent],
+.dark footer div:has(> nav) {
+    background: none !important;
+    box-shadow: none !important;
+}
 
 .dark button {
     background-color: #555 !important;
     color: #d2b48c !important;
     border-color: #777 !important;
 }
-
 
 .dark input,
 .dark select,
@@ -309,17 +315,398 @@ html {
     border-color: #777 !important;
 }
 
-
 .dark header,
 .dark nav {
-    background-color: rgb(18,25,43) !important;
+    background: linear-gradient(
+            to bottom,
+            #1f1a16,
+            #2a241d,
+            #3a3127
+    ) !important;
+    color: #fdf8f3 !important;
+}
+
+.dark header,
+.dark header * {
+    color: #f5f2ec !important;
+    fill: #f5f2ec !important; /* ensures icons also match */
+}
+
+.dark header a {
+    color: #f5f2ec !important;
+}
+
+.dark header a * {
+    color: #f5f2ec !important;
+}
+
+.dark header a::after,
+.dark header a::before {
+    border-color: #f5f2ec !important;
+    background-color: #f5f2ec !important;
+}
+
+/* DARK MODE — change header underline pseudo-element color */
+.dark header span::after,
+.dark nav span::after,
+.dark header a::after,
+.dark nav a::after {
+    background-color: #f5f2ec !important;
+}
+
+/* DARK MODE — Set text color of main content grid to #777 */
+.dark .grid.gap-10 {
+    background-color: #2a241d !important;
+}
+
+/* DARK MODE — Text inside the main content section */
+.dark .grid.gap-10,
+.dark .grid.gap-10 * {
+    color: #f5f2ec !important;
+}
+
+.dark .grid.gap-10 p,
+.dark .grid.gap-10 span,
+.dark .grid.gap-10 li {
+    color: #f5f2ec !important;
+}
+
+/* DARK MODE — force stat boxes to tan */
+.dark .grid.gap-4.sm\:grid-cols-2 > div {
+    background-color: #777 !important;
+    background: #777 !important;
+    background-image: none !important;
+    border-color: #1f1a16 !important;
+    color: #1f1a16 !important;
+}
+
+/* DARK MODE — Change hero button background to #777 but keep text unchanged */
+.dark a.inline-flex.items-center.rounded-full {
+    background-color:  #555 !important;
+    border-color:  #555 !important;
+}
+
+.dark a.inline-flex.items-center.rounded-full:hover {
+    background-color:  #555 !important; /* lighter hover */
+    border-color:  #555 !important;
+}
+
+.dark body {
+    background-color: #7a6754 !important;
+}
+
+.dark main,
+.dark section,
+.dark div {
+    background-color: transparent !important;
+}
+
+/* DARK MODE — Make all rounded containers match the dark homepage box */
+/* .dark .rounded-3xl,
+.dark .rounded-\[32px\],
+.dark .rounded-xl,
+.dark .rounded-lg,
+.dark .rounded-md {
+    background-color: #2a241d !important;
+    border-color: #f5f2ec !important;
+    color: #f5f2ec !important;
+} */
+.dark * {
+    border-width: 0 !important;
+}
+
+.dark .bg-white\/95,
+.dark .bg-white {
+    background-color: #2a241d  !important;
+    color: #f5f2ec!important;
+    border-color: #7a6754 !important; /* Subtle light border */
+}
+.dark .hover\:bg-white:hover {
+    background-color: #f5f2ec  !important; /* A slightly darker brown for hover feedback */
+}
+
+/* Ensure the dark text color is overridden to white */
+.dark .text-\[\#1f1a16\] {
+    color: #f5f2ec !important;
+}
+
+/* Ensure dark color borders are also overridden to the new color */
+.dark .border-\[\#1f1a16\] {
+    border-color:  #f5f2ec  !important;
+}
+
+/* ============================================================
+  DARK MODE BUTTON OVERRIDE (Targeting White Background)
+  Forces Tan background (#7a6754) and White text in Dark Mode.
+  ============================================================*/
+.dark a.bg-white\/95.rounded-full {
+    /* Set Background to Tan */
+    background-color: #7a6754 !important;
+
+    /* Set Text Color to White */
+    color: #f5f2ec !important;
+
+    /* Set Border to Tan (Assumes border is inherited/implicit) */
+    border-color: #7a6754 !important;
+}
+
+/* Override the default dark text color if it persists */
+.dark a.text-\[\#1f1a16\] {
+    color: #f5f2ec !important;
+}
+
+/* Ensure hover state also uses the Tan background color */
+.dark a.hover\:bg-white:hover {
+    background-color: #7a6754 !important;
+}
+
+/* Remove default gradients or whites they may have */
+.dark .rounded-3xl,
+.dark .rounded-\[32px\],
+.dark .rounded-xl {
+    background-image: none !important;
+}
+
+/* Ensure inner text stays smokey white */
+/* .dark .rounded-3xl *,
+.dark .rounded-\[32px\] *,
+.dark .rounded-xl *,
+.dark .rounded-lg *,
+.dark .rounded-md * {
+    color: #f5f2ec !important;
+} */
+
+/* .dark span.rounded-full.text-xs.font-semibold {
+    color: #4a4034 !important;
+    background-color: #fdf8f3 !important;
+} */
+
+/* ============================================================
+   DARK MODE — Accessibility Panel (outer container)
+   ============================================================ */
+.dark .accessibility-panel {
+    background-color: #7a6754 !important; /* REPLACES the grey */
+    border-color: #3d342a !important;
+    color: #f5f2ec !important;
+}
+
+/* ============================================================
+   DARK MODE — Inner Cards / Boxes inside the Panel
+   ============================================================ */
+.dark .accessibility-panel .option-box,
+.dark .accessibility-panel button,
+.dark .accessibility-panel div[role="group"],
+.dark .accessibility-panel .flex.items-center,
+.dark .accessibility-panel .flex.justify-between,
+.dark .accessibility-panel .flex.gap-2,
+.dark .accessibility-panel > div > div {
+    background-color: #2a241d !important; /* your correct inner color */
+    border-color: #3d342a !important;
+    color: #f5f2ec !important;
+}
+
+/* Remove unwanted gray backgrounds Tailwind may inject */
+.dark .accessibility-panel * {
+    background-image: none !important;
+}
+
+/* ============================================================
+   DARK MODE — Make ALL text inside Accessibility Panel and
+   Keyboard Navigation #f5f2ec
+   ============================================================ */
+.dark .accessibility-panel,
+.dark .accessibility-panel * {
+    color: #f5f2ec !important;
+    fill: #f5f2ec !important; /* icons */
+    -webkit-text-fill-color: #f5f2ec !important; /* Safari text fix */
+}
+
+/* Keyboard navigation button text should also be #f5f2ec */
+.dark button,
+.dark .keyboard-navigation,
+.dark .keyboard-navigation * {
+    color: #f5f2ec !important;
+    fill: #f5f2ec !important;
+    -webkit-text-fill-color: #f5f2ec !important;
+}
+
+/* ============================================================
+   DARK MODE — CONTACT FORM INPUT/TEXTAREA TEXT COLOR
+   ============================================================ */
+
+/* Text inside inputs + textareas when typing */
+.dark input,
+.dark textarea {
+    color: #f5f2ec !important;
+    -webkit-text-fill-color: #f5f2ec !important;  /* Fix for Safari */
+}
+
+/* Placeholder text */
+.dark input::placeholder,
+.dark textarea::placeholder {
+    color: rgba(245, 242, 236, 0.55) !important; /* softer smokey white */
+}
+
+/* Labels and text next to inputs */
+.dark label,
+.dark .contact-container label,
+.dark .contact-container span,
+.dark .contact-container p {
+    color: #f5f2ec !important;
+}
+
+/* ============================================================
+   DARK MODE — Contact Page Map Buttons
+   ============================================================ */
+
+.dark .contact-container a[href*="google"],
+.dark .contact-container a[href*="maps.apple"],
+.dark a[href*="google.com/maps"],
+.dark a[href*="maps.apple.com"] {
+    background-color: #7a6754 !important;
+    color: #f5f2ec !important;     /* keep text smokey white */
+    border-color: #6a5a48 !important;  /* optional subtle border */
+}
+
+/* Hover state */
+.dark .contact-container a[href*="google"]:hover,
+.dark .contact-container a[href*="maps.apple"]:hover,
+.dark a[href*="google.com/maps"]:hover,
+.dark a[href*="maps.apple.com"]:hover {
+    background-color: #6a5a48 !important;
+}
+
+/* ============================================================
+   DARK MODE — Remove background behind inline Google/Apple map links
+   ============================================================ */
+
+/* Remove brown/blur box behind map links in DARK MODE */
+.dark .rounded-xl.shadow-sm.border {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+
+/* FAQ Page Dark Mode Background */
+.dark .faq-section,
+.dark section.bg-gradient-to-b {
+    background: #7a6754 !important;
+}
+
+/* FAQ subsection background + text (Dark Mode) */
+.dark .faq-subsection,
+.dark .rounded-xl.bg-white\/40,
+.dark .bg-white\/40 {
+    background-color: #2a241d !important;
+    border-color: #3d342a !important;
+    color: #f5f2ec !important;
+}
+
+/* Ensure ALL nested text inside subsections is also #f5f2ec */
+.dark .faq-subsection *,
+.dark .rounded-xl.bg-white\/40 *,
+.dark .bg-white\/40 * {
+    color: #f5f2ec !important;
+    fill: #f5f2ec !important;  /* icons */
+    stroke: #f5f2ec !important; /* svg icons */
+}
+
+/* DARK MODE — overwrite FAQ section background */
+.dark section.relative.w-full.overflow-hidden {
+    background-color: #7a6754 !important;
+}
+/* Force all FAQ accordion text to #f5f2ec in dark mode */
+.dark [data-headlessui-state] p,
+.dark [data-headlessui-state] span,
+.dark [data-headlessui-state] div {
+    color: #f5f2ec !important;
+    -webkit-text-fill-color: #f5f2ec !important;
+}
+
+/* Home Page Feature Cards – Change background to #555 in dark mode */
+.dark a.group.rounded-3xl {
+    background-color: #555 !important;
+    border-color: #555 !important;
+}
+.dark a.group.rounded-3xl * {
+    color: #f5f2ec !important;
+}
+.dark a.group.rounded-3xl:hover {
+    border-color: #555 !important;
+}
+
+.dark .bg-\[\#1a383b\] {
+    background-color: #7a6754 !important;
+}
+
+.dark .border-\[\#1a383b\] {
+    border-color: #7a6754 !important;
+}
+
+.dark a.rounded-full.bg-\[\#1a383b\] {
+    background-color: #7a6754 !important;
+    border-color: #7a6754 !important;
+}
+.dark a.rounded-full.bg-\[\#1a383b\] {
+    background-color: #7a6754 !important;
+    border-color: #7a6754 !important;
+}
+
+/* .dark span.rounded-full.text-xs.font-semibold {
+    background-color: #f5f2ec !important;
+    color: #1f1a16 !important;
+} */
+
+.dark .accessibility-panel .flex.items-center.justify-between {
+    background-color: transparent !important;
+}
+/* ============================================================
+   DARK MODE — Remove brown borders from accessibility panels
+   ============================================================ */
+
+/* Remove border from main accessibility panel in dark mode */
+.dark .accessibility-panel {
+    border: none !important;
+}
+
+/* Remove borders from all inner boxes in dark mode */
+.dark .accessibility-panel .flex.flex-col.items-center.p-3 {
+    border: none !important;
+}
+
+/* Remove borders from rounded elements inside accessibility panel */
+.dark .accessibility-panel .rounded-xl,
+.dark .accessibility-panel .rounded-2xl {
+    border: none !important;
+}
+
+/* Target specific grid items that have borders */
+.dark .accessibility-panel .grid > div {
+    border: none !important;
+}
+.dark .accessibility-panel {
+    border: none !important;
+}
+
+.dark .accessibility-panel > div > div > div {
+    border: none !important;
+}
+/* DARK MODE — Remove header brown border */
+.dark header.sticky {
+    border-bottom: none !important;
+}
+
+.dark header {
+    border: none !important;
+    border-bottom: none !important;
 }
 
 
 footer {
     background-color: rgb(18,25,43) !important;
+    color: #fdf8f3 !important; /* your tan/cream text color */
 }
-
 
 .contrast-grayscale {
     filter: grayscale(1);
@@ -335,21 +722,249 @@ footer {
     text-decoration: underline !important;
 }
 
-
-.cursor-small {
-    cursor: url("/images/smallcursor.webp") 0 0, auto;
+.accessibility-panel {
+    font-size: 16px !important;
+    line-height: 1.2 !important;
 }
 
-
-.cursor-medium {
-    cursor: url("/images/mediumcursor.webp") 0 0 / 32px 32px, auto;
-    image-rendering: pixelated;
+.accessibility-panel {
+    font-size: 16px !important;
+    line-height: 1.2 !important;
 }
 
+/* Fix: Prevent accessibility panel from scaling with text size */
+.accessibility-panel,
+.accessibility-panel *,
+.accessibility-panel *::before,
+.accessibility-panel *::after {
+    /* Reset font size to fixed pixels */
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+}
 
-.cursor-large {
-    cursor: url("/images/largecursor.webp") 0 0 / 48px 48px, auto;
-    image-rendering: pixelated;
+.accessibility-panel-keyboard,
+.accessibility-panel-keyboard *,
+.accessibility-panel-keyboard *::before,
+.accessibility-panel-keyboard *::after {
+    /* Reset font size to fixed pixels */
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+}
+
+/* Force fixed width and height for MAIN panel only */
+.accessibility-panel:not(.accessibility-panel-keyboard) {
+    width: 280px !important;
+    max-width: 280px !important;
+    min-width: 280px !important;
+    /* Override the root font-size scaling by setting a local base */
+    font-size: 14px !important;
+}
+
+/* Keyboard navigation panel keeps its own width */
+.accessibility-panel-keyboard {
+    width: 320px !important;
+    max-width: 320px !important;
+    min-width: 320px !important;
+    font-size: 13px !important;
+}
+
+/* Override any inherited scaling */
+.accessibility-panel,
+.accessibility-panel-keyboard {
+    transform: scale(1) !important;
+}
+
+/* Fix all spacing to use pixels instead of rem */
+.accessibility-panel,
+.accessibility-panel-keyboard {
+    padding: 16px !important;
+    gap: 12px !important;
+}
+
+.accessibility-panel .grid,
+.accessibility-panel-keyboard .grid {
+    gap: 16px !important;
+}
+
+.accessibility-panel .flex,
+.accessibility-panel-keyboard .flex {
+    gap: 16px !important;
+}
+
+.accessibility-panel > div,
+.accessibility-panel-keyboard > div {
+    gap: 16px !important;
+}
+
+/* Fix padding for inner elements */
+.accessibility-panel .p-3,
+.accessibility-panel-keyboard .p-3 {
+    padding: 12px !important;
+}
+
+.accessibility-panel .p-5,
+.accessibility-panel-keyboard .p-5 {
+    padding: 20px !important;
+}
+
+.accessibility-panel .py-2,
+.accessibility-panel-keyboard .py-2 {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+.accessibility-panel .px-3,
+.accessibility-panel-keyboard .px-3 {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+}
+
+.accessibility-panel .py-1,
+.accessibility-panel-keyboard .py-1 {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+
+.accessibility-panel .p-1,
+.accessibility-panel-keyboard .p-1 {
+    padding: 4px !important;
+}
+
+/* Fix margins */
+.accessibility-panel .mt-2,
+.accessibility-panel-keyboard .mt-2 {
+    margin-top: 8px !important;
+}
+
+.accessibility-panel .mt-3,
+.accessibility-panel-keyboard .mt-3 {
+    margin-top: 12px !important;
+}
+
+.accessibility-panel .mt-4,
+.accessibility-panel-keyboard .mt-4 {
+    margin-top: 16px !important;
+}
+
+/* Fix button sizing */
+.accessibility-panel button,
+.accessibility-panel-keyboard button {
+    font-size: 16px !important;
+    padding: 8px 12px !important;
+    min-width: auto !important;
+    height: auto !important;
+}
+
+/* Fix width constraints */
+.accessibility-panel .min-w-\[90px\],
+.accessibility-panel-keyboard .min-w-\[90px\] {
+    min-width: 90px !important;
+}
+
+.accessibility-panel .w-5,
+.accessibility-panel-keyboard .w-5 {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.accessibility-panel .h-5,
+.accessibility-panel-keyboard .h-5 {
+    height: 20px !important;
+}
+
+/* Specific size overrides for different elements */
+.accessibility-panel h2,
+.accessibility-panel-keyboard h2 {
+    font-size: 16px !important;
+}
+
+.accessibility-panel h3,
+.accessibility-panel-keyboard h3 {
+    font-size: 14px !important;
+}
+
+.accessibility-panel span,
+.accessibility-panel-keyboard span {
+    font-size: 13px !important;
+}
+
+.accessibility-panel .text-sm,
+.accessibility-panel-keyboard .text-sm {
+    font-size: 12px !important;
+}
+
+.accessibility-panel .text-lg,
+.accessibility-panel-keyboard .text-lg {
+    font-size: 16px !important;
+}
+
+.accessibility-panel .text-xl,
+.accessibility-panel-keyboard .text-xl {
+    font-size: 18px !important;
+}
+
+.accessibility-panel .text-xs,
+.accessibility-panel-keyboard .text-xs {
+    font-size: 11px !important;
+}
+
+.accessibility-panel .font-medium,
+.accessibility-panel-keyboard .font-medium {
+    font-size: 14px !important;
+}
+
+.accessibility-panel .font-semibold,
+.accessibility-panel-keyboard .font-semibold {
+    font-size: 14px !important;
+}
+
+.accessibility-panel .font-mono,
+.accessibility-panel-keyboard .font-mono {
+    font-size: 12px !important;
+}
+
+/* Fix rounded corners to pixel values */
+.accessibility-panel .rounded-xl,
+.accessibility-panel-keyboard .rounded-xl {
+    border-radius: 12px !important;
+}
+
+.accessibility-panel .rounded-2xl,
+.accessibility-panel-keyboard .rounded-2xl {
+    border-radius: 16px !important;
+}
+
+.accessibility-panel .rounded-full,
+.accessibility-panel-keyboard .rounded-full {
+    border-radius: 9999px !important;
+}
+
+.accessibility-panel .rounded,
+.accessibility-panel-keyboard .rounded {
+    border-radius: 4px !important;
+}
+
+/* Fix gap spacing for keyboard panel grid */
+.accessibility-panel-keyboard .gap-y-2 {
+    row-gap: 8px !important;
+}
+
+.accessibility-panel-keyboard .gap-2 {
+    gap: 8px !important;
+}
+
+.accessibility-panel-keyboard .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+/* Dark mode - keyboard panel close button background */
+.dark .accessibility-panel-keyboard button[aria-label="Close options panel"] {
+    background-color: #2a241d !important;
+}
+
+/* Dark mode - main accessibility panel close button background */
+.dark .accessibility-panel button[aria-label="Close accessibility panel"] {
+    background-color: #7a6754 !important;
 }
 
 
