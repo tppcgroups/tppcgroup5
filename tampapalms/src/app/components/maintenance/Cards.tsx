@@ -1,3 +1,4 @@
+import projectConfig from "../../../../../config.json";
 import type { IconType } from "react-icons";
 import { ArrowUpRight } from "lucide-react";
 import { PiNotebook, PiWrench, PiCheckCircle, PiPhoneBold } from "react-icons/pi";
@@ -5,32 +6,54 @@ import { PiNotebook, PiWrench, PiCheckCircle, PiPhoneBold } from "react-icons/pi
 const emergencyPhone = "813-876-7697";
 const emergencyTel = "tel:8138767697";
 
+const iconMap = {
+  notebook: PiNotebook,
+  wrench: PiWrench,
+  check: PiCheckCircle,
+} as const;
+
 type Step = {
   title: string;
   description: string;
   icon: IconType;
 };
 
-const steps: Step[] = [
-  {
-    title: "Submit Request",
-    description:
-      "Log into the partner portal anytime to open a new work order and share supporting photos or notes.",
-    icon: PiNotebook,
-  },
-  {
-    title: "Handled by Experts",
-    description:
-      "Our maintenance partner assigns the right technician, coordinates scheduling, and keeps you informed.",
-    icon: PiWrench,
-  },
-  {
-    title: "Stay Updated",
-    description:
-      "Track progress, receive notifications, and close out the request once the job is completed to your satisfaction.",
-    icon: PiCheckCircle,
-  },
-];
+type MaintenanceCardConfig = {
+  title: string;
+  description: string;
+  icon: keyof typeof iconMap;
+};
+
+const configuredSteps =
+  (projectConfig.maintenancePage?.cards as MaintenanceCardConfig[] | undefined) || [];
+
+const steps: Step[] =
+  configuredSteps.length > 0
+    ? configuredSteps.map((card) => ({
+        title: card.title,
+        description: card.description,
+        icon: iconMap[card.icon] ?? PiNotebook,
+      }))
+    : [
+        {
+          title: "Submit Request",
+          description:
+            "Log into the partner portal anytime to open a new work order and share supporting photos or notes.",
+          icon: PiNotebook,
+        },
+        {
+          title: "Handled by Experts",
+          description:
+            "Our maintenance partner assigns the right technician, coordinates scheduling, and keeps you informed.",
+          icon: PiWrench,
+        },
+        {
+          title: "Stay Updated",
+          description:
+            "Track progress, receive notifications, and close out the request once the job is completed to your satisfaction.",
+          icon: PiCheckCircle,
+        },
+      ];
 
 const Card = () => {
   return (
