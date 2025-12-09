@@ -34,13 +34,26 @@ export default function ContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error(await res.text());
+      if (!res.ok) {
+        let errorMessage = "Something went wrong. Please try again or email admin@tampapalmscenter.com.";
+        try {
+          const data = await res.json();
+          if (data?.error) {
+            errorMessage = data.error;
+          }
+        } catch {
+          // fall back to default message
+        }
+        throw new Error(errorMessage);
+      }
       setStatus("success");
       setMessage("Thanks! We’ve received your message and will reply soon.");
       form.reset();
-    } catch {
+    } catch (err) {
       setStatus("error");
-      setMessage("Something went wrong. Please try again or email admin@tampapalmscenter.com.");
+      const fallback = "Something went wrong. Please try again or email admin@tampapalmscenter.com.";
+      const friendly = err instanceof Error ? err.message : fallback;
+      setMessage(friendly || fallback);
     }
   }
 

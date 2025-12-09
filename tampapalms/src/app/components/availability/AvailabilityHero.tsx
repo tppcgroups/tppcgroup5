@@ -22,14 +22,14 @@ export function AvailabilityHero({ availableCount }: AvailabilityHeroProps) {
           className="pointer-events-none absolute inset-y-0 left-0 w-full max-w-4xl bg-gradient-to-r from-[#1f1a16]/90 via-[#1f1a16]/45 to-transparent"
           aria-hidden="true"
         />
-        <div className="relative z-10 flex flex-col items-center gap-8 px-6 py-16 text-center text-white md:items-start md:px-14 md:py-20 md:text-left">
+        <div className="relative z-10 flex w-full flex-col items-center gap-8 px-6 py-16 text-center text-white md:items-start md:px-14 md:py-20 md:text-left lg:items-stretch">
           <div className="w-full">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white self-center md:self-start">
               Availability
             </span>
           </div>
-          <div className="grid gap-8 lg:grid-cols-[3fr_2fr] lg:items-end">
-            <div className="space-y-5 text-center md:text-left">
+          <div className="grid w-full gap-8 lg:grid-cols-[1fr_auto] lg:items-end lg:justify-items-stretch">
+            <div className="space-y-5 text-center md:text-left lg:justify-self-start">
               <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">
                 Find the right suite for your team
               </h1>
@@ -53,7 +53,7 @@ export function AvailabilityHero({ availableCount }: AvailabilityHeroProps) {
                 </Link>
               </div>
             </div>
-            <div className="justify-self-center lg:justify-self-end">
+            <div className="justify-self-center lg:justify-self-end lg:mr-6">
               <div className="rounded-2xl border border-white/30 bg-white/10 px-6 py-5 text-center shadow-lg backdrop-blur">
                 <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
                   Available Spaces

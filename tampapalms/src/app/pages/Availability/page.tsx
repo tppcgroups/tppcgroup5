@@ -20,10 +20,11 @@ type AvailabilityStatus = "available" | "comingSoon" | "occupied";
 const normalizeStatus = (
   rawStatus: string | null | undefined
 ): AvailabilityStatus => {
-  if (!rawStatus) return "occupied";
-  const status = rawStatus.toLowerCase().trim();
+  if (!rawStatus) return "comingSoon";
+  const status = rawStatus.toLowerCase().trim().replace(/\s+/g, "_");
   if (status === "available") return "available";
-  return "occupied"; // Default to occupied/waitlisted for all other values
+  // Any non-available state should be treated as "Available Soon" on UI.
+  return "comingSoon";
 };
 
 const buildingFilterOptions: Array<{
