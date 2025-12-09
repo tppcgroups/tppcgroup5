@@ -118,7 +118,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setIsOpen, isMobile = false }) => {
                     announce(link.label);
                   }
                 }}
-                className={`${BASE_LINK_CLASSES} ${linkSizeClasses} py-2 inline-flex items-center justify-center gap-1 group ${
+                className={`${BASE_LINK_CLASSES} py-2 inline-flex items-center justify-center gap-1 group ${
                   openDropdown === link.label ? "after:w-full" : ""
                 }`}
                 style={linkStyle}
