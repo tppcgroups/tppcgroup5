@@ -285,7 +285,17 @@
         "title": "Long-term partnership",
         "copy": "We’re around for check-ins, basic space-planning help, and general updates so your suite fits your day-to-day needs."
       }
-    ]
+    ],
+    "primeLocation": {
+      "title": "Prime Location",
+      "listItems": [
+        "Located right off I-75 and Bruce B. Downs, one of the busiest corridors in Tampa Bay.",
+        "Only a couple minutes from the interstate.",
+        "Less than ten minutes from I-4 and I-275.",
+        "Easy access to the entire region."
+      ],
+      "directionsUrl": "https://www.google.com/maps/dir/?api=1&destination=17425+Bridge+Hill+Ct,+Tampa,+FL+33647"
+    }
   },
   "maintenancePage": {
     "cards": [
