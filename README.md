@@ -1,4 +1,4 @@
-# tppcgroup5
+# TPPC Group 5
 
 ### Allowed Prefixes for commits
 
